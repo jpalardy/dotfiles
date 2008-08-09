@@ -1,0 +1,22 @@
+
+startup_message off
+
+defscrollback 5000
+
+# 256 colors
+attrcolor b ".I"
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+defbce "on"
+
+term "xterm-256color"
+
+# don't resize terminal
+termcapinfo xterm* Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+
+# status line
+hardstatus alwayslastline "%{=b}%{G}%w %=[%Y-%m-%d -- %c]"
+
+# page up / page down
+bindkey -k kP prev
+bindkey -k kN next
+

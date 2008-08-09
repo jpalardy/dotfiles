@@ -1,0 +1,11 @@
+
+function _check_rakefile() {
+  if [ ! -e Rakefile ]; then
+    return
+  fi
+
+  local tasks=`rake --silent -T | awk '{print $2}'`
+  COMPREPLY=( $(compgen -W "${tasks}" -- $2) )
+}
+complete -F _check_rakefile -o default rake
+

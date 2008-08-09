@@ -1,0 +1,15 @@
+
+set bell-style none
+set completion-query-items 2000
+set show-all-if-ambiguous
+
+$if Bash
+  Space: magic-space
+$endif
+
+"\e`": "`!!`"
+"\ev": "!! | vim -R -"
+"\el": "!! | less"
+
+"\C-f": unix-filename-rubout
+
