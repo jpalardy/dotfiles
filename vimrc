@@ -58,7 +58,7 @@ if has('gui_running')
 endif
 
 if $TERM == "xterm-256color"
-  colorscheme 256_desert
+  colorscheme 256_xoria
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
