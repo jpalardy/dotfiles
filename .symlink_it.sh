@@ -22,3 +22,5 @@ relink .screenrc     etc/screenrc
 
 relink .ssh/config   etc/ssh/config
 
+relink .gitconfig    etc/gitconfig
+
