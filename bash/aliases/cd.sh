@@ -9,8 +9,8 @@ function cdf() {
 
 function cd_pushd() {
   local dest=${1:-"$HOME"}
-  if [ -f $dest ]; then
-    cdf $dest
+  if [ -f "$dest" ]; then
+    cdf "$dest"
   else
     pushd "$dest" >/dev/null
   fi
