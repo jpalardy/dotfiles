@@ -1,0 +1,6 @@
+#!/bin/sh
+
+CLASSPATH=`find ~/etc/bin/lib -type f | paste -s | sed -e 's/	/:/'`
+
+java -server -cp $CLASSPATH jline.ConsoleRunner clojure.lang.Repl "$@"
+
