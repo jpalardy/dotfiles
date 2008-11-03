@@ -31,6 +31,12 @@ augroup ruby
   autocmd BufNewFile *.rb silent 0read ~/.vim/skel/ruby
 augroup END
 
+augroup html
+  autocmd!
+
+  autocmd BufNewFile *.html silent 0read ~/.vim/skel/html
+augroup END
+
 " CURSOR ASSUMES PREVIOUS POSITION
 autocmd BufReadPost * if line("'\"") > 0             |
 \                       if line("'\"") <= line("$")  |
