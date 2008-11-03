@@ -28,3 +28,13 @@ let g:snippets["isod"]  = function("Snippet_isod")
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+function Snippet_header(text)
+  let l:header = " " . input("header: ") . " "
+
+  return "#" . Center(l:header, 49, "-")
+endfunction
+
+let g:snippets["hdr"]  = function("Snippet_header")
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
