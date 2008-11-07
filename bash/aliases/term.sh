@@ -38,3 +38,7 @@ function t256() {
 
 alias term="echo $TERM"
 
+function title() {
+  echo -ne "\033]0;$1\007"
+}
+
