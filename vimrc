@@ -111,6 +111,7 @@ nmap d<LEFT>  d?\S?e+1<CR>:nohl<CR>
 vmap ,, :! paste -s -d, -<CR>
 " QUOTISIZE
 vmap ,' :! awk '{print "'\''"$0"'\''"}'<CR>
+vmap ," :! awk '{print "\""$0"\""}'<CR>
 " SURROUND
 vmap S :! awk '{print ""$0""}'<LEFT><LEFT><LEFT>
 " AWK
