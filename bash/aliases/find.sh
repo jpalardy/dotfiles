@@ -1,7 +1,8 @@
 
 function ftf () {
-  find "${@:-"."}" -type f
+  find "${@:-"."}" $FIND_OPTIONS -type f -print
 }
+export -f ftf
 
 function ftd () {
   find "${@:-"."}" -type d

@@ -2,7 +2,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function ScratchFind()
-  Scratch("find . -type f \| sort")
+  Scratch("ftf \| sort")
   nmap <buffer> <CR> gf
   nmap <buffer> <ESC><CR> <c-w>f<c-w>w
 endfunction
