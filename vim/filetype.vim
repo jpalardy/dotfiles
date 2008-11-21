@@ -2,6 +2,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.txt     setf txt
   autocmd BufNewFile,BufRead *.clj     setf clojure
   autocmd BufNewFile,BufRead *.clj     setl lisp
+  autocmd BufNewFile,BufRead *.ett     setf ett
 augroup END
 
 augroup aes256
