@@ -17,5 +17,9 @@ if [ "`uname`" == "Darwin" ]; then
     gsed "$@"
   }
 
+  function netstat_tcp() {
+    netstat -n -f inet -p tcp
+  }
+
 fi
 
