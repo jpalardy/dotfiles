@@ -23,8 +23,8 @@ set lazyredraw
 set nomodeline
 
 " MOUSE with VIM ! (YES)
-set mouse=a
-set ttymouse=xterm2
+" set mouse=a
+" set ttymouse=xterm2
 set scrolloff=1
 
 " Indentation options
@@ -121,6 +121,10 @@ vmap ,a      :!awk '{print }'<LEFT><LEFT>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" easier to reach, overrides TOP and BOTTOM of screen
+map H ^
+map L $
 
 " display line up/down (not actual)
 map <up> gk
