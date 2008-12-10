@@ -25,7 +25,7 @@ PS1="\[\e[37;42m\]\h@\t\[\e[0m\] "
 
 #-------------------------------------------------
 
-export PATH="$HOME/etc/bin:$HOME/bin:/opt/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/X11R6/bin"
+export PATH="$HOME/etc/bin:$HOME/bin:/opt/local/sbin:/opt/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/X11R6/bin"
 
 export EDITOR="vim"
 export PAGER="less"
