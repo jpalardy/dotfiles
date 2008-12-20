@@ -13,9 +13,9 @@ function vim_picker() {
 # 3rd (optional) parameter is DIRECT selection, bypassing VIM
 function pick_with_vim() {
   if [ -n "$3" ]; then
-    $1 | sed -n $3p > ~/.picked
+    eval "$1" | sed -n $3p > ~/.picked
   else
-    $1 | vim_picker
+    eval "$1" | vim_picker
   fi
 
   if [ -e ~/.picked ]; then
