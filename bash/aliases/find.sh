@@ -5,7 +5,7 @@ function ftf () {
 export -f ftf
 
 function ftd () {
-  find "${@:-"."}" -type d
+  find "${@:-"."}" $FIND_OPTIONS -type d -print
 }
 
 ############################################################

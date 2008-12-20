@@ -1,12 +1,14 @@
 
 #-------------------------------------------------
 
+# cd into the directory of the given filename
 function cdf() {
   cd $(dirname $1)
 }
 
 #-------------------------------------------------
 
+# overwrites behavior of 'cd'
 function cd_pushd() {
   local dest=${1:-"$HOME"}
   if [ -f "$dest" ]; then
@@ -19,69 +21,29 @@ alias cd="cd_pushd"
 
 #-------------------------------------------------
 
-alias mark_dir='echo $PWD >> $HOME/.gorc'
-
+# pick from directories in $HOME/.gorc and cd into it
 function go() {
   if [ ! -f $HOME/.gorc ]; then
     echo "$HOME/.gorc does not exist..."
     return 1
   fi
 
-  if [ -n "$1" ]; then
-    local dest=`cat $HOME/.gorc | sed -n $1p`
-  else
-    local tempfile=`mktmp` || local tempfile=/tmp/test$$
-    trap "rm -f $tempfile" 0 1 2 5 15
-
-    local places=`cat $HOME/.gorc`
-    pick_from_list $places 2> $tempfile
-
-    local dest=`cat_rm $tempfile`
-  fi
-
-  [ -n "$dest" ] && cd $dest
+  pick_with_vim "cat $HOME/.gorc" "cd" $1
 }
+
+# HELPER -- append to .gorc
+alias mark_dir='echo $PWD >> $HOME/.gorc'
 
 #-------------------------------------------------
 
+# pick from directories visited in this session and cd into it
 function tb() {
-  local tempfile=`mktmp` || local tempfile=/tmp/test$$
-  trap "rm -f $tempfile" 0 1 2 5 15
-
-  local places=`dirs -l -p | sed 1d`
-  pick_from_list $places 2> $tempfile
-
-  local dest=`cat_rm $tempfile`
-
-  [ -n "$dest" ] && cd $dest
+  pick_with_vim "dirs -l -p" "cd"
 }
 
 #-------------------------------------------------
 
-function c() {
-  local tempfile=`mktmp` || local tempfile=/tmp/test$$
-  trap "rm -f $tempfile" 0 1 2 5 15
-
-  local places=`find . -maxdepth 1 -type d | sort | sed 1d`
-  pick_from_list $places 2> $tempfile
-
-  local dest=`cat_rm $tempfile`
-
-  [ -n "$dest" ] && cd $dest && c
-}
-
-function b() {
-  local tempfile=`mktmp` || local tempfile=/tmp/test$$
-  trap "rm -f $tempfile" 0 1 2 5 15
-
-  local places=`parent_dirs $(pwd)`
-  pick_from_list $places 2> $tempfile
-
-  local dest=`cat_rm $tempfile`
-
-  [ -n "$dest" ] && cd $dest
-}
-
+# HELPER -- generate the list of parent directories
 function parent_dirs() {
   local path=$1
 
@@ -91,5 +53,35 @@ function parent_dirs() {
   done
 }
 
+# pick from parent directories and cd into it
+function b() {
+  pick_with_vim "parent_dirs `dirname $PWD`" "cd" $1
+}
+
 #-------------------------------------------------
+
+# pick from a list of directories (recursive) and cd into it
+function c() {
+  pick_with_vim "ftd" "cd"
+}
+
+#-------------------------------------------------
+
+# set a HOT directory -- default is current directory
+function gh_() {
+  echo ${1-$PWD} > $HOME/.gh_dest
+}
+
+# cd to HOT directory
+function gh() {
+  local dest_file="$HOME/.gh_dest"
+
+  if [ ! -e "$dest_file" ]; then
+    echo "could not find $dest_file..."
+    return 1
+  fi
+
+  local dest=`cat $HOME/.gh_dest`
+  cd $dest
+}
 

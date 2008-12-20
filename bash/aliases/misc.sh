@@ -12,10 +12,6 @@ alias bash_update="source $HOME/.bashrc"
 
 #-------------------------------------------------
 
-function vim-() {
-  vim -c "ScratchFind" -c "on"
-}
-
 function __() {
   cp $1 __$1
 }
