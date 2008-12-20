@@ -19,7 +19,7 @@ function pick_with_vim() {
   fi
 
   if [ -e ~/.picked ]; then
-    $2 `cat ~/.picked`
+    $2 "`cat ~/.picked`"
   fi
 }
 

@@ -45,17 +45,17 @@ function tb() {
 
 # HELPER -- generate the list of parent directories
 function parent_dirs() {
-  local path=$1
+  local path="${1:-$PWD}"
 
   while [ "$path" != "/" ]; do
-    echo $path
-    path=`dirname $path`
+    echo "$path"
+    path=`dirname "$path"`
   done
 }
 
 # pick from parent directories and cd into it
 function b() {
-  pick_with_vim "parent_dirs `dirname $PWD`" "cd" $1
+  pick_with_vim "parent_dirs" "cd" $1
 }
 
 #-------------------------------------------------
