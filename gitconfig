@@ -1,3 +1,11 @@
 [user]
-	name = Jonathan Palardy
-	email = jonathan.palardy@gmail.com
+  name = Jonathan Palardy
+  email = jonathan.palardy@gmail.com
+[color]
+  status = auto
+  diff = auto
+  branch = auto
+  interactive = auto
+[alias]
+  st = status
+  co = checkout
