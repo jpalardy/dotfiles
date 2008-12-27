@@ -1,6 +1,6 @@
 
 function _blank() {
-  cat "$@" | sed -e '/^\s*$/d'
+  cat "$@" | \grep .
 }
 
 function _tidy() {
