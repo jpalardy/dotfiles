@@ -15,3 +15,12 @@ $endif
 
 "\e,": menu-complete
 
+# set editing-mode vi
+
+$if mode=vi
+  set keymap vi-insert
+  "\C-l": clear-screen
+  "\C-w": backward-kill-word
+$endif
+
+
