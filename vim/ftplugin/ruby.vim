@@ -11,7 +11,7 @@ let g:snippets["attr_w"] = "attr_writer"
 
 function! Snippet_erb_expr(text)
   let @y = "bhi"
-  return "<%  -%>"
+  return "<%-  -%>"
 endfunction
 
 function! Snippet_erb_value(text)
