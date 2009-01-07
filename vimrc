@@ -160,3 +160,5 @@ au FileType diff NoSpaceHi
 
 let g:sql_type_default='sqlite'
 
+let NERDShutUp=1
+
