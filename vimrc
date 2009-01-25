@@ -134,7 +134,6 @@ map <down> gj
 nmap n nzz
 nmap N Nzz
 nmap * *Nzz
-nmap # #nzz
 
 " switch to other window, make it maximum height
 nmap <ESC>w <C-w>w<C-w>_
@@ -161,4 +160,6 @@ au FileType diff NoSpaceHi
 let g:sql_type_default='sqlite'
 
 let NERDShutUp=1
+vmap # <ESC>:call NERDComment(1, "toggle")<CR>
+nmap # V#
 
