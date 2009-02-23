@@ -21,9 +21,9 @@ function! SQLITE_ScratchQuery(type, prefix)
   end
 
   if a:type == '-column'
-    Scratch "sqlite3 -header " . g:db_name . " '" . l:query . "' | sed -e 's/ /_/g' -e 's/|/ /g' | column -t | sed 's/_/ /g'"
+    Scratch "sqlite3 -header -nullvalue null " . g:db_name . " '" . l:query . "' | column -t -s \\|"
   else
-    Scratch "sqlite3 -header " . a:type . " " . g:db_name . " '" . l:query . "'"
+    Scratch "sqlite3 -header -nullvalue null " . a:type . " " . g:db_name . " '" . l:query . "'"
   end
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
