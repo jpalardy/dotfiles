@@ -29,7 +29,7 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! SQLITE_Database_Vars()
   if !exists("g:db_name")
-    let g:db_name     = ""
+    let g:db_name     = $DB_NAME
   end
 
   let g:db_name     = input("database: ", g:db_name, "file")
