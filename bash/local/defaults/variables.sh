@@ -1,6 +1,6 @@
 
 function prompt_command() {
-  printf "\e[30;40;1m%*s\n\e[0m\e[1A" $COLUMNS "$PWD"
+  printf "\e[30;40;1m%*s\n\e[0m\e[1A" $COLUMNS "$(__git_ps1 "%s --") $PWD"
 }
 
 PS1="\[\e[31;43m\]\u@\h\[\e[0m\] "
