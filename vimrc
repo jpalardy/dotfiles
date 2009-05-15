@@ -157,7 +157,8 @@ au FileType diff NoSpaceHi
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:sql_type_default='sqlite'
+" set in variables.sh
+let g:sql_type_default=$DB_ADAPTER
 
 let NERDShutUp=1
 vmap # <ESC>:call NERDComment(1, "toggle")<CR>
