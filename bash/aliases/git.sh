@@ -1,6 +1,6 @@
 
 function git_diff() {
-  git diff -w "$@" | vim -R -
+  git diff --no-ext-diff -w "$@" | vim -R -
 }
 
 function git_diff_head() {
