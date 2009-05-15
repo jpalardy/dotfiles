@@ -26,7 +26,7 @@ endfunction
 function! MYSQL_Database_Vars()
   if !exists("g:db_name") || !exists("g:db_user") || !exists("g:db_password")
     let g:db_name     = $DB_NAME
-    let g:db_user     = $DB_USERNAME
+    let g:db_user     = $DB_USER
     let g:db_password = ""
   end
 
