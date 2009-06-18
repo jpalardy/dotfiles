@@ -17,11 +17,11 @@ function __() {
 }
 
 function gril() {
-  find . -type f -print0 | xargs -0 grep -il "$1"
+  find . $FIND_OPTIONS -type f -print0 | xargs -0 grep -il "$1"
 }
 
 function gri() {
-  find . -type f -print0 | xargs -0 grep -i --color=auto "$1"
+  find . $FIND_OPTIONS -type f -print0 | xargs -0 grep -i --color=auto "$1"
 }
 
 function latest() {
