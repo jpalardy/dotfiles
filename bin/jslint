@@ -1,0 +1,6 @@
+#!/bin/sh
+
+filename=${1:?"jslint: filename"}
+
+cat $filename | js ~/etc/bin/jslint.js
+
