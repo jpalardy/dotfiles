@@ -19,3 +19,7 @@ function git_out() {
   git fetch; git log FETCH_HEAD..master
 }
 
+function git_m_vim() {
+  vim -c 'ScratchFind "git ls-files -m"' -c "on"
+}
+
