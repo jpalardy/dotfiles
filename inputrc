@@ -8,7 +8,7 @@ $if Bash
 $endif
 
 "\e`": "`!!`"
-"\ev": "!! | vim -R -"
+"\e": "!! | vim -R -"
 "\el": "!! | less"
 
 "\C-f": unix-filename-rubout
