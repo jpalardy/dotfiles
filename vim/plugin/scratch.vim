@@ -45,6 +45,7 @@ let g:scratch_find_command = "find . -name .git -prune -o -name .hg -prune -o -n
 
 " textmate-like command-t
 nnoremap <ESC>t :ScratchFind<CR>
+nnoremap <ESC>T :ScratchFind g:scratch_find_command, "vnew"<CR>
 
 nnoremap <ESC>s :Scratch
 
