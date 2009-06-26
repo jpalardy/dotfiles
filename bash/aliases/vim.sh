@@ -1,4 +1,8 @@
 
+function vimpager() {
+  vim -R -
+}
+
 function vim-() {
   vim -c "ScratchFind" -c "on"
 }
