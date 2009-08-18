@@ -154,7 +154,6 @@ au FileType diff NoSpaceHi
 " set in variables.sh
 let g:sql_type_default=$DB_ADAPTER
 
-let NERDShutUp=1
 vmap # <ESC>:call NERDComment(1, "toggle")<CR>
 nmap # V#
 
