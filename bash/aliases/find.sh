@@ -2,7 +2,6 @@
 function ftf () {
   find "${@:-"."}" $FIND_OPTIONS -type f -print
 }
-export -f ftf
 
 function ftd () {
   find "${@:-"."}" $FIND_OPTIONS -type d -print

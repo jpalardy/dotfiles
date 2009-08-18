@@ -100,12 +100,6 @@ vmap _$ :  s_\s\+$__g <CR>
 " STRIP -- EMPTY LINE BEGINNINGS
 nmap _^ :% s_^\s\+__g <CR>
 vmap _^ :  s_^\s\+__g <CR>
-" STRIP -- EMPTY LINES
-nmap _- :% g/^\s*$/d<CR>
-vmap _- :  g/^\s*$/d<CR>
-" STRIP UNTIL NON-SPACE RIGHT/LEFT
-nmap d<RIGHT> d/\S<CR>:nohl<CR>
-nmap d<LEFT>  d?\S?e+1<CR>:nohl<CR>
 
 " COMMATIZE
 vmap ,, :! paste -s -d, -<CR>

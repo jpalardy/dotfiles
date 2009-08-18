@@ -23,3 +23,7 @@ function git_m_vim() {
   vim -c 'ScratchFind "git ls-files -m"' -c "on"
 }
 
+function gcp() {
+  git commit -av -m '-' && git push
+}
+
