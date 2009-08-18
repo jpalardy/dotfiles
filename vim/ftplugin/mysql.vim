@@ -14,7 +14,14 @@ nmap <buffer> ,e :call MYSQL_ScratchQuery("--table", "explain")<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! MYSQL_ScratchQuery(type, prefix)
   normal yip
-  let l:query=a:prefix . " " . substitute(@0, "\n", ' ', 'g')
+  let l:query = expand(@0)
+
+  if a:prefix != ""
+    let l:query=a:prefix . " " . l:query
+  end
+
+  let l:query=substitute(l:query, "\n", ' ', 'g')
+  let l:query=substitute(l:query, "'", "'\\\\''", "g")
 
   if !exists("g:db_name") || !exists("g:db_user") || !exists("g:db_password")
     call MYSQL_Database_Vars()
