@@ -55,13 +55,7 @@ function parent_dirs() {
 
 # pick from parent directories and cd into it
 function b() {
-  if [ "$1" == "-" ]; then
-    local level=""
-  else
-    local level="${1:-1}"
-  fi
-
-  pick_with_vim "parent_dirs | sed 1d" "cd" $level
+  pick_with_vim "parent_dirs" "cd" $1
 }
 
 #-------------------------------------------------
