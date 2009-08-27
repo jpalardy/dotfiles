@@ -34,7 +34,6 @@ export PAGER="less"
 export BLOCKSIZE="K"
 
 export GZIP="-9"
-export RUBYLIB="$HOME/lang/ruby/lib"
 
 export HISTCONTROL=ignoreboth
 export HISTFILESIZE=1000

@@ -46,3 +46,5 @@ function _tsocks() {
   TSOCKS_CONF_FILE=$HOME/etc/tsocks.conf tsocks "$@"
 }
 
+alias tkh="$EDITOR $HOME/.ssh/known_hosts"
+

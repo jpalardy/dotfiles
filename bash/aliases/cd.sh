@@ -31,9 +31,6 @@ function go() {
   pick_with_vim "cat $HOME/.gorc" "cd" $1
 }
 
-# HELPER -- append to .gorc
-alias mark_dir='echo $PWD >> $HOME/.gorc'
-
 #-------------------------------------------------
 
 # pick from directories visited in this session and cd into it
@@ -66,22 +63,4 @@ function c() {
 }
 
 #-------------------------------------------------
-
-# set a HOT directory -- default is current directory
-function gh_() {
-  echo ${1-$PWD} > $HOME/.gh_dest
-}
-
-# cd to HOT directory
-function gh() {
-  local dest_file="$HOME/.gh_dest"
-
-  if [ ! -e "$dest_file" ]; then
-    echo "could not find $dest_file..."
-    return 1
-  fi
-
-  local dest=`cat $HOME/.gh_dest`
-  cd $dest
-}
 
