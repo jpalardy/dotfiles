@@ -13,6 +13,7 @@ export TERM="xterm-256color"
 
 export FIND_OPTIONS="-name .git -prune -o -name .hg -prune -o -name *.swp -prune -o"
 
+export DB_HOST="localhost"
 export DB_ADAPTER="sqlite"
 export DB_NAME="db/development.sqlite3"
 export DB_USER=""

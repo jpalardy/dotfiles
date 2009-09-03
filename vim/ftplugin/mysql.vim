@@ -23,20 +23,22 @@ function! MYSQL_ScratchQuery(type, prefix)
   let l:query=substitute(l:query, "\n", ' ', 'g')
   let l:query=substitute(l:query, "'", "'\\\\''", "g")
 
-  if !exists("g:db_name") || !exists("g:db_user") || !exists("g:db_password")
+  if !exists("g:db_host") || !exists("g:db_name") || !exists("g:db_user") || !exists("g:db_password")
     call MYSQL_Database_Vars()
   end
 
-  Scratch "echo '" . l:query . "' | mysql -u " . g:db_user . " -p" . g:db_password . " " . a:type . " " . g:db_name
+  Scratch "echo '" . l:query . "' | mysql -h " . g:db_host . " -u " . g:db_user . " -p" . g:db_password . " " . a:type . " " . g:db_name
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! MYSQL_Database_Vars()
   if !exists("g:db_name") || !exists("g:db_user") || !exists("g:db_password")
+    let g:db_host     = $DB_HOST
     let g:db_name     = $DB_NAME
     let g:db_user     = $DB_USER
     let g:db_password = ""
   end
 
+  let g:db_host     = input("host: ", g:db_host)
   let g:db_name     = input("database: ", g:db_name)
   let g:db_user     = input("username: ", g:db_user)
   let g:db_password = inputsecret("password: ", g:db_password)
