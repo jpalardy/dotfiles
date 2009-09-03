@@ -6,7 +6,12 @@ function _check_rakefile() {
     return
   fi
 
-  local tasks=`rake --silent -T | awk '{print $2}'`
+  if [ -e ".rake_t_cache" ]; then
+    local tasks=`cat .rake_t_cache | awk '{print $2}'`
+  else
+    local tasks=`rake --silent -T | awk '{print $2}'`
+  fi
+
   COMPREPLY=( $(compgen -W "${tasks}" -- $2) )
 }
 complete -F _check_rakefile -o default rake
