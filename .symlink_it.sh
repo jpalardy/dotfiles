@@ -24,3 +24,5 @@ relink .ssh/config   etc/ssh/config
 
 relink .gitconfig    etc/gitconfig
 
+relink .rtorrent.rc  etc/rtorrent.rc
+
