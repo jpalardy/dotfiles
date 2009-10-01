@@ -27,3 +27,7 @@ function gcp() {
   git commit -av -m '-' && git push
 }
 
+function git_diff_yesterday() {
+  git_diff "@{yesterday}" "$@"
+}
+
