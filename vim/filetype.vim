@@ -2,7 +2,6 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.txt     setf txt
   autocmd BufNewFile,BufRead *.clj     setf clojure
   autocmd BufNewFile,BufRead *.clj     setl lisp
-  autocmd BufNewFile,BufRead *.ett     setf ett
 augroup END
 
 augroup aes256
@@ -18,24 +17,6 @@ augroup aes256
   autocmd BufWritePre *.aes      silent '[,']!openssl enc -e -aes-256-cbc -a -salt -pass pass:$vimpass
 
   autocmd BufWritePost *.aes     u
-augroup END
-
-augroup sh
-  autocmd!
-
-  autocmd BufNewFile *.sh silent 0read ~/.vim/skel/sh
-augroup END
-
-augroup ruby
-  autocmd!
-
-  autocmd BufNewFile *.rb silent 0read ~/.vim/skel/ruby
-augroup END
-
-augroup html
-  autocmd!
-
-  autocmd BufNewFile *.html silent 0read ~/.vim/skel/html
 augroup END
 
 " CURSOR ASSUMES PREVIOUS POSITION
