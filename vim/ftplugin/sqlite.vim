@@ -16,23 +16,23 @@ function! SQLITE_ScratchQuery(type, prefix)
   normal yip
   let l:query=Strip(@0)
 
-  if !exists("g:db_name")
+  if !exists("g:db_config")
     call SQLITE_Database_Vars()
   end
 
   if a:type == '-column'
-    Scratch "sqlite3 -header -nullvalue null " . g:db_name . " '" . l:query . "' | column -t -s \\|"
+    Scratch "sqlite3 -header -nullvalue null " . g:db_config["filename"] . " '" . l:query . "' | column -t -s \\|"
   else
-    Scratch "sqlite3 -header -nullvalue null " . a:type . " " . g:db_name . " '" . l:query . "'"
+    Scratch "sqlite3 -header -nullvalue null " . a:type . " " . g:db_config["filename"] . " '" . l:query . "'"
   end
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! SQLITE_Database_Vars()
-  if !exists("g:db_name")
-    let g:db_name     = $DB_NAME
+  if !exists("g:db_config")
+    let g:db_config = {"filename": $DB_FILENAME}
   end
 
-  let g:db_name     = input("database: ", g:db_name, "file")
+  let g:db_config["filename"] = input("database: ", g:db_config["filename"], "file")
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
