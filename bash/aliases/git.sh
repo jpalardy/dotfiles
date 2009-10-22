@@ -31,3 +31,7 @@ function git_diff_yesterday() {
   git_diff "@{yesterday}" "$@"
 }
 
+function git_stat() {
+  git log --stat "$@"
+}
+

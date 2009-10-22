@@ -37,3 +37,13 @@ function hl_update() {
   find ~ > $HOME/.hl_data
 }
 
+############################################################
+
+function find_gt() {
+  find "${2:-"."}" -type f -newer $1
+}
+
+function find_ge() {
+  find $1
+  find_gt "$@"
+}
