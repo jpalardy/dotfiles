@@ -52,7 +52,12 @@ function parent_dirs() {
 
 # pick from parent directories and cd into it
 function b() {
-  pick_with_vim "parent_dirs" "cd" $1
+  local count=$1
+  if [ -n "$count" ]; then
+    count=$(($count + 1))
+  fi
+
+  pick_with_vim "parent_dirs" "cd" $count
 }
 
 #-------------------------------------------------
