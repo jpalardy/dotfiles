@@ -1,5 +1,5 @@
 
-nmap <buffer> <F3> :Scratch "ruby " . expand("%")<CR>
+let b:fileFilterCmd = "ruby"
 
 let ruby_space_errors = 1
 
