@@ -49,3 +49,5 @@ nnoremap <ESC>T :ScratchFind g:scratch_find_command, "vnew"<CR>
 
 nnoremap <ESC>s :Scratch
 
+nnoremap <ESC>f :Scratch b:fileFilterCmd . " " . expand("%")<CR>
+

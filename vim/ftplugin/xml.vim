@@ -1,6 +1,5 @@
 
-nmap <buffer> <F3> :%!tidy -q -xml -indent --indent-spaces 2 -wrap 0<CR>
-nmap <buffer> <F4> :%!xmllint --format -<CR>
+let b:fileFilterCmd = "xml_errors.sh"
 
 function! Snippet_tag(text)
   let l:fixed = substitute(a:text, "^<", "", "g")
