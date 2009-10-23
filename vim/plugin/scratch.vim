@@ -7,7 +7,7 @@ function! Scratch(...)
   let l:splitMode = (a:0 >= 2 ? a:2 : "new")
 
   execute ":botright " . l:splitMode
-  execute ":set ft=text"
+  execute ":set ft=scratch"
   execute ":set buftype=nofile"
 
   if l:command != ''
