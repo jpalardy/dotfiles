@@ -2,43 +2,49 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " EXECUTE -- OTHER WINDOW
-nmap <buffer> <F2> :call MYSQL_ScratchQuery("", "")<CR>
-nmap <buffer> <F3> :call MYSQL_ScratchQuery("--table", "")<CR>
-nmap <buffer> <F4> :call MYSQL_ScratchQuery("--vertical", "")<CR>
+nmap <buffer> <F2> :call MYSQL_ScratchQuery("raw")<CR>
+nmap <buffer> <F3> :call MYSQL_ScratchQuery("horizontal")<CR>
+nmap <buffer> <F4> :call MYSQL_ScratchQuery("vertical")<CR>
 
 " EXPLAIN
-nmap <buffer> ,e :call MYSQL_ScratchQuery("--table", "explain")<CR>
+nmap <buffer> ,e :call MYSQL_ScratchQuery("explain")<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! MYSQL_ScratchQuery(type, prefix)
+function! MYSQL_ScratchQuery(type)
   normal yip
   let l:query = expand(@0)
 
-  if a:prefix != ""
-    let l:query=a:prefix . " " . l:query
+  if a:type == "explain"
+    let l:query= "explain " . l:query
   end
 
   let l:query=substitute(l:query, "\n", ' ', 'g')
   let l:query=substitute(l:query, "'", "'\\\\''", "g")
 
-  if !exists("g:db_config")
+  if !exists("b:db_config")
     call MYSQL_Database_Vars()
   end
 
-  Scratch "echo '" . l:query . "' | mysql --default-character-set=utf8 -h " . g:db_config["host"] . " -u " . g:db_config["user"] . " -p" . g:db_config["password"] . " " . a:type . " " . g:db_config["name"]
+  let l:host = " -h " . b:db_config["host"]
+  let l:user = " -u " . b:db_config["user"]
+  let l:password = (b:db_config["password"] == "") ? "" : " -p " . b:db_config["password"]
+  let l:name = " " . b:db_config["name"]
+  let l:flags = "--default-character-set=utf8 " . {"raw": "", "horizontal": "--table", "vertical": "--vertical", "explain": "--table"}[a:type]
+
+  Scratch "echo '" . l:query . "' | mysql " . l:flags . l:host . l:user . l:password . l:name
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! MYSQL_Database_Vars()
-  if !exists("g:db_config")
-    let g:db_config = {"host": $DB_HOST, "name": $DB_NAME, "user": $DB_USER, "password": ""}
+  if !exists("b:db_config")
+    let b:db_config = {"host": $DB_HOST, "name": $DB_NAME, "user": $DB_USER, "password": ""}
   end
 
-  let g:db_config["host"]     =       input("host: ",     g:db_config["host"])
-  let g:db_config["name"]     =       input("database: ", g:db_config["name"])
-  let g:db_config["user"]     =       input("username: ", g:db_config["user"])
-  let g:db_config["password"] = inputsecret("password: ", g:db_config["password"])
+  let b:db_config["host"]     =       input("host: ",     b:db_config["host"])
+  let b:db_config["name"]     =       input("database: ", b:db_config["name"])
+  let b:db_config["user"]     =       input("username: ", b:db_config["user"])
+  let b:db_config["password"] = inputsecret("password: ", b:db_config["password"])
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

@@ -2,37 +2,43 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " EXECUTE -- OTHER WINDOW
-nmap <buffer> <F2> :call SQLITE_ScratchQuery("", "")<CR>
-nmap <buffer> <F3> :call SQLITE_ScratchQuery("-column", "")<CR>
-nmap <buffer> <F4> :call SQLITE_ScratchQuery("-line", "")<CR>
+nmap <buffer> <F2> :call SQLITE_ScratchQuery("raw")<CR>
+nmap <buffer> <F3> :call SQLITE_ScratchQuery("horizontal")<CR>
+nmap <buffer> <F4> :call SQLITE_ScratchQuery("vertical")<CR>
 
 " EXPLAIN
-nmap <buffer> ,e :call SQLITE_ScratchQuery("-column", "explain")<CR>
+nmap <buffer> ,e :call SQLITE_ScratchQuery("explain")<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! SQLITE_ScratchQuery(type, prefix)
+function! SQLITE_ScratchQuery(type)
   normal yip
-  let l:query=Strip(@0)
+  let l:query = expand(@0) . ";"
 
-  if !exists("g:db_config")
+  if a:type == "explain"
+    let l:query= "explain " . l:query
+  end
+
+  let l:query=substitute(l:query, "\n", ' ', 'g')
+  let l:query=substitute(l:query, "'", "'\\\\''", "g")
+
+  if !exists("b:db_config")
     call SQLITE_Database_Vars()
   end
 
-  if a:type == '-column'
-    Scratch "sqlite3 -header -nullvalue null " . g:db_config["filename"] . " '" . l:query . "' | column -t -s \\|"
-  else
-    Scratch "sqlite3 -header -nullvalue null " . a:type . " " . g:db_config["filename"] . " '" . l:query . "'"
-  end
+  let l:filename = " " . b:db_config["filename"]
+  let l:flags = "-header -nullvalue null " . {"raw": "", "horizontal": "-column", "vertical": "-line", "explain": "-column"}[a:type]
+
+  Scratch "echo '" . l:query . "' | sqlite3 " . l:flags . l:filename
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! SQLITE_Database_Vars()
-  if !exists("g:db_config")
-    let g:db_config = {"filename": $DB_FILENAME}
+  if !exists("b:db_config")
+    let b:db_config = {"filename": $DB_FILENAME}
   end
 
-  let g:db_config["filename"] = input("database: ", g:db_config["filename"], "file")
+  let b:db_config["filename"] = input("database: ", b:db_config["filename"], "file")
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
