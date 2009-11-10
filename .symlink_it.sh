@@ -17,6 +17,7 @@ relink .vim          etc/vim
 relink .vimrc        etc/vimrc
 
 relink .irbrc        etc/irbrc
+relink .rdebugrc     etc/rdebugrc
 
 relink .screenrc     etc/screenrc
 
