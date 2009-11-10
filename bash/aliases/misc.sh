@@ -16,12 +16,12 @@ function __() {
   cp $1 __$1
 }
 
-function gril() {
-  find . $FIND_OPTIONS -type f -print0 | xargs -0 grep -il "$1"
+function gri() {
+  find ${2:-.} $FIND_OPTIONS -type f -print0 | xargs -0 grep -i $3 --color=auto "$1"
 }
 
-function gri() {
-  find . $FIND_OPTIONS -type f -print0 | xargs -0 grep -i --color=auto "$1"
+function gril() {
+  gri "$1" ${2:-.} -l
 }
 
 function latest() {

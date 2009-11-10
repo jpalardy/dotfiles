@@ -148,6 +148,7 @@ set diffopt=filler,iwhite
 autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
 au FileType help NoSpaceHi
 au FileType diff NoSpaceHi
+au FileType scratch NoSpaceHi
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
