@@ -21,5 +21,9 @@ if [ "`uname`" == "Darwin" ]; then
     netstat -n -f inet -p tcp
   }
 
+  function _lock() {
+    /System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend
+  }
+
 fi
 
