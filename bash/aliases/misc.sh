@@ -8,7 +8,7 @@ alias less='less -i -R -S -c'
 
 alias grep='grep --color=auto'
 
-alias bash_update="source $HOME/.bashrc"
+alias reload="source $HOME/.bashrc"
 
 #-------------------------------------------------
 
