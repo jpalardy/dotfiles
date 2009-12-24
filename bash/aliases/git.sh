@@ -11,11 +11,15 @@ function git_diff_cached() {
   git_diff --cached
 }
 
-function git_m_vim() {
-  vim -c 'ScratchFind "git ls-files -m"' -c "on"
+function git_mod() {
+  git ls-files -m
 }
 
 function gcp() {
   git commit -av -m '-' && git push
+}
+
+function glg() {
+  git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 }
 
