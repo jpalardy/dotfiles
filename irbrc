@@ -6,7 +6,19 @@ IRB.conf[:PROMPT_MODE] = :SIMPLE
 require 'irb/completion'
 require 'pp'
 
-require 'rubygems'
+%w[rubygems looksee/shortcuts wirble].each do |gem|
+  begin
+    require gem
+  rescue LoadError => e
+    warn e.inspect
+  end
+end
+
+class Object
+  def local_methods(obj = self)
+    (obj.methods - obj.class.superclass.instance_methods).sort
+  end
+end
 
 if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER')
   require 'logger'
