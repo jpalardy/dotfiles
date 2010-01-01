@@ -23,3 +23,11 @@ function glg() {
   git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 }
 
+function glp() {
+  git log -p "$@"
+}
+
+function gln() {
+  git log --name-only "$@"
+}
+
