@@ -47,3 +47,7 @@ function find_ge() {
   find $1
   find_gt "$@"
 }
+
+function find_empty() {
+  find . -type ${1:-d} -empty
+}
