@@ -24,7 +24,7 @@ function glg() {
 }
 
 function glp() {
-  git log -p "$@"
+  git log -p --since="2 weeks ago" "$@"
 }
 
 function gln() {
