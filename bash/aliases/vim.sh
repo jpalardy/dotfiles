@@ -1,21 +1,21 @@
 
-function vimpager() {
+vimpager() {
   vim -R -
 }
 
-function vim-() {
+vim-() {
   vim -c "ScratchFind" -c "on"
 }
 
 # start vim in PAGER mode, with PickerMode plugin
-function vim_picker() {
+vim_picker() {
   vim -c "PickerMode" -R -
 }
 
 # 1st parameter is command to generate a list
 # 2nd parameter is command to run on selection
 # 3rd (optional) parameter is DIRECT selection, bypassing VIM
-function pick_with_vim() {
+pick_with_vim() {
   if [ -e ~/.picked ]; then
     rm ~/.picked
   fi

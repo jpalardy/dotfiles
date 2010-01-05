@@ -1,33 +1,33 @@
 
-function git_diff() {
+git_diff() {
   git diff --no-ext-diff -w "$@" | vim -R -
 }
 
-function git_diff_head() {
+git_diff_head() {
   git_diff HEAD
 }
 
-function git_diff_cached() {
+git_diff_cached() {
   git_diff --cached
 }
 
-function git_mod() {
+git_mod() {
   git ls-files -m
 }
 
-function gcp() {
+gcp() {
   git commit -av -m '-' && git push
 }
 
-function glg() {
+glg() {
   git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 }
 
-function glp() {
+glp() {
   git log -p --since="2 weeks ago" "$@"
 }
 
-function gln() {
+gln() {
   git log --name-only "$@"
 }
 

@@ -1,5 +1,5 @@
 
-function aes_enc() {
+aes_enc() {
   if [ -z "$1" ]; then
     openssl enc -e -aes-256-cbc -a -salt
   else
@@ -7,7 +7,7 @@ function aes_enc() {
   fi
 }
 
-function aes_dec() {
+aes_dec() {
   if [ -z "$1" ]; then
     openssl enc -d -aes-256-cbc -a -salt
   else

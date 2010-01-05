@@ -1,5 +1,5 @@
 
-function term_colors() {
+term_colors() {
   local fg bg
 
   for fg in 30 31 32 33 34 35 36 37; do
@@ -29,7 +29,7 @@ function term_colors() {
   done
 }
 
-function t256() {
+t256() {
   if [ "$TERM" != "xterm-256color" ]; then
     echo "TERM: $TERM -> xterm-256color"
     export TERM="xterm-256color"
@@ -38,7 +38,7 @@ function t256() {
 
 alias term="echo $TERM"
 
-function title() {
+title() {
   echo -ne "\033]0;$1\007"
 }
 

@@ -1,5 +1,5 @@
 
-function prompt_command() {
+prompt_command() {
   printf "\e[30;40;1m%*s\n\e[0m\e[1A" $COLUMNS "$(__git_ps1 "%s --") $PWD"
 }
 

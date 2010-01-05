@@ -12,27 +12,27 @@ alias reload="source $HOME/.bashrc"
 
 #-------------------------------------------------
 
-function __() {
+__() {
   cp $1 __$1
 }
 
-function gri() {
+gri() {
   find ${2:-.} $FIND_OPTIONS -type f -print0 | xargs -0 grep -i $3 --color=auto "$1"
 }
 
-function gril() {
+gril() {
   gri "$1" ${2:-.} -l
 }
 
-function latest() {
+latest() {
   ls -d -t "$@" | head -n1
 }
 
-function du_sort() {
+du_sort() {
   du -b --max-depth=1 | sort -n | _thousands
 }
 
-function size_sort() {
+size_sort() {
   find . -type f -printf "%s %p\n" | sort -n | _thousands
 }
 
@@ -42,7 +42,7 @@ alias gem_install="gem install --no-ri --no-rdoc -r"
 
 alias apg='apg -n 20 -m 8 -M SNCL -t'
 
-function _tsocks() {
+_tsocks() {
   TSOCKS_CONF_FILE=$HOME/etc/tsocks.conf tsocks "$@"
 }
 

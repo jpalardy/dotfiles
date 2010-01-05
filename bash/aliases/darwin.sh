@@ -1,27 +1,27 @@
 
 if [ "`uname`" == "Darwin" ]; then
 
-  function ls() {
+  ls() {
     gls "$@"
   }
 
-  function find() {
+  find() {
     gfind "$@"
   }
 
-  function du() {
+  du() {
     gdu "$@"
   }
 
-  function sed() {
+  sed() {
     gsed "$@"
   }
 
-  function netstat_tcp() {
+  netstat_tcp() {
     netstat -n -f inet -p tcp
   }
 
-  function _lock() {
+  _lock() {
     /System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend
   }
 
