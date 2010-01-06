@@ -11,3 +11,8 @@ _thousands() {
   cat "$@" | awk '{printf("%15s", $1); $1=""; print $0}' | sed -r 's/^(...)(...)(...)(...)(...)/\1,\2,\3,\4,\5/' | sed 's/ ,/  /g'
 }
 
+_sum() {
+  cat "$@" | awk '{sum+=$1} END {print sum}'
+}
+export -f _sum
+
