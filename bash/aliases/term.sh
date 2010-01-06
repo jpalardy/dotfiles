@@ -39,6 +39,6 @@ t256() {
 alias term="echo $TERM"
 
 title() {
-  echo -ne "\033]0;$1\007"
+  printf '\e]2;%s\a' "$*"
 }
 
