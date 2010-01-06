@@ -24,10 +24,6 @@ gril() {
   gri "$1" ${2:-.} -l
 }
 
-latest() {
-  ls -d -t "$@" | head -n1
-}
-
 du_sort() {
   du -b --max-depth=1 | sort -n | _thousands
 }
