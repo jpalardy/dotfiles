@@ -12,7 +12,7 @@ function! Scratch(...)
 
   if l:command != ''
     let @r = system(l:command)
-    exec "normal \"rp"
+    exec "normal V\"rp"
   endif
 endfunction
 command -nargs=* Scratch :call Scratch(<args>)
@@ -29,11 +29,8 @@ command -nargs=+ ScratchDiff :call ScratchDiff(<args>)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! ScratchFind(...)
-  let l:command = (a:0 >= 1 ? a:1 : g:scratch_find_command)
-  let l:splitMode = (a:0 >= 2  ? a:2 : "new")
-
-  Scratch l:command, l:splitMode
+function! ScratchFind(command, splitMode)
+  Scratch a:command, a:splitMode
   nmap <buffer> <CR> gf
   nmap <buffer> <ESC><CR> <c-w>f<c-w>w
 endfunction
@@ -41,13 +38,13 @@ command -nargs=* ScratchFind :call ScratchFind(<args>)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:scratch_find_command = "find . -name .git -prune -o -name .hg -prune -o -name *.swp -prune -o -type f -print \| sort"
-
 " textmate-like command-t
-nnoremap <ESC>t :ScratchFind<CR>
-nnoremap <ESC>T :ScratchFind g:scratch_find_command, "vnew"<CR>
+nnoremap <ESC>t :ScratchFind "ack -l .", "new"<CR>
+nnoremap <ESC>T :ScratchFind "ack -l .", "vnew"<CR>
 
-nnoremap <ESC>s :Scratch
+nnoremap <ESC>s :Scratch ""<LEFT>
+
+nnoremap <ESC>a :Scratch "ack --group "<LEFT>
 
 nnoremap <ESC>f :Scratch b:fileFilterCmd . " " . expand("%")<CR>
 

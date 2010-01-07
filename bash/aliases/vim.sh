@@ -3,8 +3,11 @@ vimpager() {
   vim -R -
 }
 
+# 1. start vim
+# 2. execute ESC-t
+# 3. execute :on
 vim-() {
-  vim -c "ScratchFind" -c "on"
+  vim -s <(printf '\et:on\n')
 }
 
 # start vim in PAGER mode, with PickerMode plugin
