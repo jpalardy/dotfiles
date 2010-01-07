@@ -7,9 +7,9 @@ function _check_rakefile() {
   fi
 
   if [ -e ".rake_t_cache" ]; then
-    local tasks=`cat .rake_t_cache | awk '{print $2}'`
+    local tasks=$(cat .rake_t_cache | awk '{print $2}')
   else
-    local tasks=`rake --silent -T | awk '{print $2}'`
+    local tasks=$(rake --silent -T | awk '{print $2}')
   fi
 
   COMPREPLY=( $(compgen -W "${tasks}" -- $2) )

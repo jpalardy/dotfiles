@@ -1,5 +1,5 @@
 
-if [ "`uname`" == "Darwin" ]; then
+if [ "$(uname)" == "Darwin" ]; then
 
   function ls {
     gls "$@"

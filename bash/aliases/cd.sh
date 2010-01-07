@@ -46,7 +46,7 @@ parent_dirs() {
 
   while [ "$path" != "/" ]; do
     echo "$path"
-    path=`dirname "$path"`
+    path=$(dirname "$path")
   done
 }
 

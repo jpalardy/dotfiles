@@ -7,7 +7,7 @@ $if Bash
   Space: magic-space
 $endif
 
-"\e`": "`!!`"
+"\e`": "$(!!)"
 "\e": "!! | vim -R -"
 "\el": "!! | less"
 
