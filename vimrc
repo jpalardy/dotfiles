@@ -129,6 +129,10 @@ nmap n nzz
 nmap N Nzz
 nmap * *Nzz
 
+" one-key indentation
+nmap > >>
+nmap < <<
+
 " switch to other window, make it maximum height
 nmap <ESC>w <C-w>w<C-w>_
 
