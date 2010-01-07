@@ -39,8 +39,8 @@ command -nargs=* ScratchFind :call ScratchFind(<args>)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " textmate-like command-t
-nnoremap <ESC>t :ScratchFind "ack -l .", "new"<CR>
-nnoremap <ESC>T :ScratchFind "ack -l .", "vnew"<CR>
+nnoremap <ESC>t :ScratchFind "ack -af", "new"<CR>
+nnoremap <ESC>T :ScratchFind "ack -af", "vnew"<CR>
 
 nnoremap <ESC>s :Scratch ""<LEFT>
 
