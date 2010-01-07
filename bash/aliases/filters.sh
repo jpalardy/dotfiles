@@ -8,7 +8,7 @@ _tidy() {
 }
 
 _thousands() {
-  cat "$@" | awk '{printf("%'\''15d", $1); $1=""; print $0}'
+  cat "$@" | awk '{$1=sprintf("%'\''19.lf", $1); print $0}'
 }
 
 _sum() {
