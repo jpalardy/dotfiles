@@ -10,7 +10,6 @@ augroup aes256
 
   autocmd BufReadPre *.aes       set viminfo=
   autocmd BufReadPre *.aes       set noswapfile
-  autocmd BufReadPre *.aes       set readonly
 
   autocmd BufReadPost *.aes      let $vimpass = inputsecret("Password: ")
   autocmd BufReadPost *.aes      silent '[,']!openssl enc -d -aes-256-cbc -a -salt -pass pass:$vimpass
