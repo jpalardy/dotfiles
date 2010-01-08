@@ -31,3 +31,11 @@ gln() {
   git log --name-only "$@"
 }
 
+gba() {
+  git branch -a "$@"
+}
+
+gs() {
+  git status "$@"
+}
+
