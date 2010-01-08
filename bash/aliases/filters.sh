@@ -1,18 +1,18 @@
 
-_blank() {
+filters.blank() {
   cat "$@" | \grep .
 }
 
-_tidy() {
+filters.tidy() {
   cat "$@" | tidy -q -indent --indent-spaces 2 -wrap 0 -clean --tidy-mark no --show-warnings no
 }
 
-_thousands() {
+filters.thousands() {
   cat "$@" | awk '{$1=sprintf("%'\''19.lf", $1); print $0}'
 }
 
-_sum() {
+filters.sum() {
   cat "$@" | awk '{sum+=$1} END {print sum}'
 }
-export -f _sum
+export -f filters.sum
 

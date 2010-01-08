@@ -25,11 +25,11 @@ gril() {
 }
 
 du_sort() {
-  du -b --max-depth=1 | sort -n | _thousands
+  du -b --max-depth=1 | sort -n | filters.thousands
 }
 
 size_sort() {
-  find . -type f -printf "%s %p\n" | sort -n | _thousands
+  find . -type f -printf "%s %p\n" | sort -n | filters.thousands
 }
 
 #-------------------------------------------------
