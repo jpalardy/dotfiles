@@ -1,9 +1,21 @@
 
+ATTR_RESET=$(tput sgr0)
+
+CURSOR_SAVE=$(tput sc)
+CURSOR_RESTORE=$(tput rc)
+
+PS1_COLOR=$(tput setaf 166)  # orange
+PATH_COLOR=$(tput setaf 236) # gray
+
 prompt_command() {
-  printf "\e[30;40;1m%*s\n\e[0m\e[1A" $COLUMNS "$(__git_ps1 "%s --") $PWD"
+  printf "${CURSOR_SAVE}"
+  printf "${ATTR_RESET}"
+  printf "${PATH_COLOR}%*s" $COLUMNS "$(__git_ps1 "%s -- ")$PWD"
+  printf "${ATTR_RESET}"
+  printf "${CURSOR_RESTORE}"
 }
 
-PS1="\[\e[31;43m\]\u@\h\[\e[0m\] "
+PS1='\[${PS1_COLOR}\]\u@\h\[${ATTR_RESET}\] '
 PROMPT_COMMAND=prompt_command
 
 export LANG="en_US.UTF-8"
