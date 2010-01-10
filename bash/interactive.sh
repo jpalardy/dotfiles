@@ -16,12 +16,12 @@ HISTCONTROL=ignoreboth           # don't save lines starting with a space, or du
 
 ############################################################
 
-# aliases
+# commands
 
-for file in $HOME/.bash/aliases/*; do
+for file in $HOME/.bash/commands/*; do
   source $file
 done
-cond_source $HOME/.bash/local/aliases.sh
+cond_source $HOME/.bash/local/commands.sh
 
 # bindings
 
