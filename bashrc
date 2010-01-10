@@ -10,36 +10,6 @@ function cond_source () {
 # VARIABLES AND MISC                                       #
 ############################################################
 
-shopt -s checkhash
-shopt -s checkwinsize
-shopt -s cmdhist
-shopt -s extglob
-shopt -s histappend
-shopt -s no_empty_cmd_completion
-shopt -s progcomp
-
-#-------------------------------------------------
-
-umask 22
-ulimit -c 0
-
-PS1="\[\e[37;42m\]\h@\t\[\e[0m\] "
-
-#-------------------------------------------------
-
-export PATH="$HOME/etc/bin:$HOME/bin:/opt/local/sbin:/opt/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/X11R6/bin"
-export MANPATH="/opt/local/share/man:$MANPATH"
-
-export EDITOR="vim"
-export PAGER="less"
-export BLOCKSIZE="K"
-
-export GZIP="-9"
-
-export HISTCONTROL=ignoreboth
-export HISTFILESIZE=1000
-export HISTSIZE=1000
-
 source $HOME/.bash/variables.sh
 cond_source $HOME/.bash/local/variables.sh
 
