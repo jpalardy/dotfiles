@@ -1,40 +1,17 @@
-############################################################
-# SOURCE IF EXISTS
-############################################################
 
 function cond_source () {
   [ -f $1 ] && . $1
 }
 
-############################################################
-# VARIABLES AND MISC                                       #
-############################################################
+# variables
 
-source $HOME/.bash/variables.sh
+source      $HOME/.bash/variables.sh
 cond_source $HOME/.bash/local/variables.sh
 
-############################################################
-# ALIASES                                                  #
-############################################################
+# shell is interactive?
 
-for file in $HOME/.bash/aliases/*.sh; do
-  source $file
-done
-
-cond_source $HOME/.bash/local/aliases.sh
-
-############################################################
-# COMPLETIONS                                              #
-############################################################
-
-for file in $HOME/.bash/completion/*; do
-  source $file
-done
-
-############################################################
-# BINDINGS                                                 #
-############################################################
-
-source      $HOME/.bash/bindings.sh
-cond_source $HOME/.bash/local/bindings.sh
+if [[ $- =~ i ]]; then
+  source      $HOME/.bash/interactive.sh
+  cond_source $HOME/.bash/local/interactive.sh
+fi
 

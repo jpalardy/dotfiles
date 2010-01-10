@@ -1,4 +1,6 @@
 
+export FIND_OPTIONS="-name .git -prune -o -name .hg -prune -o -name *.swp -prune -o"
+
 ftf() {
   find "${@:-"."}" $FIND_OPTIONS -type f -print
 }
