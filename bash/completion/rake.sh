@@ -1,7 +1,7 @@
 
 export COMP_WORDBREAKS=${COMP_WORDBREAKS/\:/}
 
-function _check_rakefile() {
+_check_rakefile() {
   if [ ! -e Rakefile ]; then
     return
   fi

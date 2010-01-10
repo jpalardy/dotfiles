@@ -1,7 +1,7 @@
 
 export COMP_WORDBREAKS=${COMP_WORDBREAKS/\:/}
 
-function _check_capfile() {
+_check_capfile() {
   if [ ! -e Capfile ]; then
     return
   fi
