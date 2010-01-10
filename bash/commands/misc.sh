@@ -51,3 +51,7 @@ _tsocks() {
 
 alias tkh="$EDITOR $HOME/.ssh/known_hosts"
 
+rm_caches() {
+  rm -v .cache_* 2>/dev/null
+}
+
