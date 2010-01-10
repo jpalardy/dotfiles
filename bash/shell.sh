@@ -14,29 +14,12 @@ HISTSIZE=1000                    # history lines in memory
 HISTFILESIZE=1000                # history lines in the file
 HISTCONTROL=ignoreboth           # don't save lines starting with a space, or duplicate lines
 
-############################################################
-
-# commands
-
-for file in $HOME/.bash/commands/*; do
-  source $file
-done
-cond_source $HOME/.bash/local/commands.sh
-
 # bindings
 
-source      $HOME/.bash/bindings.sh
-cond_source $HOME/.bash/local/bindings.sh
+bind '"\e[A"':history-search-backward
+bind '"\e[B"':history-search-forward
 
-# completion
-
-for file in $HOME/.bash/completion/*; do
-  source $file
-done
-# no local completion
-
-# prompt
-
-source      $HOME/.bash/prompt.sh
-cond_source $HOME/.bash/local/prompt.sh
+# the dreaded backspace
+bind '"\C-?": backward-delete-char'
+stty erase ^?
 
