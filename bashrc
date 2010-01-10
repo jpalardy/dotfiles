@@ -40,6 +40,7 @@ export HISTCONTROL=ignoreboth
 export HISTFILESIZE=1000
 export HISTSIZE=1000
 
+source $HOME/.bash/variables.sh
 cond_source $HOME/.bash/local/variables.sh
 
 ############################################################
