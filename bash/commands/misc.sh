@@ -4,7 +4,14 @@ alias ll='ls -l'
 alias l='ls -l'
 alias h='history 25'
 
-alias less='less -i -R -S -c'
+# -F : don't page if less than one screen
+# -i : ignore-case
+# -R : raw-control-char
+# -S : chop-long-lines
+# -c : clear-screen (rather than scroll to clear)
+# -w : hilite-unread
+# -X : no-init (won't clear screen on exit)
+alias less='less -FiRSwX -c '
 
 alias grep='grep --color=auto'
 
