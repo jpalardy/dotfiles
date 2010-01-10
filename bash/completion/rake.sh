@@ -6,7 +6,7 @@ function _check_rakefile() {
     return
   fi
 
-  local cache_file=".rake_t_cache"
+  local cache_file=".cache_rake_t"
 
   if [ ! -e "$cache_file" ]; then
     rake -T | awk '/^rake / {print $2}' > $cache_file
