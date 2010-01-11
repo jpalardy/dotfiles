@@ -1,6 +1,6 @@
 
 git_diff() {
-  git diff --no-ext-diff -w "$@" | vim -R -
+  git diff --no-ext-diff -w --no-prefix "$@" | vim -R -
 }
 complete -F _git_diff -o default git_diff
 
