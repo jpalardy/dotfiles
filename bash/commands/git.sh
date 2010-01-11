@@ -2,6 +2,7 @@
 git_diff() {
   git diff --no-ext-diff -w "$@" | vim -R -
 }
+complete -F _git_diff -o default git_diff
 
 git_diff_head() {
   git_diff HEAD
@@ -24,16 +25,19 @@ glg() {
 }
 
 glp() {
-  git log -p --since="2 weeks ago" "$@"
+  git log -p "$@"
 }
+complete -F _git_log -o default glp
 
 gln() {
   git log --name-only "$@"
 }
+complete -F _git_log -o default gln
 
 gba() {
   git branch -a "$@"
 }
+complete -F _git_branch -o default gba
 
 gs() {
   git status "$@"
