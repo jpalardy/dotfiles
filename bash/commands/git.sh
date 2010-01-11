@@ -25,7 +25,7 @@ glg() {
 }
 
 glp() {
-  git log -p "$@"
+  git log -p --no-prefix "$@"
 }
 complete -F _git_log -o default glp
 
