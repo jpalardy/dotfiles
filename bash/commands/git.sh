@@ -43,3 +43,8 @@ gs() {
   git status "$@"
 }
 
+git_track() {
+  git branch --track ${1##*/} $1
+}
+complete -F _git_branch -o default git_track
+
