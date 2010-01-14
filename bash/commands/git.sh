@@ -34,10 +34,10 @@ gln() {
 }
 complete -F _git_log -o default gln
 
-gba() {
-  git branch -a "$@"
+gb() {
+  git branch "$@"
 }
-complete -F _git_branch -o default gba
+complete -F _git_branch -o default gb
 
 gs() {
   git status "$@"
