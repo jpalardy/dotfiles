@@ -2,10 +2,7 @@
   name = Jonathan Palardy
   email = jonathan.palardy@gmail.com
 [color]
-  status = auto
-  diff = auto
-  branch = auto
-  interactive = auto
+  ui = auto
 [alias]
   st = status
   co = checkout
