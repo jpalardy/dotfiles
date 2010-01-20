@@ -64,7 +64,7 @@ b() {
 
 # pick from a list of directories (recursive) and cd into it
 c() {
-  pick_with_vim "ftd" "cd"
+  pick_with_vim "find ${1:-.} -type d" "cd"
 }
 
 #-------------------------------------------------
