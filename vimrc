@@ -112,6 +112,9 @@ vmap S :! awk '{print ""$0""}'<LEFT><LEFT><LEFT>
 vmap ,<TAB>a :!awk -F'	' '{print }'<LEFT><LEFT>
 vmap ,a      :!awk '{print }'<LEFT><LEFT>
 
+" ONLY KEEP LINES WHICH CONTAIN SEARCH
+nmap ,v :v/<C-R>//d<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
