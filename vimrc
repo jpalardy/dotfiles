@@ -113,7 +113,7 @@ vmap ,<TAB>a :!awk -F'	' '{print }'<LEFT><LEFT>
 vmap ,a      :!awk '{print }'<LEFT><LEFT>
 
 " ONLY KEEP LINES WHICH CONTAIN SEARCH
-nmap ,v :v/<C-R>//d<CR>
+nmap ,v :v/<C-R>//d<CR>gg
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER MAPPINGS
