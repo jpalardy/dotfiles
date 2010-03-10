@@ -1,0 +1,10 @@
+#!/bin/sh
+
+CACHE=".cache_ack_find"
+
+if [ -f $CACHE ]; then
+  cat $CACHE
+else
+  ack -af | sort | tee $CACHE 2>/dev/null
+fi
+

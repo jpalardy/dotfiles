@@ -29,19 +29,6 @@ command -nargs=+ ScratchDiff :call ScratchDiff(<args>)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! ScratchFind(command, splitMode)
-  Scratch a:command, a:splitMode
-  nmap <buffer> <CR> gf
-  nmap <buffer> <ESC><CR> <c-w>f<c-w>w
-endfunction
-command -nargs=* ScratchFind :call ScratchFind(<args>)
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" textmate-like command-t
-nnoremap <ESC>t :ScratchFind "ack -af \| sort", "new"<CR>
-nnoremap <ESC>T :ScratchFind "ack -af \| sort", "vnew"<CR>
-
 nnoremap <ESC>s :Scratch ""<LEFT>
 
 nnoremap <ESC>a :Scratch "ack --group "<LEFT>
