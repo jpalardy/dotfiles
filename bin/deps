@@ -1,0 +1,35 @@
+#!/bin/sh
+
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+
+ATTR_RESET=$(tput sgr0)
+
+ok_failed() {
+  local cmd=$1
+  local description=$2
+
+  eval $cmd
+
+  if [ $? == 0 ]; then
+    echo "[${GREEN}  OK  ${ATTR_RESET}]" $description
+  else
+    echo "[${RED}FAILED${ATTR_RESET}]" $description
+  fi
+}
+
+ok_failed '[ -n "$(which vim)" ]'     vim
+ok_failed '[ -n "$(which screen)" ]'  screen
+ok_failed '[ -n "$(which git)" ]'     git
+ok_failed '[ -n "$(which ack)" ]'     awk
+ok_failed '[ -n "$(which sed)" ]'     sed
+echo
+ok_failed '[ -n "$(which ruby)" ]'    ruby
+ok_failed '[ -n "$(which gem)" ]'     gem
+ok_failed '[ -n "$(which rake)" ]'    rake
+ok_failed '[ -n "$(which cap)" ]'     cap
+echo
+ok_failed '[ -n "$(which tidy)" ]'    tidy
+ok_failed '[ -n "$(which xmllint)" ]' xmllint
+ok_failed '[ -n "$(which js)" ]'      spidermonkey
+
