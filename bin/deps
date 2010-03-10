@@ -5,11 +5,12 @@ GREEN=$(tput setaf 2)
 
 ATTR_RESET=$(tput sgr0)
 
+# ok_failed(cmd, description)
 ok_failed() {
   local cmd=$1
   local description=$2
 
-  eval $cmd
+  eval $cmd > /dev/null 2>&1
 
   if [ $? == 0 ]; then
     echo "[${GREEN}  OK  ${ATTR_RESET}]" $description
@@ -18,18 +19,26 @@ ok_failed() {
   fi
 }
 
-ok_failed '[ -n "$(which vim)" ]'     vim
-ok_failed '[ -n "$(which screen)" ]'  screen
-ok_failed '[ -n "$(which git)" ]'     git
-ok_failed '[ -n "$(which ack)" ]'     awk
-ok_failed '[ -n "$(which sed)" ]'     sed
+# check_installed(prg_name, cmd_name=prg_name)
+check_installed() {
+  local prg_name=${1}
+  local cmd_name=${2:-$1}
+
+  ok_failed "which $cmd_name" $prg_name
+}
+
+check_installed vim
+check_installed screen
+check_installed git
+check_installed awk
+check_installed sed
 echo
-ok_failed '[ -n "$(which ruby)" ]'    ruby
-ok_failed '[ -n "$(which gem)" ]'     gem
-ok_failed '[ -n "$(which rake)" ]'    rake
-ok_failed '[ -n "$(which cap)" ]'     cap
+check_installed ruby
+check_installed gem
+check_installed rake
+check_installed cap
 echo
-ok_failed '[ -n "$(which tidy)" ]'    tidy
-ok_failed '[ -n "$(which xmllint)" ]' xmllint
-ok_failed '[ -n "$(which js)" ]'      spidermonkey
+check_installed tidy
+check_installed xmllint
+check_installed spidermonkey js
 
