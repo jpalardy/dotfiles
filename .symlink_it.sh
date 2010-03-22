@@ -5,25 +5,27 @@ function relink() {
   ln -sn $2 $1
 }
 
-cd ..
+DOTFILES=$(pwd)
 
-relink .inputrc      etc/inputrc
-relink .bash         etc/bash
-relink .bashrc       etc/bashrc
-relink .bash_profile etc/bash_profile
-relink .bash_logout  etc/bash_logout
+cd
 
-relink .vim          etc/vim
-relink .vimrc        etc/vimrc
+relink .inputrc      $DOTFILES/inputrc
+relink .bash         $DOTFILES/bash
+relink .bashrc       $DOTFILES/bashrc
+relink .bash_profile $DOTFILES/bash_profile
+relink .bash_logout  $DOTFILES/bash_logout
 
-relink .irbrc        etc/irbrc
-relink .rdebugrc     etc/rdebugrc
+relink .vim          $DOTFILES/vim
+relink .vimrc        $DOTFILES/vimrc
 
-relink .screenrc     etc/screenrc
+relink .irbrc        $DOTFILES/irbrc
+relink .rdebugrc     $DOTFILES/rdebugrc
 
-relink .ssh/config   etc/ssh/config
+relink .screenrc     $DOTFILES/screenrc
 
-relink .gitconfig    etc/gitconfig
+relink .ssh/config   $DOTFILES/ssh/config
 
-relink .rtorrent.rc  etc/rtorrent.rc
+relink .gitconfig    $DOTFILES/gitconfig
+
+relink .rtorrent.rc  $DOTFILES/rtorrent.rc
 
