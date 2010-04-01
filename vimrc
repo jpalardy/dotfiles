@@ -162,6 +162,6 @@ au FileType scratch NoSpaceHi
 " set in variables.sh
 let g:sql_type_default=$DB_ADAPTER
 
-vmap # <ESC>:call NERDComment(1, "toggle")<CR>
+vmap # :call NERDComment(1, "toggle")<CR>
 nmap # V#
 
