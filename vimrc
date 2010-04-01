@@ -95,11 +95,11 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " STRIP -- EMPTY LINE ENDINGS
-nmap _$ :% s_\s\+$__g <CR>
-vmap _$ :  s_\s\+$__g <CR>
+nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
+vmap _$ :call Preserve( "s/\\s\\+$//e")<CR>
 " STRIP -- EMPTY LINE BEGINNINGS
-nmap _^ :% s_^\s\+__g <CR>
-vmap _^ :  s_^\s\+__g <CR>
+nmap _^ :call Preserve("%s/^\\s\\+//e")<CR>
+vmap _^ :call Preserve( "s/^\\s\\+//e")<CR>
 
 " COMMATIZE
 vmap ,, :! paste -s -d, -<CR>
