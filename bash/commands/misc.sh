@@ -52,6 +52,6 @@ _tsocks() {
 alias tkh="$EDITOR $HOME/.ssh/known_hosts"
 
 rm_caches() {
-  rm -v .cache_* 2>/dev/null
+  find . -name '.cache_*' -print0 | xargs -0 rm -v 2>/dev/null
 }
 
