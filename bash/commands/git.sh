@@ -48,3 +48,10 @@ git_track() {
 }
 complete -F _git_branch -o default git_track
 
+git_attach() {
+  git remote add origin $1
+  git push origin master
+  git config --add branch.master.remote origin
+  git config --add branch.master.merge  refs/heads/master
+}
+
