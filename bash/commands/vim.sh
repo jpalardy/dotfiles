@@ -7,7 +7,7 @@ vimpager() {
 # 2. execute ESC-t
 # 3. execute :on
 vim-() {
-  vim -s <(printf '\et:on\n')
+  vim -s <(printf '\eh')
 }
 
 # start vim in PAGER mode, with PickerMode plugin
