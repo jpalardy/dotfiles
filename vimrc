@@ -184,7 +184,7 @@ nmap <leader>s<down>   :rightbelow new<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SCRATCHY MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <ESC>s :Scratchy
+nnoremap <ESC>s :Scratchy ""<LEFT>
 
 " ack
 nnoremap <ESC>a :SplitScratchy "ack --group "<LEFT>
