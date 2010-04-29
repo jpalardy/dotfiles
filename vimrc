@@ -155,7 +155,7 @@ set diffopt=filler,iwhite
 autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
 au FileType help NoSpaceHi
 au FileType diff NoSpaceHi
-au FileType scratch NoSpaceHi
+au FileType scratchy NoSpaceHi
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -164,4 +164,27 @@ let g:sql_type_default=$DB_ADAPTER
 
 vmap # :call NERDComment(1, "toggle")<CR>
 nmap # V#
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SCRATCHY MAPPINGS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <ESC>s :Scratchy
+
+" ack
+nnoremap <ESC>a :SplitScratchy "ack --group "<LEFT>
+
+" filtering
+nnoremap <ESC>f :SplitScratchy b:fileFilterCmd . " " . expand("%")<CR>
+
+function! FilePicker()
+  nmap <buffer> <CR> gf
+  nmap <buffer> <ESC><CR> <c-w>f<c-w>w
+endfunction
+
+" textmate-like command-t
+nnoremap <ESC>t :botright  new<CR>:Scratchy "ack_find"<CR>:call FilePicker()<CR>
+nnoremap <ESC>T :botright vnew<CR>:Scratchy "ack_find"<CR>:call FilePicker()<CR>
+
+" replace current buffer
+nnoremap <ESC>h                   :Scratchy "ack_find"<CR>:call FilePicker()<CR>
 

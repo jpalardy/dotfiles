@@ -2,17 +2,17 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " EXECUTE -- OTHER WINDOW
-nmap <buffer> <F2> :call SQLITE_ScratchQuery("raw")<CR>
-nmap <buffer> <F3> :call SQLITE_ScratchQuery("horizontal")<CR>
-nmap <buffer> <F4> :call SQLITE_ScratchQuery("vertical")<CR>
+nmap <buffer> <F2> :call SQLITE_ScratchyQuery("raw")<CR>
+nmap <buffer> <F3> :call SQLITE_ScratchyQuery("horizontal")<CR>
+nmap <buffer> <F4> :call SQLITE_ScratchyQuery("vertical")<CR>
 
 " EXPLAIN
-nmap <buffer> ,e :call SQLITE_ScratchQuery("explain")<CR>
+nmap <buffer> ,e :call SQLITE_ScratchyQuery("explain")<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! SQLITE_ScratchQuery(type)
+function! SQLITE_ScratchyQuery(type)
   normal yip
   let l:query = expand(@0) . ";"
 
@@ -30,7 +30,7 @@ function! SQLITE_ScratchQuery(type)
   let l:filename = " " . b:db_config["filename"]
   let l:flags = "-header -nullvalue null " . {"raw": "", "horizontal": "-column", "vertical": "-line", "explain": "-column"}[a:type]
 
-  Scratch "echo '" . l:query . "' | sqlite3 " . l:flags . l:filename
+  SplitScratchy "echo '" . l:query . "' | sqlite3 " . l:flags . l:filename
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! SQLITE_Database_Vars()

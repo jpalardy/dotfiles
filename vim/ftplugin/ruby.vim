@@ -18,6 +18,6 @@ endfunction
 let g:snippets["<%-"] = function("Snippet_erb_expr")
 let g:snippets["<%="] = function("Snippet_erb_value")
 
-nmap <ESC>r :Scratch 'spec ' . expand("%")<CR>
-vmap <ESC>r :Scratch 'spec ' . expand("%") . " -l " . line(".")<CR>
+nmap <ESC>r      :SplitScratchy 'spec ' . expand("%")<CR>
+vmap <ESC>r <ESC>:SplitScratchy 'spec ' . expand("%") . " -l " . line(".")<CR>
 

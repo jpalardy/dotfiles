@@ -2,17 +2,17 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " EXECUTE -- OTHER WINDOW
-nmap <buffer> <F2> :call MYSQL_ScratchQuery("raw")<CR>
-nmap <buffer> <F3> :call MYSQL_ScratchQuery("horizontal")<CR>
-nmap <buffer> <F4> :call MYSQL_ScratchQuery("vertical")<CR>
+nmap <buffer> <F2> :call MYSQL_ScratchyQuery("raw")<CR>
+nmap <buffer> <F3> :call MYSQL_ScratchyQuery("horizontal")<CR>
+nmap <buffer> <F4> :call MYSQL_ScratchyQuery("vertical")<CR>
 
 " EXPLAIN
-nmap <buffer> ,e :call MYSQL_ScratchQuery("explain")<CR>
+nmap <buffer> ,e :call MYSQL_ScratchyQuery("explain")<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! MYSQL_ScratchQuery(type)
+function! MYSQL_ScratchyQuery(type)
   normal yip
   let l:query = expand(@0)
 
@@ -33,7 +33,7 @@ function! MYSQL_ScratchQuery(type)
   let l:name = " " . b:db_config["name"]
   let l:flags = "--default-character-set=utf8 " . {"raw": "", "horizontal": "--table", "vertical": "--vertical", "explain": "--table"}[a:type]
 
-  Scratch "echo '" . l:query . "' | mysql " . l:flags . l:host . l:user . l:password . l:name
+  SplitScratchy "echo '" . l:query . "' | mysql " . l:flags . l:host . l:user . l:password . l:name
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! MYSQL_Database_Vars()
