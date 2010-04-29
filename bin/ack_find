@@ -2,6 +2,13 @@
 
 CACHE=".cache_ack_find"
 
+while getopts "f" flag; do
+  case $flag in
+    f) rm $CACHE 2>/dev/null
+       ;;
+  esac
+done
+
 if [ -f $CACHE ]; then
   cat $CACHE
 else

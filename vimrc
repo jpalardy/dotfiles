@@ -195,7 +195,11 @@ nnoremap <ESC>f :SplitScratchy b:fileFilterCmd . " " . expand("%")<CR>
 function! FilePicker()
   nmap <buffer> <CR> gf
   nmap <buffer> <ESC><CR> <c-w>f<c-w>w
+  echo
 endfunction
+
+" flush ack_find's cache
+nnoremap <leader>aff :call system("ack_find -f")<CR>
 
 " textmate-like command-t
 nnoremap <ESC>t :botright  new<CR>:Scratchy "ack_find"<CR>:call FilePicker()<CR>
