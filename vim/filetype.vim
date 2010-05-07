@@ -3,6 +3,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.clj     setf clojure
   autocmd BufNewFile,BufRead *.clj     setl lisp
   autocmd BufNewFile,BufRead *.spec    setf ruby
+  autocmd BufNewFile,BufRead Capfile   setf ruby
   autocmd BufNewFile,BufRead Gemfile   setf ruby
   autocmd BufNewFile,BufRead *.scala   setf scala
 augroup END
