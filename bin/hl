@@ -1,0 +1,18 @@
+#!/bin/bash
+
+CACHE="$HOME/.hl_data"
+
+while getopts "f" flag; do
+  case $flag in
+    f) rm $CACHE 2>/dev/null
+       ;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ -f $CACHE ]; then
+  grep -i $1 $CACHE
+else
+  find $HOME | tee $CACHE | grep -i $1
+fi
+
