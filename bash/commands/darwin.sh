@@ -5,6 +5,11 @@ if [ "$(uname)" == "Darwin" ]; then
     gls "$@"
   }
 
+  function tac {
+    gtac "$@"
+  }
+  export -f tac
+
   alias find="gfind"
   alias du="gdu"
   alias sed="gsed"
