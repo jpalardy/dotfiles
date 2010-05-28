@@ -6,6 +6,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead Capfile   setf ruby
   autocmd BufNewFile,BufRead Gemfile   setf ruby
   autocmd BufNewFile,BufRead *.scala   setf scala
+  autocmd BufNewFile,BufRead *.csv     setf csv
 augroup END
 
 augroup aes256
