@@ -55,3 +55,7 @@ rm_caches() {
   find . -name '.cache_*' -print0 | xargs -0 rm -v 2>/dev/null
 }
 
+serve() {
+  python -m SimpleHTTPServer
+}
+
