@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'date'
+
+n = (ARGV[0] || 10).to_i
+
+n.times do |i|
+  puts (Date.today + i).to_s
+end
+
