@@ -29,15 +29,6 @@ term_colors() {
   done
 }
 
-t256() {
-  if [ "$TERM" != "xterm-256color" ]; then
-    echo "TERM: $TERM -> xterm-256color"
-    export TERM="xterm-256color"
-  fi
-}
-
-alias term="echo $TERM"
-
 title() {
   printf '\e]2;%s\a' "$*"
 }

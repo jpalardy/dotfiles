@@ -39,10 +39,6 @@ gb() {
 }
 complete -F _git_branch -o default gb
 
-gs() {
-  git status "$@"
-}
-
 git_track() {
   git checkout --track -b ${1##*/} $1
 }

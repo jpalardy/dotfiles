@@ -1,21 +1,14 @@
 
 #-------------------------------------------------
 
-# cd into the directory of the given filename
-cdf() {
-  cd $(dirname $1)
-}
-
-#-------------------------------------------------
-
 # overwrites behavior of 'cd'
 cd_pushd() {
   local dest=${1:-"$HOME"}
   if [ -f "$dest" ]; then
-    cdf "$dest"
-  else
-    pushd "$dest" >/dev/null
+    dest=$(dirname $dest)
   fi
+
+  pushd "$dest" >/dev/null
 }
 alias cd="cd_pushd"
 
