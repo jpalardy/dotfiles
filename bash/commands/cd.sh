@@ -28,7 +28,7 @@ go() {
     return 1
   fi
 
-  pick_with_vim "cat $HOME/.gorc" "cd" $1
+  pick_with_vim "cat $HOME/.gorc" "cd" 1 $1
 }
 
 #-------------------------------------------------
