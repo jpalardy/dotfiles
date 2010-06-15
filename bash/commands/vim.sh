@@ -14,6 +14,7 @@ vim-() {
 vim_picker() {
   vim -c "PickerMode" -R -
 }
+export -f vim_picker
 
 # 1st parameter is command to generate a list
 # 2nd parameter is command to run on selection
@@ -34,4 +35,5 @@ pick_with_vim() {
     $2 "$(cat ~/.picked | awk '{print $'${3:-1}'}')"
   fi
 }
+export -f pick_with_vim
 
