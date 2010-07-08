@@ -198,13 +198,13 @@ function! FilePicker()
   echo
 endfunction
 
-" flush ack_find's cache
-nnoremap <leader>aff :call system("ack_find -f")<CR>
-
 " textmate-like command-t
 nnoremap <ESC>t :botright  new<CR>:Scratchy "ack_find"<CR>:call FilePicker()<CR>
 nnoremap <ESC>T :botright vnew<CR>:Scratchy "ack_find"<CR>:call FilePicker()<CR>
 
 " replace current buffer
-nnoremap <ESC>h                   :Scratchy "ack_find"<CR>:call FilePicker()<CR>
+nnoremap <ESC>h                                :Scratchy "ack_find"<CR>:call FilePicker()<CR>
+" flush ack_find's cache (and replace current buffer)
+nnoremap <ESC>H :call system("ack_find -f")<CR>:Scratchy "ack_find"<CR>:call FilePicker()<CR>
+
 
