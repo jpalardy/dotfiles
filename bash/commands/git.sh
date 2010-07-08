@@ -51,3 +51,7 @@ git_attach() {
   git config --add branch.master.merge  refs/heads/master
 }
 
+git_info_exclude() {
+  $EDITOR .git/info/exclude
+}
+
