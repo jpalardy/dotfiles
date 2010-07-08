@@ -50,7 +50,7 @@ b() {
     count=$(($count + 1))
   fi
 
-  pick_with_vim "parent_dirs" "cd" $count
+  pick_with_vim "parent_dirs" "cd" 1 $count
 }
 
 #-------------------------------------------------
