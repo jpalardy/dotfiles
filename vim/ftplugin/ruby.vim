@@ -21,3 +21,7 @@ let g:snippets["<%="] = function("Snippet_erb_value")
 nmap <ESC>r      :SplitScratchy 'spec ' . expand("%")<CR>
 vmap <ESC>r <ESC>:SplitScratchy 'spec ' . expand("%") . " -l " . line(".")<CR>
 
+ab attr_a attr_accessor
+ab attr_r attr_reader
+ab attr_w attr_writer
+
