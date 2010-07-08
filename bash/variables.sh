@@ -2,8 +2,8 @@
 umask 22
 ulimit -c 0
 
-export PATH="$HOME/etc/bin:$HOME/bin:/opt/local/sbin:/opt/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/X11R6/bin"
-export MANPATH="/opt/local/share/man:$MANPATH"
+export PATH=".local:$HOME/etc/bin:$HOME/bin:/opt/local/sbin:/opt/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/X11R6/bin"
+export MANPATH="$HOME/etc/man:/opt/local/share/man:$MANPATH"
 
 export EDITOR="vim"
 export PAGER="less"
