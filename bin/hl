@@ -10,9 +10,11 @@ while getopts "f" flag; do
 done
 shift $(($OPTIND - 1))
 
+QUERY=${1:-.}
+
 if [ -f $CACHE ]; then
-  grep -i $1 $CACHE
+  grep -i $QUERY $CACHE
 else
-  find $HOME | tee $CACHE | grep -i $1
+  find $HOME | tee $CACHE | grep -i $QUERY
 fi
 
