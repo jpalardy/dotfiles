@@ -182,6 +182,13 @@ nmap <leader>s<up>     :leftabove  new<CR>
 nmap <leader>s<down>   :rightbelow new<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SESSIONS MAPPINGS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nmap <leader>ss        :wa<CR>:mksession! .sessions/
+nmap <leader>rs        :wa<CR>:source     .sessions/
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SCRATCHY MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <ESC>s :Scratchy ""<LEFT>
@@ -206,5 +213,4 @@ nnoremap <ESC>T :botright vnew<CR>:Scratchy "ack_find"<CR>:call FilePicker()<CR>
 nnoremap <ESC>h                                :Scratchy "ack_find"<CR>:call FilePicker()<CR>
 " flush ack_find's cache (and replace current buffer)
 nnoremap <ESC>H :call system("ack_find -f")<CR>:Scratchy "ack_find"<CR>:call FilePicker()<CR>
-
 
