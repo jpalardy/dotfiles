@@ -1,5 +1,11 @@
 
 upload_rate = 70
+download_rate = 300
 port_range = 49164-49164
 encryption = allow_incoming,try_outgoing,enable_retry
+
+dht = auto
+dht_port = 6881
+peer_exchange = yes
+session = .session
 
