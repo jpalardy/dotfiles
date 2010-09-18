@@ -41,8 +41,6 @@ size_sort() {
 
 #-------------------------------------------------
 
-alias gem_install="gem install --no-ri --no-rdoc -r"
-
 alias apg='apg -n 20 -m 8 -M SNCL -t'
 
 _tsocks() {
