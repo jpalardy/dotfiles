@@ -41,4 +41,6 @@ echo
 check_installed tidy
 check_installed xmllint
 check_installed spidermonkey js
+echo
+check_installed parallel
 
