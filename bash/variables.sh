@@ -2,8 +2,46 @@
 umask 22
 ulimit -c 0
 
-export PATH=".local:$HOME/etc/bin:$HOME/bin:/opt/local/sbin:/opt/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/X11R6/bin"
-export MANPATH="$HOME/etc/man:/opt/local/share/man:$MANPATH"
+paths() {
+  env | grep PATH
+}
+
+# prepend_colon(val, var)
+prepend_colon() {
+  if [ -z "$2" ]; then
+    echo $1
+  else
+    echo $1:$2
+  fi
+}
+
+# unshift_path(path)
+unshift_path() {
+  if [ -d $1/sbin ]; then
+    export PATH=$(prepend_colon "$1/sbin" $PATH)
+  fi
+  if [ -d $1/bin ]; then
+    export PATH=$(prepend_colon "$1/bin" $PATH)
+  fi
+
+  if [ -d $1/share/man ]; then
+    export MANPATH=$(prepend_colon "$1/share/man" $MANPATH)
+  fi
+}
+
+# TABULA RASA
+export PATH=""
+export MANPATH=""
+
+unshift_path "/usr/X11"
+unshift_path ""
+unshift_path "/usr"
+unshift_path "/usr/local"
+unshift_path "/opt/local"
+unshift_path "$HOME/local"
+unshift_path "$HOME/etc"
+
+export PATH=$(prepend_colon ".local" $PATH)
 
 export EDITOR="vim"
 export PAGER="less"
