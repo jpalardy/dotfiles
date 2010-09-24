@@ -54,6 +54,6 @@ rm_caches() {
 }
 
 serve() {
-  python -m SimpleHTTPServer
+  python -m SimpleHTTPServer ${1:-8000}
 }
 
