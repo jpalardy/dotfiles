@@ -1,7 +1,7 @@
 
 #-------------------------------------------------
 
-# overwrites behavior of 'cd'
+# replacement for 'cd'
 cd_pushd() {
   local dest=${1:-"$HOME"}
   if [ -f "$dest" ]; then
@@ -10,7 +10,11 @@ cd_pushd() {
 
   pushd "$dest" >/dev/null
 }
-alias cd="cd_pushd"
+
+# overwrites behavior of 'cd'
+cd() {
+  cd_pushd "$@"
+}
 
 #-------------------------------------------------
 
