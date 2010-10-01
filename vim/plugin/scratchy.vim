@@ -1,23 +1,25 @@
 
-"         Scratchy(command="")
-function! Scratchy(command)
-  "let l:command = (a:0 > 0 ? a:1 : '')
-
+"         Scratchy(command, input=None)
+function! Scratchy(...)
   execute ':enew'
   setlocal filetype=scratchy
   setlocal buftype=nofile
   setlocal bufhidden=hide
   setlocal noswapfile
 
-  execute "%!" . a:command
+  if !empty(a:000)
+    let l:result = call(function("system"), a:000)
+    put =l:result
+    normal ggdd
+  endif
 endfunction
 command -nargs=* Scratchy :call Scratchy(<args>)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! SplitScratchy(command)
+function! SplitScratchy(...)
   execute "botright new"
-  call Scratchy(a:command)
+  call call(function("Scratchy"), a:000)
 endfunction
 command -nargs=* SplitScratchy :call SplitScratchy(<args>)
 
