@@ -4,7 +4,7 @@ git_vimdiff() {
 }
 
 git_diff() {
-  git diff --no-ext-diff -w --no-prefix "$@" | vim -R -
+  git diff -w "$@" | vim -R -
 }
 complete -F _git_diff -o default git_diff
 
@@ -29,7 +29,7 @@ glg() {
 }
 
 glp() {
-  git log -p --no-prefix "$@"
+  git log -p "$@"
 }
 complete -F _git_log -o default glp
 

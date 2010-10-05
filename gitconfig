@@ -6,5 +6,7 @@
 [alias]
   st = status
   co = checkout
+[diff]
+  noprefix = true
 [push]
   default = current
