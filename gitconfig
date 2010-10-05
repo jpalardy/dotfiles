@@ -6,9 +6,5 @@
 [alias]
   st = status
   co = checkout
-[diff]
-  external = git_diff_wrapper
-[pager]
-  diff =
 [push]
   default = current

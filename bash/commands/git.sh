@@ -1,4 +1,8 @@
 
+git_vimdiff() {
+  GIT_PAGER= GIT_EXTERNAL_DIFF=git_diff_wrapper git diff
+}
+
 git_diff() {
   git diff --no-ext-diff -w --no-prefix "$@" | vim -R -
 }
