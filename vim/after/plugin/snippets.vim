@@ -7,15 +7,11 @@ let g:snippets["#--"] = "#-------------------------------------------------"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function Snippet_date(text)
-  return Squeeze(strftime("%B %e, %Y"))
+  return substitute(strftime("%B %e, %Y"), " \\+", " ", "g")
 endfunction
 
-function Datel(time)
-  return Squeeze(strftime("%B %e, %Y (%A)", a:time))
-endfunction
-
-function Snippet_datel(text)
-  return Datel(localtime())
+function Snippet_fdate(text)
+  return substitute(strftime("%B %e, %Y (%A)"), " \\+", " ", "g")
 endfunction
 
 function Snippet_isod(time)
@@ -23,18 +19,8 @@ function Snippet_isod(time)
 endfunction
 
 let g:snippets["date"]  = function("Snippet_date")
-let g:snippets["datel"] = function("Snippet_datel")
+let g:snippets["fdate"] = function("Snippet_fdate")
 let g:snippets["isod"]  = function("Snippet_isod")
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function Snippet_header(text)
-  let l:header = " " . input("header: ") . " "
-
-  return "#" . Center(l:header, 49, "-")
-endfunction
-
-let g:snippets["hdr"]  = function("Snippet_header")
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
