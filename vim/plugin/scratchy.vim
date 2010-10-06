@@ -1,7 +1,14 @@
 
 "         Scratchy(command, input=None)
 function! Scratchy(...)
-  execute ':enew'
+  try
+    enew
+  catch
+    echohl ErrorMsg | echo "No write since last change" | echohl None
+    sleep 1
+    return
+  endtry
+
   setlocal filetype=scratchy
   setlocal buftype=nofile
   setlocal bufhidden=hide
