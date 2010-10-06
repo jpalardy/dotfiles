@@ -1,7 +1,4 @@
 #!/usr/bin/env ruby
-$VERBOSE = true
-
-############################################################
 
 require 'yaml'
 require 'pp'

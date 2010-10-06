@@ -19,16 +19,12 @@ alias reload="source $HOME/.bashrc"
 
 #-------------------------------------------------
 
-__() {
-  cp $1 __$1
-}
-
 gri() {
-  find ${2:-.} $FIND_OPTIONS -type f -print0 | xargs -0 grep -i $3 --color=auto "$1"
+  ack -a -i --no-group "$1" ${2:-.}
 }
 
 gril() {
-  gri "$1" ${2:-.} -l
+  ack -a -il "$1" ${2:-.}
 }
 
 du_sort() {
@@ -46,8 +42,6 @@ alias apg='apg -n 20 -m 8 -M SNCL -t'
 _tsocks() {
   TSOCKS_CONF_FILE=$HOME/etc/tsocks.conf tsocks "$@"
 }
-
-alias tkh="$EDITOR $HOME/.ssh/known_hosts"
 
 rm_caches() {
   find . -name '.cache_*' -print0 | xargs -0 rm -v 2>/dev/null

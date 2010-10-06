@@ -1,4 +1,4 @@
 #!/bin/sh
 
-ack -af | grep -E '(\.DS_Store|\.cache_)'
+ack -af | ack '(\.DS_Store|\.cache_)'
 

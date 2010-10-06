@@ -10,7 +10,7 @@ module MovieHasher
 
     # Read 64 kbytes, divide up into 64 bits and add each
     # to hash. Do for beginning and end of file.
-    File.open(filename, 'rb') do |f|    
+    File.open(filename, 'rb') do |f|
       # Q = unsigned long long = 64 bit
       f.read(CHUNK_SIZE).unpack("Q*").each do |n|
         hash = hash + n & 0xffffffffffffffff # to remain as 64 bit number

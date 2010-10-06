@@ -25,7 +25,7 @@ go() {
     return 1
   fi
 
-  pick_with_vim "cat $HOME/.gorc" "cd" 1 $1
+  pick_with_vim "cat $HOME/.gorc" "cd" $1
 }
 
 #-------------------------------------------------
@@ -54,7 +54,7 @@ b() {
     count=$(($count + 1))
   fi
 
-  pick_with_vim "parent_dirs" "cd" 1 $count
+  pick_with_vim "parent_dirs" "cd" $count
 }
 
 #-------------------------------------------------

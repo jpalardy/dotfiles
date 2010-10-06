@@ -5,6 +5,8 @@ ssh_hosts() {
 
 # pick from directories in $HOME/.gorc and cd into it
 _ssh() {
-  pick_with_vim "ssh_hosts" "ssh" 1 $1
+  pick_with_vim "ssh_hosts" "ssh" $1
 }
+
+alias tkh="$EDITOR $HOME/.ssh/known_hosts"
 

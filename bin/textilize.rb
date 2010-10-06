@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-#$VERBOSE = true
 
 require 'rubygems'
 require 'redcloth'
