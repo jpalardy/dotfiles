@@ -1,3 +1,3 @@
 
-set formatoptions-=ro
+setlocal formatoptions-=o formatoptions-=r
 
