@@ -1,3 +1,3 @@
 
-nmap <ESC>c :execute "botright sv $HOME/.vim/cheats/cheats." . expand("%:e")<CR>
+nnoremap <leader>c :Scratchy "ack -af $HOME/.vim/cheats"<CR>:call FilePicker()<CR>
 
