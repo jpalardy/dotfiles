@@ -7,7 +7,7 @@ function Send_to_Screen(text)
   end
 
   let escaped_text = substitute(shellescape(a:text), "\\\\\n", "\n", "g")
-  echo system("screen -S " . b:slime["sessionname"] . " -p " . b:slime["windowname"] . " -X stuff " . escaped_text)
+  call system("screen -S " . b:slime["sessionname"] . " -p " . b:slime["windowname"] . " -X stuff " . escaped_text)
 endfunction
 
 function Screen_Session_Names(A,L,P)
