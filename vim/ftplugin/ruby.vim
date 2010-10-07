@@ -13,8 +13,8 @@ let b:snippets['#!'] = '#!/usr/bin/env ruby'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <ESC>r      :SplitScratchy 'spec ' . expand("%")<CR>
-vmap <ESC>r <ESC>:SplitScratchy 'spec ' . expand("%") . " -l " . line(".")<CR>
+nmap <buffer> <ESC>r      :SplitScratchy 'spec ' . expand("%")<CR>
+vmap <buffer> <ESC>r <ESC>:SplitScratchy 'spec ' . expand("%") . " -l " . line(".")<CR>
 
 ab attr_a attr_accessor
 ab attr_r attr_reader
