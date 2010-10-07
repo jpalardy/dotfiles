@@ -6,6 +6,8 @@
 [alias]
   st = status
   co = checkout
+  out = log FETCH_HEAD..HEAD
+  in =  log HEAD..FETCH_HEAD
 [diff]
   noprefix = true
 [push]
