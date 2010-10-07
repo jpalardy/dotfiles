@@ -5,11 +5,13 @@ let ruby_space_errors = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:snippets['<%-'] = '<%- | -%>'
-let g:snippets['<%='] = '<%= | %>'
-let g:snippets['end'] = '<%- end -%>'
+if !exists("b:snippets")
+  let b:snippets = {}
+endif
 
-let g:snippets['#!'] = '#!/usr/bin/env ruby'
+let b:snippets['#!'] = '#!/usr/bin/env ruby'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nmap <ESC>r      :SplitScratchy 'spec ' . expand("%")<CR>
 vmap <ESC>r <ESC>:SplitScratchy 'spec ' . expand("%") . " -l " . line(".")<CR>
