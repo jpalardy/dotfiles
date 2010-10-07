@@ -21,14 +21,14 @@ function! MYSQL_Scratchy(flags, sql)
     let b:db_config["user"] = input("name: ",     b:db_config["user"])
   end
 
-  let l:host = " -h " . b:db_config["host"]
-  let l:user = " -u " . b:db_config["user"]
-  let l:name = " " . b:db_config["name"]
-  let l:flags = " --default-character-set=utf8 " . a:flags
-  let l:command = "mysql" . l:flags . l:host . l:user . l:name
-  let l:sql = a:sql
+  let host = "-h " . b:db_config["host"]
+  let user = "-u " . b:db_config["user"]
+  let name = b:db_config["name"]
+  let flags = "--default-character-set=utf8 "
+  let command = join(["mysql", flags, a:flags, host, user, name], " ")
+  let sql = a:sql
 
-  SplitScratchy l:command, l:sql
+  SplitScratchy command, sql
 endfunction
 
 function! MYSQL_Scratchy_raw(sql)

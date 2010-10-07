@@ -4,8 +4,8 @@ let b:fileFilterCmd = "xml_errors.sh"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! Snippet_tag(text)
-  let l:tag = substitute(a:text, "^<", "", "g")
-  return "<" . l:tag . ">|</" . l:tag . ">"
+  let tag = substitute(a:text, "^<", "", "g")
+  return "<" . tag . ">|</" . tag . ">"
 endfunction
 
 if !exists("b:snippets")

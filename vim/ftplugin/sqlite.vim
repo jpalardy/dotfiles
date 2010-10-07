@@ -19,10 +19,11 @@ function! SQLITE_Scratchy(flags, sql)
     let b:db_config["filename"] = input("database: ", b:db_config["filename"], "file")
   end
 
-  let l:command = "sqlite3 -header -nullvalue null " . a:flags . " " . b:db_config["filename"]
-  let l:sql = a:sql . ";"
+  let flags = "-header -nullvalue null"
+  let command = join(["sqlite3", flags, a:flags, b:db_config["filename"]], " ")
+  let sql = a:sql . ";"
 
-  SplitScratchy l:command, l:sql
+  SplitScratchy command, sql
 endfunction
 
 function! SQLITE_Scratchy_raw(sql)

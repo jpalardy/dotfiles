@@ -15,8 +15,8 @@ function! Scratchy(...)
   setlocal noswapfile
 
   if !empty(a:000)
-    let l:result = call(function("system"), a:000)
-    put =l:result
+    let result = call(function("system"), a:000)
+    put =result
     normal ggdd
   endif
 endfunction

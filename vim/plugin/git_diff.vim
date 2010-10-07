@@ -2,10 +2,10 @@
 function! GitDiff()
   diffthis
 
-  let l:filename = expand("%")
+  let filename = expand("%")
 
   execute "botright vnew"
-  Scratchy("git show HEAD:" . l:filename)
+  Scratchy("git show HEAD:" . filename)
 
   diffthis
 endfunction

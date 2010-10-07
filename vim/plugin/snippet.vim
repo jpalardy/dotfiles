@@ -8,22 +8,22 @@ function Snippet(text)
   let @y = "a"
 
   if exists("b:snippets")
-    let l:snippets = extend(copy(g:snippets), b:snippets)
+    let snippets = extend(copy(g:snippets), b:snippets)
   else
-    let l:snippets = g:snippets
+    let snippets = g:snippets
   endif
 
-  for l:key in sort(keys(l:snippets))
-    if match(a:text, l:key) != 0
+  for key in sort(keys(snippets))
+    if match(a:text, key) != 0
       continue
     endif
 
-    if type(l:snippets[l:key]) == 2 " Funcref
+    if type(snippets[key]) == 2 " Funcref
       call inputsave()
-      let @x = l:snippets[l:key](a:text)
+      let @x = snippets[key](a:text)
       call inputrestore()
     else
-      let @x = l:snippets[l:key]
+      let @x = snippets[key]
     endif
     break
   endfor
