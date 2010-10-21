@@ -44,7 +44,7 @@ size_sort() {
 alias apg='apg -n 20 -m 8 -M SNCL -t'
 
 _tsocks() {
-  TSOCKS_CONF_FILE=$HOME/etc/tsocks.conf tsocks "$@"
+  TSOCKS_CONF_FILE=$HOME/dotfiles/tsocks.conf tsocks "$@"
 }
 
 rm_caches() {

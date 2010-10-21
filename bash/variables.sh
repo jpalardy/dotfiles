@@ -39,7 +39,7 @@ unshift_path "/usr"
 unshift_path "/usr/local"
 unshift_path "/opt/local"
 unshift_path "$HOME/local"
-unshift_path "$HOME/etc"
+unshift_path "$HOME/dotfiles"
 
 export PATH=$(prepend_colon ".local" $PATH)
 

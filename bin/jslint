@@ -2,5 +2,5 @@
 
 filename=${1:?"jslint: filename"}
 
-cat $filename | js ~/etc/bin/jslint.js
+cat $filename | js ~/dotfiles/bin/jslint.js
 
