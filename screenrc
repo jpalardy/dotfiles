@@ -14,7 +14,7 @@ term "xterm-256color"
 termcapinfo xterm* Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
 
 # status line
-hardstatus alwayslastline "%{=b}%{G}%w %=[%Y-%m-%d -- %c]"
+hardstatus alwayslastline "%{=b}%{G}%w"
 
 # page up / page down
 bindkey -k kP prev
