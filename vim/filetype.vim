@@ -7,6 +7,8 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead Gemfile   setf ruby
   autocmd BufNewFile,BufRead *.scala   setf scala
   autocmd BufNewFile,BufRead *.csv     setf csv
+  autocmd BufNewFile,BufRead *.json    setf javascript
+  autocmd BufNewFile,BufRead *.json    let b:fileFilterCmd = "json_errors.sh"
 augroup END
 
 augroup aes256
