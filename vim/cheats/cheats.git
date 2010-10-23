@@ -1,4 +1,5 @@
 
 .cache_*
 .*.sw*
+.rvmrc
 
