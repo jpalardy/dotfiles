@@ -28,6 +28,11 @@ go() {
   pick_with_vim "cat $HOME/.gorc" "cd" $1
 }
 
+pwd_gorc() {
+  pwd >> $HOME/.gorc
+  vim $HOME/.gorc
+}
+
 #-------------------------------------------------
 
 # pick from directories visited in this session and cd into it
