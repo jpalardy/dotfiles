@@ -4,5 +4,5 @@ if !exists("b:snippets")
 endif
 
 let b:snippets['fn'] = 'function'
-let b:snippets['function'] = 'function {}'
+let b:snippets['function'] = 'function() {}'
 
