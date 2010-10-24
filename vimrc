@@ -215,3 +215,5 @@ nnoremap <ESC>h                                :Scratchy "ack_find"<CR>:call Fil
 " flush ack_find's cache (and replace current buffer)
 nnoremap <ESC>H :call system("ack_find -f")<CR>:Scratchy "ack_find"<CR>:call FilePicker()<CR>
 
+" used by :TOhtml
+let g:html_use_css=0
