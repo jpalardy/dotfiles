@@ -9,6 +9,12 @@ vim-() {
   vim -s <(printf '\eh')
 }
 
+# 1. start vim
+# 2. execute ESC-r
+vimr() {
+  vim -s <(printf '\er')
+}
+
 # start vim in PAGER mode, with PickerMode plugin
 vim_picker() {
   vim -c "PickerMode" -R -

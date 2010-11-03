@@ -1,0 +1,4 @@
+#!/bin/sh
+
+awk '/^>/ {print $2}' $HOME/.viminfo | sed "s_^~_${HOME}_" | while read f; do test -f $f && echo $f; done
+

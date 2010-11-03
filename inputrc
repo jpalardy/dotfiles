@@ -17,6 +17,7 @@ $endif
 
 # same as Vim shortcut
 "\et": "vim-"
+"\er": "vimr"
 "\ec": "c"
 
 # set editing-mode vi
