@@ -195,7 +195,7 @@ nmap <leader>rs        :wa<CR>:source     .sessions/
 nnoremap <ESC>s :Scratchy ""<LEFT>
 
 " ack
-nnoremap <ESC>a :Scratchy "ack -il "<LEFT>
+nnoremap <ESC>a :Scratchy "ack -ail "<LEFT>
 
 " filtering
 nnoremap <ESC>f :SplitScratchy b:fileFilterCmd . " " . expand("%")<CR>
