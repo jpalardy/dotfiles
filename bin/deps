@@ -33,10 +33,7 @@ check_installed git
 check_installed awk
 check_installed sed
 echo
-check_installed ruby
-check_installed gem
-check_installed rake
-check_installed cap
+check_installed rvm
 echo
 check_installed tidy
 check_installed xmllint
