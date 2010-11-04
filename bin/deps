@@ -40,7 +40,7 @@ check_installed cap
 echo
 check_installed tidy
 check_installed xmllint
-check_installed spidermonkey js
+check_installed node.js node
 echo
 check_installed parallel
 
