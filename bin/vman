@@ -1,0 +1,4 @@
+#!/bin/sh
+
+col -bx | view - -c "set ft=man nomod"
+

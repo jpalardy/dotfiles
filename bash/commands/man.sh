@@ -1,5 +1,9 @@
 
 manfiles() {
-  find $(echo $MANPATH | sed 's/:/ /g') -type f
+  find $(echo $MANPATH | tr : ' ') -type f
+}
+
+man_() {
+  pick_with_vim manfiles man
 }
 
