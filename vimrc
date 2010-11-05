@@ -192,30 +192,33 @@ nmap <leader>rs        :wa<CR>:source     .sessions/
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SCRATCHY MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <ESC>s :Scratchy ""<LEFT>
-
-" ack
-nnoremap <ESC>a :Scratchy "ack -ail "<LEFT>
 
 " filtering
 nnoremap <ESC>f :SplitScratchy b:fileFilterCmd . " " . expand("%")<CR>
 
-function! FilePicker()
+function! FPScratchy(...)
+  call call(function("Scratchy"), a:000)
   nmap <buffer> <CR> gf
   nmap <buffer> <ESC><CR> <c-w>f<c-w>w
-  echo
 endfunction
-
-" textmate-like command-t
-nnoremap <ESC>t :botright  new<CR>:Scratchy "ack_find"<CR>:call FilePicker()<CR>
-nnoremap <ESC>T :botright vnew<CR>:Scratchy "ack_find"<CR>:call FilePicker()<CR>
+command -nargs=* FPScratchy :call FPScratchy(<args>)
 
 " replace current buffer
-nnoremap <ESC>h                                :Scratchy "ack_find"<CR>:call FilePicker()<CR>
-" flush ack_find's cache (and replace current buffer)
-nnoremap <ESC>H :call system("ack_find -f")<CR>:Scratchy "ack_find"<CR>:call FilePicker()<CR>
+nmap <ESC>h :FPScratchy "ack_find"<CR>
 
-nnoremap <ESC>r                                :Scratchy "vim_recent"<CR>:call FilePicker()<CR>
+" flush ack_find's cache (and replace current buffer)
+nmap <ESC>H :call system("ack_find -f")<CR><ESC>h
+
+" textmate-like command-t
+nmap <ESC>t :botright  new<CR><ESC>h
+nmap <ESC>T :botright vnew<CR><ESC>h
+
+" ack
+nmap <ESC>a :FPScratchy "ack -ail "<LEFT>
+
+nmap <ESC>r :FPScratchy "vim_recent"<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " used by :TOhtml
 let g:html_use_css=0
