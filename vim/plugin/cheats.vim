@@ -1,3 +1,3 @@
 
-nnoremap <leader>c :Scratchy "ack -af $HOME/.vim/cheats"<CR>:call FilePicker()<CR>
+nnoremap <leader>c :FPScratchy "ack -af $HOME/.vim/cheats"<CR>
 
