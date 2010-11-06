@@ -1,4 +1,8 @@
 
+let b:fileFilterCmd = "jslint"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 if !exists("b:snippets")
   let b:snippets = {}
 endif
