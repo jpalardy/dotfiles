@@ -1,4 +1,6 @@
 
+export DOTFILES=$HOME/dotfiles
+
 umask 22
 ulimit -c 0
 
@@ -39,7 +41,7 @@ unshift_path "/usr"
 unshift_path "/usr/local"
 unshift_path "/opt/local"
 unshift_path "$HOME/local"
-unshift_path "$HOME/dotfiles"
+unshift_path "$DOTFILES"
 
 export PATH=$(prepend_colon ".local" $PATH)
 
