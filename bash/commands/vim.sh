@@ -25,19 +25,28 @@ export -f vim_picker
 # 2nd parameter is command to run on selection
 # 3rd (optional) parameter is DIRECT selection, bypassing VIM
 pick_with_vim() {
-  if [ -e ~/.picked ]; then
-    rm ~/.picked
+  local TARGET=$HOME/.picked
+
+  if [ -e "$TARGET" ]; then
+    rm "$TARGET"
   fi
 
   if [ -n "$3" ]; then
-    eval "$1" | sed -n $3p > ~/.picked
+    eval "$1" | sed -n $3p > "$TARGET"
   else
     eval "$1" | vim_picker
   fi
 
-  if [ -e ~/.picked ]; then
-    $2 "$(eval ${FILTER:-cat} ~/.picked)"
+  if [ ! -e "$TARGET" ]; then
+    return
   fi
+
+  local old_IFS="$IFS"
+  IFS=$'\n'
+  local lines=($(eval ${FILTER:-cat} "$TARGET"))
+  IFS="$old_IFS"
+
+  $2 "${lines[@]}"
 }
 export -f pick_with_vim
 
