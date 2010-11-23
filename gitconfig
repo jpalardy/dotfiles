@@ -5,6 +5,7 @@
   ui = auto
 [alias]
   st = status
+  ss = status --short
   co = checkout
   out = log FETCH_HEAD..HEAD
   in =  log HEAD..FETCH_HEAD
