@@ -8,7 +8,14 @@ cd_pushd() {
     dest=$(dirname $dest)
   fi
 
-  pushd "$dest" >/dev/null
+  builtin cd "$dest"
+  local result=$?
+
+  if [ $result == "0" ]; then
+    echo $PWD >> $HOME/.dirs
+  fi
+
+  return $result
 }
 
 # overwrites behavior of 'cd'
@@ -35,9 +42,9 @@ pwd_gorc() {
 
 #-------------------------------------------------
 
-# pick from directories visited in this session and cd into it
-tb() {
-  pick_with_vim "dirs -l -p" "cd"
+# pick from a list of recent directories
+rd() {
+  pick_with_vim "tail -n20 $HOME/.dirs" "cd"
 }
 
 #-------------------------------------------------
