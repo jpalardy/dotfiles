@@ -32,11 +32,11 @@ ack_ignored() {
 }
 
 du_sort() {
-  du -b --max-depth=1 | sort -n | thousands
+  du -b --max-depth=1 $1 | sort -n | thousands
 }
 
 size_sort() {
-  find . -type f -printf "%s %p\n" | sort -n | thousands
+  find ${1:-.} -type f -printf "%s %p\n" | sort -n | thousands
 }
 
 #-------------------------------------------------
