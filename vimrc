@@ -215,6 +215,7 @@ nmap <ESC>T :botright vnew<CR><ESC>h
 
 " ack
 nmap <ESC>a :FPScratchy "ack -ail "<LEFT>
+set grepprg=ack\ -ai
 
 nmap <ESC>r :FPScratchy "vim_recent"<CR>
 
