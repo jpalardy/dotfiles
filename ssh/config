@@ -6,4 +6,6 @@ Host *
   ServerAliveInterval    10
   Compression            yes
   CheckHostIP            no
+  ControlMaster          auto
+  ControlPath            ~/.ssh/master-%r@%h:%p
 
