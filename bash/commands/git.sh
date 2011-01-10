@@ -15,11 +15,6 @@ glg() {
   git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 }
 
-glp() {
-  git log -p "$@"
-}
-complete -F _git_log -o default glp
-
 gln() {
   git log --name-only "$@"
 }
