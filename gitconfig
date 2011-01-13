@@ -6,7 +6,7 @@
 [alias]
   st = status --short
   co = checkout
-  out = log FETCH_HEAD..HEAD
+  out = !git log $(git rev-list --max-count=1 --simplify-by-decoration HEAD^)..
   in =  log HEAD..FETCH_HEAD
 [diff]
   noprefix = true
