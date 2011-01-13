@@ -43,10 +43,6 @@ size_sort() {
 
 alias apg='apg -n 20 -m 8 -M SNCL -t'
 
-_tsocks() {
-  TSOCKS_CONF_FILE=$DOTFILES/tsocks.conf tsocks "$@"
-}
-
 rm_caches() {
   find . -name '.cache_*' -print0 | xargs -0 rm -v 2>/dev/null
 }
