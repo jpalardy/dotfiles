@@ -1,7 +1,9 @@
 #!/bin/sh
 
-# http://www.grymoire.com/Unix/Sed.html
-# www.ncsociology.org/sociationtoday/v21/merit.htm
+url=${1:?missing url}
 
-curl --location --silent "${1:?missing url}" | paste -s - | ack -o '<title>.*<\/title>' | sed -e 's/^<title>\s*//' -e 's/\s*<\/title>//'
+title=$(curl --location --silent "$url" | paste -s - | ack -o '<title>.*<\/title>' | sed -e 's/^<title>\s*//' -e 's/\s*<\/title>//')
+
+echo $title
+echo $url
 

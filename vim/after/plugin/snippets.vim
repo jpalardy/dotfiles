@@ -26,11 +26,5 @@ let g:snippets["()$"]  = "(|)"
 let g:snippets["[$"]  = "[|]"
 let g:snippets["[]$"]  = "[|]"
 
-function Snippet_page_title(text)
-  return a:text . " -- " . substitute(system("html_page_title '" . a:text . "'"), '\n$', '', '')
-endfunction
-
-let g:snippets["http://"] = function("Snippet_page_title")
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
