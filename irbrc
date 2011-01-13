@@ -6,7 +6,7 @@ IRB.conf[:PROMPT_MODE] = :SIMPLE
 require 'irb/completion'
 require 'pp'
 
-%w[rubygems looksee/shortcuts].each do |gem|
+%w[rubygems].each do |gem|
   begin
     require gem
   rescue LoadError => e
