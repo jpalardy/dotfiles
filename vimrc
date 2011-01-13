@@ -171,16 +171,16 @@ nmap # V#
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " window
-nmap <leader>sw<left>  :topleft  vnew<CR>
-nmap <leader>sw<right> :botright vnew<CR>
-nmap <leader>sw<up>    :topleft  new<CR>
-nmap <leader>sw<down>  :botright new<CR>
+nmap \|<left>  :topleft  vnew<CR>
+nmap \|<right> :botright vnew<CR>
+nmap \|<up>    :topleft  new<CR>
+nmap \|<down>  :botright new<CR>
 
 " buffer
-nmap <leader>s<left>   :leftabove  vnew<CR>
-nmap <leader>s<right>  :rightbelow vnew<CR>
-nmap <leader>s<up>     :leftabove  new<CR>
-nmap <leader>s<down>   :rightbelow new<CR>
+nmap \<left>  :leftabove  vnew<CR>
+nmap \<right> :rightbelow vnew<CR>
+nmap \<up>    :leftabove  new<CR>
+nmap \<down>  :rightbelow new<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SESSIONS MAPPINGS
