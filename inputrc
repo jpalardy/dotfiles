@@ -8,8 +8,6 @@ $if Bash
 $endif
 
 "\e`": "$(!!)"
-"\e": "!! | vim -R -"
-"\el": "!! | less"
 
 "\C-f": unix-filename-rubout
 
@@ -17,15 +15,4 @@ $endif
 
 # same as Vim shortcut
 "\et": "vim-"
-"\er": "vimr"
-"\ec": "c"
-
-# set editing-mode vi
-
-$if mode=vi
-  set keymap vi-insert
-  "\C-l": clear-screen
-  "\C-w": backward-kill-word
-$endif
-
 
