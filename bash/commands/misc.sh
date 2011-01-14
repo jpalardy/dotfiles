@@ -19,6 +19,10 @@ alias reload="source $HOME/.bashrc"
 
 alias man=vman
 
+vman() {
+  \man "$@" | col -b | view - -c "set ft=man nomod"
+}
+
 #-------------------------------------------------
 
 gri() {

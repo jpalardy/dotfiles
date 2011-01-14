@@ -1,4 +1,0 @@
-#!/bin/sh
-
-man "$@" | col -b | view - -c "set ft=man nomod"
-
