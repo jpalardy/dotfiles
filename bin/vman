@@ -1,4 +1,4 @@
 #!/bin/sh
 
-col -bx | view - -c "set ft=man nomod"
+man "$@" | col -b | view - -c "set ft=man nomod"
 

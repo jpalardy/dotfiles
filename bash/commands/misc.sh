@@ -17,6 +17,8 @@ alias grep='grep --color=auto'
 
 alias reload="source $HOME/.bashrc"
 
+alias man=vman
+
 #-------------------------------------------------
 
 gri() {

@@ -47,7 +47,6 @@ export PATH=$(prepend_colon ".local" $PATH)
 
 export EDITOR="vim"
 export PAGER="less"
-export MANPAGER="vman"
 export BLOCKSIZE="K"
 
 export GZIP="-9"
