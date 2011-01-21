@@ -2,16 +2,15 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " EXECUTE -- OTHER WINDOW
-nmap <buffer> <F2> yip:call SQLITE_Scratchy_raw(@0)<CR>
-nmap <buffer> <F3> yip:call SQLITE_Scratchy_horizontal(@0)<CR>
-nmap <buffer> <F4> yip:call SQLITE_Scratchy_vertical(@0)<CR>
+nmap <buffer> <F2> yip:call SQLITE_Scratchy("",        @0)<CR>
+nmap <buffer> <F3> yip:call SQLITE_Scratchy("-column", @0)<CR>
+nmap <buffer> <F4> yip:call SQLITE_Scratchy("-line",   @0)<CR>
 
 " EXPLAIN
-nmap <buffer> ,e   yip:call SQLITE_Scratchy_explain(@0)<CR>
+nmap <buffer> ,e   yip:call SQLITE_Scratchy("-column", "explain query plan\\n" . @0)<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FUNCTIONS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 function! SQLITE_Scratchy(flags, sql)
   if !exists("b:db_config")
     let b:db_config = {"filename": $DB_FILENAME}
@@ -21,24 +20,9 @@ function! SQLITE_Scratchy(flags, sql)
 
   let flags = "-header -nullvalue null"
   let command = join(["sqlite3", flags, a:flags, b:db_config["filename"]], " ")
-  let sql = a:sql . ";"
+  let sql = FixSQLSemicolon(a:sql)
 
   SplitScratchy command, sql
-endfunction
-
-function! SQLITE_Scratchy_raw(sql)
-  call SQLITE_Scratchy("", a:sql)
-endfunction
-
-function! SQLITE_Scratchy_horizontal(sql)
-  call SQLITE_Scratchy("-column", a:sql)
-endfunction
-
-function! SQLITE_Scratchy_vertical(sql)
-  call SQLITE_Scratchy("-line", a:sql)
-endfunction
-
-function! SQLITE_Scratchy_explain(sql)
-  call SQLITE_Scratchy("-column", "explain query plan\n" . a:sql)
+  exe "normal \<c-w>\<c-w>"
 endfunction
 
