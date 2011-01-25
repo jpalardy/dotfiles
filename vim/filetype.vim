@@ -9,6 +9,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.csv     setf csv
   autocmd BufNewFile,BufRead *.json    setf javascript
   autocmd BufNewFile,BufRead *.json    let b:fileFilterCmd = "json_errors.sh"
+  autocmd BufNewFile,BufRead *.gtd     setf gtd
 augroup END
 
 augroup aes256
