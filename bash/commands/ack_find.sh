@@ -1,6 +1,6 @@
 
 ff() {
-  ack -af | ack -i "$@"
+  ack -af --sort-files | ack -i --no-color "${@:-.}"
 }
 
 fne() {
