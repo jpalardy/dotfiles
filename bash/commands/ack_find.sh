@@ -1,6 +1,6 @@
 
 ff() {
-  ack_find | ack "$@"
+  ack -af | ack -i "$@"
 }
 
 fne() {
