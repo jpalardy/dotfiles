@@ -29,3 +29,19 @@ END
   source $filename
 }
 
+env_oracle() {
+  local filename="$HOME/.source.sh"
+
+  cat > $filename <<END
+
+export DB_ADAPTER="oracle"
+export DB_HOST="${DB_HOST}"
+export DB_NAME="${DB_NAME}"
+export DB_USER="${DB_USER}"
+
+END
+
+  $EDITOR $filename
+  source $filename
+}
+
