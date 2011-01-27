@@ -57,3 +57,9 @@ serve() {
   python -m SimpleHTTPServer ${1:-8000}
 }
 
+#-------------------------------------------------
+
+dlu() {
+  pick_with_vim "look $1" "dict"
+}
+
