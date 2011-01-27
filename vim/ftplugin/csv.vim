@@ -9,7 +9,7 @@ if !exists("b:snippets")
 endif
 
 function Snippet_later(time)
-  return substitute(system("later 5"), "\n", "", "")
+  return strftime("%F", localtime() + system("shuf -n1 -i 1-5") * 86400)
 endfunction
 
 let b:snippets["later"] = function("Snippet_later")
