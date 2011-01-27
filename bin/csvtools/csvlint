@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'csv'
+
+begin
+  CSV.parse(ARGF.read, skip_blanks: true)
+rescue CSV::MalformedCSVError => e
+  $stderr.puts e.message
+end
+
