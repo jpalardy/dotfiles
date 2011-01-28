@@ -43,15 +43,15 @@ set ignorecase
 " Print options ...
 set printoptions=header:0
 
+" vimdiff
+set diffopt=filler,iwhite
+
 " This is useful for debugging
 " set verbose=9
 
-if v:version >= 700
-  set spellcapcheck=
-endif
+set spellcapcheck=
 
 if has('gui_running')
-  " nothing please
   set guioptions=
   set guifont=Inconsolata\ 16
 endif
@@ -105,11 +105,8 @@ vmap ,, :! paste -s -d, -<CR>
 " QUOTISIZE
 vmap ,' :! awk '{print "'\''"$0"'\''"}'<CR>
 vmap ," :! awk '{print "\""$0"\""}'<CR>
-" SURROUND
-vmap S :! awk '{print ""$0""}'<LEFT><LEFT><LEFT>
 " AWK
-vmap ,<TAB>a :!awk -F'	' '{print }'<LEFT><LEFT>
-vmap ,a      :!awk '{print }'<LEFT><LEFT>
+vmap ,a :! awk '{print }'<LEFT><LEFT>
 
 " ONLY KEEP LINES WHICH CONTAIN SEARCH
 nmap ,v :v/<C-R>//d<CR>gg
@@ -136,37 +133,7 @@ nmap * *Nzz
 nmap > >>
 nmap < <<
 
-" switch to other window, make it maximum height
-nmap <ESC>w <C-w>w<C-w>_
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" VIMDIFF
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nmap <ESC>du :diffupdate<CR>
-nmap <ESC>do :%diffget<CR>
-
-set diffopt=filler,iwhite
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SPACEHI
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
-au FileType help NoSpaceHi
-au FileType diff NoSpaceHi
-au FileType man  NoSpaceHi
-au FileType scratchy NoSpaceHi
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-source $VIMRUNTIME/ftplugin/man.vim
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" set in variables.sh
-let g:sql_type_default=$DB_ADAPTER
-
+" nerd commenter
 vmap # :call NERDComment(1, "toggle")<CR>
 nmap # V#
 
@@ -187,43 +154,24 @@ nmap \<up>    :leftabove  new<CR>
 nmap \<down>  :rightbelow new<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SESSIONS MAPPINGS
+" SPACEHI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <leader>ss        :wa<CR>:mksession! .sessions/
-nmap <leader>rs        :wa<CR>:source     .sessions/
+autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
+au FileType help NoSpaceHi
+au FileType diff NoSpaceHi
+au FileType man  NoSpaceHi
+au FileType scratchy NoSpaceHi
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SCRATCHY MAPPINGS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" filtering
-nnoremap <ESC>f :SplitScratchy b:fileFilterCmd . " " . expand("%")<CR>
-
-function! FPScratchy(...)
-  call call(function("Scratchy"), a:000)
-  nmap <buffer> <CR> gf
-  nmap <buffer> <ESC><CR> <c-w>f<c-w>w
-endfunction
-command -nargs=* FPScratchy :call FPScratchy(<args>)
-
-" replace current buffer
-nmap <ESC>h :FPScratchy "ack_find"<CR>
-
-" flush ack_find's cache (and replace current buffer)
-nmap <ESC>H :call system("ack_find -f")<CR><ESC>h
-
-" textmate-like command-t
-nmap <ESC>t :botright  new<CR><ESC>h
-nmap <ESC>T :botright vnew<CR><ESC>h
-
-" ack
-nmap <ESC>a :FPScratchy "ack -ail "<LEFT>
-set grepprg=ack\ -ai
-
-nmap <ESC>r :FPScratchy "vim_recent"<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source $VIMRUNTIME/ftplugin/man.vim
 
 " used by :TOhtml
 let g:html_use_css=0
+
+" set in variables.sh
+let g:sql_type_default=$DB_ADAPTER
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
