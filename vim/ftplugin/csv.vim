@@ -7,7 +7,7 @@ if !exists("b:snippets")
   let b:snippets = {}
 endif
 
-function Snippet_later(time)
+function! Snippet_later(time)
   return strftime("%F", localtime() + system("shuf -n1 -i 1-5") * 86400)
 endfunction
 
