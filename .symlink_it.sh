@@ -22,6 +22,7 @@ relink .irbrc        $DOTFILES/irbrc
 relink .rdebugrc     $DOTFILES/rdebugrc
 
 relink .screenrc     $DOTFILES/screenrc
+relink .tmux.conf    $DOTFILES/tmux.conf
 
 relink .ssh/config   $DOTFILES/ssh/config
 
