@@ -57,7 +57,11 @@ if has('gui_running')
 endif
 
 if $TERM == "xterm-256color"
-  colorscheme 256_xoria
+  if $TMUX == ""
+    colorscheme 256_xoria
+  else
+    colorscheme 256_jellyx " until tmux fixes BCE problems
+  endif
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
