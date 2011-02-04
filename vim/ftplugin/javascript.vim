@@ -1,5 +1,5 @@
 
-let b:fileFilterCmd = "jslint"
+let b:quickCheckCmd = "jslint"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
