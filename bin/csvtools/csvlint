@@ -4,6 +4,7 @@ require 'csv'
 
 begin
   CSV.parse(ARGF.read, skip_blanks: true)
+  puts "OK"
 rescue CSV::MalformedCSVError => e
   $stderr.puts e.message
 end
