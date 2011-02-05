@@ -1,5 +1,5 @@
 
 source ~/.vim/ftplugin/xml.vim
 
-let b:fileFilterCmd = "html_errors.sh"
+let b:quickCheckCmd = "html_errors.sh"
 

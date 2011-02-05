@@ -1,5 +1,5 @@
 
-let b:fileFilterCmd = "xml_errors.sh"
+let b:quickCheckCmd = "xml_errors.sh"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

@@ -1,5 +1,5 @@
 
-let b:fileFilterCmd = "ruby"
+let b:quickCheckCmd = "ruby -c"
 
 let ruby_space_errors = 1
 

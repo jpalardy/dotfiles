@@ -8,7 +8,8 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.scala   setf scala
   autocmd BufNewFile,BufRead *.csv     setf csv
   autocmd BufNewFile,BufRead *.json    setf javascript
-  autocmd BufNewFile,BufRead *.json    let b:fileFilterCmd = "json_errors.sh"
+  autocmd BufNewFile,BufRead *.json    let b:fileFilterCmd = "json_reformat.sh"
+  autocmd BufNewFile,BufRead *.json    let b:quickCheckCmd = "json_verify.sh"
   autocmd BufNewFile,BufRead *.gtd     setf gtd
 augroup END
 

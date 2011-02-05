@@ -1,5 +1,5 @@
 
-let b:fileFilterCmd = "csvlint"
+let b:quickCheckCmd = "csvlint"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
