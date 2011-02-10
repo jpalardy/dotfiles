@@ -1,6 +1,6 @@
 
 " line containing only CAPITAL letters and spaces
-syntax match gtdHeader /^[A-Z ]*$/
+syntax match gtdHeader /^[-_A-Z ]*$/
 highlight link gtdHeader Keyword
 
 " line ending with a space and a !
