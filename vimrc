@@ -35,6 +35,9 @@ set tabstop=2
 set virtualedit=block
 set equalprg=
 
+" don't insert 2 spaces after punctuation
+set nojoinspaces
+
 " Search options
 set incsearch
 set hlsearch
