@@ -44,7 +44,8 @@ hi Folded       ctermfg=255 guifg=#eeeeee ctermbg=60  guibg=#5f5f87
 hi IncSearch    ctermfg=0   guifg=#000000 ctermbg=223 guibg=#ffdfaf cterm=none gui=none
 hi LineNr       ctermfg=247 guifg=#9e9e9e ctermbg=233 guibg=#101010
 hi MatchParen   ctermfg=188 guifg=#dfdfdf ctermbg=68  guibg=#5f87df cterm=bold gui=bold
-hi NonText      ctermfg=247 guifg=#9e9e9e ctermbg=233 guibg=#101010 cterm=bold gui=bold
+hi NonText      ctermfg=247 guifg=#9e9e9e ctermbg=234 guibg=#101010 cterm=bold gui=bold
+"hi NonText      ctermfg=247 guifg=#9e9e9e ctermbg=233 guibg=#101010 cterm=bold gui=bold
 hi Pmenu        ctermfg=0   guifg=#000000 ctermbg=246 guibg=#949494
 hi PmenuSbar                              ctermbg=243 guibg=#767676
 hi PmenuSel     ctermfg=0   guifg=#000000 ctermbg=243 guibg=#767676
