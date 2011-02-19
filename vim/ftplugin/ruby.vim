@@ -1,8 +1,6 @@
 
 let b:quickCheckCmd = "ruby -c"
 
-let ruby_space_errors = 1
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if !exists("b:snippets")
