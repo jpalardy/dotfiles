@@ -29,6 +29,7 @@ check_installed() {
 
 check_installed vim
 check_installed screen
+check_installed tmux
 check_installed git
 check_installed awk
 check_installed sed
