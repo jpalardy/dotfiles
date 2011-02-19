@@ -1,8 +1,9 @@
 #!/bin/bash
 
+flag="$@"
+
 function relink() {
-  rm -i $1
-  ln -sn $2 $1
+  ln -s -h -v $flag $2 $1
 }
 
 DOTFILES=$(pwd)
