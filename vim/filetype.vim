@@ -1,11 +1,8 @@
 augroup filetypedetect
   autocmd BufNewFile,BufRead *.txt     setf txt
-  autocmd BufNewFile,BufRead *.clj     setf clojure
-  autocmd BufNewFile,BufRead *.clj     setl lisp
   autocmd BufNewFile,BufRead *.spec    setf ruby
   autocmd BufNewFile,BufRead Capfile   setf ruby
   autocmd BufNewFile,BufRead Gemfile   setf ruby
-  autocmd BufNewFile,BufRead *.scala   setf scala
   autocmd BufNewFile,BufRead *.csv     setf csv
   autocmd BufNewFile,BufRead *.json    setf javascript
   autocmd BufNewFile,BufRead *.json    let b:fileFilterCmd = "json_reformat.sh"

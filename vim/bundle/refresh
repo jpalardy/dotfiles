@@ -1,0 +1,11 @@
+#!/bin/sh
+
+rm -rf matchit
+git clone https://github.com/vim-scripts/matchit.zip.git matchit
+rm -rf matchit/.git
+
+rm -rf nerdcommenter
+git clone https://github.com/scrooloose/nerdcommenter
+rm -rf nerdcommenter/.git
+rm nerdcommenter/.gitignore
+
