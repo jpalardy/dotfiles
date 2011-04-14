@@ -9,6 +9,8 @@
 "   Modified by Aaron Bieber, May 2007.
 "   blog.aaronbieber.com
 "
+"   Modified by Tim Harper, July 2008 - current
+"   tim.theenchanter.com
 " @(#) $Id$
 
 if version < 600
@@ -22,15 +24,6 @@ syn case match
 
 " Textile syntax: <http://textism.com/tools/textile/>
 
-" Block elements.
-syn match txtHeader      /^h[1-6]\./
-syn match txtBlockquote  /^bq\./
-syn match txtFootnoteDef /^fn[0-9]\+\./
-syn match txtListBullet  /^\*\+/
-syn match txtListNumber  /^#\+/
-
-syn cluster txtBlockElement contains=txtHeader,txtBlockElement,txtFootnoteDef,txtListBullet,txtListNumber
-
 " Inline elements.
 syn match txtEmphasis    /_[^_]\+_/
 syn match txtBold        /\*[^*]\+\*/
@@ -42,6 +35,20 @@ syn match txtSub         /\~[^~]\+\~/
 syn match txtSpan        /%[^%]\+%/
 syn match txtFootnoteRef /\[[0-9]\+]/
 syn match txtCode        /@[^@]\+@/
+
+" Block elements.
+syn match txtHeader      /^h1\. .\+/
+syn match txtHeader2     /^h2\. .\+/
+syn match txtHeader3     /^h[3-6]\..\+/
+syn match txtBlockquote  /^bq\./
+syn match txtFootnoteDef /^fn[0-9]\+\./
+syn match txtListBullet  /\v^\*+ /
+syn match txtListBullet2  /\v^(\*\*)+ /
+syn match txtListNumber  /\v^#+ /
+syn match txtListNumber2  /\v^(##)+ /
+
+syn cluster txtBlockElement contains=txtHeader,txtBlockElement,txtFootnoteDef,txtListBullet,txtListNumber
+
 
 " Everything after the first colon is from RFC 2396, with extra
 " backslashes to keep vim happy...  Original:
@@ -62,9 +69,13 @@ if version >= 508 || !exists("did_txt_syn_inits")
     endif
 
     HiLink txtHeader Title
+    HiLink txtHeader2 Question
+    HiLink txtHeader3 Statement
     HiLink txtBlockquote Comment
-    HiLink txtListBullet PreProc
-    HiLink txtListNumber PreProc
+    HiLink txtListBullet Operator
+    HiLink txtListBullet2 Constant
+    HiLink txtListNumber Operator
+    HiLink txtListNumber2 Constant
     HiLink txtLink String
     HiLink txtCode Identifier
     hi def txtEmphasis term=underline cterm=underline gui=italic

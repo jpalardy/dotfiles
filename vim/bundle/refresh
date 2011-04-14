@@ -16,4 +16,5 @@ refresh() {
 refresh https://github.com/scrooloose/nerdcommenter    nerdcommenter
 refresh https://github.com/vim-scripts/matchit.zip.git matchit
 refresh https://github.com/tpope/vim-haml.git          vim-haml
+refresh https://github.com/timcharper/textile.vim.git  textile
 
