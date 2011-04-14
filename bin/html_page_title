@@ -1,9 +1,0 @@
-#!/bin/sh
-
-url=${1:?missing url}
-
-title=$(curl --location --silent "$url" | paste -s - | ack -o '<title>.*<\/title>' | sed -e 's/^<title>\s*//' -e 's/\s*<\/title>//')
-
-echo $title
-echo $url
-
