@@ -11,6 +11,10 @@ highlight link moeImportant Error
 syntax match moeLessImportant /.* #$/
 highlight link moeLessImportant Comment
 
+" [TAGS]
+syntax match moeTag /\[[^]]\+\]/
+highlight link moeTag Identifier
+
 " line containing only ----------------------
 syntax match moeDivider /^-*$/
 highlight link moeDivider Comment
