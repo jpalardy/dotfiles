@@ -37,7 +37,9 @@ set softtabstop=2
 set shiftwidth=2
 set tabstop=2
 set virtualedit=block
+
 set equalprg=
+set grepprg=ack\ -ai
 
 " don't insert 2 spaces after punctuation
 set nojoinspaces
