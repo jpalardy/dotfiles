@@ -5,7 +5,7 @@ refresh() {
   local dir="$2"
 
   rm -rf $dir
-  git clone $url $dir
+  git clone $url $dir --depth=1
   rm -rf $dir/.git
 
   if [ -f "$dir/.gitignore" ]; then
