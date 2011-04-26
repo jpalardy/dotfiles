@@ -18,4 +18,5 @@ refresh https://github.com/vim-scripts/matchit.zip.git  matchit
 refresh https://github.com/tpope/vim-haml.git           vim-haml
 refresh https://github.com/timcharper/textile.vim.git   textile
 refresh https://github.com/kchmck/vim-coffee-script.git vim-coffee-script
+refresh https://github.com/tpope/vim-fugitive.git       vim-fugitive
 
