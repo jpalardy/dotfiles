@@ -93,6 +93,7 @@ highlight default link coffeeAssignSymbols SpecialChar
 
 syntax match coffeeAssignBrackets /\[.\+\]/ contained contains=TOP,coffeeAssign
 
+syntax match coffeeAssign /[}\]]\@<=\s*==\@!>\@!/ contains=coffeeAssignSymbols
 syntax match coffeeAssign /\%(++\|--\)\s*\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*/
 \                         contains=@coffeeIdentifier,coffeeAssignSymbols,coffeeAssignBrackets
 syntax match coffeeAssign /\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*\%(++\|--\|\s*\%(and\|or\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)\?=\@<!==\@!>\@!\)/
@@ -106,7 +107,7 @@ endif
 
 syntax match coffeeAssign /@\?\I\i*\s*:\@<!::\@!/ contains=@coffeeIdentifier,coffeeAssignSymbols
 " Matches string assignments in object literals like {'a': 'b'}.
-syntax match coffeeAssign /\("\|'\)[^'"]\+\1\s*;\@<!::\@!/ contains=coffeeAssignString,
+syntax match coffeeAssign /\("\|'\)[^\1]*\1\s*;\@<!::\@!/ contains=coffeeAssignString,
 \                                                      coffeeAssignSymbols
 " Matches number assignments in object literals like {42: 'a'}.
 syntax match coffeeAssign /\d\+\%(\.\d\+\)\?\s*:\@<!::\@!/ contains=coffeeNumber,coffeeAssignSymbols
@@ -122,7 +123,7 @@ syntax keyword coffeeTodo TODO FIXME XXX contained
 highlight default link coffeeTodo Todo
 
 syntax match coffeeComment /#.*/ contains=@Spell,coffeeTodo
-syntax match coffeeComment /####\@!\_.\{-}###/ contains=@Spell,coffeeTodo
+syntax region coffeeComment start=/####\@!/ end=/###/ contains=@Spell,coffeeTodo
 highlight default link coffeeComment Comment
 
 syntax region coffeeHereComment start=/#/ end=/\ze\/\/\// end=/$/ contained contains=@Spell,coffeeTodo
@@ -146,12 +147,13 @@ syntax cluster coffeeSimpleString contains=@Spell,coffeeEscape
 syntax cluster coffeeInterpString contains=@coffeeSimpleString,
 \                                           coffeeInterpolation
 
-syntax region coffeeRegExp start=/)\@<!\%(\%((\s*\|=\s\+\)\@<=\/\|\s\zs\/\s\@!\)/
-\                          skip=/\[[^]]\{-}\/[^]]\{-}\]/ end=/\/[gimy]\{,4}/ oneline
-\                          contains=@coffeeSimpleString
-syntax region coffeeHereRegexp start=/\/\/\// end=/\/\/\/[gimy]\{,4}/ contains=@coffeeInterpString,coffeeHereComment fold
-highlight default link coffeeHereRegexp coffeeRegExp
-highlight default link coffeeRegExp String
+syntax region coffeeRegex start=/\%(\%()\|\i\@<!\d\)\s*\|\i\)\@<!\/\s\@!/
+\                         skip=/\[[^]]\{-}\/[^]]\{-}\]/
+\                         end=/\/[gimy]\{,4}\d\@!/
+\                         oneline contains=@coffeeSimpleString
+syntax region coffeeHereRegex start=/\/\/\// end=/\/\/\/[gimy]\{,4}/ contains=@coffeeInterpString,coffeeHereComment fold
+highlight default link coffeeHereRegex coffeeRegex
+highlight default link coffeeRegex String
 
 syntax region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString fold
 syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeSimpleString fold
