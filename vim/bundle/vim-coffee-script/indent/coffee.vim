@@ -20,57 +20,60 @@ if exists("*GetCoffeeIndent")
   finish
 endif
 
-" Join a list of regexps as branches.
-function! s:RegexpJoin(regexps)
-  return join(a:regexps, '\|')
+" Join a list of regexs as branches.
+function! s:RegexJoin(regexes)
+  return join(a:regexes, '\|')
 endfunction
 
-" Create a regexp group from a list of regexps.
-function! s:RegexpGroup(...)
-  return '\%(' . s:RegexpJoin(a:000) . '\)'
+" Create a regex group from a list of regexes.
+function! s:RegexGroup(...)
+  return '\%(' . s:RegexJoin(a:000) . '\)'
 endfunction
 
 " Outdent certain keywords and brackets.
 let s:outdent = '^'
-\             . s:RegexpGroup('else', 'when', 'catch', 'finally', ']', '}', ')')
+\             . s:RegexGroup('else', 'when', 'catch', 'finally', ']', '}', ')')
 
 " Indent after certain keywords.
 let s:indent_after_keywords = '^'
-\                           . s:RegexpGroup('if', 'unless', 'else', 'for',
-\                                           'while', 'until', 'loop', 'switch',
-\                                           'when', 'try', 'catch', 'finally',
-\                                           'class')
+\                           . s:RegexGroup('if', 'unless', 'else', 'for',
+\                                          'while', 'until', 'loop', 'switch',
+\                                          'when', 'try', 'catch', 'finally',
+\                                          'class')
 \                           . '\>'
 
 " Indent after brackets, functions, and assignments.
-let s:indent_after_literals = s:RegexpGroup('\[', '{', '(', '->', '=>', ':', '=')
+let s:indent_after_literals = s:RegexGroup('\[', '{', '(', '->', '=>', ':', '=')
 \                           . '$'
 
-" Combine the two regexps above.
-let s:indent_after = s:RegexpJoin([s:indent_after_keywords,
-\                                  s:indent_after_literals])
+" Combine the two regexes above.
+let s:indent_after = s:RegexJoin([s:indent_after_keywords,
+\                                 s:indent_after_literals])
 
 " Indent after operators at the end of lines.
-let s:continuations = s:RegexpGroup('-\@<!>', '=\@<!>', '-\@<!-', '+\@<!+',
-\                                   '<', '\*', '/', '%', '|', '&', ',',
-\                                   '\.\@<!\.', 'is', 'isnt', 'and', 'or')
+let s:continuations = s:RegexGroup('-\@<!>', '=\@<!>', '-\@<!-', '+\@<!+',
+\                                  '<', '\*', '/', '%', '|', '&', ',',
+\                                  '\.\@<!\.', 'is', 'isnt', 'and', 'or')
 \                   . '$'
 
 " Indent after certain keywords used as multi-line assignments.
-let s:assignment_keywords = s:RegexpGroup(':', '=')
+let s:assignment_keywords = s:RegexGroup(':', '=')
 \                         . '\s*\<'
-\                         . s:RegexpGroup('if', 'unless', 'for', 'while',
-\                                         'until', 'switch', 'try', 'class')
+\                         . s:RegexGroup('if', 'unless', 'for', 'while',
+\                                        'until', 'switch', 'try', 'class')
 \                         . '\>'
 
 " Outdent after certain keywords.
 let s:outdent_after = '^'
-\                   . s:RegexpGroup('return', 'break', 'continue', 'throw')
+\                   . s:RegexGroup('return', 'break', 'continue', 'throw')
 \                   . '\>'
 
 " Don't outdent if the line contains one of these keywords (for cases like
 " 'return if a is b', 'break unless a', etc.)
-let s:dont_outdent_after = '\<' . s:RegexpGroup('if', 'unless') . '\>'
+let s:postfix_keywords = '\<' . s:RegexGroup('if', 'unless') . '\>'
+
+" Max lines to look back for a match
+let s:max_lookback = 50
 
 " Check for a single-line statement (e.g., 'if a then b'), which doesn't need an
 " indent afterwards.
@@ -98,6 +101,13 @@ function! s:IsFirstWhen(curline, prevline)
   return a:curline =~ '^when\>' && a:prevline =~ '\<switch\>'
 endfunction
 
+" Check if a line is a postfix condition (and not a conditional assignment).
+function! s:IsPostfixCondition(line)
+  return a:line =~ s:postfix_keywords
+  \   && a:line !~ ('^' . s:postfix_keywords)
+  \   && a:line !~ ('[:=]\s*' . s:postfix_keywords)
+endfunction
+
 " Check for a multi-line assignment like
 "   a = if b
 "     c
@@ -107,8 +117,18 @@ function! s:IsMultiLineAssignment(line)
   return a:line =~ s:assignment_keywords
 endfunction
 
-" Check if a line is a comment.
-function! s:IsComment(line)
+" Get the linked syntax name of some text.
+function! s:SyntaxName(line, col)
+  return synIDattr(synIDtrans(synID(a:line, a:col, 1)), 'name')
+endfunction
+
+" Check if some text is a comment or string.
+function! s:IsCommentOrString(line, col)
+  return s:SyntaxName(a:line, a:col) =~ 'Comment\|Constant'
+endfunction
+
+" Crudely check if a line is a comment.
+function! s:IsCommentQuick(line)
   return a:line =~ '^#'
 endfunction
 
@@ -136,7 +156,7 @@ endfunction
 function! s:ShouldIndentAfter(prevline, prevprevline)
   return !s:IsSingleLineStatement(a:prevline)
   \   && !s:IsSingleLineElse(a:prevline)
-  \   && !s:IsComment(a:prevline)
+  \   && !s:IsCommentQuick(a:prevline)
   \
   \   && (a:prevline =~ s:indent_after
   \   ||  s:IsMultiLineAssignment(a:prevline)
@@ -147,9 +167,65 @@ function! s:ShouldIndentAfter(prevline, prevprevline)
 endfunction
 
 function! s:ShouldOutdentAfter(prevline)
-  return (a:prevline !~ s:dont_outdent_after
+  return (a:prevline !~ s:postfix_keywords
   \   ||  s:IsSingleLineStatement(a:prevline))
   \   &&  a:prevline =~ s:outdent_after
+endfunction
+
+function! s:ShouldSkip(startlinenum, linenum, col)
+  let line = s:GetTrimmedLine(a:linenum)
+
+  return  s:IsCommentOrString(a:linenum, a:col)
+  \   || (s:IsSingleLineStatement(line)
+  \   &&  a:startlinenum - a:linenum > 1)
+  \   ||  s:IsPostfixCondition(line)
+endfunction
+
+" Find the farthest line to look back to, capped to line 1 (zero and negative
+" numbers cause bad things).
+function! s:MaxLookback(startlinenum)
+  return max([1, a:startlinenum - s:max_lookback])
+endfunction
+
+" Get the skip expression for searchpair().
+function! s:SkipExpr(startlinenum)
+  return "s:ShouldSkip(" . a:startlinenum . ", line('.'), col('.'))"
+endfunction
+
+" Search for pairs of text.
+function! s:SearchPair(start, end)
+  " The cursor must be in the first column for regexes to match.
+  call cursor(0, 1)
+
+  let startlinenum = line('.')
+
+  " Don't need the W flag since MaxLookback caps the search to line 1.
+  return searchpair(a:start, '', a:end, 'bn',
+  \                 s:SkipExpr(startlinenum),
+  \                 s:MaxLookback(startlinenum))
+endfunction
+
+" Try to find a previous matching line.
+function! s:GetMatch(curline, prevline)
+  let firstchar = a:curline[0]
+
+  if firstchar == '}'
+    return s:SearchPair('{', '}')
+  elseif firstchar == ')'
+    return s:SearchPair('(', ')')
+  elseif firstchar == ']'
+    return s:SearchPair('\[', '\]')
+  elseif a:curline =~ '^else'
+    return s:SearchPair('\<if\|unless\|when\>', '\<else\>')
+  elseif a:curline =~ '^catch'
+    return s:SearchPair('\<try\>', '\<catch\>')
+  elseif a:curline =~ '^finally'
+    return s:SearchPair('\<try\>', '\<finally\>')
+  elseif a:curline =~ '^when' && !s:IsFirstWhen(a:curline, a:prevline)
+    return s:SearchPair('\<when\>', '\<when\>')
+  endif
+
+  return 0
 endfunction
 
 " Get the nearest previous non-blank line.
@@ -157,7 +233,7 @@ function! s:GetPrevLineNum(linenum)
   return prevnonblank(a:linenum - 1)
 endfunction
 
-" Get the contents of a line without leading whitespace.
+" Get the contents of a line without leading or trailing whitespace.
 function! s:GetTrimmedLine(linenum)
   return substitute(substitute(getline(a:linenum), '^\s\+', '', ''),
   \                                                '\s\+$', '', '')
@@ -172,12 +248,22 @@ function! GetCoffeeIndent(curlinenum)
     return 0
   endif
 
+  if s:IsCommentOrString(a:curlinenum, col('.'))
+    return -1
+  endif
+
   let curindent = indent(a:curlinenum)
   let previndent = indent(prevlinenum)
 
   let curline = s:GetTrimmedLine(a:curlinenum)
   let prevline = s:GetTrimmedLine(prevlinenum)
   let prevprevline = s:GetTrimmedLine(prevprevlinenum)
+
+  let matchlinenum = s:GetMatch(curline, prevline)
+
+  if matchlinenum
+    return indent(matchlinenum)
+  endif
 
   if s:ShouldIndent(curline, prevline)
     return previndent + &shiftwidth
@@ -201,5 +287,5 @@ function! GetCoffeeIndent(curlinenum)
   endif
 
   " No indenting or outdenting is needed
-  return curindent
+  return -1
 endfunction
