@@ -12,6 +12,6 @@ done
 if [ -f $CACHE ]; then
   cat $CACHE
 else
-  ack -af --follow --sort-files | tee $CACHE 2>/dev/null
+  ack -af --follow --sort-files | grep -v '.cache_' | tee $CACHE 2>/dev/null
 fi
 
