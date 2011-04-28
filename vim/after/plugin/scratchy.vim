@@ -4,10 +4,24 @@
 " filtering
 nnoremap <ESC>f :SplitScratchy b:fileFilterCmd . " " . expand("%")<CR>
 
+function! StarToggle()
+  let line = getline(".")
+  if match(line, " \\*$")  != -1
+    let line = line[0:-3]
+  else
+    let line = line . " *"
+  endif
+  call setline(".", line)
+endfunction
+
 function! FPScratchy(...)
   call call(function("Scratchy"), a:000)
-  nmap <buffer> <CR> gf
-  nmap <buffer> <ESC><CR> <c-w>f<c-w>w
+  setlocal cursorline
+  let @/ = "*$"
+
+  nmap <buffer> <CR> 0gf
+  nmap <buffer> <ESC><CR> 0<c-w>f<c-w>w
+  map  <buffer> <SPACE> :call StarToggle()<CR>
 endfunction
 command -nargs=* FPScratchy :call FPScratchy(<args>)
 
