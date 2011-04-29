@@ -30,3 +30,5 @@ relink .gitignore    $DOTFILES/gitignore
 
 relink .rtorrent.rc  $DOTFILES/rtorrent.rc
 
+relink .filter       $DOTFILES/bin/ack_find_global_filter
+

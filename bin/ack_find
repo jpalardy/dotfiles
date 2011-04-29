@@ -9,9 +9,24 @@ while getopts "f" flag; do
   esac
 done
 
+filter() {
+  local GLOBAL_FILTER="$HOME/.filter"
+  local LOCAL_FILTER="./.filter"
+
+  if [ -x "$GLOBAL_FILTER" -a -x "$LOCAL_FILTER" ]; then
+    $GLOBAL_FILTER | $LOCAL_FILTER
+  elif [ -x "$GLOBAL_FILTER" ]; then
+    $GLOBAL_FILTER
+  elif [ -x "$LOCAL_FILTER" ]; then
+    $LOCAL_FILTER
+  else
+    cat
+  fi
+}
+
 if [ -f $CACHE ]; then
   cat $CACHE
 else
-  ack -af --follow --sort-files | grep -v '.cache_' | tee $CACHE 2>/dev/null
+  ack -af --follow --sort-files | filter | tee $CACHE 2>/dev/null
 fi
 
