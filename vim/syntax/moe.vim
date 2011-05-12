@@ -1,6 +1,6 @@
 
 " line containing only CAPITAL letters and spaces
-syntax match moeHeader /^[^a-z]*$/
+syntax match moeHeader /^[- A-Z0-9]*$/
 highlight link moeHeader Keyword
 
 " line ending with a space and a !
@@ -15,7 +15,7 @@ highlight link moeLessImportant Comment
 syntax match moeTag /\[[^]]\+\]/
 highlight link moeTag Identifier
 
-" line containing only ----------------------
+" line containing only '-'
 syntax match moeDivider /^-*$/
 highlight link moeDivider Comment
 
