@@ -1,0 +1,9 @@
+#!/bin/bash
+
+sed -r -e 's/(^| )select /SELECT /gi'   \
+       -e 's/ from /\nFROM /gi'         \
+       -e 's/ where /\nWHERE /gi'       \
+       -e 's/ and /\n  AND /gi'       \
+       -e 's/ group by /\nGROUP BY /gi' \
+       -e 's/ order by /\nORDER BY /gi' \
+       "$@"
