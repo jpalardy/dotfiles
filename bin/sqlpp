@@ -1,9 +1,19 @@
 #!/bin/bash
 
-sed -r -e 's/(^| )select /SELECT /gi'   \
-       -e 's/ from /\nFROM /gi'         \
-       -e 's/ where /\nWHERE /gi'       \
-       -e 's/ and /\n  AND /gi'       \
-       -e 's/ group by /\nGROUP BY /gi' \
-       -e 's/ order by /\nORDER BY /gi' \
-       "$@"
+sed -r -e 's/\bselect\b/SELECT/gi'     \
+       -e 's/\bfrom\b/FROM/gi'         \
+       -e 's/\bwhere\b/WHERE/gi'       \
+       -e 's/\band\b/AND/gi'           \
+       -e 's/\bgroup by\b/GROUP BY/gi' \
+       -e 's/\border by\b/ORDER BY/gi' \
+\
+       -e 's/(\S) +FROM /\1\nFROM /g'         \
+       -e 's/(\S) +WHERE /\1\nWHERE /g'       \
+       -e 's/(\S) +AND /\1\n  AND /g'       \
+       -e 's/(\S) +GROUP BY /\1\nGROUP BY /g' \
+       -e 's/(\S) +ORDER BY /\1\nORDER BY /g' \
+\
+       -e 's/^ +//' \
+       -e 's/^AND /  AND /' \
+       -e 's/ +/ /g' \
+       "$@" \
