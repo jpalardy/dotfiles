@@ -69,7 +69,7 @@ if $TERM == "xterm-256color"
   if $TMUX == ""
     colorscheme 256_xoria
   else
-    colorscheme 256_jellyx " until tmux fixes BCE problems
+    colorscheme 256_xoria_black " until tmux fixes BCE problems
   endif
 endif
 
