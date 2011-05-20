@@ -2,10 +2,17 @@
 
 require 'csv'
 
-begin
-  CSV.parse(ARGF.read, skip_blanks: true)
-  puts "OK"
-rescue CSV::MalformedCSVError => e
-  $stderr.puts e.message
+filenames = ARGV.dup
+
+filenames.each do |filename|
+  begin
+    lineno = 0
+    CSV.foreach(filename, skip_blanks: true) do |line|
+      lineno += 1
+    end
+    puts "OK"
+  rescue CSV::MalformedCSVError => e
+    $stderr.puts "%s:%d: %s" % [filename, lineno+1, "malformed CSV"]
+  end
 end
 

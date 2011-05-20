@@ -1,5 +1,5 @@
 
-let b:quickCheckCmd = "csvlint"
+setlocal makeprg=csvlint\ %
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

@@ -1,5 +1,5 @@
 
-let b:quickCheckCmd = "ruby -c"
+setlocal makeprg=ruby\ -c\ %
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

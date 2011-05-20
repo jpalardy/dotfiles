@@ -79,6 +79,8 @@ endif
 
 nmap <F2> :set spell!<CR>
 
+nmap <F4> :make<CR>:cw<CR>
+
 "nmap <F5>   -- mapped for SpaceHi
 nmap <F6>   :call Toggle_syntax()<CR>
 nmap <F7>   :set wrap!<CR>

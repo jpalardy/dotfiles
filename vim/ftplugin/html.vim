@@ -1,5 +1,6 @@
 
 source ~/.vim/ftplugin/xml.vim
 
-let b:quickCheckCmd = "html_errors.sh"
+setlocal makeprg=xmllint\ --html\ --noout\ %
+" inherit 'errorformat' from xml.vim
 

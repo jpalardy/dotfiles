@@ -1,5 +1,6 @@
 
-let b:quickCheckCmd = "xml_errors.sh"
+setlocal makeprg=xmllint\ --noout\ %
+setlocal errorformat=%A%f:%l:\ %.%#error\ :\ %m,%-Z%p^,%-C%.%#
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

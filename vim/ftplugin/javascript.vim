@@ -6,8 +6,6 @@ setlocal errorformat=%-P%f,
                     \%-G\ \ \ \ %.%#,
                     \%-Q
 
-nmap <F5> :make<CR>:cw<CR>
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if !exists("b:snippets")

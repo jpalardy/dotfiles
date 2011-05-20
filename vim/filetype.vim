@@ -6,7 +6,6 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.csv     setf csv
   autocmd BufNewFile,BufRead *.json    setf javascript
   autocmd BufNewFile,BufRead *.json    let b:fileFilterCmd = "json_reformat.sh"
-  autocmd BufNewFile,BufRead *.json    let b:quickCheckCmd = "json_verify.sh"
   autocmd BufNewFile,BufRead *.less    setf less
   autocmd BufNewFile,BufRead *.moe     setf moe
 augroup END
