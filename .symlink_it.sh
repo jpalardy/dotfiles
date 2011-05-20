@@ -24,6 +24,7 @@ relink .rdebugrc     $DOTFILES/rdebugrc
 
 relink .screenrc     $DOTFILES/screenrc
 relink .tmux.conf    $DOTFILES/tmux.conf
+relink .npmrc        $DOTFILES/npmrc
 
 relink .gitconfig    $DOTFILES/gitconfig
 relink .gitignore    $DOTFILES/gitignore
