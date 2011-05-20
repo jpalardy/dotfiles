@@ -179,6 +179,14 @@ au FileType man  NoSpaceHi
 au FileType scratchy NoSpaceHi
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" QUICKFIX
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" like vim-unimpaired, but without all that other code
+nmap <silent> [q :cprevious<CR>
+nmap <silent> ]q :cnext<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 source $VIMRUNTIME/ftplugin/man.vim
 
