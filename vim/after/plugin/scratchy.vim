@@ -26,3 +26,10 @@ nmap <ESC>T :botright vnew<CR><ESC>h
 " ack
 nmap <ESC>a :FPScratchy "ack -ail "<LEFT>
 
+function! Lines2arglocal() range
+  let lines = map(range(a:firstline, a:lastline), 'getline(v:val)')
+
+  execute "arglocal " . join(lines, " ")
+endfunction
+command -range Lines2arglocal <line1>,<line2>:call Lines2arglocal()
+
