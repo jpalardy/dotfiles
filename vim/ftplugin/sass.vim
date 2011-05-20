@@ -1,3 +1,0 @@
-
-let b:fileFilterCmd = "sass"
-

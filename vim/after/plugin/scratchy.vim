@@ -1,9 +1,6 @@
 
 " SCRATCHY MAPPINGS
 
-" filtering
-nnoremap <ESC>f :SplitScratchy b:fileFilterCmd . " " . expand("%")<CR>
-
 function! FPScratchy(...)
   call call(function("Scratchy"), a:000)
   setlocal cursorline
