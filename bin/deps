@@ -38,7 +38,10 @@ check_installed rvm
 echo
 check_installed tidy
 check_installed xmllint
+echo
 check_installed node.js node
+check_installed npm
+check_installed jslint
 echo
 check_installed parallel
 
