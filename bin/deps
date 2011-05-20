@@ -5,43 +5,31 @@ GREEN=$(tput setaf 2)
 
 ATTR_RESET=$(tput sgr0)
 
-# ok_failed(cmd, description)
-ok_failed() {
-  local cmd=$1
-  local description=$2
+# check_installed(description, version)
+check_installed() {
+  local description=$1
+  local version=$2
 
-  eval $cmd > /dev/null 2>&1
-
-  if [ $? == 0 ]; then
-    echo "[${GREEN}  OK  ${ATTR_RESET}]" $description
+  if [ -n "$version" ]; then
+    echo "$description -- ${version}"
   else
-    echo "[${RED}FAILED${ATTR_RESET}]" $description
+    echo "${RED}$description${ATTR_RESET}"
   fi
 }
 
-# check_installed(prg_name, cmd_name=prg_name)
-check_installed() {
-  local prg_name=${1}
-  local cmd_name=${2:-$1}
-
-  ok_failed "which $cmd_name" $prg_name
-}
-
-check_installed vim
-check_installed screen
-check_installed tmux
-check_installed git
-check_installed awk
-check_installed sed
-echo
-check_installed rvm
-echo
-check_installed tidy
-check_installed xmllint
-echo
-check_installed node.js node
-check_installed npm
-check_installed jslint
-echo
-check_installed parallel
+check_installed "vim                 " $(which -s vim      && vim --version | sed -n 1p | awk '{print $5}')
+check_installed "screen              " $(which -s screen   && screen --version | awk '{print $3}')
+check_installed "tmux                " $(which -s tmux     && tmux -V | awk '{print $2}')
+check_installed "git                 " $(which -s git      && git --version | awk '{print $3}')
+check_installed "awk                 " $(which -s awk      && awk --version | sed -n 1p | awk '{print $3}')
+check_installed "sed                 " $(which -s sed      && sed --version | sed -n 1p | awk '{print $4}')
+check_installed "parallel            " $(which -s parallel && parallel --version | sed -n 1p | awk '{print $3}')
+check_installed "tidy                " $(which -s tidy     && tidy --version | awk '{print $NF}')
+check_installed "xmllint             " $(which -s xmllint  && xmllint --version 2>&1 | sed -n 1p | awk '{print $NF}')
+check_installed "rvm                 " $(which -s rvm      && rvm --version | grep . | awk '{print $2}')
+check_installed "node.js             " $(which -s node     && node --version)
+check_installed "└─ npm              " $(which -s npm      && npm --version)
+check_installed "    ├─ jslint       " $(which -s npm      && npm ls -g | grep jslint | awk -F@ '{print $2}')
+check_installed "    ├─ less         " $(which -s npm      && npm ls -g | grep less   | awk -F@ '{print $2}')
+check_installed "    └─ coffee-script" $(which -s npm      && npm ls -g | grep coffee-script   | awk -F@ '{print $2}')
 
