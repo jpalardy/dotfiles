@@ -1,5 +1,12 @@
 
-let b:quickCheckCmd = "jslint"
+setlocal makeprg=jslint\ %
+setlocal errorformat=%-P%f,
+                    \%-G/*jslint\ %.%#*/,
+                    \%*[\ ]%n\ %l\\,%c:\ %m,
+                    \%-G\ \ \ \ %.%#,
+                    \%-Q
+
+nmap <F5> :make<CR>:cw<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
