@@ -5,7 +5,7 @@ if [ -d "$HOME/.rvm" ]; then
   source $HOME/.rvm/scripts/completion
 
   cd() {
-    cd_pushd "$@"
+    better_cd "$@"
     result=$?
     __rvm_project_rvmrc
     return $result

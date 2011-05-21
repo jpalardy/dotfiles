@@ -1,8 +1,10 @@
 
-#-------------------------------------------------
+_pwd() {
+  echo "${ATTR_RESET}${PATH_COLOR}-> $PWD$(__git_ps1)${ATTR_RESET}"
+}
 
 # replacement for 'cd'
-cd_pushd() {
+better_cd() {
   local dest=${1:-"$HOME"}
   if [ -f "$dest" ]; then
     dest=$(dirname $dest)
@@ -11,16 +13,14 @@ cd_pushd() {
   builtin cd "$dest"
   local result=$?
 
-  if [ $result == "0" ]; then
-    echo $PWD >> $HOME/.dirs
-  fi
+  _pwd
 
   return $result
 }
 
 # overwrites behavior of 'cd'
 cd() {
-  cd_pushd "$@"
+  better_cd "$@"
 }
 
 #-------------------------------------------------
@@ -38,13 +38,6 @@ go() {
 pwd_gorc() {
   pwd >> $HOME/.gorc
   vim $HOME/.gorc
-}
-
-#-------------------------------------------------
-
-# pick from a list of recent directories
-rd() {
-  pick_with_vim "tail -n20 $HOME/.dirs" "cd"
 }
 
 #-------------------------------------------------
@@ -75,6 +68,4 @@ b() {
 c() {
   pick_with_vim "ack_find" "cd"
 }
-
-#-------------------------------------------------
 
