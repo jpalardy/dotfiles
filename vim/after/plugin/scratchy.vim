@@ -4,7 +4,6 @@
 function! FPScratchy(...)
   call call(function("Scratchy"), a:000)
   setlocal cursorline
-  let @/ = "*$"
 
   nmap <buffer> <CR> 0gf
   nmap <buffer> <ESC><CR> 0<c-w>f<c-w>w
