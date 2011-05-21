@@ -5,9 +5,10 @@ _pwd() {
 
 # replacement for 'cd'
 better_cd() {
-  local dest=${1:-"$HOME"}
+  local dest="${@:-"$HOME"}"
+
   if [ -f "$dest" ]; then
-    dest=$(dirname $dest)
+    dest=$(dirname "$dest")
   fi
 
   builtin cd "$dest"
@@ -65,7 +66,7 @@ b() {
 #-------------------------------------------------
 
 # pick from a list of directories (recursive) and cd into it
-c() {
+cdf() {
   pick_with_vim "ack_find" "cd"
 }
 
