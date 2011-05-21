@@ -1,11 +1,12 @@
 augroup filetypedetect
-  autocmd BufNewFile,BufRead *.txt     setf txt
-  autocmd BufNewFile,BufRead *.spec    setf ruby
-  autocmd BufNewFile,BufRead Capfile   setf ruby
-  autocmd BufNewFile,BufRead Gemfile   setf ruby
-  autocmd BufNewFile,BufRead *.csv     setf csv
-  autocmd BufNewFile,BufRead *.less    setf less
-  autocmd BufNewFile,BufRead *.moe     setf moe
+  autocmd BufNewFile,BufRead *.txt       setf txt
+  autocmd BufNewFile,BufRead *.spec      setf ruby
+  autocmd BufNewFile,BufRead Capfile     setf ruby
+  autocmd BufNewFile,BufRead Gemfile     setf ruby
+  autocmd BufNewFile,BufRead Vagrantfile setf ruby
+  autocmd BufNewFile,BufRead *.csv       setf csv
+  autocmd BufNewFile,BufRead *.less      setf less
+  autocmd BufNewFile,BufRead *.moe       setf moe
 augroup END
 
 augroup aes256
