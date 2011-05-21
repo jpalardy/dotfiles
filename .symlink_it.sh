@@ -21,6 +21,7 @@ relink .vimrc        $DOTFILES/vimrc
 
 relink .irbrc        $DOTFILES/irbrc
 relink .rdebugrc     $DOTFILES/rdebugrc
+relink .rvmrc        $DOTFILES/rvmrc
 
 relink .screenrc     $DOTFILES/screenrc
 relink .tmux.conf    $DOTFILES/tmux.conf

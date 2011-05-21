@@ -10,5 +10,7 @@ if [ -d "$HOME/.rvm" ]; then
     __rvm_project_rvmrc
     return $result
   }
+
+  alias rgl="rvm gemset list"
 fi
 
