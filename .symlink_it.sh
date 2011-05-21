@@ -19,17 +19,17 @@ relink .bash_logout  $DOTFILES/bash_logout
 relink .vim          $DOTFILES/vim
 relink .vimrc        $DOTFILES/vimrc
 
+relink .gitconfig    $DOTFILES/gitconfig
+relink .gitignore    $DOTFILES/gitignore
+
+relink .screenrc     $DOTFILES/screenrc
+relink .tmux.conf    $DOTFILES/tmux.conf
+
 relink .irbrc        $DOTFILES/irbrc
 relink .rdebugrc     $DOTFILES/rdebugrc
 relink .rvmrc        $DOTFILES/rvmrc
 
-relink .screenrc     $DOTFILES/screenrc
-relink .tmux.conf    $DOTFILES/tmux.conf
 relink .npmrc        $DOTFILES/npmrc
-
-relink .gitconfig    $DOTFILES/gitconfig
-relink .gitignore    $DOTFILES/gitignore
-
 relink .rtorrent.rc  $DOTFILES/rtorrent.rc
 
 relink .filter       $DOTFILES/bin/ack_find_global_filter
