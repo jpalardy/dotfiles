@@ -1,6 +1,6 @@
 " fugitive.vim - A Git wrapper so awesome, it should be illegal
 " Maintainer:   Tim Pope <vimNOSPAM@tpope.org>
-" Version:      1.1
+" Version:      1.2
 " GetLatestVimScripts: 2975 1 :AutoInstall: fugitive.vim
 
 if exists('g:loaded_fugitive') || &cp
@@ -734,6 +734,9 @@ function! s:Commit(args) abort
     else
       silent execute '!'.command.' > '.outfile.' 2> '.errorfile
     endif
+    if !has('gui_running')
+      redraw!
+    endif
     if !v:shell_error
       if filereadable(outfile)
         for line in readfile(outfile)
@@ -1205,9 +1208,9 @@ function! s:Move(force,destination)
   call fugitive#reload_status()
   if s:buffer().commit() == ''
     if isdirectory(destination)
-      return 'keepalt edit '.s:fnameescape(destination)
+      return 'edit '.s:fnameescape(destination)
     else
-      return 'keepalt saveas! '.s:fnameescape(destination)
+      return 'saveas! '.s:fnameescape(destination)
     endif
   else
     return 'file '.s:fnameescape(s:repo().translate(':0:'.destination)
@@ -1609,7 +1612,6 @@ endfunction
 function! s:ReplaceCmd(cmd,...) abort
   let fn = bufname('')
   let tmp = tempname()
-  let aw = &autowrite
   let prefix = ''
   try
     if a:0 && a:1 != ''
@@ -1620,10 +1622,8 @@ function! s:ReplaceCmd(cmd,...) abort
         let prefix = 'env GIT_INDEX_FILE='.s:shellesc(a:1).' '
       endif
     endif
-    set noautowrite
-    silent exe '!'.escape(prefix.a:cmd,'%#').' > '.tmp
+    call writefile(split(system(prefix.a:cmd), "\n", 1), tmp)
   finally
-    let &autowrite = aw
     if exists('old_index')
       let $GIT_INDEX_FILE = old_index
     endif
