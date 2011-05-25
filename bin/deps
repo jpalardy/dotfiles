@@ -31,5 +31,6 @@ check_installed "node.js             " $(which -s node     && node --version)
 check_installed "└─ npm              " $(which -s npm      && npm --version)
 check_installed "    ├─ jslint       " $(which -s npm      && npm ls -g | grep jslint | awk -F@ '{print $2}')
 check_installed "    ├─ less         " $(which -s npm      && npm ls -g | grep less   | awk -F@ '{print $2}')
-check_installed "    └─ coffee-script" $(which -s npm      && npm ls -g | grep coffee-script   | awk -F@ '{print $2}')
+check_installed "    ├─ coffee-script" $(which -s npm      && npm ls -g | grep coffee-script   | awk -F@ '{print $2}')
+check_installed "    └─ uglify-js    " $(which -s npm      && npm ls -g | grep uglify-js       | awk -F@ '{print $2}')
 

@@ -6,6 +6,7 @@ function! FPScratchy(...)
   setlocal cursorline
 
   nmap <buffer> <CR> 0gf
+  vmap <buffer> <CR> :Lines2arglocal<CR>
   nmap <buffer> <ESC><CR> 0<c-w>f<c-w>w
 endfunction
 command -nargs=* FPScratchy :call FPScratchy(<args>)
