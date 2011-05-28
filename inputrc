@@ -15,4 +15,5 @@ $endif
 
 # same as Vim shortcut
 "\et": "vim-"
+"\eh": "vim-"
 
