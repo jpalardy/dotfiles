@@ -80,6 +80,7 @@ endif
 nmap <F2> :set spell!<CR>
 
 nmap <F4> :w<CR>:make<CR>:cw<CR>
+imap <F4> <ESC><F4>
 
 "nmap <F5>   -- mapped for SpaceHi
 nmap <F6>   :call Toggle_syntax()<CR>
