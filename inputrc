@@ -17,3 +17,5 @@ $endif
 "\et": "vim-"
 "\eh": "vim-"
 
+"\e ": "_pwd"
+
