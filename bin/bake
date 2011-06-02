@@ -1,0 +1,14 @@
+#!/bin/bash
+
+bake2bash.rb Bakefile > Bakefile.bash
+
+source Bakefile.bash
+
+if [ -z "$@" ]; then
+  bake_tasks
+fi
+
+for task in "$@"; do
+  invoke "$task"
+done
+

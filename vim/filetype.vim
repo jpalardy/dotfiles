@@ -4,6 +4,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.csv       setf csv
   autocmd BufNewFile,BufRead *.less      setf less
   autocmd BufNewFile,BufRead *.moe       setf moe
+  autocmd BufNewFile,BufRead Bakefile    call SetFileTypeSH("bash")
 augroup END
 
 " CURSOR ASSUMES PREVIOUS POSITION
