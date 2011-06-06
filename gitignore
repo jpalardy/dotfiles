@@ -1,8 +1,8 @@
 
 .DS_Store
-
-.cache_*
 .*.sw*
 
+.cache_*
 .filter
+.local
 
