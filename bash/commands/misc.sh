@@ -25,18 +25,6 @@ vman() {
 
 #-------------------------------------------------
 
-gri() {
-  ack -a -i --no-group "$1" ${2:-.}
-}
-
-gril() {
-  ack -a -il "$1" ${2:-.}
-}
-
-ack_ignored() {
-  (cat <(ack -af) <(ack -f)) 2>/dev/null | sort | uniq -u
-}
-
 du_sort() {
   du -b --max-depth=1 $1 | sort -n | thousands
 }
