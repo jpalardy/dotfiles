@@ -1,0 +1,49 @@
+
+TMP_FILE="tmp.bash"
+
+refresh() {
+  local url="$1"
+  local dir="$2"
+
+  rm -rf $dir
+  git clone $url $dir --depth=1
+  rm -rf $dir/.git
+
+  if [ -f "$dir/.gitignore" ]; then
+    rm "$dir/.gitignore"
+  fi
+}
+
+make_refresh_task() {
+  local plugin_name=$1
+  local url=$2
+
+  local fname=$(echo $plugin_name | sed -e 's/[-]/_/g')
+
+  cat > $TMP_FILE <<END
+bake_refresh_${fname}() {
+  refresh $url $plugin_name
+}
+END
+
+  source $TMP_FILE
+  rm $TMP_FILE
+}
+
+#-------------------------------------------------
+
+bake_refresh() {
+  for task in $(_bake_tasks "^bake_refresh_"); do
+    invoke $task
+  done
+}
+
+make_refresh_task  matchit            https://github.com/vim-scripts/matchit.zip.git
+make_refresh_task  nerdcommenter      https://github.com/scrooloose/nerdcommenter.git
+make_refresh_task  tabular            https://github.com/godlygeek/tabular.git
+make_refresh_task  textile            https://github.com/timcharper/textile.vim.git
+make_refresh_task  vim-coffee-script  https://github.com/kchmck/vim-coffee-script.git
+make_refresh_task  vim-fugitive       https://github.com/tpope/vim-fugitive.git
+make_refresh_task  vim-haml           https://github.com/tpope/vim-haml.git
+make_refresh_task  vim-json           https://github.com/leshill/vim-json.git
+
