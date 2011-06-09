@@ -1,11 +1,17 @@
 #!/bin/bash
 
-bake2bash.rb Bakefile > Bakefile.bash
+invoke() {
+  local task="$1"
 
-source Bakefile.bash
+  echo "-> $task"
+  "bake_$task"
+}
+
+source Bakefile
 
 if [ -z "$@" ]; then
-  bake_tasks
+  compgen -A function | grep '^bake_' | sed -e 's/^bake_/bake /'
+  exit
 fi
 
 for task in "$@"; do
