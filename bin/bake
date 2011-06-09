@@ -5,10 +5,16 @@ invoke() {
   "bake_$task"
 }
 
+_bake_tasks() {
+  compgen -A function | grep "^bake" | sed -e 's/^bake_//'
+}
+
 source Bakefile
 
 if [ $# -eq 0 ]; then
-  compgen -A function | grep '^bake_' | sed -e 's/^bake_/bake /'
+  for task in $(_bake_tasks); do
+    echo "bake ${task}"
+  done
   exit
 fi
 
