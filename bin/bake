@@ -7,7 +7,7 @@ invoke() {
 
 source Bakefile
 
-if [ -z "$@" ]; then
+if [ $# -eq 0 ]; then
   compgen -A function | grep '^bake_' | sed -e 's/^bake_/bake /'
   exit
 fi
@@ -15,5 +15,4 @@ fi
 for task in "$@"; do
   invoke "$task"
 done
-
 
