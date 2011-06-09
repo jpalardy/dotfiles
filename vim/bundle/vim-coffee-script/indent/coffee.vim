@@ -20,17 +20,18 @@ if exists("*GetCoffeeIndent")
   finish
 endif
 
-" Keywords and operators to indent after
-let s:INDENT_AFTER = '^\%(if\|unless\|else\|for\|while\|until\|'
-\                  . 'loop\|switch\|when\|try\|catch\|finally\|'
-\                  . 'class\)\>'
-\                  . '\|'
-\                  . '\%([([{:=]\|[-=]>\)$'
+" Keywords to indent after
+let s:INDENT_AFTER_KEYWORD = '^\%(if\|unless\|else\|for\|while\|until\|'
+\                          . 'loop\|switch\|when\|try\|catch\|finally\|'
+\                          . 'class\)\>'
+
+" Operators to indent after
+let s:INDENT_AFTER_OPERATOR = '\%([([{:=]\|[-=]>\)$'
 
 " Keywords and operators that continue a line
 let s:CONTINUATION = '\<\%(is\|isnt\|and\|or\)\>$'
 \                  . '\|'
-\                  . '\%(-\@<!-\|+\@<!+\|<\|[-=]\@<!>\|\*\|/\|%\||\|'
+\                  . '\%(-\@<!-\|+\@<!+\|<\|[-=]\@<!>\|\*\|/\@<!/\|%\||\|'
 \                  . '&\|,\|\.\@<!\.\)$'
 
 " Operators that block continuation indenting
@@ -195,14 +196,14 @@ endfunction
 function! s:GetCoffeeIndent(curlinenum)
   let prevlinenum = s:GetPrevNormalLine(a:curlinenum)
 
-  " Don't do anything if there is no previous line.
+  " Don't do anything if there's no previous line.
   if !prevlinenum
     return -1
   endif
 
   let curline = s:GetTrimmedLine(a:curlinenum)
 
-  " Try to find a matching pair.
+  " Try to find a previous matching statement. This handles outdenting.
   let matchlinenum = s:GetMatch(curline)
 
   if matchlinenum
@@ -225,7 +226,12 @@ function! s:GetCoffeeIndent(curlinenum)
   let prevline = s:GetTrimmedLine(prevlinenum)
   let previndent = indent(prevlinenum)
 
-  " Try indenting logic.
+  " Always indent after these operators.
+  if prevline =~ s:INDENT_AFTER_OPERATOR
+    return previndent + &shiftwidth
+  endif
+
+  " Indent after a continuation if it's the first.
   if prevline =~ s:CONTINUATION
     let prevprevlinenum = s:GetPrevNormalLine(prevlinenum)
     let prevprevline = s:GetTrimmedLine(prevprevlinenum)
@@ -233,20 +239,31 @@ function! s:GetCoffeeIndent(curlinenum)
     if prevprevline !~ s:CONTINUATION && prevprevline !~ s:CONTINUATION_BLOCK
       return previndent + &shiftwidth
     endif
-  elseif prevline =~ s:INDENT_AFTER || prevline =~ s:COMPOUND_ASSIGNMENT
+  endif
+
+  " Indent after these keywords and compound assignments if they aren't a
+  " single-line statement.
+  if prevline =~ s:INDENT_AFTER_KEYWORD || prevline =~ s:COMPOUND_ASSIGNMENT
     if !s:SmartSearch(prevlinenum, '\<then\>') && prevline !~ s:SINGLE_LINE_ELSE
       return previndent + &shiftwidth
     endif
-  elseif curline =~ s:DOT_ACCESS && prevline !~ s:DOT_ACCESS
+  endif
+
+  " Indent a dot access if it's the first.
+  if curline =~ s:DOT_ACCESS && prevline !~ s:DOT_ACCESS
     return previndent + &shiftwidth
-  elseif prevline =~ s:OUTDENT_AFTER
+  endif
+
+  " Outdent after these keywords if they don't have a postfix condition and
+  " aren't a single-line statement.
+  if prevline =~ s:OUTDENT_AFTER
     if !s:SmartSearch(prevlinenum, s:POSTFIX_CONDITION) ||
     \   s:SmartSearch(prevlinenum, '\<then\>')
       return previndent - &shiftwidth
     endif
   endif
 
-  " No indenting or outdenting is needed
+  " No indenting or outdenting is needed.
   return -1
 endfunction
 

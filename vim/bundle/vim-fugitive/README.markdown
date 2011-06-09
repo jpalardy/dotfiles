@@ -45,9 +45,14 @@ with the current branch in (surprise!) your statusline.
 
 Oh, and of course there's `:Git` for running any arbitrary command.
 
-Like fugitive.vim? Follow the repository on
-[GitHub](http://github.com/tpope/vim-fugitive) and vote for it on
-[vim.org](http://www.vim.org/scripts/script.php?script_id=2975).
+Screencasts
+-----------
+
+* [A complement to command line git](http://vimcasts.org/e/31)
+* [Working with the git index](http://vimcasts.org/e/32)
+* [Resolving merge conflicts with vimdiff](http://vimcasts.org/e/33)
+* [Browsing the git object database](http://vimcasts.org/e/34)
+* [Exploring the history of a git repository](http://vimcasts.org/e/35)
 
 FAQ
 ---
@@ -68,3 +73,13 @@ directory.  Edit a file from the repository.
 
 Fugitive cares about the current file, not the current working
 directory.  Edit a file from the repository.
+
+Self-Promotion
+--------------
+
+Like fugitive.vim? Follow the repository on
+[GitHub](http://github.com/tpope/vim-fugitive) and vote for it on
+[vim.org](http://www.vim.org/scripts/script.php?script_id=2975).  And if
+you're feeling especially grateful, follow tpope on
+[Twitter](http://twitter.com/tpope) and
+[Github](http://github.com/tpope).

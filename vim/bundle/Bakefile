@@ -33,7 +33,7 @@ END
 #-------------------------------------------------
 
 bake_refresh() {
-  for task in $(_bake_tasks "^bake_refresh_"); do
+  for task in $(_bake_tasks | grep  "^refresh_"); do
     invoke $task
   done
 }
