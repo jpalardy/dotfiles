@@ -2,8 +2,6 @@
 
 invoke() {
   local task="$1"
-
-  echo "-> $task"
   "bake_$task"
 }
 
@@ -17,4 +15,5 @@ fi
 for task in "$@"; do
   invoke "$task"
 done
+
 
