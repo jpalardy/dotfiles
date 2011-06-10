@@ -2,7 +2,13 @@
 
 invoke() {
   local task="$1"
-  "bake_$task"
+
+  if [ -n "$(_bake_tasks | grep "^${task}$")" ]; then
+    bake_$task
+  else
+    echo >&2 "No such task: \"$task\""
+    exit 1
+  fi
 }
 
 _bake_tasks() {
