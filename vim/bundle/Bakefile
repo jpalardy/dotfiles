@@ -18,10 +18,8 @@ make_refresh_task() {
   local plugin_name=$1
   local url=$2
 
-  local fname=$(echo $plugin_name | sed -e 's/[-]/_/g')
-
   cat > $TMP_FILE <<END
-bake_refresh_${fname}() {
+bake_refresh:${plugin_name}() {
   refresh $url $plugin_name
 }
 END
@@ -33,7 +31,7 @@ END
 #-------------------------------------------------
 
 bake_refresh() {
-  for task in $(_bake_tasks | grep  "^refresh_"); do
+  for task in $(_bake_tasks | grep  "^refresh:"); do
     invoke $task
   done
 }
