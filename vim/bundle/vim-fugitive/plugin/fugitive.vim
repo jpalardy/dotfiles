@@ -910,6 +910,16 @@ function! s:Edit(cmd,...) abort
   else
     if &previewwindow && getbufvar('','fugitive_type') ==# 'index'
       wincmd p
+      if &diff
+        let mywinnr = winnr()
+        for winnr in range(winnr('$'),1,-1)
+          if winnr != mywinnr && getwinvar(winnr,'&diff')
+            execute winnr.'wincmd w'
+            close
+            wincmd p
+          endif
+        endfor
+      endif
     endif
     return a:cmd.' '.s:fnameescape(file)
   endif
@@ -1622,7 +1632,7 @@ function! s:ReplaceCmd(cmd,...) abort
         let prefix = 'env GIT_INDEX_FILE='.s:shellesc(a:1).' '
       endif
     endif
-    call writefile(split(system(prefix.a:cmd), "\n", 1), tmp)
+    call writefile(split(system(prefix.a:cmd), "\n", 1), tmp, 'b')
   finally
     if exists('old_index')
       let $GIT_INDEX_FILE = old_index

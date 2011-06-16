@@ -10,7 +10,7 @@ indenting, and compiling.
 ### Installing and Using
 
 1. Install [tpope's][tpope] [pathogen] into `~/.vim/autoload/` and add the
-   following line to your `~/.vimrc`:
+   following line to your `vimrc`:
 
         call pathogen#runtime_append_all_bundles()
 
@@ -87,7 +87,7 @@ The command can be bound to a key like:
 #### Autocompiling
 
 To get autocompiling when a file is written (formerly `coffee_compile_on_save`),
-add an `autocmd` like this to your `~/.vimrc`:
+add an `autocmd` like this to your `vimrc`:
 
     autocmd BufWritePost *.coffee silent CoffeeMake!
 
@@ -128,10 +128,15 @@ The command can also be mapped to a visual mode key for convenience:
 
     vmap KEY :CoffeeCompile<CR>
 
+### Running some CoffeeScript
+
+The `CoffeeRun` command compiles the current file or selected snippet and runs
+the resulting JavaScript. Output is shown at the bottom of the screen.
+
 ### Customizing
 
 These customizations can be enabled or disabled by adding the relevant `let`
-statement to your `~/.vimrc`.
+statement to your `vimrc`.
 
 #### Fold by indentation
 
