@@ -4,7 +4,7 @@ $1 < min  {min = $1}
 $1 > max  {max = $1}
           {sum+=$1; sumsq+=$1*$1}
 END {
-  print "lines: ", NR;
+  print "count: ", NR;
   print "min:   ", min;
   print "max:   ", max;
   print "sum:   ", sum;
