@@ -1,0 +1,30 @@
+#!/bin/bash
+
+die() {
+  echo >&2 "$1"
+  exit 1
+}
+
+#-------------------------------------------------
+
+DST_FILE="$HOME/.farpoint"
+
+if [ $# -lt 1 ]; then
+  $EDITOR "$DST_FILE"
+  exit
+fi
+
+if [ ! -f "$DST_FILE" ]; then
+  die "$DST_FILE does not exist"
+fi
+
+DST=$(cat "$DST_FILE")
+
+if [ ! -d "$DST" ]; then
+  die "directory $DST does not exist"
+fi
+
+#-------------------------------------------------
+
+mv -iv "$@" "$DST"
+
