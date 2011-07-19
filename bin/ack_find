@@ -27,6 +27,6 @@ filter() {
 if [ -f $CACHE ]; then
   cat $CACHE
 else
-  ack -af --follow --sort-files | filter | tee $CACHE 2>/dev/null
+  ack -af --sort-files | filter | tee $CACHE 2>/dev/null
 fi
 
