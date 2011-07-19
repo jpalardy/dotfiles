@@ -5,3 +5,7 @@ ATTR_RESET=$(tput sgr0)
 
 PS1='\[${PS1_COLOR}\]\h\[${ATTR_RESET}\] '
 
+simple_PS1() {
+  PS1='\[${PS1_COLOR}\]#\[${ATTR_RESET}\] '
+}
+
