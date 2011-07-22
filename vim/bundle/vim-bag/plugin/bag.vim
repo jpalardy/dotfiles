@@ -1,4 +1,4 @@
 
-nmap ,b :r!bag<CR>
-vmap ,b !bag<CR>
+nmap ,b :r !bag<CR>
+vmap ,b :w !bag<CR>
 
