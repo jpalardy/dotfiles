@@ -4,8 +4,9 @@ export DB_ADAPTER="sqlite"
 export DB_FILENAME="db/development.sqlite3"
 
 # mysql
-export DB_ADAPTER="mysql"
+export DB_ADAPTER="postgresql"
 export DB_HOST="localhost"
+export DB_PORT="5432"
 export DB_NAME=""
 export DB_USER=""
 
