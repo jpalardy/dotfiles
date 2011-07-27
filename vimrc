@@ -163,11 +163,6 @@ nmap \<down>  :rightbelow new<CR>
 let g:spacehi_tabcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
 let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow guifg=Blue guibg=Yellow"
 
-"let g:spacehi_tabcolor="ctermfg=1 cterm=underline"
-"let g:spacehi_tabcolor=g:spacehi_tabcolor . " guifg=red gui=underline"
-"let g:spacehi_spacecolor="ctermfg=4 cterm=underline"
-"let g:spacehi_spacecolor=g:spacehi_spacecolor . " guifg=blue gui=underline"
-
 autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
 au FileType help NoSpaceHi
 au FileType diff NoSpaceHi
