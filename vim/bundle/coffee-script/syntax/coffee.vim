@@ -36,7 +36,7 @@ hi def link coffeeConditional Conditional
 syn match coffeeException /\<\%(try\|catch\|finally\)\>/
 hi def link coffeeException Exception
 
-syntax match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/
+syn match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/
 hi def link coffeeOperator Operator
 
 syn match coffeeKeyword /\<\%(new\|in\|of\|by\|and\|or\|not\|is\|isnt\|class\|extends\|super\|own\|do\)\>/
@@ -48,17 +48,11 @@ hi def link coffeeBoolean Boolean
 syn match coffeeGlobal /\<\%(null\|undefined\)\>/
 hi def link coffeeGlobal Type
 
-" Keywords reserved by the language
-syn cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
-\                                   coffeeConditional,coffeeException,
-\                                   coffeeOperator,coffeeKeyword,
-\                                   coffeeBoolean,coffeeGlobal
-
 " A special variable
 syn match coffeeSpecialVar /\<\%(this\|prototype\|arguments\)\>/
 " An @-variable
 syn match coffeeSpecialVar /@\%(\I\i*\)\?/
-hi def link coffeeSpecialVar Type
+hi def link coffeeSpecialVar Special
 
 " A class-like name that starts with a capital letter
 syn match coffeeObject /\<\u\w*\>/
@@ -98,7 +92,7 @@ syn match coffeeAssignSymbols /:\@<!::\@!\|++\|--\|\%(\s\zs\%(and\|or\)\|&&\|||\
 \                             contained
 hi def link coffeeAssignSymbols SpecialChar
 
-syn match coffeeAssignBrackets /\[.\+\]/ contained contains=TOP,coffeeAssign
+syn match coffeeAssignBrackets /\[.\+\]/ contained contains=@coffeeAll
 
 " A destructuring assignment
 syn match coffeeAssign /[}\]]\@<=\s*==\@!>\@!/ contains=coffeeAssignSymbols
@@ -107,7 +101,7 @@ syn match coffeeAssign /\%(++\|--\)\s*\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*/
 \                      contains=@coffeeIdentifier,coffeeAssignSymbols,
 \                                coffeeAssignBrackets
 " A normal assignment, or a post-increment or post-decrement assignment
-syn match coffeeAssign /\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*\%(++\|--\|\s*\%(and\|or\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)\?=\@<!==\@!>\@!\)/
+syn match coffeeAssign /\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*\%(++\|--\|\s*\%(and\|or\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)\?=[=>]\@!\)/
 \                      contains=@coffeeIdentifier,coffeeAssignSymbols,
 \                                coffeeAssignBrackets
 hi def link coffeeAssign Identifier
@@ -165,8 +159,8 @@ syn region coffeeEmbed matchgroup=coffeeEmbedDelim
 hi def link coffeeEmbedDelim Delimiter
 
 syn region coffeeInterp matchgroup=coffeeInterpDelim
-\                       start=/\#{/ end=/}/
-\                       contained contains=TOP
+\                       start=/#{/ end=/}/
+\                       contained contains=@coffeeAll,coffeeAssign,coffeeCurlies
 hi def link coffeeInterpDelim Delimiter
 
 " A string escape sequence
@@ -207,8 +201,24 @@ if !exists("coffee_no_trailing_semicolon_error")
 endif
 
 " Ignore reserved words in dot-properties.
-syn match coffeeDot /\.\@<!\.\i\+/ contains=ALLBUT,@coffeeReserved,
-\                                                   coffeeReservedError
-\                                  transparent
+syn match coffeeDot /\.\@<!\.\i\+/
+
+" Allows interpolations with nested curlies
+syn region coffeeCurlies start=/{/ end=/}/ contained
+\                                          contains=@coffeeAll,coffeeCurlies 
+
+" This is used instead of TOP to keep things coffee-specific for good
+" embedding. Errors and `contained` groups aren't included.
+"
+" HACK: coffeeAssign isn't included until assignments are less stupid.
+syn cluster coffeeAll contains=coffeeStatement,coffeeRepeat,coffeeConditional,
+\                              coffeeException,coffeeOperator,coffeeKeyword,
+\                              coffeeBoolean,coffeeGlobal,coffeeSpecialVar,
+\                              coffeeObject,coffeeConstant,coffeeString,
+\                              coffeeNumber,coffeeFloat,coffeeObjAssign,
+\                              coffeeObjStringAssign,coffeeObjNumberAssign,
+\                              coffeePrototype,coffeeFunction,coffeeComment,
+\                              coffeeBlockComment,coffeeEmbed,coffeeRegex,
+\                              coffeeHeregex,coffeeHeredoc,coffeeDot
 
 let b:current_syntax = "coffee"
