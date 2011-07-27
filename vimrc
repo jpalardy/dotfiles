@@ -132,6 +132,9 @@ nmap ,d :g/<C-R>//d<CR>gg
 " OTHER MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" buffer list on tab
+nmap <tab> :buffers<CR>:buffer<Space>
+
 " easier to reach, overrides TOP and BOTTOM of screen
 map H ^
 map L $
