@@ -1,0 +1,6 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=443
+
+This plugin will highlight tabs and trailing spaces on a line, with the ability to toggle the highlighting on and off. Using highlighting to illuminate these characters is preferrable to using listchars and "set list" because it allows you to copy from the vim window without getting listchars shrapnel in your buffer.
+
+The highlighting is done on a per buffer basis, and can be toggled on and off easily (the default binds to F3 if it&#039s unbound).
+

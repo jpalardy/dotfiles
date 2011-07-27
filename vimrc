@@ -77,33 +77,17 @@ endif
 " F-KEYS MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <F2> :set spell!<CR>
-
 nmap <F4> :w<CR>:make<CR>:cw<CR>
 imap <F4> <ESC><F4>
 
-"nmap <F5>   -- mapped for SpaceHi
-nmap <F6>   :call Toggle_syntax()<CR>
+nmap <F5>   :ToggleSpaceHi<CR>
+nmap <F6>   :set spell!<CR>
 nmap <F7>   :set wrap!<CR>
 nmap <F8>   :set paste!<CR>
 
 nmap <ESC>l :set list!<CR>
 nmap <ESC>n :set number!<CR>
 nmap <ESC><SPACE> :nohl<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TOGGLERS -- for F-keys
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function! Toggle_syntax()
-  if has("syntax_items")
-    syntax off
-    echo "syntax off"
-  else
-    syntax enable
-    echo "syntax on"
-  endif
-endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COMMA MAPPINGS
@@ -175,6 +159,14 @@ nmap \<down>  :rightbelow new<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPACEHI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:spacehi_tabcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
+let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow guifg=Blue guibg=Yellow"
+
+"let g:spacehi_tabcolor="ctermfg=1 cterm=underline"
+"let g:spacehi_tabcolor=g:spacehi_tabcolor . " guifg=red gui=underline"
+"let g:spacehi_spacecolor="ctermfg=4 cterm=underline"
+"let g:spacehi_spacecolor=g:spacehi_spacecolor . " guifg=blue gui=underline"
 
 autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
 au FileType help NoSpaceHi

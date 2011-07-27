@@ -1,10 +1,10 @@
 " vim600: set foldmethod=marker:
-" $Id: spacehi.vim,v 1.1 2005/12/02 00:53:27 jonathan Exp $
+" $Id: spacehi.vim,v 1.3 2002/10/11 20:37:13 laz Exp $
 "
 " Description:  Per buffer, togglable syntax highlighting of tabs and trailing
 "               spaces. 	 	 	 	 	 	 
 " Author:       Adam Lazur <adam@lazur.org>
-" Last Change:  $Date: 2005/12/02 00:53:27 $
+" Last Change:  $Date: 2002/10/11 20:37:13 $
 " URL:          http://adam.lazur.org/vim/spacehi.vim
 " License:      Redistribution and use of this file, with or without
 "               modification, are permitted without restriction.
@@ -53,13 +53,13 @@ let loaded_spacehi=1
 " Section: Default Global Vars {{{1
 if !exists("g:spacehi_tabcolor")
     " highlight tabs with red underline
-    let g:spacehi_tabcolor="ctermfg=White ctermbg=Red"
-    let g:spacehi_tabcolor=g:spacehi_tabcolor . " guifg=White guibg=Red"
+    let g:spacehi_tabcolor="ctermfg=1 cterm=underline"
+    let g:spacehi_tabcolor=g:spacehi_tabcolor . " guifg=red gui=underline"
 endif
 if !exists("g:spacehi_spacecolor")
     " highlight trailing spaces in blue underline
-    let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow"
-    let g:spacehi_spacecolor=g:spacehi_spacecolor . " guifg=Blue guibg=Yellow"
+    let g:spacehi_spacecolor="ctermfg=4 cterm=underline"
+    let g:spacehi_spacecolor=g:spacehi_spacecolor . " guifg=blue gui=underline"
 endif
 
 " Section: Functions {{{1
@@ -105,6 +105,6 @@ com! ToggleSpaceHi call s:ToggleSpaceHi()
 " Section: Default mappings {{{1
 " Only insert a map to ToggleSpaceHi if they don't already have a map to
 " the function and don't have something bound to F3
-if !hasmapto('ToggleSpaceHi') && maparg("<F5>") == ""
-  map <silent> <unique> <F5> :ToggleSpaceHi<CR>
+if !hasmapto('ToggleSpaceHi') && maparg("<F3>") == ""
+  map <silent> <unique> <F3> :ToggleSpaceHi<CR>
 endif
