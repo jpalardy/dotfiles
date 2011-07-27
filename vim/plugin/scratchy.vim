@@ -11,7 +11,7 @@ function! Scratchy(...)
 
   setlocal filetype=scratchy
   setlocal buftype=nofile
-  setlocal bufhidden=hide
+  setlocal bufhidden=delete
   setlocal noswapfile
 
   if !empty(a:000)
