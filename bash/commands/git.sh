@@ -12,7 +12,7 @@ complete -F _git_diff -o default git_diff
 #-------------------------------------------------
 
 glg() {
-  git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative
+  git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative "$@"
 }
 
 gln() {
