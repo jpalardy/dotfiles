@@ -14,6 +14,7 @@ complete -F _git_diff -o default git_diff
 glg() {
   git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset' --abbrev-commit --date=relative "$@"
 }
+complete -F _git_log -o default glg
 
 gln() {
   git log --name-only "$@"
@@ -27,11 +28,6 @@ git_mod() {
 }
 
 #-------------------------------------------------
-
-git_track() {
-  git checkout --track -b ${1##*/} $1
-}
-complete -F _git_branch -o default git_track
 
 git_attach() {
   git remote add origin $1
