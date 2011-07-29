@@ -4,6 +4,6 @@ manfiles() {
 }
 
 man_() {
-  pick_with_vim manfiles man
+  pick_with_vim manfiles vman
 }
 
