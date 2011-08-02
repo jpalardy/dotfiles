@@ -8,6 +8,7 @@
   co = checkout
   out = !git log $(git rev-list --max-count=1 --simplify-by-decoration HEAD^)..
   in =  log HEAD..FETCH_HEAD
+  ignored = ls-files --others -i --exclude-standard
 [diff]
   noprefix = true
 [push]
