@@ -3,7 +3,11 @@
 syntax match moeHeader /^[- A-Z0-9]*$/
 highlight link moeHeader Keyword
 
-" line ending with a space and a !
+" line ending with a space and <-
+syntax match moeHighlight /.* <-$/
+highlight link moeHighlight Todo
+
+" line ending with a space and !
 syntax match moeImportant /.* !$/
 highlight link moeImportant Error
 
