@@ -116,6 +116,8 @@ nmap ,d :g/<C-R>//d<CR>gg
 " OTHER MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+nmap <silent> Q :qa<CR>
+
 " buffer list on tab
 nmap <tab> :buffers<CR>:buffer<Space>
 
