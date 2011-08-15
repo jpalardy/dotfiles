@@ -27,6 +27,10 @@ highlight link moeDivider Comment
 syntax match moeDate /\d\d\d\d-\d\d-\d\d/
 highlight link moeDate Number
 
+" a phone number
+syntax match moeDate /\d\d\d.\d\d\d.\d\d\d\d/
+highlight link moeDate Number
+
 " a URL
 syntax match moeURL /https\?:[^ ]*/
 highlight link moeURL Comment
