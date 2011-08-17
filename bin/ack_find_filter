@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cat > .filter <<END
+#!/bin/bash
+
+cat "\$@" | sed_filter '(^|\/)\.'
+
+END
+
+chmod +x .filter
+

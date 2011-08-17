@@ -32,5 +32,5 @@ relink .rvmrc        $DOTFILES/rvmrc
 relink .npmrc        $DOTFILES/npmrc
 relink .rtorrent.rc  $DOTFILES/rtorrent.rc
 
-relink .filter       $DOTFILES/bin/ack_find_global_filter
+ack_find_filter
 
