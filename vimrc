@@ -81,9 +81,13 @@ nmap <F4> :w<CR>:make<CR>:cw<CR>
 imap <F4> <ESC><F4>
 
 nmap <F5>   :ToggleSpaceHi<CR>
+imap <F5>   <C-o><F5>
 nmap <F6>   :set spell!<CR>
+imap <F6>   <C-o><F6>
 nmap <F7>   :set wrap!<CR>
+imap <F7>   <C-o><F7>
 nmap <F8>   :set paste!<CR>
+imap <F8>   <C-o><F8>
 
 nmap <ESC>l :set list!<CR>
 nmap <ESC>n :set number!<CR>
