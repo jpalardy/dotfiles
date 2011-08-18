@@ -1,6 +1,6 @@
 
 " line containing only CAPITAL letters and spaces
-syntax match moeHeader /^[- A-Z0-9]*$/
+syntax match moeHeader /^[- A-Z0-9']*$/
 highlight link moeHeader Keyword
 
 " line ending with a space and <-
