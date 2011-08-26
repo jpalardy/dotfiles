@@ -32,7 +32,6 @@ git_mod() {
 git_attach() {
   git remote add origin $1
   git push origin master
-  git config --add branch.master.remote origin
-  git config --add branch.master.merge  refs/heads/master
+  git branch --set-upstream master origin/master
 }
 
