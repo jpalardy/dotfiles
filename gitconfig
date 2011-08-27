@@ -4,11 +4,12 @@
 [color]
   ui = auto
 [alias]
-  st = status --short
-  co = checkout
-  out = log FETCH_HEAD..HEAD
-  in =  log HEAD..FETCH_HEAD
+  st      = status --short
+  co      = checkout
+  out     = log FETCH_HEAD..HEAD
+  in      = log HEAD..FETCH_HEAD
   ignored = ls-files --others -i --exclude-standard
+  ffm     = merge --ff-only FETCH_HEAD
 [diff]
   noprefix = true
 [push]
