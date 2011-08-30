@@ -2,7 +2,16 @@
 alias ls='ls --color=auto'
 alias ll='ls -l'
 alias l='ls -l'
-alias h='history 25'
+
+h() {
+  local COUNT=${COUNT:-25}
+
+  if [ -z "$@" ]; then
+    history $COUNT
+  else
+    history | ack "$@" | tail -n $COUNT
+  fi
+}
 
 # -F : don't page if less than one screen
 # -i : ignore-case
