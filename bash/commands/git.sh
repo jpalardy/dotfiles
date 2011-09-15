@@ -35,3 +35,9 @@ git_attach() {
   git branch --set-upstream master origin/master
 }
 
+#-------------------------------------------------
+
+git_status_vim() {
+  FILTER="awk '{print \$2}'" pick_with_vim "git status --short" "vim"
+}
+
