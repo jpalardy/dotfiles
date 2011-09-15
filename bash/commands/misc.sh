@@ -47,7 +47,7 @@ size_sort() {
 alias apg='apg -n 20 -m 8 -M SNCL -t'
 
 rm_caches() {
-  find . -name '.cache_*' -print0 | xargs -0 rm -v 2>/dev/null
+  ack -ag '\.cache_' --print0 | xargs -0 rm -v 2>/dev/null
 }
 
 serve() {
