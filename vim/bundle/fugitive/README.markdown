@@ -43,7 +43,8 @@ GitHub, `git instaweb` will be spun up instead.
 Add `%{fugitive#statusline()}` to `'statusline'` to get an indicator
 with the current branch in (surprise!) your statusline.
 
-Oh, and of course there's `:Git` for running any arbitrary command.
+Last but not least, there's `:Git` for running any arbitrary command,
+and `Git!` to open the output of a command in a temp file.
 
 Screencasts
 -----------
@@ -66,6 +67,10 @@ then simply copy and paste:
 
 Once help tags have been generated, you can view the manual with
 `:help fugitive`.
+
+If your Vim version is below 7.2, I recommend also installing
+[vim-git](https://github.com/tpope/vim-git) for syntax highlighting and
+other Git niceties.
 
 FAQ
 ---
@@ -116,9 +121,9 @@ If your [commit message sucks](http://stopwritingramblingcommitmessages.com/),
 I'm not going to accept your pull request.  I've explained very politely
 dozens of times that
 [my general guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
-are absolute rules on on my own repositories, so I may lack the energy
-to explain it to you yet another time.  And please, if I ask you to
-change something, `git commit --amend`.
+are absolute rules on my own repositories, so I may lack the energy to
+explain it to you yet another time.  And please, if I ask you to change
+something, `git commit --amend`.
 
 Beyond that, don't be shy about asking before patching.  What takes you
 hours might take me minutes simply because I have both domain knowledge
@@ -140,4 +145,5 @@ you're feeling especially charitable, follow [tpope](http://tpo.pe/) on
 License
 -------
 
-Distributable under the same terms as Vim itself.  See `:help license`.
+Copyright (c) Tim Pope.  Distributed under the same terms as Vim itself.
+See `:help license`.

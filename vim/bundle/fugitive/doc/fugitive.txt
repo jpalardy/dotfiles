@@ -1,38 +1,14 @@
 *fugitive.txt*  A Git wrapper so awesome, it should be illegal
 
-Author:  Tim Pope <vimNOSPAM@tpope.org>         *fugitive-author*
+Author:  Tim Pope <http://tpo.pe/>
 License: Same terms as Vim itself (see |license|)
 
 This plugin is only available if 'compatible' is not set.
 
 INTRODUCTION                                    *fugitive*
 
-Install in ~/.vim, or in ~\vimfiles if you're on Windows and feeling lucky.
-Vim 7.2 is recommended as it ships with syntax highlighting for many Git file
-types.
-
-If you're in a hurry to get started, here are some things to try:
-
-In any file in your repository, run |:Gedit| HEAD.  Press <CR> to jump to the
-current branch.  Press <CR> again to jump to the top most commit.  Keep using
-<CR> to explore parent commits, trees, and blobs.  Use C in a tree or blob to
-get back to the commit.
-
-Edit a file in the work tree and make some changes.  Use |:Gdiff| to open up
-the indexed version.  Use |do| and |dp| on various hunks to bring the files in
-sync, or use |:Gread| to pull in all changes.  Write the indexed version to
-stage the file.
-
-Run |:Gstatus| to check your repository's status.  Use "-" to stage and reset
-files and "p" to add/reset --patch them.  Invoke |:Gcommit| to commit your
-changes.
-
-Run |:Gblame| in a work tree file to see a blame in a vertical split.  Press
-<CR> on any line to reopen and reblame that file as it stood in that commit.
-Press o or O on any line to inspect that commit in a split or a tab.
-
-Run |:Ggrep| to search the work tree or history.  Run |:Gmove| to rename a
-file.  Run |:Gremove| to delete a file.
+Whenever you edit a file from a Git repository, a set of commands is defined
+that serve as a gateway to Git.
 
 COMMANDS                                        *fugitive-commands*
 
@@ -43,6 +19,10 @@ that are part of Git repositories).
 :Git [args]             Run an arbitrary git command. Similar to :!git [args]
                         but chdir to the repository tree first.
 
+                                                *fugitive-:Git!*
+:Git! [args]            Like |:Git|, but capture the output into a temp file,
+                        and edit that temp file.
+
                                                 *fugitive-:Gcd*
 :Gcd [directory]        |:cd| relative to the repository.
 
@@ -51,15 +31,28 @@ that are part of Git repositories).
 
                                                 *fugitive-:Gstatus*
 :Gstatus                Bring up the output of git-status in the preview
-                        window.  In addition to standard motions, you can
-                        use <C-N> and <C-P> to jump from filename to
-                        filename.  Press C to invoke |:Gcommit|.  Press D to
-                        |:Gdiff| the file on the cursor line, or ds to
-                        |:Gsdiff|.  Press - to stage or unstage the file on
-                        the cursor line.  Press p to do so on a per hunk basis
-                        (--patch).  All of D, -, and p have a different,
-                        sensible (and hopefully intuitive) behavior when
-                        invoked on a heading rather than a file name.
+                        window.  The following maps, which work on the cursor
+                        line file where sensible, are provided:
+
+                        <C-N> next file
+                        <C-P> previous file
+                        <CR>  |:Gedit|
+                        -     |:Git| add
+                        -     |:Git| reset (staged files)
+                        C     |:Gcommit|
+                        cA    |Gcommit| --amend --reuse-message=HEAD
+                        ca    |Gcommit| --amend
+                        D     |:Gdiff|
+                        ds    |:Gsdiff|
+                        dp    |:Git!| diff (p for patch; use :Gw to apply)
+                        dp    |:Git| add --intent-to-add (untracked files)
+                        dv    |:Gvdiff|
+                        O     |:Gtabedit|
+                        o     |:Gsplit|
+                        p     |:Git| add --patch
+                        p     |:Git| reset --patch (staged files)
+                        q     close status
+                        R     reload status
 
                                                 *fugitive-:Gcommit*
 :Gcommit [args]         A wrapper around git-commit.  If there is nothing
@@ -93,10 +86,15 @@ that are part of Git repositories).
 :Gvsplit [revision]     |:vsplit| a |fugitive-revision|.
 
                                                 *fugitive-:Gtabedit*
-:Gtabedit [revision]    |:tabedit| a |fugitive-revision|
+:Gtabedit [revision]    |:tabedit| a |fugitive-revision|.
 
                                                 *fugitive-:Gpedit*
-:Gpedit [revision]      |:pedit| a |fugitive-revision|
+:Gpedit [revision]      |:pedit| a |fugitive-revision|.
+
+:Gsplit! [args]                 *fugitive-:Gsplit!* *fugitive-:Gvsplit!*
+:Gvsplit! [args]                *fugitive-:Gtabedit!* *fugitive-:Gpedit!*
+:Gtabedit! [args]       Like |:Git!|, but open the resulting temp file in a
+:Gpedit! [args]         split, tab, or preview window.
 
                                                 *fugitive-:Gread*
 :Gread [revision]       Empty the buffer and |:read| a |fugitive-revision|.
@@ -106,6 +104,12 @@ that are part of Git repositories).
 
 :{range}Gread [revision]
                         |:read| in a |fugitive-revision| after {range}.
+
+                                                *fugitive-:Gread!*
+:Gread! [args]          Empty the buffer and |:read| the output of a Git
+                        command.  For example, :Gread! show HEAD:%.
+
+:{range}Gread! [args]  |:read| the output of a Git command after {range}.
 
                                                 *fugitive-:Gwrite*
 :Gwrite                 Write to the current file's path and stage the results.
@@ -160,6 +164,14 @@ that are part of Git repositories).
                         reblame the file as it was in that commit.  You can
                         give any of ltwfsMC as flags and they will be passed
                         along to git-blame.
+
+                        In a blame buffer on any line, one can press <CR> to
+                        reblame at that commit, ~ to reblame at that commit's
+                        [count]th first grandparent (like HEAD~[count]), or P
+                        to reblame at that commit's [count]th parent (like
+                        HEAD^[count]).  Press o or O to open up that commit
+                        in a horizontal of vertical split.  Pressing q will
+                        close the blame buffer.
 
 :[range]Gblame [flags]  Run git-blame on the given range.
 
