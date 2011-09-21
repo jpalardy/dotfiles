@@ -46,3 +46,5 @@ make_refresh_task  haml           https://github.com/tpope/vim-haml.git
 make_refresh_task  json           https://github.com/leshill/vim-json.git
 make_refresh_task  slime          https://github.com/jpalardy/vim-slime
 make_refresh_task  spacehi        https://github.com/vim-scripts/spacehi.vim.git
+make_refresh_task  puppet         https://github.com/rodjek/vim-puppet.git
+
