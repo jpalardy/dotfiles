@@ -1,6 +1,6 @@
 
 git_vimdiff() {
-  GIT_PAGER= GIT_EXTERNAL_DIFF=git_diff_wrapper git diff -w "$@"
+  git difftool
 }
 complete -F _git_diff -o default git_vimdiff
 

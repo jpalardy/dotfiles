@@ -12,6 +12,7 @@
   ffm     = merge --ff-only FETCH_HEAD
 [diff]
   noprefix = true
+  tool = vimdiff
 [push]
   default = current
 [core]
