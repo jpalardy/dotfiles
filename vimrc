@@ -23,12 +23,13 @@ set backspace=indent,eol,start
 set nowrap
 set linebreak
 
+" don't load modelines...
 set nomodeline
 
-" MOUSE with VIM ! (YES)
-" set mouse=a
-" set ttymouse=xterm2
-set scrolloff=1
+" Search options
+set incsearch
+set hlsearch
+set ignorecase
 
 " Indentation options
 set autoindent
@@ -37,6 +38,7 @@ set softtabstop=2
 set shiftwidth=2
 set tabstop=2
 set virtualedit=block
+set scrolloff=1
 
 set equalprg=
 set grepprg=ack\ -ai
@@ -44,26 +46,10 @@ set grepprg=ack\ -ai
 " don't insert 2 spaces after punctuation
 set nojoinspaces
 
-" Search options
-set incsearch
-set hlsearch
-set ignorecase
-
-" Print options ...
-set printoptions=header:0
-
 " vimdiff
 set diffopt=filler,iwhite
 
-" This is useful for debugging
-" set verbose=9
-
 set spellcapcheck=
-
-if has('gui_running')
-  set guioptions=
-  set guifont=Inconsolata\ 16
-endif
 
 if $TERM == "xterm-256color"
   if $TMUX == ""
@@ -73,6 +59,9 @@ if $TERM == "xterm-256color"
   endif
 endif
 
+" This is useful for debugging
+" set verbose=9
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPACEHI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -81,14 +70,12 @@ let g:spacehi_tabcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
 let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow guifg=Blue guibg=Yellow"
 
 autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
-au FileType help NoSpaceHi
-au FileType diff NoSpaceHi
-au FileType man  NoSpaceHi
-au FileType scratchy NoSpaceHi
+autocmd FileType help     NoSpaceHi
+autocmd FileType diff     NoSpaceHi
+autocmd FileType man      NoSpaceHi
+autocmd FileType scratchy NoSpaceHi
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-source $VIMRUNTIME/ftplugin/man.vim
 
 " used by :TOhtml
 let g:html_use_css=0
