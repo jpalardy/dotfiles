@@ -1,12 +1,11 @@
 
-ssh_hosts() {
-  cat ~/.ssh/config | awk '/^Host [^*]/ {print $2}'
-}
+warp() {
+  local SOURCE="$HOME/.warp"
+  if [ ! -f "$SOURCE" ]; then
+    echo "$SOURCE does not exist..."
+    return 1
+  fi
 
-# pick from directories in $HOME/.gorc and cd into it
-_ssh() {
-  pick_with_vim "ssh_hosts" "ssh" $1
+  FILTER="awk '{print \$1}'" pick_with_vim "cat $SOURCE" "ssh" $1
 }
-
-alias tkh="$EDITOR $HOME/.ssh/known_hosts"
 
