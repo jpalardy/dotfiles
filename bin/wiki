@@ -1,0 +1,22 @@
+#!/bin/bash
+
+setup() {
+  screen -S wiki -X title gtd
+  screen -S wiki -X stuff "vim -O gtd/tasks.moe gtd/research.moe"
+
+  screen -S wiki -X screen
+  screen -S wiki -X title forgetful
+  screen -S wiki -X stuff "clear; cd supermemo; ls -l"
+
+  screen -S wiki -X screen
+  screen -S wiki -X title working
+  screen -S wiki -X stuff "clear; ls -l"
+
+  screen -S wiki -X select 0
+}
+
+(sleep 1; setup) &
+
+cd ~/Documents/wiki
+screen -S wiki
+
