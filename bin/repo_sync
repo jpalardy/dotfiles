@@ -1,0 +1,9 @@
+#!/bin/bash
+
+REPOS=${REPOS:?"environment variable REPOS is empty"}
+
+for repo in $REPOS; do
+  echo $repo
+  cd $repo; git fetch
+done
+

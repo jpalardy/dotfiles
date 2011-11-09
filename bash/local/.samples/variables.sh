@@ -14,3 +14,5 @@ export DB_USER=""
 export AMAZON_ACCESS_KEY_ID=""
 export AMAZON_SECRET_ACCESS_KEY=""
 
+export REPOS="$HOME/dotfiles/ $HOME/Documents/wiki/"
+
