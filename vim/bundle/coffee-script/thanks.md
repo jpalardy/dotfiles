@@ -24,6 +24,10 @@ code:
     Maciej Konieczny (narfdotpl):
           Fix funny typo
 
+    Matt Sacks (mattsa):
+          Javascript omni-completion
+          coffee_compile_vert option
+
     Nick Stenning (nickstenning):
           Fold by indentation for coffeescript
 
@@ -32,6 +36,9 @@ code:
 
     Stéphan Kochen (stephank):
           Initial HTML CoffeeScript highlighting
+
+    Sven Felix Oberquelle (Svelix):
+          Haml CoffeeScript highlighting
 
     Wei Dai (clvv):
           Fix the use of Vim built-in make command.

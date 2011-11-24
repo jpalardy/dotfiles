@@ -24,7 +24,7 @@ endfunction
 
 function! TextileRenderFile(lines, filename)
   let html = TextileRender(getbufline(bufname("%"), 1, '$'))
-  let html = "<html><head><title>" . bufname("%") . "</title><body>\n" . html . "\n</body></html>"
+  let html = "<html><head><title>" . bufname("%") . "</title></head><body>\n" . html . "\n</body></html>"
   return writefile(split(html, "\n"), a:filename)
 endfunction
 

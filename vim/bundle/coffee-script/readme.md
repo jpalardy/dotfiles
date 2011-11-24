@@ -1,18 +1,19 @@
 This project adds [CoffeeScript] support to the vim editor. It handles syntax,
 indenting, and compiling. Also included is an [eco] syntax and support for
-CoffeeScript in HTML.
+CoffeeScript in Haml and HTML.
 
 ![Screenshot](http://i.imgur.com/BV29H.png)
 
 [CoffeeScript]: http://jashkenas.github.com/coffee-script/
 [eco]: https://github.com/sstephenson/eco
 
-### Simple Installation
+### Install from a Zipball
 
 This is the quickest way to get things running.
 
 1. Download the latest zipball from [vim.org][zipball-vim] or
-   [github][zipball-github].
+   [github][zipball-github]. The latest version on github is under Download
+   Packages (don't use the Download buttons.)
 
 2. Extract the archive into `~/.vim/`:
 
@@ -21,13 +22,13 @@ This is the quickest way to get things running.
 These steps are also used to update the plugin.
 
 [zipball-vim]: http://www.vim.org/scripts/script.php?script_id=3590
-[zipball-github]: https://github.com/kchmck/vim-coffee-script/archives/master
+[zipball-github]: https://github.com/kchmck/vim-coffee-script/downloads
 
-### Pathogen Installation
+### Install with Pathogen
 
 Since this plugin has rolling versions based on git commits, using pathogen and
 git is the preferred way to install. The plugin ends up contained in its own
-directory, and updates are just a `git pull` away.
+directory and updates are just a `git pull` away.
 
 1. Install tpope's [pathogen] into `~/.vim/autoload/` and add this line to your
    `vimrc`:
@@ -35,7 +36,7 @@ directory, and updates are just a `git pull` away.
         call pathogen#infect()
 
     To get the all the features of this plugin, make sure you also have a
-    `filetype plugin indent on` line.
+    `filetype plugin indent on` line in there.
 
 [pathogen]: http://www.vim.org/scripts/script.php?script_id=2332
 
@@ -89,9 +90,13 @@ Options given to `CoffeeMake` are passed along to `coffee`:
 
     :CoffeeMake --bare
 
+`CoffeeMake` can be manually loaded for a file with:
+
+    :compiler coffee
+
 #### Recompile on write
 
-To recompile a file when it is written, add an `autocmd` like this to your
+To recompile a file when it's written, add an `autocmd` like this to your
 `vimrc`:
 
     au BufWritePost *.coffee silent CoffeeMake!
@@ -137,18 +142,26 @@ Using `vert` splits the CoffeeCompile buffer vertically instead of horizontally:
 
     :CoffeeCompile vert
 
+Set the `coffee_compile_vert` variable to split the buffer vertically by
+default:
+
+    let coffee_compile_vert = 1
+
 The initial size of the CoffeeCompile buffer can be given as a number:
 
     :CoffeeCompile 4
 
 #### Watch (live preview) mode
 
-Watch mode brings to vim the "Try CoffeeScript" live preview box on the
-CoffeeScript homepage (or something like it):
+Watch mode is like the Try CoffeeScript preview box on the CoffeeScript
+homepage:
 
   ![Watch Mode](http://i.imgur.com/wIN6h.png)
   ![Watch Mode](http://i.imgur.com/GgdCo.png)
   ![Watch Mode](http://i.imgur.com/QdpAP.png)
+
+Writing some code and then exiting insert mode automatically updates the
+compiled JavaScript buffer.
 
 Use `watch` to start watching a buffer (`vert` is also recommended):
 
@@ -176,9 +189,9 @@ the resulting JavaScript. Output is shown at the bottom of the screen:
 
   ![CoffeeRun Output](http://i.imgur.com/m6UID.png)
 
-### Configuration
+### Configure Syntax Highlighting
 
-You can configure plugin behavior by adding the relevant lines to your `vimrc`.
+Add these lines to your `vimrc` to disable the relevant syntax group.
 
 #### Disable trailing whitespace error
 
@@ -201,7 +214,7 @@ they're not allowed in CoffeeScript. This can be disabled with:
 
     hi link coffeeReservedError NONE
 
-### Tuning Vim for CoffeeScript
+### Tune Vim for CoffeeScript
 
 Changing these core settings can make vim more CoffeeScript friendly.
 
