@@ -26,23 +26,6 @@ cd() {
 
 #-------------------------------------------------
 
-# pick from directories in $HOME/.gorc and cd into it
-go() {
-  if [ ! -f $HOME/.gorc ]; then
-    echo "$HOME/.gorc does not exist..."
-    return 1
-  fi
-
-  pick_with_vim "cat $HOME/.gorc" "cd" $1
-}
-
-pwd_gorc() {
-  pwd >> $HOME/.gorc
-  vim $HOME/.gorc
-}
-
-#-------------------------------------------------
-
 # HELPER -- generate the list of parent directories
 parent_dirs() {
   local path="${1:-$PWD}"
