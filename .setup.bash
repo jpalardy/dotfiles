@@ -30,7 +30,6 @@ relink .rdebugrc     $DOTFILES/rdebugrc
 relink .rvmrc        $DOTFILES/rvmrc
 
 relink .npmrc        $DOTFILES/npmrc
-relink .rtorrent.rc  $DOTFILES/rtorrent.rc
 
-ack_find_filter
+$DOTFILES/bin/ack_find_filter
 
