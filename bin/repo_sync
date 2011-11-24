@@ -3,7 +3,9 @@
 REPOS=${REPOS:?"environment variable REPOS is empty"}
 
 for repo in $REPOS; do
-  echo $repo
+  echo "##" $repo
   cd $repo; git fetch
+  git status --short --branch
+  echo
 done
 

@@ -4,7 +4,7 @@
 [color]
   ui = auto
 [alias]
-  st      = status --short
+  st      = status --short --branch
   co      = checkout
   out     = log FETCH_HEAD..HEAD
   in      = log HEAD..FETCH_HEAD
