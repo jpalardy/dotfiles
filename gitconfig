@@ -9,7 +9,8 @@
   out     = log FETCH_HEAD..HEAD
   in      = log HEAD..FETCH_HEAD
   ignored = ls-files --others -i --exclude-standard
-  ffm     = merge --ff-only FETCH_HEAD
+  ffm     = merge --ff-only
+  ffp     = pull --ff-only
 [diff]
   noprefix = true
   tool = vimdiff

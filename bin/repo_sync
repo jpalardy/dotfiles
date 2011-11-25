@@ -4,7 +4,7 @@ REPOS=${REPOS:?"environment variable REPOS is empty"}
 
 for repo in $REPOS; do
   echo "##" $repo
-  cd $repo; git fetch
+  cd $repo; git pull --ff-only
   git status --short --branch
   echo
 done
