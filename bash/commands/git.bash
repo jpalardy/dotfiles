@@ -16,6 +16,11 @@ glg() {
 }
 complete -F _git_log -o default glg
 
+ga() {
+  glg --all
+}
+complete -F _git_log -o default ga
+
 gln() {
   git log --name-only "$@"
 }
