@@ -4,8 +4,8 @@ function cond_source () {
 }
 
 # variables
-source      $HOME/.bash/variables.sh
-cond_source $HOME/.bash/local/variables.sh
+source      $HOME/.bash/variables.bash
+cond_source $HOME/.bash/local/variables.bash
 
 # shell is interactive?
 if [[ $- =~ i ]]; then
@@ -13,7 +13,7 @@ if [[ $- =~ i ]]; then
   for file in $HOME/.bash/commands/*; do
     source $file
   done
-  cond_source $HOME/.bash/local/commands.sh
+  cond_source $HOME/.bash/local/commands.bash
 
   # completion
   for file in $HOME/.bash/completion/*; do
@@ -21,11 +21,11 @@ if [[ $- =~ i ]]; then
   done
 
   # shell behavior
-  source      $HOME/.bash/shell.sh
-  cond_source $HOME/.bash/local/shell.sh
+  source      $HOME/.bash/shell.bash
+  cond_source $HOME/.bash/local/shell.bash
 
   # prompt
-  source      $HOME/.bash/prompt.sh
-  cond_source $HOME/.bash/local/prompt.sh
+  source      $HOME/.bash/prompt.bash
+  cond_source $HOME/.bash/local/prompt.bash
 fi
 

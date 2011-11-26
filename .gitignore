@@ -1,4 +1,4 @@
-bash/local/*
+bash/local
 *.swp
 vim/spell/
 vim/.netrwhist
