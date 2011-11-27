@@ -1,6 +1,4 @@
 
-TMP_FILE="tmp.bash"
-
 refresh() {
   local url="$1"
   local dir="$2"
@@ -14,18 +12,15 @@ refresh() {
   fi
 }
 
-make_refresh_task() {
+refresh_task() {
   local plugin_name=$1
   local url=$2
 
-  cat > $TMP_FILE <<END
-bake_refresh:${plugin_name}() {
-  refresh $url $plugin_name
-}
-END
-
-  source $TMP_FILE
-  rm $TMP_FILE
+  eval "
+    bake_refresh:${plugin_name}() {
+      refresh $url $plugin_name
+    }
+"
 }
 
 #-------------------------------------------------
@@ -36,15 +31,15 @@ bake_refresh() {
   done
 }
 
-make_refresh_task  matchit        https://github.com/vim-scripts/matchit.zip.git
-make_refresh_task  nerdcommenter  https://github.com/scrooloose/nerdcommenter.git
-make_refresh_task  tabular        https://github.com/godlygeek/tabular.git
-make_refresh_task  textile        https://github.com/timcharper/textile.vim.git
-make_refresh_task  coffee-script  https://github.com/kchmck/vim-coffee-script.git
-make_refresh_task  fugitive       https://github.com/tpope/vim-fugitive.git
-make_refresh_task  haml           https://github.com/tpope/vim-haml.git
-make_refresh_task  json           https://github.com/leshill/vim-json.git
-make_refresh_task  slime          https://github.com/jpalardy/vim-slime
-make_refresh_task  spacehi        https://github.com/vim-scripts/spacehi.vim.git
-make_refresh_task  puppet         https://github.com/rodjek/vim-puppet.git
+refresh_task  matchit        https://github.com/vim-scripts/matchit.zip.git
+refresh_task  nerdcommenter  https://github.com/scrooloose/nerdcommenter.git
+refresh_task  tabular        https://github.com/godlygeek/tabular.git
+refresh_task  textile        https://github.com/timcharper/textile.vim.git
+refresh_task  coffee-script  https://github.com/kchmck/vim-coffee-script.git
+refresh_task  fugitive       https://github.com/tpope/vim-fugitive.git
+refresh_task  haml           https://github.com/tpope/vim-haml.git
+refresh_task  json           https://github.com/leshill/vim-json.git
+refresh_task  slime          https://github.com/jpalardy/vim-slime
+refresh_task  spacehi        https://github.com/vim-scripts/spacehi.vim.git
+refresh_task  puppet         https://github.com/rodjek/vim-puppet.git
 

@@ -1,6 +1,6 @@
 
 env_sqlite() {
-  local filename="$HOME/.source.sh"
+  local filename="$HOME/.source"
 
   cat > $filename <<END
 
@@ -14,7 +14,7 @@ END
 }
 
 env_mysql() {
-  local filename="$HOME/.source.sh"
+  local filename="$HOME/.source"
 
   cat > $filename <<END
 
@@ -30,7 +30,7 @@ END
 }
 
 env_oracle() {
-  local filename="$HOME/.source.sh"
+  local filename="$HOME/.source"
 
   cat > $filename <<END
 
