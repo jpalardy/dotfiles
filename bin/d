@@ -1,0 +1,14 @@
+#!/bin/bash
+
+GREEN=$(tput setaf 28)
+current=$(date +%Z)
+
+for tz in US/Pacific Canada/Eastern UTC Japan; do
+  if [ "$(TZ=$tz date +%Z)" == $current ]; then
+    echo -n "$GREEN"
+  fi
+
+  TZ=$tz date +"%H:%M %Z"
+  echo -n $(tput sgr0)
+done
+
