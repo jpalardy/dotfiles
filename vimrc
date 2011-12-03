@@ -51,12 +51,8 @@ set diffopt=filler,iwhite
 
 set spellcapcheck=
 
-if $TERM == "xterm-256color"
-  if $TMUX == ""
-    colorscheme 256_xoria
-  else
-    colorscheme 256_xoria_black " until tmux fixes BCE problems
-  endif
+if match($TERM, '256color$') != -1
+  colorscheme 256_xoria
 endif
 
 " This is useful for debugging
