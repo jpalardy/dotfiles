@@ -1,19 +1,20 @@
 #!/bin/bash
 
 setup() {
-  screen -S wiki -X stuff "vim -O gtd/tasks.moe gtd/research.moe"
+  tmux -L wiki send-keys "vim -O gtd/tasks.moe gtd/research.moe"
 
-  screen -S wiki -X screen
-  screen -S wiki -X stuff "clear; cd supermemo; ls -l"
+  tmux -L wiki new-window
+  tmux -L wiki send-keys "clear; cd supermemo; ls -l"
 
-  screen -S wiki -X screen
-  screen -S wiki -X stuff "clear; ls -l"
+  tmux -L wiki new-window
+  tmux -L wiki send-keys "clear; ls -l"
 
-  screen -S wiki -X select 0
+  tmux -L wiki select-window -t 0
 }
+
+cd ~/Documents/wiki
 
 (sleep 1; setup) &
 
-cd ~/Documents/wiki
-screen -S wiki
+tmux -L wiki
 
