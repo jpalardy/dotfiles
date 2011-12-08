@@ -40,6 +40,9 @@ pick_with_vim() {
   local lines=($(eval ${FILTER:-cat} "$TARGET"))
   IFS="$old_IFS"
 
+  # neat! add this line to the bash history
+  # as if we had typed it
+  history -s $2 "${lines[@]}"
   $2 "${lines[@]}"
 }
 export -f pick_with_vim
