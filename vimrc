@@ -79,6 +79,9 @@ let g:html_use_css=0
 " set in variables.sh
 let g:sql_type_default=$DB_ADAPTER
 
+" use tmux for slime
+let g:slime_target = "tmux"
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 source $HOME/.vim/mappings.vim
