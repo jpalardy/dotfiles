@@ -31,5 +31,5 @@ relink .rvmrc        $DOTFILES/rvmrc
 
 relink .npmrc        $DOTFILES/npmrc
 
-$DOTFILES/bin/ack_find_filter
+relink .filter       $DOTFILES/filter
 
