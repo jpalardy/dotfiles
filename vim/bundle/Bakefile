@@ -43,4 +43,4 @@ refresh_task  slime          https://github.com/jpalardy/vim-slime
 refresh_task  spacehi        https://github.com/vim-scripts/spacehi.vim.git
 refresh_task  puppet         https://github.com/rodjek/vim-puppet.git
 refresh_task  scala          https://github.com/derekwyatt/vim-scala.git
-
+refresh_task  clojure        https://github.com/vim-scripts/VimClojure.git
