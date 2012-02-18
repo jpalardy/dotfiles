@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 CACHE=".cache_ack_find"
 
@@ -27,6 +27,13 @@ filter() {
 if [ -f $CACHE ]; then
   cat $CACHE
 else
+  t1=$(date +%s)
   ack -af --sort-files | filter | tee $CACHE 2>/dev/null
+  t2=$(date +%s)
+
+  # if builing the cache took less than 2 seconds
+  if [ $(($t2 - $t1)) -lt 2 ]; then
+    rm $CACHE
+  fi
 fi
 
