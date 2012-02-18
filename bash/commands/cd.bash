@@ -50,6 +50,6 @@ b() {
 
 # pick from a list of directories (recursive) and cd into it
 cdf() {
-  pick_with_vim "ff" "cd"
+  pick_with_vim "ack_find" "cd"
 }
 
