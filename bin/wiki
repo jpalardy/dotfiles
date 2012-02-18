@@ -1,20 +1,20 @@
 #!/bin/bash
 
 setup() {
-  tmux -L wiki send-keys "vim -O gtd/tasks.moe gtd/research.moe"
+  tmux send-keys "vim -O gtd/tasks.moe gtd/research.moe"
 
-  tmux -L wiki new-window
-  tmux -L wiki send-keys "clear; cd supermemo; ls -l"
+  tmux new-window
+  tmux send-keys "clear; cd supermemo; ls -l"
 
-  tmux -L wiki new-window
-  tmux -L wiki send-keys "clear; ls -l"
+  tmux new-window
+  tmux send-keys "clear; ls -l"
 
-  tmux -L wiki select-window -t 0
+  tmux select-window -t 0
 }
 
 cd ~/Documents/wiki
 
 (sleep 1; setup) &
 
-tmux -L wiki
+tmux
 
