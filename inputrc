@@ -21,3 +21,5 @@ $endif
 
 "\e\e": alias-expand-line
 
+"\ev": "tmux2vim"
+
