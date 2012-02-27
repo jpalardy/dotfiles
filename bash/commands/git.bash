@@ -1,7 +1,9 @@
 
 alias git_vimdiff="git difftool"
 
-alias git_diff="git diff -w | vim -R -"
+git_diff() {
+  git diff -w "$@" | vim -R -
+}
 
 #-------------------------------------------------
 
