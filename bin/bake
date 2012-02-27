@@ -15,7 +15,8 @@ _bake_tasks() {
   compgen -A function | grep "^bake" | sed -e 's/^bake_//'
 }
 
-source Bakefile
+# I didn't know: without ./, the file is searched in the PATH
+source ./Bakefile
 
 if [ $# -eq 0 ]; then
   for task in $(_bake_tasks); do
