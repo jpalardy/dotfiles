@@ -15,6 +15,10 @@ vim_picker() {
 }
 export -f vim_picker
 
+vimgrep() {
+  vim -c "grep $1"
+}
+
 # 1st parameter is command to generate a list
 # 2nd parameter is command to run on selection
 # 3rd (optional) parameter is DIRECT selection, bypassing VIM
