@@ -20,6 +20,7 @@ env_mysql() {
 
 export DB_ADAPTER="mysql"
 export DB_HOST="${DB_HOST}"
+export DB_PORT="${DB_PORT}"
 export DB_NAME="${DB_NAME}"
 export DB_USER="${DB_USER}"
 
