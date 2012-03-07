@@ -186,7 +186,7 @@ endfunction
 function! s:GetPrevNormalLine(startlinenum)
   let curlinenum = a:startlinenum
 
-  while curlinenum > 0
+  while curlinenum
     let curlinenum = prevnonblank(curlinenum - 1)
 
     if !s:IsCommentLine(curlinenum)
@@ -237,10 +237,22 @@ function! s:GetTrimmedLine(linenum)
   \                                  '\s\+$', '', '')
 endfunction
 
-function! s:GetCoffeeIndent(curlinenum)
+function! GetCoffeeIndent(curlinenum)
+  " Don't do anything if on the first line.
+  if a:curlinenum == 1
+    return -1
+  endif
+
+  let prevlinenum = a:curlinenum - 1
+
+  " If continuing a comment, keep the indent level.
+  if s:IsCommentLine(prevlinenum)
+    return indent(prevlinenum)
+  endif
+
   let prevlinenum = s:GetPrevNormalLine(a:curlinenum)
 
-  " Don't do anything if there's no previous line.
+  " Don't do anything if there's no code before.
   if !prevlinenum
     return -1
   endif
@@ -259,7 +271,7 @@ function! s:GetCoffeeIndent(curlinenum)
   if curline =~ '^when\>' && !s:SmartSearch(prevlinenum, '\<switch\>')
     let linenum = a:curlinenum
 
-    while linenum > 0
+    while linenum
       let linenum = s:GetPrevNormalLine(linenum)
 
       if getline(linenum) =~ '^\s*when\>'
@@ -333,19 +345,7 @@ function! s:GetCoffeeIndent(curlinenum)
     endif
   endif
 
-  " If no indent / outdent is needed, keep the indentation level of the previous line if possible
-  if previndent
-    return previndent
-  else
-    return -1
-  endif
-endfunction
-
-" Wrap s:GetCoffeeIndent to keep the cursor position.
-function! GetCoffeeIndent(curlinenum)
-  let oldcursor = getpos('.')
-  let indent = s:GetCoffeeIndent(a:curlinenum)
-  call setpos('.', oldcursor)
-
-  return indent
+  " If no indent or outdent is needed, keep the indent level of the previous
+  " line.
+  return previndent
 endfunction

@@ -1,5 +1,5 @@
 This project adds [CoffeeScript] support to the vim editor. It handles syntax,
-indenting, and compiling. Also included is an [eco] syntax and support for
+indenting, compiling, and more. Also included is an [eco] syntax and support for
 CoffeeScript in Haml and HTML.
 
 ![Screenshot](http://i.imgur.com/BV29H.png)
@@ -114,7 +114,17 @@ can removed for gVim.
 The `CoffeeMake` command passes any options in the `coffee_make_options`
 variable along to the compiler. You can use this to set default options:
 
-    let coffee_make_options = "--bare"
+    let coffee_make_options = '--bare'
+
+#### Path to compiler
+
+To change the compiler used by `CoffeeMake` and `CoffeeCompile`, set
+`coffee_compiler` to the full path of an executable or the filename of one
+in your `$PATH`:
+
+    let coffee_compiler = '/usr/bin/coffee'
+
+This option is set to `coffee` by default.
 
 ### CoffeeCompile: Compile Snippets of CoffeeScript
 
@@ -179,6 +189,32 @@ To get synchronized scrolling of a CoffeeScript and CoffeeCompile buffer, set
 Use `unwatch` to stop watching a buffer:
 
     :CoffeeCompile unwatch
+
+### CoffeeLint: Lint your CoffeeScript
+
+The `CoffeeLint` command runs [coffeelint](http://www.coffeelint.org/) on the
+current file and parses any errors:
+
+    :[RANGE] CoffeeLint[!] [COFFEELINT-OPTIONS]
+
+Use it like `CoffeeMake`.
+
+    :CoffeeLint! | cwindow
+
+#### Default coffeelint options
+
+Options in `coffee_lint_options` are passed along to `coffeelint`:
+
+    let coffee_lint_options = '-f lint.json'
+
+#### Path to `coffeelint`
+
+Use the `coffee_linter` option to set a different path to the `coffeelint`
+executable:
+
+    let coffee_linter = '/usr/bin/coffeelint'
+
+This option is set to `coffeelint` by default.
 
 ### CoffeeRun: Run some CoffeeScript
 
