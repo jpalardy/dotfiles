@@ -1,9 +1,4 @@
 
-setlocal makeprg=xmllint\ --noout\ %
-setlocal errorformat=%A%f:%l:\ %.%#error\ :\ %m,%-Z%p^,%-C%.%#
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 function! Snippet_tag(text)
   let tag = substitute(a:text, "^<", "", "g")
   return "<" . tag . ">|</" . tag . ">"

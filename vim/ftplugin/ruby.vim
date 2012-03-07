@@ -1,8 +1,4 @@
 
-setlocal makeprg=ruby\ -c\ %
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 if !exists("b:snippets")
   let b:snippets = {}
 endif
