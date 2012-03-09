@@ -1,7 +1,7 @@
 
 augroup filetypedetect
   autocmd BufNewFile,BufRead *.txt       setf txt
-  autocmd BufNewFile,BufRead *.csv       setf csv
+  autocmd BufNewFile,BufRead *.deck      setf deck
   autocmd BufNewFile,BufRead *.less      setf less
   autocmd BufNewFile,BufRead *.moe       setf moe
   autocmd BufNewFile,BufRead Bakefile    call SetFileTypeSH("bash")
