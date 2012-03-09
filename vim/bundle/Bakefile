@@ -45,4 +45,5 @@ refresh_task  puppet         https://github.com/rodjek/vim-puppet.git
 refresh_task  scala          https://github.com/derekwyatt/vim-scala.git
 refresh_task  clojure        https://github.com/vim-scripts/VimClojure.git
 refresh_task  syntastic      https://github.com/scrooloose/syntastic.git
+refresh_task  less           https://github.com/groenewege/vim-less.git
 
