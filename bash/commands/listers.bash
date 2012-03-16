@@ -24,4 +24,5 @@ lister "go"   "cd"
 lister "qc"   "eval"
 lister "rg"   "rvm use"
 lister "warp" "ssh"     "awk '{print \\\$1}'"
+lister "rs"   "eval"
 
