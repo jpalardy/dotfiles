@@ -70,3 +70,4 @@ tad() {
   rm -r $d
 }
 
+alias af="ack_find"

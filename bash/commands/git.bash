@@ -20,3 +20,11 @@ git_attach() {
   git branch --set-upstream master origin/master
 }
 
+git_out() {
+  git log --branches --not --remotes
+}
+
+git_out_decorate() {
+  git log --branches --not --remotes --simplify-by-decoration --decorate --oneline
+}
+
