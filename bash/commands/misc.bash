@@ -44,7 +44,7 @@ size_sort() {
 
 #-------------------------------------------------
 
-alias apg='apg -n 20 -m 8 -M SNCL -t'
+alias apg='apg -a 1 -n 20 -m 20 -M SNCL -s'
 
 rm_caches() {
   ack -ag '\.cache_' --print0 | xargs -0 rm -v 2>/dev/null
