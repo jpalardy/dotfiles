@@ -79,6 +79,7 @@ let s:delimiterMap = {
     \ 'apachestyle': { 'left': '#' },
     \ 'asciidoc': { 'left': '//' },
     \ 'applescript': { 'left': '--', 'leftAlt': '(*', 'rightAlt': '*)' },
+    \ 'armasm': { 'left': ';' },
     \ 'asm68k': { 'left': ';' },
     \ 'asm': { 'left': ';', 'leftAlt': '#' },
     \ 'asn': { 'left': '--' },
@@ -154,6 +155,7 @@ let s:delimiterMap = {
     \ 'focexec': { 'left': '-*' },
     \ 'form': { 'left': '*' },
     \ 'foxpro': { 'left': '*' },
+    \ 'fsharp': { 'left': '(*', 'right': '*)', 'leftAlt': '//' },
     \ 'fstab': { 'left': '#' },
     \ 'fvwm': { 'left': '#' },
     \ 'fx': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
@@ -1128,6 +1130,13 @@ function! NERDComment(mode, type) range
     endif
 
     let &ignorecase = oldIgnoreCase
+
+    if isVisual
+        let nlines = lastLine - firstLine
+        silent! call repeat#set("V" . nlines . "jo" . "\<Plug>NERDCommenter". a:type)
+    else
+        silent! call repeat#set("\<Plug>NERDCommenter". a:type)
+    endif
 endfunction
 
 " Function: s:PlaceDelimitersAndInsBetween() function {{{2
