@@ -16,8 +16,7 @@ alias gln="git log --name-only"
 
 git_attach() {
   git remote add origin $1
-  git push origin master
-  git branch --set-upstream master origin/master
+  git push -u origin master
 }
 
 git_out() {
