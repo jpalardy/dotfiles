@@ -1,7 +1,7 @@
 #!/bin/bash
 
 setup() {
-  tmux send-keys "vim -O gtd/tasks.moe gtd/research.moe"
+  tmux send-keys "vim -O gtd/tasks.moe gtd/research.moe gtd/short.moe"
 
   tmux new-window
   tmux send-keys "clear; cd supermemo; ls -l"
