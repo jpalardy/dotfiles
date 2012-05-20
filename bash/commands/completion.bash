@@ -12,11 +12,16 @@ cache_complete() {
   # if the cache file doesn't exists
   # or the src_file is more recent than the cache_file
   if [ ! -f "$cache_file" -o "$src_file" -nt "$cache_file" ]; then
+    t1=$(date +%s)
     eval $generate_cmd > $cache_file
+    t2=$(date +%s)
   fi
 
   COMP_WORDBREAKS=${COMP_WORDBREAKS/\:/}
   local tasks=$(cat $cache_file)
+  if [ $(($t2 - $t1)) -lt 2 ]; then
+    rm $cache_file
+  fi
   COMPREPLY=( $(compgen -W "${tasks}" -- "$word") )
 }
 
