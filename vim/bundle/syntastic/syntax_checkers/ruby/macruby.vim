@@ -1,7 +1,6 @@
 "============================================================================
-"File:        html.vim
+"File:        macruby.vim
 "Description: Syntax checking plugin for syntastic.vim
-"Maintainer:  Martin Grenfell <martin.grenfell at gmail dot com>
 "License:     This program is free software. It comes without any warranty,
 "             to the extent permitted by applicable law. You can redistribute
 "             it and/or modify it under the terms of the Do What The Fuck You
@@ -9,21 +8,8 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists("loaded_html_syntax_checker")
-    finish
-endif
-let loaded_html_syntax_checker = 1
-
-if !exists('g:syntastic_html_checker')
-    let g:syntastic_html_checker = "tidy"
-endif
-
-if g:syntastic_html_checker == "tidy"
-    if executable("tidy") && executable("grep")
-        runtime! syntax_checkers/html/tidy.vim
-    endif
-elseif g:syntastic_html_checker == "w3"
-    if executable("curl") && executable("sed")
-        runtime! syntax_checkers/html/w3.vim
-    endif
-endif
+function! SyntaxCheckers_ruby_GetLocList()
+    let makeprg = 'RUBYOPT= macruby -W1 -c '.shellescape(expand('%'))
+    let errorformat =  '%-GSyntax OK,%E%f:%l: syntax error\, %m,%Z%p^,%W%f:%l: warning: %m,%Z%p^,%W%f:%l: %m,%-C%.%#'
+    return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+endfunction

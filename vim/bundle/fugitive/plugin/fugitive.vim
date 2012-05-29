@@ -29,8 +29,8 @@ endfunction
 function! s:shellesc(arg) abort
   if a:arg =~ '^[A-Za-z0-9_/.-]\+$'
     return a:arg
-  elseif &shell =~# 'cmd' && a:arg !~# '"'
-    return '"'.a:arg.'"'
+  elseif &shell =~# 'cmd'
+    return '"'.s:gsub(s:gsub(a:arg, '"', '""'), '\%', '"%"').'"'
   else
     return shellescape(a:arg)
   endif
@@ -119,7 +119,9 @@ function! fugitive#extract_git_dir(path) abort
       return resolve(dir)
     elseif type !=# '' && filereadable(dir)
       let line = get(readfile(dir, '', 1), 0, '')
-      if line =~# '^gitdir: ' && fugitive#is_git_dir(line[8:-1])
+      if line =~# '^gitdir: \.' && fugitive#is_git_dir(root.'/'.line[8:-1])
+        return simplify(root.'/'.line[8:-1])
+      elseif line =~# '^gitdir: ' && fugitive#is_git_dir(line[8:-1])
         return line[8:-1]
       endif
     elseif fugitive#is_git_dir(root)
@@ -206,7 +208,11 @@ function! s:repo_configured_tree() dict abort
       endif
     endif
   endif
-  return self._tree
+  if self._tree =~# '^\.'
+    return simplify(self.dir(self._tree))
+  else
+    return self._tree
+  endif
 endfunction
 
 function! s:repo_tree(...) dict abort
@@ -275,7 +281,21 @@ function! s:repo_translate(spec) dict abort
   endif
 endfunction
 
-call s:add_methods('repo',['dir','configured_tree','tree','bare','translate'])
+function! s:repo_head(...) dict abort
+    let head = s:repo().head_ref()
+
+    if head =~# '^ref: '
+      let branch = s:sub(head,'^ref: %(refs/%(heads/|remotes/|tags/)=)=','')
+    elseif head =~# '^\x\{40\}$'
+      " truncate hash to a:1 characters if we're in detached head mode
+      let len = a:0 ? a:1 : 0
+      let branch = len ? head[0:len-1] : ''
+    endif
+
+    return branch
+endfunction
+
+call s:add_methods('repo',['dir','configured_tree','tree','bare','translate','head'])
 
 function! s:repo_git_command(...) dict abort
   let git = g:fugitive_git_executable . ' --git-dir='.s:shellesc(self.git_dir)
@@ -1901,7 +1921,8 @@ function! s:ReplaceCmd(cmd,...) abort
       endif
     endif
     if &shell =~# 'cmd'
-      call system('cmd /c "'.prefix.a:cmd.' > '.tmp.'"')
+      let cmd_escape_char = &shellxquote == '(' ?  '^' : '^^^'
+      call system('cmd /c "'.prefix.s:gsub(a:cmd,'[<>]', cmd_escape_char.'&').' > '.tmp.'"')
     else
       call system(' ('.prefix.a:cmd.' > '.tmp.') ')
     endif
@@ -2372,17 +2393,20 @@ function! fugitive#statusline(...)
   if s:buffer().commit() != ''
     let status .= ':' . s:buffer().commit()[0:7]
   endif
-  let head = s:repo().head_ref()
-  if head =~# '^ref: '
-    let status .= s:sub(head,'^ref: %(refs/%(heads/|remotes/|tags/)=)=','(').')'
-  elseif head =~# '^\x\{40\}$'
-    let status .= '('.head[0:7].')'
-  endif
+  let status .= '('.fugitive#head(7).')'
   if &statusline =~# '%[MRHWY]' && &statusline !~# '%[mrhwy]'
     return ',GIT'.status
   else
     return '[Git'.status.']'
   endif
+endfunction
+
+function! fugitive#head(...)
+  if !exists('b:git_dir')
+    return ''
+  endif
+
+  return s:repo().head(a:0 ? a:1 : 0)
 endfunction
 
 " }}}1

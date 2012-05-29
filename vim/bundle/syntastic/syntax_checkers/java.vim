@@ -1,7 +1,7 @@
 "============================================================================
-"File:        mri.vim
+"File:        java.vim
 "Description: Syntax checking plugin for syntastic.vim
-"Maintainer:  Martin Grenfell <martin.grenfell at gmail dot com>
+"Maintainer:  Jochen Keil <jochen.keil at gmail dot com>
 "License:     This program is free software. It comes without any warranty,
 "             to the extent permitted by applicable law. You can redistribute
 "             it and/or modify it under the terms of the Do What The Fuck You
@@ -9,14 +9,20 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-function! SyntaxCheckers_ruby_GetLocList()
-    " we cannot set RUBYOPT on windows like that
-    if has('win32')
-        let makeprg = 'ruby -W1 -T1 -c '.shellescape(expand('%'))
-    else
-        let makeprg = 'RUBYOPT= ruby -W1 -c '.shellescape(expand('%'))
-    endif
-    let errorformat =  '%-GSyntax OK,%E%f:%l: syntax error\, %m,%Z%p^,%W%f:%l: warning: %m,%Z%p^,%W%f:%l: %m,%-C%.%#'
+function! SyntaxCheckers_java_GetLocList()
+
+    let makeprg = 'javac -Xlint '
+               \. expand ( '%:p:h' ) . '/' . expand ( '%:t' )
+               \. ' 2>&1 \| '
+               \. 'sed -e "s\|'
+               \. expand ( '%:t' )
+               \. '\|'
+               \. expand ( '%:p:h' ) . '/' . expand ( '%:t' )
+               \. '\|"'
+
+    " unashamedly stolen from *errorformat-javac* (quickfix.txt)
+    let errorformat = '%A%f:%l:\ %m,%+Z%p^,%+C%.%#,%-G%.%#'
 
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+
 endfunction
