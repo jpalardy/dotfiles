@@ -2,9 +2,22 @@
 
 REPOS=${REPOS:?"environment variable REPOS is empty"}
 
+QUICK="no"
+
+while getopts "q" options; do
+  case $options in
+    q ) QUICK="yes";;
+  esac
+done
+
 for repo in $REPOS; do
   echo "##" $repo
-  cd $repo; git pull --ff-only
+  cd $repo
+
+  if [ $QUICK == "no" ]; then
+    git pull --ff-only
+  fi
+
   git status --short --branch
   echo
 done
