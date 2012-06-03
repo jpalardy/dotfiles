@@ -8,4 +8,5 @@ Host *
   CheckHostIP            no
   ControlMaster          auto
   ControlPath            ~/.ssh/master-%r@%h:%p
+  ControlPersist         30s
 
