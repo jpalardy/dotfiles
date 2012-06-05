@@ -1,4 +1,0 @@
-#!/bin/sh
-
-awk -f $DOTFILES/bin/numstats.awk "$@"
-

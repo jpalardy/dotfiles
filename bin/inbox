@@ -1,6 +1,0 @@
-#!/bin/bash
-
-TARGET="$HOME/Documents/wiki/gtd/inbox.moe"
-
-vim $TARGET
-

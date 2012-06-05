@@ -1,4 +1,0 @@
-#!/bin/sh
-
-ack -af | ack '(\.DS_Store|\.cache_)'
-
