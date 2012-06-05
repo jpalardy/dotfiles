@@ -2,12 +2,11 @@
 
 setup() {
   tmux send-keys "vim -O gtd/tasks.moe gtd/research.moe gtd/short.moe"
+  tmux rename-window gtd
 
   tmux new-window
-  tmux send-keys "clear; cd supermemo; ls -l"
-
-  tmux new-window
-  tmux send-keys "clear; ls -l"
+  tmux rename-window memora
+  tmux send-keys "clear; cd supermemo; bake upcoming"
 
   tmux select-window -t 0
 }
