@@ -30,6 +30,7 @@ relink .rdebugrc     $DOTFILES/rdebugrc
 relink .rvmrc        $DOTFILES/rvmrc
 
 relink .npmrc        $DOTFILES/npmrc
+relink .jshintrc     $DOTFILES/jshintrc
 
 relink .filter       $DOTFILES/filter
 
