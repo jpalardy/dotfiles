@@ -1,4 +1,3 @@
-
 vim-slime
 =========
 
@@ -70,12 +69,25 @@ tmux target pane
     ":i" means the ith window, current pane
     ":i.j" means the ith window, jth pane
 
+By default `STDIN` is used to pass the text to tmux.
+If you experience issues with this you may be able to work around them
+by configuring slime to use a file instead:
+
+    let g:slime_paste_file = "$HOME/.slime_paste"
+
+This file is not erased by the plugin and will always contain the last thing
+you sent over.  If this behavior is undesired one alternative is to use a temporary file:
+
+    let g:slime_paste_file = tempname()
+
 Key Bindings
 ------------
 
 By default, the current paragraph will be sent. This is equivalent to typing *vip*. If you (visually) select text, that will be sent over:
 
     C-c, C-c  --- the same as slime
+    
+_You can just hold `Ctrl` and double-tap `c`._
 
 There will be a few questions, as to where you want to send your text, and the answers will be remembered. If you need to reconfigure:
 
