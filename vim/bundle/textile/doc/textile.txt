@@ -45,14 +45,14 @@ CONFIG                                                        *textile-config*
 MAC OS X:
 
   Optional:
-    set g:TextileBrowser="Google Chrome"   - Open preview in "Google Chrome"
+    let g:TextileBrowser="Google Chrome"   - Open preview in "Google Chrome"
                                              rather than Safari (optional)
 
 Other:
 
   Mandatory:
-    set g:TextileOS="Linux"
-    set g:TextileBrowser="/path/to/browser_bin"
+    let g:TextileOS="Linux"
+    let g:TextileBrowser="/path/to/browser_bin"
 
 
 ==============================================================================
