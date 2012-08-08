@@ -56,12 +56,6 @@ serve() {
 
 #-------------------------------------------------
 
-dlu() {
-  pick_with_vim "look $1" "dict"
-}
-
-#-------------------------------------------------
-
 tad() {
   local ts=$(date +%s)
   local d="$HOME/.throw_away/$ts"
@@ -70,4 +64,3 @@ tad() {
   rm -r $d
 }
 
-alias af="ack_find"

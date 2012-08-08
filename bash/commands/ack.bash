@@ -23,7 +23,3 @@ gril() {
   OPTIONS="-il" gr  "$@"
 }
 
-ack_ignored() {
-  (cat <(ack -af) <(ack -f)) 2>/dev/null | sort | uniq -u
-}
-
