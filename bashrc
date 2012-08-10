@@ -20,6 +20,12 @@ if [[ $- =~ i ]]; then
     source $file
   done
 
+  if [ -z "$BASH_COMPLETION" ]; then
+    echo "no bash-completion"
+  else
+    source $BASH_COMPLETION
+  fi
+
   # shell behavior
   source      $HOME/.bash/shell.bash
   cond_source $HOME/.bash/local/shell.bash
