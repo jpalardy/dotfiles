@@ -43,7 +43,7 @@ unshift_path "/opt/local"
 unshift_path "$HOME/local"
 unshift_path "$DOTFILES"
 
-export PATH=$(prepend_colon ".local" $PATH)
+export PATH=$(prepend_colon ".local/bin" $PATH)
 
 export EDITOR="vim"
 export PAGER="less"
