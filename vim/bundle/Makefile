@@ -1,6 +1,5 @@
 
 dirs  = $(shell awk '{print $$1}' deps)
-clone = git clone --depth=1
 
 #-------------------------------------------------
 
