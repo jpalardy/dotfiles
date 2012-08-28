@@ -20,10 +20,12 @@ if [[ $- =~ i ]]; then
     source $file
   done
 
-  if [ -z "$BASH_COMPLETION" ]; then
-    echo "no bash-completion"
-  else
+  BASH_COMPLETION=${BASH_COMPLETION:-/usr/local/etc/bash_completion}
+  if [ -e $BASH_COMPLETION ]; then
     source $BASH_COMPLETION
+    complete -r vim
+  else
+    echo "no bash-completion"
   fi
 
   # shell behavior
