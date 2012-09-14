@@ -19,3 +19,10 @@ git_out_decorate() {
   git log --branches --not --remotes --simplify-by-decoration --decorate --oneline
 }
 
+#-------------------------------------------------
+
+sr() {
+  pwd
+  git st 2>/dev/null
+}
+

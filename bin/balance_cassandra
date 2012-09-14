@@ -1,0 +1,8 @@
+#!/bin/bash
+
+nodes=${1:?"how many nodes?"}
+
+for node in $(seq 0 $nodes | sed '$d'); do
+  echo "$node * (2^127/$nodes)" | bc
+done
+
