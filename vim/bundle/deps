@@ -14,3 +14,4 @@ clojure        https://github.com/vim-scripts/VimClojure.git
 syntastic      https://github.com/scrooloose/syntastic.git
 less           https://github.com/groenewege/vim-less.git
 gnupg          https://github.com/jamessan/vim-gnupg.git
+go             https://github.com/jnwhiteh/vim-golang.git
