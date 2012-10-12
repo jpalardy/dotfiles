@@ -7,7 +7,7 @@ fugitive       https://github.com/tpope/vim-fugitive.git
 haml           https://github.com/tpope/vim-haml.git
 json           https://github.com/leshill/vim-json.git
 slime          https://github.com/jpalardy/vim-slime
-spacehi        https://github.com/vim-scripts/spacehi.vim.git
+spacehi        https://github.com/jpalardy/spacehi.vim.git
 puppet         https://github.com/rodjek/vim-puppet.git
 scala          https://github.com/derekwyatt/vim-scala.git
 clojure        https://github.com/vim-scripts/VimClojure.git

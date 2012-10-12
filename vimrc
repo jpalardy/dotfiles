@@ -22,6 +22,7 @@ set wildmode=list:longest,full
 set backspace=indent,eol,start
 set nowrap
 set linebreak
+set listchars=eol:$,nbsp:%
 
 " don't load modelines...
 set nomodeline
@@ -61,9 +62,6 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPACEHI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:spacehi_tabcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
-let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow guifg=Blue guibg=Yellow"
 
 autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
 autocmd FileType help     NoSpaceHi

@@ -1,17 +1,16 @@
 " vim600: set foldmethod=marker:
-" $Id: spacehi.vim,v 1.3 2002/10/11 20:37:13 laz Exp $
 "
+" Version:      1.4
 " Description:  Per buffer, togglable syntax highlighting of tabs and trailing
 "               spaces. 	 	 	 	 	 	 
-" Author:       Adam Lazur <adam@lazur.org>
-" Last Change:  $Date: 2002/10/11 20:37:13 $
-" URL:          http://adam.lazur.org/vim/spacehi.vim
+" Author:       Adam Lazur <adam@lazur.org>, extended by Jonathan Palardy
+" URL:          https://github.com/jpalardy/spacehi.vim
 " License:      Redistribution and use of this file, with or without
 "               modification, are permitted without restriction.
 "
 " Section: Documentation {{{1
 "
-" This plugin will highlight tabs and trailing spaces on a line, with the
+" This plugin will highlight tabs, nbsps and trailing spaces on a line, with the
 " ability to toggle the highlighting on and off. Using highlighting to
 " illuminate these characters is preferrable to using listchars and set list
 " because it allows you to copy from the vim window without getting shrapnel
@@ -28,6 +27,7 @@
 "
 "       g:spacehi_spacecolor
 "       g:spacehi_tabcolor
+"       g:spacehi_nbspcolor
 "
 " The defaults can be found in the "Default Global Vars" section below.
 "
@@ -53,13 +53,15 @@ let loaded_spacehi=1
 " Section: Default Global Vars {{{1
 if !exists("g:spacehi_tabcolor")
     " highlight tabs with red underline
-    let g:spacehi_tabcolor="ctermfg=1 cterm=underline"
-    let g:spacehi_tabcolor=g:spacehi_tabcolor . " guifg=red gui=underline"
+    let g:spacehi_tabcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
 endif
 if !exists("g:spacehi_spacecolor")
     " highlight trailing spaces in blue underline
-    let g:spacehi_spacecolor="ctermfg=4 cterm=underline"
-    let g:spacehi_spacecolor=g:spacehi_spacecolor . " guifg=blue gui=underline"
+    let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow guifg=Blue guibg=Yellow"
+endif
+if !exists("g:spacehi_nbspcolor")
+    " highlight nbsps with red underline
+    let g:spacehi_nbspcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
 endif
 
 " Section: Functions {{{1
@@ -74,6 +76,10 @@ function! s:SpaceHi()
     syntax match spacehiTrailingSpace /\s\+$/ containedin=ALL
     execute("highlight spacehiTrailingSpace " . g:spacehi_spacecolor)
 
+    " highlight nbsps
+    syntax match spacehiNbsp /\%d160/ containedin=ALL
+    execute("highlight spacehiNbsp " . g:spacehi_nbspcolor)
+
     let b:spacehi = 1
 endfunction
 
@@ -82,6 +88,7 @@ endfunction
 function! s:NoSpaceHi()
     syntax clear spacehiTab
     syntax clear spacehiTrailingSpace
+    syntax clear spacehiNbsp
     let b:spacehi = 0
 endfunction
 
