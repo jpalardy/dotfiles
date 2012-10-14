@@ -32,9 +32,10 @@ function! s:MatchPairs(open, close, stopat)
 		let stopat = a:stopat
 	endif
 
-	return searchpairpos(a:open, '', a:close, 'bWn',
+	let pos = searchpairpos(a:open, '', a:close, 'bWn',
 				\ 'vimclojure#util#SynIdName() !~ "clojureParen\\d"',
 				\ stopat)
+	return [ pos[0], virtcol(pos) ]
 endfunction
 
 function! ClojureCheckForStringWorker() dict
@@ -229,7 +230,7 @@ function! GetClojureIndent()
 	endif
 
 	normal! ge
-	return col(".") + 1
+	return virtcol(".") + 1
 endfunction
 
 setlocal indentexpr=GetClojureIndent()

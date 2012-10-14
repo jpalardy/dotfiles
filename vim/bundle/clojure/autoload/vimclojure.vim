@@ -89,7 +89,7 @@ endif
 
 function! vimclojure#ReportError(msg)
 	if g:vimclojure#UseErrorBuffer
-		let buf = g:vimclojure#ResultBuffer.New()
+		let buf = g:vimclojure#ResultWindow.New(g:vimclojure#ResultBuffer)
 		call buf.showText(a:msg)
 		wincmd p
 	else
@@ -244,55 +244,28 @@ function! vimclojure#Object.Init() dict
 endfunction
 
 let vimclojure#Buffer = copy(vimclojure#Object)
-let vimclojure#Buffer["__superObjectNew"] = vimclojure#Buffer["New"]
+let vimclojure#Buffer["__superObjectNew"]  = vimclojure#Buffer["New"]
+let vimclojure#Buffer["__superObjectInit"] = vimclojure#Buffer["Init"]
+
+let vimclojure#BufferNr = 0
 
 function! vimclojure#Buffer.New(...) dict
-	if g:vimclojure#SplitPos == "left" || g:vimclojure#SplitPos == "right"
-		let o_sr = &splitright
-		if g:vimclojure#SplitPos == "left"
-			set nosplitright
-		else
-			set splitright
-		end
-		execute printf("%svnew", g:vimclojure#SplitSize)
-		let &splitright = o_sr
-	else
-		let o_sb = &splitbelow
-		if g:vimclojure#SplitPos == "bottom"
-			set splitbelow
-		else
-			set nosplitbelow
-		end
-		execute printf("%snew", g:vimclojure#SplitSize)
-		let &splitbelow = o_sb
-	endif
+	let nr = g:vimclojure#BufferNr
+	let bufname = printf("vimclojure_buffer_%06d", nr)
+	let g:vimclojure#BufferNr += 1
+
+	execute "badd" bufname
+	execute "buffer!" bufname
 
 	return call(self.__superObjectNew, a:000, self)
 endfunction
 
 function! vimclojure#Buffer.Init() dict
-	let self._buffer = bufnr("%")
-endfunction
-
-function! vimclojure#Buffer.goHere() dict
-	execute "buffer! " . self._buffer
-endfunction
-
-function! vimclojure#Buffer.goHereWindow() dict
-	execute "sbuffer! " . self._buffer
-endfunction
-
-function! vimclojure#Buffer.resize() dict
-	call self.goHere()
-	let size = line("$")
-	if size < 3
-		let size = 3
-	endif
-	execute "resize " . size
+	call self.__superObjectInit()
+	let self._buf = bufnr("%")
 endfunction
 
 function! vimclojure#Buffer.showText(text) dict
-	call self.goHere()
 	if type(a:text) == type("")
 		" XXX: Opening the box of the pandora.
 		" 2012-01-09: Adding Carriage Returns here.
@@ -303,70 +276,167 @@ function! vimclojure#Buffer.showText(text) dict
 	call append(line("$"), text)
 endfunction
 
-function! vimclojure#Buffer.showOutput(output) dict
-	call self.goHere()
-	if a:output.value == 0
-		if a:output.stdout != ""
-			call self.showText(a:output.stdout)
-		endif
-		if a:output.stderr != ""
-			call self.showText(a:output.stderr)
-		endif
-	else
-		call self.showText(a:output.value)
-	endif
-endfunction
-
 function! vimclojure#Buffer.clear() dict
 	1
 	normal! "_dG
 endfunction
 
+function! vimclojure#Buffer.goHere() dict
+	if bufnr("%") != self._buf
+		execute "buffer!" self._buf
+	endif
+endfunction
+
 function! vimclojure#Buffer.close() dict
-	execute "bdelete! " . self._buffer
+	execute "bdelete!" self._buf
+endfunction
+
+let vimclojure#Window = copy(vimclojure#Object)
+let vimclojure#Window["__superObjectNew"] = vimclojure#Window["New"]
+let vimclojure#Window["__superObjectInit"] = vimclojure#Window["Init"]
+
+function! vimclojure#Window.New(...) dict
+	if g:vimclojure#SplitPos == "left" || g:vimclojure#SplitPos == "right"
+		let o_sr = &splitright
+		if g:vimclojure#SplitPos == "left"
+			set nosplitright
+		else
+			set splitright
+		end
+		execute printf("%svsplit", g:vimclojure#SplitSize)
+		let &splitright = o_sr
+	else
+		let o_sb = &splitbelow
+		if g:vimclojure#SplitPos == "bottom"
+			set splitbelow
+		else
+			set nosplitbelow
+		end
+		execute printf("%ssplit", g:vimclojure#SplitSize)
+		let &splitbelow = o_sb
+	endif
+
+	return call(self.__superObjectNew, a:000, self)
+endfunction
+
+function! vimclojure#Window.Init(buftype) dict
+	call self.__superObjectInit()
+	let w:vimclojure_window = self
+	let self._buffer = a:buftype.New()
+endfunction
+
+function! vimclojure#Window.goHere() dict
+	let wn = self.findThis()
+	if wn == -1
+		echoerr 'A crisis has arisen! Cannot find my window.'
+	endif
+	execute wn . "wincmd w"
+	call self._buffer.goHere()
+endfunction
+
+function! vimclojure#Window.resize() dict
+	call self.goHere()
+	let size = line("$")
+	if size < 3
+		let size = 3
+	endif
+	execute "resize " . size
+endfunction
+
+function! vimclojure#Window.showText(text) dict
+	call self.goHere()
+	call self._buffer.showText(a:text)
+endfunction
+
+function! vimclojure#Window.showOutput(output) dict
+	call self.goHere()
+	if a:output.value == 0
+		if a:output.stdout != ""
+			call self._buffer.showText(a:output.stdout)
+		endif
+		if a:output.stderr != ""
+			call self._buffer.showText(a:output.stderr)
+		endif
+	else
+		call self._buffer.showText(a:output.value)
+	endif
+endfunction
+
+function! vimclojure#Window.clear() dict
+	call self.goHere()
+	call self._buffer.clear()
+endfunction
+
+function! vimclojure#Window.close() dict
+	call self._buffer.close()
+endfunction
+
+function! vimclojure#Window.findThis() dict
+	for w in range(1, winnr("$"))
+		if type(getwinvar(w, "vimclojure_window")) == type({})
+			if getwinvar(w, "vimclojure_window") == self
+				return w
+			endif
+		endif
+	endfor
+
+	return -1
 endfunction
 
 " The transient buffer, used to display results.
-let vimclojure#ResultBuffer = copy(vimclojure#Buffer)
-let vimclojure#ResultBuffer["__superBufferNew"] = vimclojure#ResultBuffer["New"]
-let vimclojure#ResultBuffer["__superBufferInit"] = vimclojure#ResultBuffer["Init"]
-let vimclojure#ResultBuffer.__instance = []
+let vimclojure#ResultWindow = copy(vimclojure#Window)
+let vimclojure#ResultWindow["__superWindowNew"]   = vimclojure#ResultWindow["New"]
+let vimclojure#ResultWindow["__superWindowClose"] = vimclojure#ResultWindow["close"]
 
-function! ClojureResultBufferNewWorker() dict
-	set switchbuf=useopen
-	call self.instance.goHereWindow()
-	call call(self.instance.Init, self.args, self.instance)
+function! vimclojure#ResultWindow.New(buftype, ...) dict
+	if exists("t:vimclojure_result_window")
+		call t:vimclojure_result_window.goHere()
 
-	return self.instance
-endfunction
-
-function! vimclojure#ResultBuffer.New(...) dict
-	if g:vimclojure#ResultBuffer.__instance != []
-		let oldInstance = g:vimclojure#ResultBuffer.__instance[0]
-
-		if oldInstance.prototype is self
-			let closure = {
-						\ 'instance' : oldInstance,
-						\ 'args'     : a:000,
-						\ 'f'        : function("ClojureResultBufferNewWorker")
-						\ }
-
-			return vimclojure#util#WithSavedOption('switchbuf', closure)
+		if t:vimclojure_result_window._buffer.prototype != a:buftype
+			let t:vimclojure_result_window._buffer = a:buftype.New()
 		else
-			call oldInstance.close()
+			call t:vimclojure_result_window.clear()
 		endif
+
+		return t:vimclojure_result_window
 	endif
 
+	let instance = call(self.__superWindowNew, [a:buftype] + a:000, self)
 	let b:vimclojure_result_buffer = 1
-	let instance = call(self.__superBufferNew, a:000, self)
-	let g:vimclojure#ResultBuffer.__instance = [ instance ]
+	let t:vimclojure_result_window = instance
 
 	return instance
 endfunction
 
+function! vimclojure#ResultWindow.close() dict
+	unlet t:vimclojure_result_window
+	call self.__superWindowClose()
+endfunction
+
+function! vimclojure#ResultWindow.CloseWindow() dict
+	if exists("t:vimclojure_result_window")
+		call t:vimclojure_result_window.close()
+	endif
+endfunction
+
+"function! s:InvalidateResultBufferIfNecessary(buf)
+"	" FIXME: This is incorrect.
+"	if exists("t:vimclojure_result_window")
+"				\ && t:vimclojure_result_window._buffer._buf == a:buf
+"		let t:vimclojure_result_window.close()
+"	endif
+"endfunction
+
+"augroup VimClojureResultWindow
+"	au BufDelete * call s:InvalidateResultWindowIfNecessary(expand("<abuf>"))
+"augroup END
+
+let vimclojure#ResultBuffer = copy(vimclojure#Buffer)
+let vimclojure#ResultBuffer["__superBufferInit"]  = vimclojure#ResultBuffer.Init
+let vimclojure#ResultBuffer["__superBufferClear"] = vimclojure#ResultBuffer.clear
+
 function! vimclojure#ResultBuffer.Init() dict
 	call self.__superBufferInit()
-
 	setlocal noswapfile
 	setlocal buftype=nofile
 	setlocal bufhidden=wipe
@@ -374,44 +444,33 @@ function! vimclojure#ResultBuffer.Init() dict
 	call vimclojure#MapPlug("n", "p", "CloseResultBuffer")
 
 	call self.clear()
+endfunction
+
+function! vimclojure#ResultBuffer.clear() dict
+	call self.__superBufferClear()
 	let leader = exists("g:maplocalleader") ? g:maplocalleader : "\\"
 	call append(0, "; Use " . leader . "p to close this buffer!")
 endfunction
-
-function! vimclojure#ResultBuffer.CloseBuffer() dict
-	if g:vimclojure#ResultBuffer.__instance != []
-		let instance = g:vimclojure#ResultBuffer.__instance[0]
-		let g:vimclojure#ResultBuffer.__instance = []
-		call instance.close()
-	endif
-endfunction
-
-function! s:InvalidateResultBufferIfNecessary(buf)
-	if g:vimclojure#ResultBuffer.__instance != []
-				\ && g:vimclojure#ResultBuffer.__instance[0]._buffer == a:buf
-		let g:vimclojure#ResultBuffer.__instance = []
-	endif
-endfunction
-
-augroup VimClojureResultBuffer
-	au BufDelete * call s:InvalidateResultBufferIfNecessary(expand("<abuf>"))
-augroup END
 
 " A special result buffer for clojure output.
 let vimclojure#ClojureResultBuffer = copy(vimclojure#ResultBuffer)
 let vimclojure#ClojureResultBuffer["__superResultBufferInit"] =
 			\ vimclojure#ResultBuffer["Init"]
-let vimclojure#ClojureResultBuffer["__superResultBufferShowOutput"] =
-			\ vimclojure#ResultBuffer["showOutput"]
+let vimclojure#ClojureResultBuffer["__superResultBufferShowText"] =
+			\ vimclojure#ResultBuffer["showText"]
 
-function! vimclojure#ClojureResultBuffer.Init(ns) dict
+function! vimclojure#ClojureResultBuffer.Init(...) dict
 	call self.__superResultBufferInit()
-	set filetype=clojure
-	let b:vimclojure_namespace = a:ns
+	set filetype=vimclojure.clojure
+	if a:0 == 1
+		let b:vimclojure_namespace = a:1
+	else
+		let b:vimclojure_namespace = "user"
+	endif
 endfunction
 
-function! vimclojure#ClojureResultBuffer.showOutput(text) dict
-	call self.__superResultBufferShowOutput(a:text)
+function! vimclojure#ClojureResultBuffer.showText(text) dict
+	call self.__superResultBufferShowText(a:text)
 	normal G
 endfunction
 
@@ -474,6 +533,19 @@ function! vimclojure#ExecuteNail(nail, ...)
 	return call(function("vimclojure#ExecuteNailWithInput"), [a:nail, ""] + a:000)
 endfunction
 
+function! vimclojure#ShowResult(result)
+	let buf = g:vimclojure#ResultWindow.New(g:vimclojure#ResultBuffer)
+	call buf.showOutput(a:result)
+	wincmd p
+endfunction
+
+function! vimclojure#ShowClojureResult(result, nspace)
+	let buf = g:vimclojure#ResultWindow.New(g:vimclojure#ClojureResultBuffer)
+	let b:vimclojure_namespace = a:nspace
+	call buf.showOutput(a:result)
+	wincmd p
+endfunction
+
 function! vimclojure#DocLookup(word)
 	if a:word == ""
 		return
@@ -481,17 +553,13 @@ function! vimclojure#DocLookup(word)
 
 	let doc = vimclojure#ExecuteNailWithInput("DocLookup", a:word,
 				\ "-n", b:vimclojure_namespace)
-	let buf = g:vimclojure#ResultBuffer.New()
-	call buf.showOutput(doc)
-	wincmd p
+	call vimclojure#ShowResult(doc)
 endfunction
 
 function! vimclojure#FindDoc()
 	let pattern = input("Pattern to look for: ")
 	let doc = vimclojure#ExecuteNailWithInput("FindDoc", pattern)
-	let buf = g:vimclojure#ResultBuffer.New()
-	call buf.showOutput(doc)
-	wincmd p
+	call vimclojure#ShowResult(doc)
 endfunction
 
 let s:DefaultJavadocPaths = {
@@ -533,9 +601,7 @@ function! vimclojure#JavadocLookup(word)
 				\ "-n", b:vimclojure_namespace)
 
 	if path.stderr != ""
-		let buf = g:vimclojure#ResultBuffer.New()
-		call buf.showOutput(path)
-		wincmd p
+		call vimclojure#ShowResult(path)
 		return
 	endif
 
@@ -557,17 +623,13 @@ endfunction
 function! vimclojure#SourceLookup(word)
 	let source = vimclojure#ExecuteNailWithInput("SourceLookup", a:word,
 				\ "-n", b:vimclojure_namespace)
-	let buf = g:vimclojure#ClojureResultBuffer.New(b:vimclojure_namespace)
-	call buf.showOutput(source)
-	wincmd p
+	call vimclojure#ShowClojureResult(source, b:vimclojure_namespace)
 endfunction
 
 function! vimclojure#MetaLookup(word)
 	let meta = vimclojure#ExecuteNailWithInput("MetaLookup", a:word,
 				\ "-n", b:vimclojure_namespace)
-	let buf = g:vimclojure#ClojureResultBuffer.New(b:vimclojure_namespace)
-	call buf.showOutput(meta)
-	wincmd p
+	call vimclojure#ShowClojureResult(meta, b:vimclojure_namespace)
 endfunction
 
 function! vimclojure#GotoSource(word)
@@ -575,9 +637,7 @@ function! vimclojure#GotoSource(word)
 				\ "-n", b:vimclojure_namespace)
 
 	if pos.stderr != ""
-		let buf = g:vimclojure#ResultBuffer.New()
-		call buf.showOutput(pos)
-		wincmd p
+		call vimclojure#ShowResult(pos)
 		return
 	endif
 
@@ -606,9 +666,7 @@ function! vimclojure#MacroExpand(firstOnly)
 
 	let expanded = call(function("vimclojure#ExecuteNailWithInput"), cmd)
 
-	let buf = g:vimclojure#ClojureResultBuffer.New(ns)
-	call buf.showOutput(expanded)
-	wincmd p
+	call vimclojure#ShowClojureResult(expanded, ns)
 endfunction
 
 function! vimclojure#RequireFile(all)
@@ -618,9 +676,7 @@ function! vimclojure#RequireFile(all)
 	let require = "(require :reload" . all . " :verbose '". ns. ")"
 	let result = vimclojure#ExecuteNailWithInput("Repl", require, "-r")
 
-	let resultBuffer = g:vimclojure#ClojureResultBuffer.New(ns)
-	call resultBuffer.showOutput(result)
-	wincmd p
+	call vimclojure#ShowClojureResult(result, ns)
 endfunction
 
 function! vimclojure#RunTests(all)
@@ -628,9 +684,8 @@ function! vimclojure#RunTests(all)
 
 	let result = call(function("vimclojure#ExecuteNailWithInput"),
 				\ [ "RunTests", "", "-n", ns ] + (a:all ? [ "-a" ] : []))
-	let resultBuffer = g:vimclojure#ClojureResultBuffer.New(ns)
-	call resultBuffer.showOutput(result)
-	wincmd p
+
+	call vimclojure#ShowClojureResult(result, ns)
 endfunction
 
 function! vimclojure#EvalFile()
@@ -641,9 +696,7 @@ function! vimclojure#EvalFile()
 	let result = vimclojure#ExecuteNailWithInput("Repl", content,
 				\ "-r", "-n", ns, "-f", file)
 
-	let resultBuffer = g:vimclojure#ClojureResultBuffer.New(ns)
-	call resultBuffer.showOutput(result)
-	wincmd p
+	call vimclojure#ShowClojureResult(result, ns)
 endfunction
 
 function! vimclojure#EvalLine()
@@ -655,9 +708,7 @@ function! vimclojure#EvalLine()
 	let result = vimclojure#ExecuteNailWithInput("Repl", content,
 				\ "-r", "-n", ns, "-f", file, "-l", theLine)
 
-	let resultBuffer = g:vimclojure#ClojureResultBuffer.New(ns)
-	call resultBuffer.showOutput(result)
-	wincmd p
+	call vimclojure#ShowClojureResult(result, ns)
 endfunction
 
 function! vimclojure#EvalBlock()
@@ -668,9 +719,7 @@ function! vimclojure#EvalBlock()
 	let result = vimclojure#ExecuteNailWithInput("Repl", content,
 				\ "-r", "-n", ns, "-f", file, "-l", line("'<") - 1)
 
-	let resultBuffer = g:vimclojure#ClojureResultBuffer.New(ns)
-	call resultBuffer.showOutput(result)
-	wincmd p
+	call vimclojure#ShowClojureResult(result, ns)
 endfunction
 
 function! vimclojure#EvalToplevel()
@@ -681,9 +730,7 @@ function! vimclojure#EvalToplevel()
 	let result = vimclojure#ExecuteNailWithInput("Repl", expr,
 				\ "-r", "-n", ns, "-f", file, "-l", pos[0] - 1)
 
-	let resultBuffer = g:vimclojure#ClojureResultBuffer.New(ns)
-	call resultBuffer.showOutput(result)
-	wincmd p
+	call vimclojure#ShowClojureResult(result, ns)
 endfunction
 
 function! ClojureEvalParagraphWorker() dict
@@ -704,16 +751,14 @@ function! vimclojure#EvalParagraph()
 	let result = vimclojure#ExecuteNailWithInput("Repl", content,
 				\ "-r", "-n", ns, "-f", file, "-l", startPosition - 1)
 
-	let resultBuffer = g:vimclojure#ClojureResultBuffer.New(ns)
-	call resultBuffer.showOutput(result)
-	wincmd p
+	call vimclojure#ShowClojureResult(result, ns)
 endfunction
 
 " The Repl
-let vimclojure#Repl = copy(vimclojure#Buffer)
-let vimclojure#Repl.__superBufferNew = vimclojure#Repl.New
-let vimclojure#Repl.__superBufferInit = vimclojure#Repl.Init
-let vimclojure#Repl.__superBufferClear = vimclojure#Repl.clear
+let vimclojure#Repl = copy(vimclojure#Window)
+let vimclojure#Repl["__superWindowNew"]   = vimclojure#Repl.New
+let vimclojure#Repl["__superWindowInit"]  = vimclojure#Repl.Init
+let vimclojure#Repl["__superWindowClear"] = vimclojure#Repl.clear
 
 let vimclojure#Repl._history = []
 let vimclojure#Repl._historyDepth = 0
@@ -727,7 +772,7 @@ endfunction
 
 " FIXME: Ugly hack. But easier than cleaning up the buffer
 " mess in case something goes wrong with repl start.
-function! vimclojure#Repl.New(namespace) dict
+function! vimclojure#Repl.New(namespace, ...) dict
 	let replStart = vimclojure#ExecuteNail("Repl", "-s",
 				\ "-n", a:namespace)
 	if replStart.stderr != ""
@@ -735,7 +780,9 @@ function! vimclojure#Repl.New(namespace) dict
 		return
 	endif
 
-	let instance = call(self.__superBufferNew, [a:namespace], self)
+	let instance = call(self.__superWindowNew,
+				\ [g:vimclojure#Buffer, a:namespace] + a:000,
+				\ self)
 	let instance._id = replStart.value.id
 	call vimclojure#ExecuteNailWithInput("Repl",
 				\ "(require 'clojure.stacktrace)",
@@ -744,8 +791,8 @@ function! vimclojure#Repl.New(namespace) dict
 	return instance
 endfunction
 
-function! vimclojure#Repl.Init(namespace) dict
-	call self.__superBufferInit()
+function! vimclojure#Repl.Init(buftype, namespace) dict
+	call self.__superWindowInit(a:buftype)
 
 	let self._prompt = a:namespace . "=>"
 
@@ -756,7 +803,7 @@ function! vimclojure#Repl.Init(namespace) dict
 
 	let b:vimclojure_repl = self
 
-	set filetype=clojure
+	set filetype=vimclojure.clojure
 	let b:vimclojure_namespace = a:namespace
 
 	if !hasmapto("<Plug>ClojureReplEnterHook.", "i")
@@ -821,7 +868,7 @@ function! vimclojure#Repl.showPrompt() dict
 endfunction
 
 function! vimclojure#Repl.clear() dict
-	call self.__superBufferClear()
+	call self.__superWindowClear()
 	call self.showPrompt()
 endfunction
 
@@ -887,8 +934,7 @@ function! vimclojure#Repl.enterHook() dict
 	if result.value == 0 && result.stderr == ""
 		call vimclojure#ReplDoEnter()
 	elseif result.stderr != ""
-		let buf = g:vimclojure#ResultBuffer.New()
-		call buf.showOutput(result)
+		call vimclojure#ShowResult(result)
 	else
 		let result = vimclojure#ExecuteNailWithInput("Repl", cmd,
 					\ "-r", "-i", self._id)
