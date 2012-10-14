@@ -19,6 +19,10 @@ git_out_decorate() {
   git log --branches --not --remotes --simplify-by-decoration --decorate --oneline
 }
 
+gllp() {
+  git log -p master@{1}..
+}
+
 #-------------------------------------------------
 
 sr() {

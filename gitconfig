@@ -8,7 +8,7 @@
   co      = checkout
   out     = log FETCH_HEAD..HEAD
   in      = log HEAD..FETCH_HEAD
-  ignored = ls-files --others -i --exclude-standard
+  ignored = !git clean -ndX | sed -e 's/^Would remove //'
   ffm     = merge --ff-only
   ffp     = pull --ff-only
 [diff]
