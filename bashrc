@@ -20,14 +20,6 @@ if [[ $- =~ i ]]; then
     source $file
   done
 
-  BASH_COMPLETION=${BASH_COMPLETION:-/usr/local/etc/bash_completion}
-  if [ -e $BASH_COMPLETION ]; then
-    source $BASH_COMPLETION
-    complete -r vim
-  else
-    echo "no bash-completion"
-  fi
-
   # shell behavior
   source      $HOME/.bash/shell.bash
   cond_source $HOME/.bash/local/shell.bash
