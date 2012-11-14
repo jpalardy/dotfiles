@@ -3,9 +3,6 @@
 " F-KEYS MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <F4> :w<CR>:make<CR>:cw<CR>
-imap <F4> <ESC><F4>
-
 nmap <F5>   :ToggleSpaceHi<CR>
 imap <F5>   <C-o><F5>
 nmap <F6>   :set spell!<CR>

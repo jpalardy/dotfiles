@@ -69,6 +69,8 @@ autocmd FileType diff     NoSpaceHi
 autocmd FileType man      NoSpaceHi
 autocmd FileType scratchy NoSpaceHi
 
+autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax *.go NoSpaceHi
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " used by :TOhtml
