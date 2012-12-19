@@ -11,6 +11,9 @@ endif
 
 syntax match moeHeader /^[- A-Z0-9']*$/
 
+" @person
+syntax match moePerson "\k\@<!@\S*"
+
 " emphasis
 syntax match moeHighlight     /.* <-$/
 syntax match moeImportant     /.* !$/
@@ -28,6 +31,7 @@ syntax match moeURL         /https\?:[^ ]*/
 "-------------------------------------------------
 
 hi def link moeHeader        Keyword
+hi def link moePerson        Special
 hi def link moeHighlight     Todo
 hi def link moeImportant     Error
 hi def link moeLessImportant Comment
