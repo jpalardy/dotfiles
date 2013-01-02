@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language: moe file -- like .txt but cuter
 " Maintainer: Jonathan Palardy
-" Latest Revision: March 8, 2012
+" Latest Revision: December 19, 2012
 
 if exists("b:current_syntax")
   finish
@@ -9,10 +9,10 @@ endif
 
 "-------------------------------------------------
 
-syntax match moeHeader /^[- A-Z0-9']*$/
+syntax match moeHeader /^[- A-Z0-9']\+$/
 
 " @person
-syntax match moePerson "\k\@<!@\S*"
+syntax match moePerson "\w\@<!@\w\+"
 
 " emphasis
 syntax match moeHighlight     /.* <-$/
@@ -22,11 +22,11 @@ syntax match moeLessImportant /.* #$/
 " [TAGS]
 syntax match moeTag     /\[[^]]\+\]/
 
-syntax match moeDivider /^-*$/
+syntax match moeDivider /^-\+$/
 
 syntax match moeDate        /\d\d\d\d-\d\d-\d\d/
 syntax match moePhoneNumber /\d\d\d.\d\d\d.\d\d\d\d/
-syntax match moeURL         /https\?:[^ ]*/
+syntax match moeURL         /https\?:[^ ]\+/
 
 "-------------------------------------------------
 
