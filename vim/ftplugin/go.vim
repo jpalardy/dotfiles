@@ -7,3 +7,9 @@ setlocal tabstop=4
 nmap <F4> :Fmt<CR>
 imap <F4> <ESC><F4>
 
+if !exists("b:snippets")
+  let b:snippets = {}
+endif
+
+let b:snippets['print'] = 'fmt.Printf("|", )'
+
