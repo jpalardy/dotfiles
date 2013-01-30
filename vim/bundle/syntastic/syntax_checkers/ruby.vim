@@ -13,19 +13,6 @@
 "Use the g:syntastic_ruby_checker option to specify which checker to load -
 "set it to "jruby" to load the jruby checker.
 "============================================================================
-if exists("loaded_ruby_syntax_checker")
-    finish
-endif
-let loaded_ruby_syntax_checker = 1
-
-if !exists("g:syntastic_ruby_exec")
-  let g:syntastic_ruby_exec = "ruby"
-endif
-
-"bail if the user doesnt have ruby installed where they said it is
-if !executable(expand(g:syntastic_ruby_exec))
-    finish
-endif
 
 if !exists("g:syntastic_ruby_checker")
     let g:syntastic_ruby_checker = "mri"

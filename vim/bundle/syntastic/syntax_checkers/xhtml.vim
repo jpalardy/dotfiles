@@ -9,10 +9,6 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists("loaded_xhtml_syntax_checker")
-    finish
-endif
-let loaded_xhtml_syntax_checker = 1
 
 "bail if the user doesnt have tidy or grep installed
 if !executable("tidy")
@@ -38,9 +34,10 @@ function! s:TidyEncOptByFenc()
 endfunction
 
 function! SyntaxCheckers_xhtml_GetLocList()
-
     let encopt = s:TidyEncOptByFenc()
-    let makeprg="tidy ".encopt." -xml -e ".shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'tidy',
+                \ 'args': encopt . ' -xml -e' })
     let errorformat='%Wline %l column %c - Warning: %m,%Eline %l column %c - Error: %m,%-G%.%#,%-G%.%#'
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat, 'defaults': {'bufnr': bufnr("")} })
 endfunction

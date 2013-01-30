@@ -14,11 +14,6 @@
 "
 "   let g:syntastic_csslint_options = "--warnings=none"
 
-if exists("loaded_css_syntax_checker")
-    finish
-endif
-let loaded_css_syntax_checker = 1
-
 if !exists('g:syntastic_csslint_options')
     let g:syntastic_csslint_options = ""
 endif
@@ -29,8 +24,9 @@ if !executable("csslint")
 endif
 
 function! SyntaxCheckers_css_GetLocList()
-    let makeprg = 'csslint --format=compact '.g:syntastic_csslint_options.' '.
-                \ shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'csslint',
+                \ 'args': '--format=compact ' . g:syntastic_csslint_options })
 
     " Print CSS Lint's error/warning messages from compact format. Ignores blank lines.
     let errorformat = '%-G,%-G%f: lint free!,%f: line %l\, col %c\, %trror - %m,%f: line %l\, col %c\, %tarning - %m,%f: line %l\, col %c\, %m,'

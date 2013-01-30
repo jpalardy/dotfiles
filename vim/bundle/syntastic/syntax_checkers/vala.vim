@@ -22,11 +22,6 @@
 "
 "============================================================================
 
-if exists('loaded_vala_syntax_checker')
-    finish
-endif
-let loaded_vala_syntax_checker = 1
-
 if !executable('valac')
     finish
 endif
@@ -58,7 +53,9 @@ endfunction
 
 function! SyntaxCheckers_vala_GetLocList()
     let vala_pkg_args = join(map(s:GetValaModules(), '"--pkg ".v:val'), ' ')
-    let makeprg = 'valac -C ' . vala_pkg_args . ' ' .shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'valac',
+                \ 'args': '-C ' . vala_pkg_args })
     let errorformat = '%A%f:%l.%c-%\d%\+.%\d%\+: %t%[a-z]%\+: %m,%C%m,%Z%m'
 
     return SyntasticMake({ 'makeprg': makeprg,

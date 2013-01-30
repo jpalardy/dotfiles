@@ -9,10 +9,6 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists("loaded_cucumber_syntax_checker")
-    finish
-endif
-let loaded_cucumber_syntax_checker = 1
 
 "bail if the user doesnt have cucumber installed
 if !executable("cucumber")
@@ -20,7 +16,9 @@ if !executable("cucumber")
 endif
 
 function! SyntaxCheckers_cucumber_GetLocList()
-    let makeprg = 'cucumber --dry-run --quiet --strict --format pretty '.shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'cucumber',
+                \ 'args': '--dry-run --quiet --strict --format pretty' })
     let errorformat =  '%f:%l:%c:%m,%W      %.%# (%m),%-Z%f:%l:%.%#,%-G%.%#'
 
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })

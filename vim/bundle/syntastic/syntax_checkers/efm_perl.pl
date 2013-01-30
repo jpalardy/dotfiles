@@ -1,9 +1,8 @@
-#!/usr/bin/perl -w
-
+#!/usr/bin/perl
 # vimparse.pl - Reformats the error messages of the Perl interpreter for use
 # with the quickfix mode of Vim
 #
-# Copyright (©) 2001 by Jörg Ziefle <joerg.ziefle@gmx.de>
+# Copyright (c) 2001 by JÃ¶rg Ziefle <joerg.ziefle@gmx.de>
 # Copyright (c) 2012 Eric Harmon <http://eharmon.net>
 # You may use and distribute this software under the same terms as Perl itself.
 #
@@ -66,9 +65,10 @@
 #
 # Tested under SunOS 5.7 with Perl 5.6.0.  Let me know if it's not working for
 # you.
-
+use warnings;
 use strict;
 use Getopt::Std;
+use File::Temp qw( tempfile );
 
 use vars qw/$opt_I $opt_c $opt_w $opt_f $opt_h/; # needed for Getopt in combination with use strict 'vars'
 
@@ -92,14 +92,24 @@ my $handle = (defined $opt_f ? \*FILE : \*STDOUT);
 (my $file = shift) or &usage; # display usage if no filename is supplied
 my $args = (@ARGV ? ' ' . join ' ', @ARGV : '');
 
-my $libs = join ' ', map {"-I$_"} split ',', $opt_I;
-my @error_lines = `perl $libs @{[defined $opt_c ? '-c ' : '' ]} @{[defined $opt_w ? '-X ' : '-w ']} "$file$args" 2>&1`;
+if ($file eq '-') { # make STDIN seek-able, so it can be read twice
+    my $fh = tempfile();
+    print {$fh} <STDIN>;
+    open \*STDIN, '<&', $fh or die "open: $!";
+    seek \*STDIN, 0, 0 or die "seek: $!";
+}
+
+my $libs = join ' ', map {"-I$_"} split ',', $opt_I || '';
+my @error_lines = `perl $libs @{[defined $opt_c ? '-c ' : '' ]} @{[defined $opt_w ? '-X ' : '-Mwarnings ']} "$file$args" 2>&1`;
 
 my @lines = map { "E:$_" } @error_lines;
 
 my @warn_lines;
 if(defined($opt_w)) {
-    @warn_lines = `perl $libs @{[defined $opt_c ? '-c ' : '' ]} -w "$file$args" 2>&1`;
+    if ($file eq '-') {
+        seek \*STDIN, 0, 0 or die "seek: $!";
+    }
+    @warn_lines = `perl $libs @{[defined $opt_c ? '-c ' : '' ]} -Mwarnings "$file$args" 2>&1`;
 }
 
 # Any new errors must be warnings

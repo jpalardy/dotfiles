@@ -10,22 +10,19 @@
 "
 "============================================================================
 
-if exists("loaded_lisp_syntax_checker")
-  finish
-endif
-let loaded_lisp_syntax_checker = 1
-
 " Bail if the user doesnt have clisp installed
 if !executable("clisp")
   finish
 endif
 
 function! SyntaxCheckers_lisp_GetLocList()
-  let makeprg  = 'clisp -c ' . shellescape(expand('%'))
-  let makeprg .= ' -o /tmp/clisp-vim-compiled-file'
-  let efm  = '%-G;%.%#,'
-  let efm .= '%W%>WARNING:%.%#line %l : %m,%C  %#%m,'
-  let efm .= '%E%>The following functions were %m,%Z %m,'
-  let efm .= '%-G%.%#'
-  return SyntasticMake({ 'makeprg': makeprg, 'errorformat': efm })
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'clisp',
+                \ 'args': '-c'
+                \ 'tail': '-o /tmp/clisp-vim-compiled-file' })
+    let efm  = '%-G;%.%#,'
+    let efm .= '%W%>WARNING:%.%#line %l : %m,%C  %#%m,'
+    let efm .= '%E%>The following functions were %m,%Z %m,'
+    let efm .= '%-G%.%#'
+    return SyntasticMake({ 'makeprg': makeprg, 'errorformat': efm })
 endfunction

@@ -12,17 +12,15 @@
 "Installation: $ npm install -g js-yaml
 "
 "============================================================================
-if exists("loaded_yaml_syntax_checker")
-    finish
-endif
-let loaded_yaml_syntax_checker = 1
 
 if !executable("js-yaml")
     finish
 endif
 
 function! SyntaxCheckers_yaml_GetLocList()
-    let makeprg='js-yaml --compact ' . shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'js-yaml',
+                \ 'args': '--compact' })
     let errorformat='Error on line %l\, col %c:%m,%-G%.%#'
     return SyntasticMake({ 'makeprg': makeprg,
                          \ 'errorformat': errorformat,

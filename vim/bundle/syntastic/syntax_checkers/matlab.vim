@@ -10,18 +10,13 @@
 "
 "============================================================================
 
-if exists("loaded_matlab_syntax_checker")
-    finish
-endif
-let loaded_matlab_syntax_checker = 1
-
 "bail if the user doesn't have mlint installed
 if !executable("mlint")
     finish
 endif
 
 function! SyntaxCheckers_matlab_GetLocList()
-    let makeprg = 'mlint -id $* '.shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({ 'exe': 'mlint', 'args': '-id $*' })
     let errorformat = 'L %l (C %c): %*[a-zA-Z0-9]: %m,L %l (C %c-%*[0-9]): %*[a-zA-Z0-9]: %m'
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat, 'defaults': {'bufnr': bufnr("")} })
 endfunction

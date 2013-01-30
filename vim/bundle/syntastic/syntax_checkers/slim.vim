@@ -9,10 +9,6 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists("loaded_slim_syntax_checker")
-    finish
-endif
-let loaded_slim_syntax_checker = 1
 
 "bail if the user doesnt have the slim binary installed
 if !executable("slimrb")
@@ -30,7 +26,9 @@ function! s:SlimrbVersion()
 endfunction
 
 function! SyntaxCheckers_slim_GetLocList()
-    let makeprg = "slimrb -c " . shellescape(expand("%"))
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'slimrb',
+                \ 'args': '-c' })
     if SyntasticIsVersionAtLeast(s:SlimrbVersion(), [1,3,1])
         let errorformat = '%C\ %#%f\, Line %l\, Column %c,%-G\ %.%#,%ESlim::Parser::SyntaxError: %m,%+C%.%#'
     else

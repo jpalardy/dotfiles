@@ -9,10 +9,6 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists("loaded_puppet_syntax_checker")
-    finish
-endif
-let loaded_puppet_syntax_checker = 1
 
 "bail if the user doesnt have puppet installed
 if !executable("puppet")
@@ -61,7 +57,7 @@ function! s:getPuppetLintErrors()
         let g:syntastic_puppet_lint_arguments = ''
     endif
 
-    let makeprg = 'puppet-lint --log-format "\%{KIND} [\%{check}] \%{message} at \%{fullpath}:\%{linenumber}" '.g:syntastic_puppet_lint_arguments.shellescape(expand('%'))
+    let makeprg = 'puppet-lint --log-format "\%{KIND} [\%{check}] \%{message} at \%{fullpath}:\%{linenumber}" '.g:syntastic_puppet_lint_arguments.' '.shellescape(expand('%'))
     let errorformat = '%t%*[a-zA-Z] %m at %f:%l'
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat, 'subtype': 'Style' })
 endfunction

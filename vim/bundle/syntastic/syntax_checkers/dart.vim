@@ -1,7 +1,8 @@
 "============================================================================
-"File:        6g.vim
-"Description: Syntax checking plugin for syntastic.vim
-"Maintainer:  Sam Nguyen <samxnguyen@gmail.com>
+"File:        dart.vim
+"Description: Figures out which dart syntax checker (if any) to load
+"             from the dart directory.
+"Maintainer:  Maksim Ryzhikov <rv.maksim at gmail dot com>
 "License:     This program is free software. It comes without any warranty,
 "             to the extent permitted by applicable law. You can redistribute
 "             it and/or modify it under the terms of the Do What The Fuck You
@@ -9,9 +10,5 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-function! SyntaxCheckers_go_GetLocList()
-    let makeprg = '6g -o /dev/null %'
-    let errorformat = '%E%f:%l: %m'
 
-    return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
-endfunction
+call SyntasticLoadChecker('dart')

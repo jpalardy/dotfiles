@@ -25,18 +25,15 @@
 "
 "============================================================================
 
-if exists("loaded_applescript_syntax_checker")
-    finish
-endif
-let loaded_applescript_syntax_checker = 1
-
 "bail if the user doesnt have osacompile installed
 if !executable("osacompile")
     finish
 endif
 
 function! SyntaxCheckers_applescript_GetLocList()
-    let makeprg = 'osacompile -o ' . tempname() . '.scpt '. shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'osacompile',
+                \ 'args': '-o ' . tempname() . '.scpt ' })
     let errorformat = '%f:%l:%m'
 
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })

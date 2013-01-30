@@ -9,22 +9,18 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists("loaded_elixir_syntax_checker")
-    finish
-endif
-let loaded_elixir_syntax_checker = 1
 
 if !executable('elixir')
   finish
 endif
 
 function! SyntaxCheckers_elixir_GetLocList()
-  let makeprg = 'elixir ' . shellescape(expand('%'))
-  let errorformat = '** %*[^\ ] %f:%l: %m'
+    let makeprg = syntastic#makeprg#build({ 'exe': 'elixir' })
+    let errorformat = '** %*[^\ ] %f:%l: %m'
 
-  let elixir_results = SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+    let elixir_results = SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
 
-  if !empty(elixir_results)
-    return elixir_results
-  endif
+    if !empty(elixir_results)
+        return elixir_results
+    endif
 endfunction

@@ -46,22 +46,30 @@ set cpo&vim
 
 " Return the number of bytes in a string after expanding tabs to spaces.  {{{2
 " This expansion is done based on the current value of 'tabstop'
-function! s:Strlen(string)
-  let rv = 0
-  let i = 0
+if exists('*strdisplaywidth')
+  " Needs vim 7.3
+  let s:Strlen = function("strdisplaywidth")
+else
+  function! s:Strlen(string)
+    " Implement the tab handling part of strdisplaywidth for vim 7.2 and
+    " earlier - not much that can be done about handling doublewidth
+    " characters.
+    let rv = 0
+    let i = 0
 
-  for char in split(a:string, '\zs')
-    if char == "\t"
-      let rv += &ts - i
-      let i = 0
-    else
-      let rv += 1
-      let i = (i + 1) % &ts
-    endif
-  endfor
+    for char in split(a:string, '\zs')
+      if char == "\t"
+        let rv += &ts - i
+        let i = 0
+      else
+        let rv += 1
+        let i = (i + 1) % &ts
+      endif
+    endfor
 
-  return rv
-endfunction
+    return rv
+  endfunction
+endif
 
 " Align a string within a field                                           {{{2
 " These functions do not trim leading and trailing spaces.
@@ -219,6 +227,10 @@ function! tabular#TabularizeStrings(strings, delim, ...)
   "     intentionally
   "   - Don't strip leading spaces from the first element; we like indenting.
   for line in lines
+    if len(line) == 1 && s:do_gtabularize
+      continue " Leave non-matching lines unchanged for GTabularize
+    endif
+
     if line[0] !~ '^\s*$'
       let line[0] = s:StripTrailingSpaces(line[0])
     endif
@@ -232,6 +244,10 @@ function! tabular#TabularizeStrings(strings, delim, ...)
   " Find the max length of each field
   let maxes = []
   for line in lines
+    if len(line) == 1 && s:do_gtabularize
+      continue " non-matching lines don't affect field widths for GTabularize
+    endif
+
     for i in range(len(line))
       if i == len(maxes)
         let maxes += [ s:Strlen(line[i]) ]
@@ -246,6 +262,12 @@ function! tabular#TabularizeStrings(strings, delim, ...)
   " Concatenate the fields, according to the format pattern.
   for idx in range(len(lines))
     let line = lines[idx]
+
+    if len(line) == 1 && s:do_gtabularize
+      let lines[idx] = line[0] " GTabularize doesn't change non-matching lines
+      continue
+    endif
+
     for i in range(len(line))
       let how = format[i % len(format)][0]
       let pad = format[i % len(format)][1:-1]
@@ -270,6 +292,8 @@ endfunction
 "   If the function is called with a range containing multiple lines, then
 "     those lines will be used as the range.
 "   If the function is called with no range or with a range of 1 line, then
+"     if GTabularize mode is being used,
+"       the range will not be adjusted
 "     if "includepat" is not specified,
 "       that 1 line will be filtered,
 "     if "includepat" is specified and that line does not match it,
@@ -281,24 +305,41 @@ endfunction
 " The remaining arguments must each be a filter to apply to the text.
 " Each filter must either be a String evaluating to a function to be called.
 function! tabular#PipeRange(includepat, ...) range
+  exe a:firstline . ',' . a:lastline
+      \ . 'call tabular#PipeRangeWithOptions(a:includepat, a:000, {})'
+endfunction
+
+" Extended version of tabular#PipeRange, which
+" 1) Takes the list of filters as an explicit list rather than as varargs
+" 2) Supports passing a dictionary of options to control the routine.
+"    Currently, the only supported option is 'mode', which determines whether
+"    to behave as :Tabularize or as :GTabularize
+" This allows me to add new features here without breaking API compatibility
+" in the future.
+function! tabular#PipeRangeWithOptions(includepat, filterlist, options) range
   let top = a:firstline
   let bot = a:lastline
 
-  if a:includepat != '' && top == bot
-    if top < 0 || top > line('$') || getline(top) !~ a:includepat
-      return
+  let s:do_gtabularize = (get(a:options, 'mode', '') ==# 'GTabularize')
+
+  if !s:do_gtabularize
+    " In the default mode, apply range extension logic
+    if a:includepat != '' && top == bot
+      if top < 0 || top > line('$') || getline(top) !~ a:includepat
+        return
+      endif
+      while top > 1 && getline(top-1) =~ a:includepat
+        let top -= 1
+      endwhile
+      while bot < line('$') && getline(bot+1) =~ a:includepat
+        let bot += 1
+      endwhile
     endif
-    while top > 1 && getline(top-1) =~ a:includepat
-      let top -= 1
-    endwhile
-    while bot < line('$') && getline(bot+1) =~ a:includepat
-      let bot += 1
-    endwhile
   endif
 
   let lines = map(range(top, bot), 'getline(v:val)')
 
-  for filter in a:000
+  for filter in a:filterlist
     if type(filter) != type("")
       echoerr "PipeRange: Bad filter: " . string(filter)
     endif
@@ -309,6 +350,12 @@ function! tabular#PipeRange(includepat, ...) range
   endfor
 
   call s:SetLines(top, bot - top + 1, lines)
+endfunction
+
+" Part of the public interface so interested pipelines can query this and
+" adjust their behavior appropriately.
+function! tabular#DoGTabularize()
+  return s:do_gtabularize
 endfunction
 
 function! s:SplitDelimTest(string, delim, expected)

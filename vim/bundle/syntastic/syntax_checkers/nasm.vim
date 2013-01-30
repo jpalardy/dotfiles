@@ -9,10 +9,6 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists("loaded_nasm_syntax_checker")
-    finish
-endif
-let loaded_nasm_syntax_checker = 1
 
 "bail if the user doesnt have nasm installed
 if !executable("nasm")
@@ -26,7 +22,9 @@ function! SyntaxCheckers_nasm_GetLocList()
         let outfile="/dev/null"
     endif
     let wd = shellescape(expand("%:p:h") . "/")
-    let makeprg = "nasm -X gnu -f elf -I " . wd . " -o " . outfile . " " . shellescape(expand("%"))
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'nasm',
+                \ 'args': '-X gnu -f elf -I ' . wd . ' -o ' . outfile })
     let errorformat = '%f:%l: %t%*[^:]: %m'
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
 endfunction

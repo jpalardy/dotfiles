@@ -9,10 +9,6 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists("loaded_rust_syntax_checker")
-    finish
-endif
-let loaded_rust_syntax_checker = 1
 
 "bail if the user doesnt have rustc installed
 if !executable("rustc")
@@ -20,7 +16,9 @@ if !executable("rustc")
 endif
 
 function! SyntaxCheckers_rust_GetLocList()
-    let makeprg = 'rustc --parse-only '.shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'rustc',
+                \ 'args': '--parse-only' })
 
     let errorformat  = '%E%f:%l:%c: \\d%#:\\d%# %.%\{-}error:%.%\{-} %m,'   .
                      \ '%W%f:%l:%c: \\d%#:\\d%# %.%\{-}warning:%.%\{-} %m,' .

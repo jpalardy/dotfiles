@@ -10,11 +10,6 @@
 "
 "============================================================================
 
-if exists('loaded_lua_syntax_checker')
-    finish
-endif
-let loaded_lua_syntax_checker = 1
-
 " check if the lua compiler is installed
 if !executable('luac')
     finish
@@ -44,7 +39,7 @@ function! SyntaxCheckers_lua_GetHighlightRegex(pos)
 endfunction
 
 function! SyntaxCheckers_lua_GetLocList()
-    let makeprg = 'luac -p ' . shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({ 'exe': 'luac', 'args': '-p' })
     let errorformat =  'luac: %#%f:%l: %m'
 
     return SyntasticMake({ 'makeprg': makeprg,

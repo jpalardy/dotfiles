@@ -18,11 +18,6 @@
 "
 "============================================================================
 
-if exists("loaded_fortran_syntax_checker")
-    finish
-endif
-let loaded_fortran_syntax_checker = 1
-
 "bail if the user doesnt have fortran installed
 if !executable("gfortran")
     finish
@@ -33,12 +28,17 @@ if !exists('g:syntastic_fortran_flags')
 endif
 
 function! SyntaxCheckers_fortran_GetLocList()
-    let makeprg  = 'gfortran -fsyntax-only'
-    let makeprg .= g:syntastic_fortran_flags
-    if exists('b:syntastic_fortran_flags')
-        let makeprg .= b:syntastic_fortran_flags
-    endif
-    let makeprg .= ' ' . shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'gfortran',
+                \ 'args': s:args() })
     let errorformat = '%-C %#,%-C  %#%.%#,%A%f:%l.%c:,%Z%m,%G%.%#'
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+endfunction
+
+function s:args()
+    let rv  = '-fsyntax-only ' . g:syntastic_fortran_flags
+    if exists('b:syntastic_fortran_flags')
+        let rv .= " " . b:syntastic_fortran_flags
+    endif
+    return rv
 endfunction

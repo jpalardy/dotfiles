@@ -9,13 +9,9 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists("loaded_scala_syntax_checker")
-    finish
-endif
-let loaded_scala_syntax_checker = 1
 
 "bail if the user doesnt have the scala binary installed
-if !executable("scala")
+if !executable("scalac")
     finish
 endif
 
@@ -24,7 +20,9 @@ if !exists("g:syntastic_scala_options")
 endif
 
 function! SyntaxCheckers_scala_GetLocList()
-    let makeprg = 'scala '. g:syntastic_scala_options .' '.  shellescape(expand('%')) . ' /dev/null'
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'scalac',
+                \ 'args': '-Ystop-after:parser '. g:syntastic_scala_options })
 
     let errorformat = '%f\:%l: %trror: %m'
 

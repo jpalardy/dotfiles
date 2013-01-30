@@ -9,10 +9,6 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists("loaded_zsh_syntax_checker")
-    finish
-endif
-let loaded_zsh_syntax_checker = 1
 
 "bail if the user doesnt have zsh installed
 if !executable("zsh")
@@ -20,7 +16,7 @@ if !executable("zsh")
 endif
 
 function! SyntaxCheckers_zsh_GetLocList()
-    let makeprg = 'zsh -n ' . shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({ 'exe': 'zsh', 'args': '-n' })
     let errorformat = '%f:%l: %m'
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat})
 endfunction

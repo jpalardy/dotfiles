@@ -17,11 +17,6 @@
 " To use less-lint instead of less set the variable
 " g:syntastic_less_use_less_lint.
 
-if exists("loaded_less_syntax_checker")
-    finish
-endif
-let loaded_less_syntax_checker = 1
-
 "bail if the user doesnt have the lessc binary installed
 if !executable("lessc")
     finish
@@ -42,8 +37,10 @@ else
 end
 
 function! SyntaxCheckers_less_GetLocList()
-    let makeprg = s:check_file . ' ' . g:syntastic_less_options . ' ' .
-                \ shellescape(expand('%')) . ' /dev/null'
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': s:check_file,
+                \ 'args': g:syntastic_less_options,
+                \ 'tail': syntastic#util#DevNull() })
     let errorformat = '%m in %f:%l:%c'
 
     return SyntasticMake({ 'makeprg': makeprg,

@@ -10,7 +10,7 @@ elseif exists("b:current_syntax")
 endif
 
 syn case match
-syn sync minlines=50
+syn sync minlines=50 maxlines=100
 
 " most Scala keywords
 syn keyword scalaKeyword case
@@ -83,7 +83,7 @@ syn match scalaRoot "\<[a-zA-Z][_$a-zA-Z0-9]*\."me=e-1
 syn match scalaMethodCall "\.[a-z][_$a-zA-Z0-9]*"ms=s+1
 
 " type declarations in val/var/def
-syn match scalaType ":\s*\(=>\s*\)\?[._$a-zA-Z0-9]\+\(\[.*\]\+\)\?\(\s*\(<:\|>:\|#\|=>\)\s*[._$a-zA-Z0-9]\+\(\[.*\]\+\)*\)*"ms=s+1
+syn match scalaType ":\s*\(=>\s*\)\?[\._$a-zA-Z0-9]\+\(\[[^:]*\]\+\)\?\(\s*\(<:\|>:\|#\|=>\)\s*[\._$a-zA-Z0-9]\+\(\[[^:]*\]\+\)*\)*"ms=s+1
 
 " comments
 syn match scalaTodo "[tT][oO][dD][oO]" contained
@@ -131,8 +131,6 @@ syn match scalaXmlComment "<!--\_[^>]*-->" contained
 
 " REPL
 syn match scalaREPLCmdLine "\<scala>\>"
-
-syn sync fromstart
 
 " map Scala groups to standard groups
 hi link scalaKeyword Keyword

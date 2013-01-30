@@ -19,18 +19,13 @@
 " Then install the zptlint program, found on pypi:
 " http://pypi.python.org/pypi/zptlint
 
-if exists("loaded_zpt_syntax_checker")
-    finish
-endif
-let loaded_zpt_syntax_checker = 1
-
 " Bail if the user doesn't have zptlint installed
 if !executable("zptlint")
     finish
 endif
 
 function! SyntaxCheckers_zpt_GetLocList()
-    let makeprg="zptlint ".shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({ 'exe': 'zptlint' })
     let errorformat='%-P*** Error in: %f,%Z%*\s\, at line %l\, column %c,%E%*\s%m,%-Q'
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
 endfunction

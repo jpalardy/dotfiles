@@ -9,10 +9,6 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists("loaded_haml_syntax_checker")
-    finish
-endif
-let loaded_haml_syntax_checker = 1
 
 "bail if the user doesnt have the haml binary installed
 if !executable("haml")
@@ -20,7 +16,9 @@ if !executable("haml")
 endif
 
 function! SyntaxCheckers_haml_GetLocList()
-    let makeprg = "haml -c " . shellescape(expand("%"))
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': 'haml',
+                \ 'args': '-c' })
     let errorformat = 'Haml error on line %l: %m,Syntax error on line %l: %m,%-G%.%#'
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
 endfunction

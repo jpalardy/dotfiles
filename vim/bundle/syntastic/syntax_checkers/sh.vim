@@ -9,10 +9,6 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-if exists('loaded_sh_syntax_checker')
-    finish
-endif
-let loaded_sh_syntax_checker = 1
 
 function! s:GetShell()
     if !exists('b:shell') || b:shell == ""
@@ -53,7 +49,10 @@ function! SyntaxCheckers_sh_GetLocList()
         return []
     endif
 
-    let makeprg = s:GetShell() . ' -n ' . shellescape(expand('%'))
+    let makeprg = syntastic#makeprg#build({
+                \ 'exe': s:GetShell(),
+                \ 'args': '-n' })
+
     let errorformat = '%f: line %l: %m'
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat})
 endfunction
