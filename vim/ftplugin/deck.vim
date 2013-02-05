@@ -9,3 +9,5 @@ nnoremap <buffer> <CR> mbYpO<esc>`b:execute "normal ,c"<CR>`b3j
 vnoremap <buffer> ,[ <ESC>`>a]<ESC>`<i[<ESC>
 vnoremap <buffer> ,] <ESC>`>a]<ESC>`<i[<ESC>
 
+nnoremap <buffer> ,g v"ay:SplitScratchy "ack '^<c-r>a ;' <c-r>%"<CR>
+
