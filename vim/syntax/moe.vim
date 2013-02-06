@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language: moe file -- like .txt but cuter
 " Maintainer: Jonathan Palardy
-" Latest Revision: December 19, 2012
+" Latest Revision: February 6, 2013
 
 if exists("b:current_syntax")
   finish
@@ -9,7 +9,8 @@ endif
 
 "-------------------------------------------------
 
-syntax match moeHeader /^[- A-Z0-9']\+$/
+" a header is a line that starts with (at least) 3 capital letters
+syntax match moeHeader /^[A-Z][A-Z][A-Z].\+$/
 
 " @person
 syntax match moePerson "\w\@<!@\w\+"
