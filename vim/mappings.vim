@@ -3,100 +3,100 @@
 " F-KEYS MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <F5>   :ToggleSpaceHi<CR>
-imap <F5>   <C-o><F5>
-nmap <F6>   :set spell!<CR>
-imap <F6>   <C-o><F6>
-nmap <F7>   :set wrap!<CR>
-imap <F7>   <C-o><F7>
+nnoremap <F5>   :ToggleSpaceHi<CR>
+inoremap <F5>   <C-o>:ToggleSpaceHi<CR>
+nnoremap <F6>   :set spell!<CR>
+inoremap <F6>   <C-o>:set spell!<CR>
+nnoremap <F7>   :set wrap!<CR>
+inoremap <F7>   <C-o>:set wrap!<CR>
 set pastetoggle=<F8>
 
-nmap <ESC>l :set list!<CR>
-nmap <ESC>n :set number!<CR>
-nmap <ESC>N :set relativenumber!<CR>
-nmap <ESC><SPACE> :nohl<CR>
+nnoremap <ESC>l :set list!<CR>
+nnoremap <ESC>n :set number!<CR>
+nnoremap <ESC>N :set relativenumber!<CR>
+nnoremap <ESC><SPACE> :nohl<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COMMA MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " STRIP -- EMPTY LINE ENDINGS
-nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
-vmap _$ :call Preserve( "s/\\s\\+$//e")<CR>
+nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR>
+vnoremap _$ :call Preserve( "s/\\s\\+$//e")<CR>
 " STRIP -- EMPTY LINE BEGINNINGS
-nmap _^ :call Preserve("%s/^\\s\\+//e")<CR>
-vmap _^ :call Preserve( "s/^\\s\\+//e")<CR>
+nnoremap _^ :call Preserve("%s/^\\s\\+//e")<CR>
+vnoremap _^ :call Preserve( "s/^\\s\\+//e")<CR>
 
 " COMMATIZE
-vmap ,, :! paste -s -d, -<CR>
+vnoremap ,, :! paste -s -d, -<CR>
 " QUOTISIZE
-vmap ,' :! awk '{print "'\''"$0"'\''"}'<CR>
-vmap ," :! awk '{print "\""$0"\""}'<CR>
+vnoremap ,' :! awk '{print "'\''"$0"'\''"}'<CR>
+vnoremap ," :! awk '{print "\""$0"\""}'<CR>
 " AWK
-vmap ,a :! awk '{print }'<LEFT><LEFT>
+vnoremap ,a :! awk '{print }'<LEFT><LEFT>
 
 " ONLY KEEP LINES WHICH CONTAIN SEARCH
-nmap ,v :v/<C-R>//d<CR>gg
-nmap ,d :g/<C-R>//d<CR>gg
+nnoremap ,v :v/<C-R>//d<CR>gg
+nnoremap ,d :g/<C-R>//d<CR>gg
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <silent> Q :qa<CR>
+nnoremap <silent> Q :qa<CR>
 
 " buffer list on tab
-nmap <tab> :buffers<CR>:buffer<Space>
+nnoremap <tab> :buffers<CR>:buffer<Space>
 
 " easier to reach, overrides TOP and BOTTOM of screen
-map H ^
-map L $
+nnoremap H ^
+nnoremap L $
 
 " display line up/down (not actual)
-map <up> gk
-map <down> gj
+noremap <up> gk
+noremap <down> gj
 
 " search next/previous -- center in page
-nmap n nzz
-nmap N Nzz
-nmap * *Nzz
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *Nzz
 
 " one-key indentation
-nmap > >>
-nmap < <<
+nnoremap > >>
+nnoremap < <<
 
 " nerd commenter
-vmap # :call NERDComment(1, "toggle")<CR>
-nmap # V#
+vnoremap # :call NERDComment(1, "toggle")<CR>
+nnoremap # V:call NERDComment(1, "toggle")<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPLIT MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " window
-nmap \|<left>  :topleft  vnew<CR>
-nmap \|<right> :botright vnew<CR>
-nmap \|<up>    :topleft  new<CR>
-nmap \|<down>  :botright new<CR>
+nnoremap \|<left>  :topleft  vnew<CR>
+nnoremap \|<right> :botright vnew<CR>
+nnoremap \|<up>    :topleft  new<CR>
+nnoremap \|<down>  :botright new<CR>
 
 " buffer
-nmap \<left>  :leftabove  vnew<CR>
-nmap \<right> :rightbelow vnew<CR>
-nmap \<up>    :leftabove  new<CR>
-nmap \<down>  :rightbelow new<CR>
+nnoremap \<left>  :leftabove  vnew<CR>
+nnoremap \<right> :rightbelow vnew<CR>
+nnoremap \<up>    :leftabove  new<CR>
+nnoremap \<down>  :rightbelow new<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " QUICKFIX
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " like vim-unimpaired, but without all that other code
-nmap <silent> [q :cprevious<CR>
-nmap <silent> ]q :cnext<CR>
+nnoremap <silent> [q :cprevious<CR>
+nnoremap <silent> ]q :cnext<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MISC
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Tabularize on pipe (<BAR>)
-vmap <BAR> :Tab /
+vnoremap <BAR> :Tab /
 
