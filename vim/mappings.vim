@@ -13,6 +13,7 @@ set pastetoggle=<F8>
 
 nmap <ESC>l :set list!<CR>
 nmap <ESC>n :set number!<CR>
+nmap <ESC>N :set relativenumber!<CR>
 nmap <ESC><SPACE> :nohl<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
