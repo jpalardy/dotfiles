@@ -1,9 +1,10 @@
 
 " grab something, replace it with <blank>, paste it on the next line
-vnoremap <buffer> ,c "aygvc▒<ESC>o<ESC>"ap
-nnoremap <buffer> ,c v"aygvc▒<ESC>o<ESC>"ap
+vnoremap <buffer> ,c "aygvr▒<ESC>o<ESC>"ap
+nmap     <buffer> ,c v,c
 
-nnoremap <buffer> <CR> mbYpO<esc>`b:execute "normal ,c"<CR>`b3j
+vmap <buffer> <CR> "zymbYpO<esc>`bgv,c`b3j
+nmap <buffer> <CR> v<CR>
 
 " surround with square brackets
 vnoremap <buffer> ,[ <ESC>`>a]<ESC>`<i[<ESC>
