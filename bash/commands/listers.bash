@@ -20,9 +20,13 @@ lister() {
 
 #-------------------------------------------------
 
-lister "go"   "cd"
+lister "g"    "cd"
 lister "qc"   "eval"
 lister "rg"   "rvm use"
 lister "warp" "ssh"     "awk '{print \\\$1}'"
 lister "rs"   "eval"
+
+for i in $(seq 20); do
+  alias g$i="g $i"
+done
 
