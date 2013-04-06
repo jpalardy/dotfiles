@@ -10,6 +10,11 @@
 "
 " Tested with checkstyle 5.5
 "============================================================================
+if exists("g:loaded_syntastic_java_checkstyle_checker")
+    finish
+endif
+let g:loaded_syntastic_java_checkstyle_checker=1
+
 if !exists("g:syntastic_java_checkstyle_classpath")
     let g:syntastic_java_checkstyle_classpath = 'checkstyle-5.5-all.jar'
 endif
@@ -17,7 +22,12 @@ endif
 if !exists("g:syntastic_java_checkstyle_conf_file")
     let g:syntastic_java_checkstyle_conf_file = 'sun_checks.xml'
 endif
-function! SyntaxCheckers_java_GetLocList()
+
+function! SyntaxCheckers_java_checkstyle_IsAvailable()
+    return executable('java')
+endfunction
+
+function! SyntaxCheckers_java_checkstyle_GetLocList()
     let makeprg = syntastic#makeprg#build({
                 \ 'exe': 'java',
                 \ 'args': '-cp ' . g:syntastic_java_checkstyle_classpath . ' com.puppycrawl.tools.checkstyle.Main -c ' . g:syntastic_java_checkstyle_conf_file,
@@ -31,3 +41,8 @@ function! SyntaxCheckers_java_GetLocList()
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
 
 endfunction
+
+call g:SyntasticRegistry.CreateAndRegisterChecker({
+    \ 'filetype': 'java',
+    \ 'name': 'checkstyle'})
+

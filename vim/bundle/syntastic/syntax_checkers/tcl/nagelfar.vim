@@ -11,7 +11,16 @@
 "             See nagelfar homepage http://nagelfar.berlios.de/.
 "
 "============================================================================
-function! SyntaxCheckers_tcl_GetLocList()
+if exists("g:loaded_syntastic_tcl_nagelfar_checker")
+    finish
+endif
+let g:loaded_syntastic_tcl_nagelfar_checker=1
+
+function! SyntaxCheckers_tcl_nagelfar_IsAvailable()
+    return executable('nagelfar')
+endfunction
+
+function! SyntaxCheckers_tcl_nagelfar_GetLocList()
     let makeprg = syntastic#makeprg#build({
                 \ 'exe': 'nagelfar',
                 \ 'args': '-H ' . g:syntastic_tcl_nagelfar_conf,
@@ -20,3 +29,7 @@ function! SyntaxCheckers_tcl_GetLocList()
 
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
 endfunction
+
+call g:SyntasticRegistry.CreateAndRegisterChecker({
+    \ 'filetype': 'tcl',
+    \ 'name': 'nagelfar'})

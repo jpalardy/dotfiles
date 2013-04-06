@@ -94,6 +94,11 @@
 "     This corresponds to gpg's --homedir option.  This variable is a Vim
 "     string.
 "
+"   g:GPGFilePattern
+"     If set, overrides the default set of file patterns that determine
+"     whether this plugin will be activated.  Defaults to
+"     '*.\(gpg\|asc\|pgp\)'.
+"
 " Known Issues: {{{2
 "
 "   In some cases gvim can't decrypt files
@@ -150,23 +155,33 @@ endif
 
 " Section: Autocmd setup {{{1
 
+if (!exists("g:GPGFilePattern"))
+  let g:GPGFilePattern = '*.\(gpg\|asc\|pgp\)'
+endif
+
 augroup GnuPG
   autocmd!
 
   " do the decryption
-  autocmd BufReadCmd                             *.\(gpg\|asc\|pgp\) call s:GPGInit(1)
-  autocmd BufReadCmd                             *.\(gpg\|asc\|pgp\) call s:GPGDecrypt(1)
-  autocmd BufReadCmd                             *.\(gpg\|asc\|pgp\) call s:GPGBufReadPost()
-  autocmd FileReadCmd                            *.\(gpg\|asc\|pgp\) call s:GPGInit(0)
-  autocmd FileReadCmd                            *.\(gpg\|asc\|pgp\) call s:GPGDecrypt(0)
+  exe "autocmd BufReadCmd " . g:GPGFilePattern .  " call s:GPGInit(1) |" .
+                                                \ " call s:GPGDecrypt(1) |" .
+                                                \ " call s:GPGBufReadPost()"
+  exe "autocmd FileReadCmd " . g:GPGFilePattern . " call s:GPGInit(0) |" .
+                                                \ " call s:GPGDecrypt(0)"
 
   " convert all text to encrypted text before writing
-  autocmd BufWriteCmd                            *.\(gpg\|asc\|pgp\) call s:GPGBufWritePre()
-  autocmd BufWriteCmd,FileWriteCmd               *.\(gpg\|asc\|pgp\) call s:GPGInit(0)
-  autocmd BufWriteCmd,FileWriteCmd               *.\(gpg\|asc\|pgp\) call s:GPGEncrypt()
+  " We check for GPGCorrespondingTo to avoid triggering on writes in GPG Options/Recipient windows
+  exe "autocmd BufWriteCmd " . g:GPGFilePattern . " if !exists('b:GPGCorrespondingTo') |" .
+                                                \ " call s:GPGBufWritePre() |" .
+                                                \ " endif"
+
+  exe "autocmd BufWriteCmd,FileWriteCmd " . g:GPGFilePattern . " if !exists('b:GPGCorrespondingTo') |" .
+                                                \ " call s:GPGInit(0) |" .
+                                                \ " call s:GPGEncrypt() |" .
+                                                \ " endif"
 
   " cleanup on leaving vim
-  autocmd VimLeave                               *.\(gpg\|asc\|pgp\) call s:GPGCleanup()
+  exe "autocmd VimLeave " . g:GPGFilePattern .    " call s:GPGCleanup()"
 augroup END
 
 " Section: Constants {{{1
@@ -374,11 +389,18 @@ function s:GPGDecrypt(bufread)
   let filename = expand("<afile>:p")
 
   " clear GPGRecipients and GPGOptions
-  let b:GPGRecipients = g:GPGDefaultRecipients
+  let b:GPGRecipients = copy(g:GPGDefaultRecipients)
   let b:GPGOptions = []
 
   " File doesn't exist yet, so nothing to decrypt
   if empty(glob(filename))
+
+    " This is a new file, so force the user to edit the recipient list if
+    " they open a new file and public keys are preferred
+    if (exists("g:GPGPreferSymmetric") && g:GPGPreferSymmetric == 0)
+        call s:GPGEditRecipients()
+    endif
+
     return
   endif
 

@@ -9,6 +9,12 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
+
+if exists("g:loaded_syntastic_html_tidy_checker")
+    finish
+endif
+let g:loaded_syntastic_html_tidy_checker=1
+
 " TODO: join this with xhtml.vim for DRY's sake?
 function! s:TidyEncOptByFenc()
     let tidy_opts = {
@@ -21,6 +27,7 @@ function! s:TidyEncOptByFenc()
                 \'utf-16le'    : '-utf16le',
                 \'utf-16'      : '-utf16',
                 \'big5'        : '-big5',
+                \'cp932'       : '-shiftjis',
                 \'sjis'        : '-shiftjis',
                 \'cp850'       : '-ibm858',
                 \}
@@ -35,6 +42,11 @@ let s:ignore_html_errors = [
                 \ "<meta> lacks \"content\" attribute",
                 \ "inserting \"type\" attribute",
                 \ "proprietary attribute \"data-",
+                \ "missing <!DOCTYPE> declaration",
+                \ "inserting implicit <body>",
+                \ "inserting missing 'title' element",
+                \ "attribute \"[+",
+                \ "unescaped & or unknown entity",
                 \ "<input> attribute \"type\" has invalid value \"search\""
                 \]
 
@@ -55,9 +67,14 @@ function s:Args()
     let args .= " --new-inline-tags " . shellescape('video, audio, source, embed, mark, progress, meter, time, ruby, rt, rp, canvas, command, details, datalist')
     let args .= " --new-empty-tags " . shellescape('wbr, keygen')
     let args .= " -e"
+    return args
 endfunction
 
-function! SyntaxCheckers_html_GetLocList()
+function! SyntaxCheckers_html_tidy_IsAvailable()
+    return executable('tidy')
+endfunction
+
+function! SyntaxCheckers_html_tidy_GetLocList()
     let makeprg = syntastic#makeprg#build({
                 \ 'exe': 'tidy',
                 \ 'args': s:Args(),
@@ -85,3 +102,8 @@ function! SyntaxCheckers_html_GetLocList()
 
     return loclist
 endfunction
+
+call g:SyntasticRegistry.CreateAndRegisterChecker({
+    \ 'filetype': 'html',
+    \ 'name': 'tidy'})
+
