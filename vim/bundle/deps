@@ -1,15 +1,12 @@
 matchit        https://github.com/vim-scripts/matchit.zip.git
 nerdcommenter  https://github.com/scrooloose/nerdcommenter.git
 tabular        https://github.com/godlygeek/tabular.git
-textile        https://github.com/timcharper/textile.vim.git
 coffee-script  https://github.com/kchmck/vim-coffee-script.git
 fugitive       https://github.com/tpope/vim-fugitive.git
-haml           https://github.com/tpope/vim-haml.git
 json           https://github.com/leshill/vim-json.git
 slime          https://github.com/jpalardy/vim-slime
 spacehi        https://github.com/jpalardy/spacehi.vim.git
 puppet         https://github.com/rodjek/vim-puppet.git
-scala          https://github.com/derekwyatt/vim-scala.git
 clojure        https://github.com/vim-scripts/VimClojure.git
 syntastic      https://github.com/scrooloose/syntastic.git
 less           https://github.com/groenewege/vim-less.git
