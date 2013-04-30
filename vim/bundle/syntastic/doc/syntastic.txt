@@ -35,7 +35,9 @@ CONTENTS                                                  *syntastic-contents*
 1. Intro                                                     *syntastic-intro*
 
 Note: This doc only deals with using syntastic. To learn how to write syntax
-checker integrations, visit the github wiki (coming soon).
+checker integrations, see the guide on the github wiki:
+
+    https://github.com/scrooloose/syntastic/wiki/Syntax-Checker-Guide
 
 Syntastic is a syntax checking plugin that runs files through external syntax
 checkers. This can be done on demand, or automatically as files are saved and
@@ -146,6 +148,11 @@ for more info.
 Manually cause a syntax check to be done. Useful in passive mode, or if the
 current filetype is set to passive. See |'syntastic_mode_map'| for more info.
 
+:SyntasticInfo                                               *:SyntasticInfo*
+
+Output info about what checkers are available and in use for the current
+filetype.
+
 
 ==============================================================================
 4. Global Options                                   *syntastic-global-options*
@@ -160,7 +167,7 @@ well as on saving >
 
                                               *'syntastic_echo_current_error'*
 Default: 1
-If enabled, syntastic will error message associated with the current line to
+If enabled, syntastic will echo the errror associated with the current line to
 the command window. If multiple errors are found, the first will be used. >
     let g:syntastic_echo_current_error=1
 <
@@ -201,7 +208,7 @@ errors (where possible). Highlighting can be turned off with the following >
     let g:syntastic_enable_highlighting = 0
 <
 
-                                      *'g:syntastic_always_populate_loc_list'*
+                                        *'syntastic_always_populate_loc_list'*
 Default: 0
 Enable this option to tell syntastic to always stick any detected errors into
 the loclist: >
@@ -350,7 +357,7 @@ This is telling syntastic to run the 'php' checker first, and if no errors are
 found, run 'phpcs', and then 'phpmd'.
 
 ------------------------------------------------------------------------------
-5.2 Configuring specific checkers.
+5.2 Configuring specific checkers                  *syntastic-config-makeprg*
 
 Most checkers use the 'syntastic#makeprg#build()' function and provide many
 options by default - in fact you can customise every part of the command

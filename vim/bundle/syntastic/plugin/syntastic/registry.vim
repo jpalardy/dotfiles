@@ -1,7 +1,7 @@
 if exists("g:loaded_syntastic_registry")
     finish
 endif
-let g:loaded_syntastic_registry=1
+let g:loaded_syntastic_registry = 1
 
 let s:defaultCheckers = {
         \ 'c': ['gcc'],
@@ -89,6 +89,15 @@ function! g:SyntasticRegistry.availableCheckersFor(filetype)
     return self._filterCheckersByAvailability(checkers)
 endfunction
 
+function! g:SyntasticRegistry.echoInfoFor(filetype)
+    echomsg "Syntastic info for filetype: " . a:filetype
+
+    let available = self.availableCheckersFor(a:filetype)
+    echomsg "Available checkers: " . join(map(available, "v:val.name()"))
+
+    echomsg "Currently active checker(s): " . self.getActiveCheckerNames(a:filetype)
+endfunction
+
 " Private methods {{{1
 
 function! g:SyntasticRegistry._allCheckersFor(filetype)
@@ -139,6 +148,10 @@ function! g:SyntasticRegistry._haveLoadedCheckers(filetype)
 endfunction
 
 function! g:SyntasticRegistry._userHasFiletypeSettings(filetype)
+    if exists("g:syntastic_" . a:filetype . "_checker") && !exists("g:syntastic_" . a:filetype . "_checkers")
+        let g:syntastic_{a:filetype}_checkers = [g:syntastic_{a:filetype}_checker]
+        call syntastic#util#deprecationWarn("variable g:syntastic_" . a:filetype . "_checker is deprecated")
+    endif
     return exists("b:syntastic_checkers") || exists("g:syntastic_" . a:filetype . "_checkers")
 endfunction
 

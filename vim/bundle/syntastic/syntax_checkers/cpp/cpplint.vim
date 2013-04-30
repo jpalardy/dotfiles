@@ -1,5 +1,5 @@
 "============================================================================
-"File:        perlcritic.vim
+"File:        cpplint.vim
 "Description: Syntax checking plugin for syntastic.vim
 "Maintainer:  LCD 47 <lcd047 at gmail dot com>
 "License:     This program is free software. It comes without any warranty,
@@ -10,49 +10,50 @@
 "
 "============================================================================
 "
-" For details about perlcritic see:
-"
-" - http://perlcritic.tigris.org/
-" - https://metacpan.org/module/Perl::Critic
+" For details about cpplint see:
+"    https://code.google.com/p/google-styleguide/
 "
 " Checker options:
 "
-" - g:syntastic_perl_perlcritic_thres (integer; default: 5)
+" - g:syntastic_cpp_cpplint_thres (integer; default: 5)
 "   error threshold: policy violations with a severity above this
 "   value are highlighted as errors, the others are warnings
 "
-" - g:syntastic_perl_perlcritic_args (string; default: empty)
-"   command line options to pass to perlcritic
+" - g:syntastic_cpp_cpplint_args (string; default: '--verbose=3')
+"   command line options to pass to cpplint
 
-if exists("g:loaded_syntastic_perl_perlcritic_checker")
+if exists("g:loaded_syntastic_cpp_cpplint_checker")
     finish
 endif
-let g:loaded_syntastic_perl_perlcritic_checker=1
+let g:loaded_syntastic_cpp_cpplint_checker = 1
 
-if !exists('g:syntastic_perl_perlcritic_thres')
-    let g:syntastic_perl_perlcritic_thres = 5
+if !exists('g:syntastic_cpp_cpplint_thres')
+    let g:syntastic_cpp_cpplint_thres = 5
 endif
 
-function! SyntaxCheckers_perl_perlcritic_IsAvailable()
-    return executable('perlcritic')
+if ! exists('g:syntastic_cpp_cpplint_args')
+    let g:syntastic_cpp_cpplint_args = '--verbose=3'
+endif
+
+function! SyntaxCheckers_cpp_cpplint_IsAvailable()
+    return executable('cpplint.py')
 endfunction
 
-function! SyntaxCheckers_perl_perlcritic_GetLocList()
+function! SyntaxCheckers_cpp_cpplint_GetLocList()
     let makeprg = syntastic#makeprg#build({
-                \ 'exe': 'perlcritic',
-                \ 'post_args': '--quiet --nocolor --verbose "\%s:\%f:\%l:\%c:(\%s) \%m (\%e)\n"',
-                \ 'subchecker': 'perlcritic' })
-    let errorformat='%t:%f:%l:%c:%m'
+                \ 'exe': 'cpplint.py',
+                \ 'subchecker': 'cpplint' })
+    let errorformat = '%A%f:%l:  %m [%t],%-G%.%#'
     let loclist = SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat, 'subtype': 'Style' })
 
     " change error types according to the prescribed threshold
     for n in range(len(loclist))
-        let loclist[n]['type'] = loclist[n]['type'] < g:syntastic_perl_perlcritic_thres ? 'W' : 'E'
+        let loclist[n]['type'] = loclist[n]['type'] < g:syntastic_cpp_cpplint_thres ? 'W' : 'E'
     endfor
 
     return loclist
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
-    \ 'filetype': 'perl',
-    \ 'name': 'perlcritic'})
+    \ 'filetype': 'cpp',
+    \ 'name': 'cpplint'})
