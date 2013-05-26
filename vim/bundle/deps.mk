@@ -88,5 +88,11 @@ bundle.jade:
 	@rm -rf jade/.git
 	@find jade -name .gitignore | xargs rm
 
-.PHONY: bundle.matchit bundle.nerdcommenter bundle.tabular bundle.coffee-script bundle.fugitive bundle.json bundle.slime bundle.spacehi bundle.puppet bundle.clojure bundle.syntastic bundle.less bundle.gnupg bundle.go bundle.jade
+bundle.dbext:
+	@rm -rf dbext
+	git clone --depth=1 https://github.com/vim-scripts/dbext.vim dbext
+	@rm -rf dbext/.git
+	@find dbext -name .gitignore | xargs rm
+
+.PHONY: bundle.matchit bundle.nerdcommenter bundle.tabular bundle.coffee-script bundle.fugitive bundle.json bundle.slime bundle.spacehi bundle.puppet bundle.clojure bundle.syntastic bundle.less bundle.gnupg bundle.go bundle.jade bundle.dbext
 

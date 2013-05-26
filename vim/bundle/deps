@@ -13,3 +13,4 @@ less           https://github.com/groenewege/vim-less.git
 gnupg          https://github.com/jamessan/vim-gnupg.git
 go             https://github.com/jnwhiteh/vim-golang.git
 jade           https://github.com/digitaltoad/vim-jade.git
+dbext          https://github.com/vim-scripts/dbext.vim

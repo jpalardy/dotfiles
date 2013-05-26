@@ -1,5 +1,4 @@
 
-function! FixSQLSemicolon(sql)
-  return substitute(a:sql,";*\n*$",';','g')
-endfunction
+nnoremap <buffer> <F3> vip:DBExecVisualSQL<CR>
+vnoremap <buffer> <F3> :DBExecVisualSQL<CR>
 

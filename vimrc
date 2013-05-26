@@ -76,8 +76,10 @@ autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax *.go NoSpaceHi
 " used by :TOhtml
 let g:html_use_css=0
 
-" set in variables.sh
-let g:sql_type_default=$DB_ADAPTER
+" dbext
+let g:dbext_default_buffer_lines = 20
+let g:dbext_default_profile_default = $DBEXT_PROFILE
+let g:dbext_default_profile = 'default'
 
 " use tmux for slime
 let g:slime_target = "tmux"
