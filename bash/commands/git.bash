@@ -5,6 +5,13 @@ git_diff() {
   git diff -w "$@" | vim -R -
 }
 
+git_review() {
+  local commits=$(git log --format="%H" "$@")
+  for commit in $commits; do
+    git show $commit | vim -R -
+  done
+}
+
 #-------------------------------------------------
 
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset %C(dim white)%an%Creset' --abbrev-commit --date=relative --date-order --all"
