@@ -6,7 +6,7 @@ git_diff() {
 }
 
 git_review() {
-  local commits=$(git log --format="%H" "$@")
+  local commits=$(git log --format="%H" "$@" | tac)
   for commit in $commits; do
     git show $commit | vim -R -
   done
