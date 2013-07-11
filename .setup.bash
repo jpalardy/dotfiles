@@ -28,6 +28,7 @@ relink .tmux.conf    $DOTFILES/tmux.conf
 relink .irbrc        $DOTFILES/irbrc
 relink .rdebugrc     $DOTFILES/rdebugrc
 relink .rvmrc        $DOTFILES/rvmrc
+relink .gemrc        $DOTFILES/gemrc
 
 relink .npmrc        $DOTFILES/npmrc
 relink .jshintrc     $DOTFILES/jshintrc
