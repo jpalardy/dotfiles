@@ -1,22 +1,18 @@
 
-vimpager() {
-  vim -R -
-}
-
 # 1. start vim
 # 2. execute ESC-h
 vim-() {
   vim -s <(printf '\eh')
 }
 
-# start vim in PAGER mode, with PickerMode plugin
+# start vim in PAGER mode
 vim_picker() {
-  vim -c "PickerMode" -R -
-}
-export -f vim_picker
-
-vimgrep() {
-  vim -c "grep $1"
+  vim -c "setlocal noreadonly" \
+      -c "setlocal cursorline" \
+      -c "setlocal number" \
+      -c "nnoremap <buffer> <CR> V:w! ~/.picked<CR>:qa!<CR>" \
+      -c "vnoremap <buffer> <CR>  :w! ~/.picked<CR>:qa!<CR>" \
+      -R -
 }
 
 # 1st parameter is command to generate a list
