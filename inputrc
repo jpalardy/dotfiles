@@ -15,11 +15,6 @@ $endif
 
 # same as Vim shortcut
 "\et": "vim-"
-"\eh": "vim-"
 
 "\ew": "warp "
-
-"\e\e": alias-expand-line
-
-"\ev": "tmux2vim"
 
