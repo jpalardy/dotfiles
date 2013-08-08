@@ -1,5 +1,5 @@
 "============================================================================
-"File:        eruby.vim
+"File:        ruby.vim
 "Description: Syntax checking plugin for syntastic.vim
 "Maintainer:  Martin Grenfell <martin.grenfell at gmail dot com>
 "License:     This program is free software. It comes without any warranty,
@@ -24,19 +24,40 @@ function! SyntaxCheckers_eruby_ruby_IsAvailable()
 endfunction
 
 function! SyntaxCheckers_eruby_ruby_GetLocList()
-    let ruby_exec=expand(g:syntastic_ruby_exec)
+    let exe = expand(g:syntastic_ruby_exec)
     if !has('win32')
-        let ruby_exec='RUBYOPT= ' . ruby_exec
+        let exe = 'RUBYOPT= ' . exe
     endif
 
-    "gsub fixes issue #7 rails has it's own eruby syntax
-    let makeprg=ruby_exec . ' -rerb -e "puts ERB.new(File.read(''' .
-        \ (expand("%")) .
-        \ ''').gsub(''<\%='',''<\%''), nil, ''-'').src" \| ' . ruby_exec . ' -c'
+    let fname = "'" . escape(expand('%'), "\\'") . "'"
 
-    let errorformat='%-GSyntax OK,%E-:%l: syntax error\, %m,%Z%p^,%W-:%l: warning: %m,%Z%p^,%-C%.%#'
+    " TODO: encodings became useful in ruby 1.9 :)
+    if syntastic#util#versionIsAtLeast(syntastic#util#parseVersion('ruby --version'), [1, 9])
+        let enc = &fileencoding != '' ? &fileencoding : &encoding
+        let encoding_spec = ', :encoding => "' . (enc ==? 'utf-8' ? 'UTF-8' : 'BINARY') . '"'
+    else
+        let encoding_spec = ''
+    endif
 
-    return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat})
+    "gsub fixes issue #7, rails has it's own eruby syntax
+    let makeprg =
+        \ exe . ' -rerb -e ' .
+        \ syntastic#util#shescape('puts ERB.new(File.read(' .
+        \     fname . encoding_spec .
+        \     ').gsub(''<%='',''<%''), nil, ''-'').src') .
+        \ ' \| ' . exe . ' -c'
+
+    let errorformat =
+        \ '%-GSyntax OK,'.
+        \ '%E-:%l: syntax error\, %m,%Z%p^,'.
+        \ '%W-:%l: warning: %m,'.
+        \ '%Z%p^,'.
+        \ '%-C%.%#'
+
+    return SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat,
+        \ 'defaults': { 'bufnr': bufnr(""), 'vcol': 1 } })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

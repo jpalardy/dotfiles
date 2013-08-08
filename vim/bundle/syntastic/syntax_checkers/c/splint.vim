@@ -16,10 +16,10 @@
 "
 "   let g:syntastic_splint_config_file = '.config'
 
-if exists("loaded_splint_syntax_checker")
+if exists("g:loaded_syntastic_c_splint_checker")
     finish
 endif
-let loaded_splint_syntax_checker = 1
+let g:loaded_syntastic_c_splint_checker = 1
 
 function! SyntaxCheckers_c_splint_IsAvailable()
     return executable("splint")
@@ -33,9 +33,11 @@ function! SyntaxCheckers_c_splint_GetLocList()
     let makeprg = syntastic#makeprg#build({
         \ 'exe': 'splint',
         \ 'post_args': '-showfunc -hints +quiet ' . syntastic#c#ReadConfig(g:syntastic_splint_config_file),
+        \ 'filetype': 'c',
         \ 'subchecker': 'splint' })
 
     let errorformat =
+        \ '%-G%f:%l:%v: %[%#]%[%#]%[%#] Internal Bug %.%#,' .
         \ '%W%f:%l:%v: %m,' .
         \ '%W%f:%l: %m,' .
         \ '%-C %\+In file included from %.%#,' .
@@ -45,7 +47,9 @@ function! SyntaxCheckers_c_splint_GetLocList()
     return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'defaults': {'type': 'W', 'subtype': 'Style' } })
+        \ 'subtype': 'Style',
+        \ 'postprocess': ['compressWhitespace'],
+        \ 'defaults': {'type': 'W'} })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

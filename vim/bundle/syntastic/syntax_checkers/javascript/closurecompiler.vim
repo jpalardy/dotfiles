@@ -38,17 +38,26 @@ function! SyntaxCheckers_javascript_closurecompiler_GetLocList()
     if exists("g:syntastic_javascript_closure_compiler_file_list")
         let file_list = join(readfile(g:syntastic_javascript_closure_compiler_file_list), ' ')
     else
-        let file_list = shellescape(expand('%'))
+        let file_list = syntastic#util#shexpand('%')
     endif
 
     let makeprg = syntastic#makeprg#build({
-                \ 'exe': 'java -jar ' . g:syntastic_javascript_closure_compiler_path,
-                \ 'args': g:syntastic_javascript_closure_compiler_options . ' --js' ,
-                \ 'fname': file_list,
-                \ 'subchecker': 'closurecompiler' })
+        \ 'exe': 'java -jar ' . g:syntastic_javascript_closure_compiler_path,
+        \ 'args': g:syntastic_javascript_closure_compiler_options . ' --js' ,
+        \ 'fname': file_list,
+        \ 'filetype': 'javascript',
+        \ 'subchecker': 'closurecompiler' })
 
-    let errorformat = '%-GOK,%E%f:%l: ERROR - %m,%Z%p^,%W%f:%l: WARNING - %m,%Z%p^'
-    return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+    let errorformat =
+        \ '%-GOK,'.
+        \ '%E%f:%l: ERROR - %m,'.
+        \ '%Z%p^,'.
+        \ '%W%f:%l: WARNING - %m,'.
+        \ '%Z%p^'
+
+    return SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

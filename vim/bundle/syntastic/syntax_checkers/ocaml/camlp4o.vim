@@ -82,15 +82,16 @@ function! SyntaxCheckers_ocaml_camlp4o_GetLocList()
         return []
     endif
 
-    let errorformat = '%AFile "%f"\, line %l\, characters %c-%*\d:,'.
-                \ '%AFile "%f"\, line %l\, characters %c-%*\d (end at line %*\d\, character %*\d):,'.
-                \ '%AFile "%f"\, line %l\, character %c:,'.
-                \ '%AFile "%f"\, line %l\, character %c:%m,'.
-                \ '%-GPreprocessing error %.%#,'.
-                \ '%-GCommand exited %.%#,'.
-                \ '%C%tarning %n: %m,'.
-                \ '%C%m,'.
-                \ '%-G+%.%#'
+    let errorformat =
+        \ '%AFile "%f"\, line %l\, characters %c-%*\d:,'.
+        \ '%AFile "%f"\, line %l\, characters %c-%*\d (end at line %*\d\, character %*\d):,'.
+        \ '%AFile "%f"\, line %l\, character %c:,'.
+        \ '%AFile "%f"\, line %l\, character %c:%m,'.
+        \ '%-GPreprocessing error %.%#,'.
+        \ '%-GCommand exited %.%#,'.
+        \ '%C%tarning %n: %m,'.
+        \ '%C%m,'.
+        \ '%-G+%.%#'
 
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
 endfunction
@@ -111,16 +112,16 @@ function s:GetOcamlcMakeprg()
     if g:syntastic_ocaml_use_janestreet_core
         let build_cmd = "ocamlc -I "
         let build_cmd .= expand(g:syntastic_ocaml_janestreet_core_dir)
-        let build_cmd .= " -c ".expand('%')
+        let build_cmd .= " -c " . syntastic#util#shexpand('%')
         return build_cmd
     else
-        return "ocamlc -c ". expand('%')
+        return "ocamlc -c " . syntastic#util#shexpand('%')
     endif
 endfunction
 
 function s:GetOcamlBuildMakeprg()
-    return "ocamlbuild -quiet -no-log -tag annot,". s:ocamlpp. " -no-links -no-hygiene -no-sanitize ".
-                \ shellescape(expand('%:r')).".cmi"
+    return "ocamlbuild -quiet -no-log -tag annot," . s:ocamlpp . " -no-links -no-hygiene -no-sanitize " .
+                \ syntastic#util#shexpand('%:r') . ".cmi"
 endfunction
 
 function s:GetOtherMakeprg()
@@ -133,11 +134,11 @@ function s:GetOtherMakeprg()
 
     if match(extension, 'mly') >= 0 && executable("menhir")
         " ocamlyacc output can't be redirected, so use menhir
-        let makeprg = "menhir --only-preprocess ".shellescape(expand('%')) . " >/dev/null"
+        let makeprg = "menhir --only-preprocess " . syntastic#util#shexpand('%') . " >" . syntastic#util#DevNull()
     elseif match(extension,'mll') >= 0 && executable("ocamllex")
-        let makeprg = "ocamllex -q -o /dev/null ".shellescape(expand('%'))
+        let makeprg = "ocamllex -q " . syntastic#c#GetNullDevice() . " " . syntastic#util#shexpand('%')
     else
-        let makeprg = "camlp4o -o /dev/null ".shellescape(expand('%'))
+        let makeprg = "camlp4o " . syntastic#c#GetNullDevice() . " " . syntastic#util#shexpand('%')
     endif
 
     return makeprg

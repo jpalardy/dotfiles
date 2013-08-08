@@ -21,21 +21,34 @@ function! g:SyntasticBalloonsNotifier.New()
 endfunction
 
 function! g:SyntasticBalloonsNotifier.enabled()
-    return exists('b:syntastic_enable_balloons') ? b:syntastic_enable_balloons : g:syntastic_enable_balloons
+    return
+        \ has('balloon_eval') &&
+        \ (exists('b:syntastic_enable_balloons') ? b:syntastic_enable_balloons : g:syntastic_enable_balloons)
 endfunction
 
 " Update the error balloons
 function! g:SyntasticBalloonsNotifier.refresh(loclist)
     let b:syntastic_balloons = {}
-    if a:loclist.hasErrorsOrWarningsToDisplay()
-        for i in a:loclist.filteredRaw()
-            if has_key(b:syntastic_balloons, i['lnum'])
-                let b:syntastic_balloons[i['lnum']] .= "\n" . i['text']
-            else
-                let b:syntastic_balloons[i['lnum']] = i['text']
-            endif
-        endfor
-        set beval bexpr=SyntasticBalloonsExprNotifier()
+    if self.enabled() && a:loclist.hasErrorsOrWarningsToDisplay()
+        let buf = bufnr('')
+        let issues = filter(a:loclist.filteredRaw(), 'v:val["bufnr"] == buf')
+        if !empty(issues)
+            for i in issues
+                if has_key(b:syntastic_balloons, i['lnum'])
+                    let b:syntastic_balloons[i['lnum']] .= "\n" . i['text']
+                else
+                    let b:syntastic_balloons[i['lnum']] = i['text']
+                endif
+            endfor
+            set beval bexpr=SyntasticBalloonsExprNotifier()
+        endif
+    endif
+endfunction
+
+" Reset the error balloons
+function! g:SyntasticBalloonsNotifier.reset(loclist)
+    if has('balloon_eval')
+        set nobeval
     endif
 endfunction
 

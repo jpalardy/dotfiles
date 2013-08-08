@@ -17,29 +17,45 @@ endfunction
 
 function! SyntaxCheckers_python_pyflakes_GetHighlightRegex(i)
     if match(a:i['text'], 'is assigned to but never used') > -1
-                \ || match(a:i['text'], 'imported but unused') > -1
-                \ || match(a:i['text'], 'undefined name') > -1
-                \ || match(a:i['text'], 'redefinition of') > -1
-                \ || match(a:i['text'], 'referenced before assignment') > -1
-                \ || match(a:i['text'], 'duplicate argument') > -1
-                \ || match(a:i['text'], 'after other statements') > -1
-                \ || match(a:i['text'], 'shadowed by loop variable') > -1
+        \ || match(a:i['text'], 'imported but unused') > -1
+        \ || match(a:i['text'], 'undefined name') > -1
+        \ || match(a:i['text'], 'redefinition of') > -1
+        \ || match(a:i['text'], 'referenced before assignment') > -1
+        \ || match(a:i['text'], 'duplicate argument') > -1
+        \ || match(a:i['text'], 'after other statements') > -1
+        \ || match(a:i['text'], 'shadowed by loop variable') > -1
 
-        let term = split(a:i['text'], "'", 1)[1]
-        return '\V\<'.term.'\>'
+        " fun with Python's %r: try "..." first, then '...'
+        let terms =  split(a:i['text'], '"', 1)
+        if len(terms) > 2
+            return terms[1]
+        endif
+
+        let terms =  split(a:i['text'], "'", 1)
+        if len(terms) > 2
+            return terms[1]
+        endif
     endif
     return ''
 endfunction
 
 function! SyntaxCheckers_python_pyflakes_GetLocList()
     let makeprg = syntastic#makeprg#build({
-                \ 'exe': 'pyflakes',
-                \ 'subchecker': 'pyflakes' })
-    let errorformat = '%E%f:%l: could not compile,%-Z%p^,%E%f:%l:%c: %m,%E%f:%l: %m,%-G%.%#'
+        \ 'exe': 'pyflakes',
+        \ 'filetype': 'python',
+        \ 'subchecker': 'pyflakes' })
 
-    return SyntasticMake({ 'makeprg': makeprg,
-                         \ 'errorformat': errorformat,
-                         \ 'defaults': {'text': "Syntax error"} })
+    let errorformat =
+        \ '%E%f:%l: could not compile,'.
+        \ '%-Z%p^,'.
+        \ '%E%f:%l:%c: %m,'.
+        \ '%E%f:%l: %m,'.
+        \ '%-G%.%#'
+
+    return SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat,
+        \ 'defaults': {'text': "Syntax error"} })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

@@ -35,6 +35,7 @@ endfunction
 function! SyntaxCheckers_css_prettycss_GetLocList()
     let makeprg = syntastic#makeprg#build({
         \ 'exe': 'prettycss',
+        \ 'filetype': 'css',
         \ 'subchecker': 'prettycss' })
 
     " Print CSS Lint's error/warning messages from compact format. Ignores blank lines.
@@ -43,12 +44,17 @@ function! SyntaxCheckers_css_prettycss_GetLocList()
         \ '%WWarning:  %m\, line %l\, char %c),' .
         \ '%-G%.%#'
 
-    let loclist = SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat, 'defaults': {'bufnr': bufnr("")} })
+    let loclist = SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat,
+        \ 'defaults': {'bufnr': bufnr("")},
+        \ 'postprocess': ['sort'] })
+
     for n in range(len(loclist))
         let loclist[n]["text"] .= ')'
     endfor
 
-    return sort(loclist, 'syntastic#util#compareErrorItems')
+    return loclist
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

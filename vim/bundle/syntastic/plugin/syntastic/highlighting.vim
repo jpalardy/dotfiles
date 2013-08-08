@@ -3,13 +3,11 @@ if exists("g:loaded_syntastic_notifier_highlighting")
 endif
 let g:loaded_syntastic_notifier_highlighting = 1
 
+" Highlighting requires getmatches introduced in 7.1.040
+let s:has_highlighting = v:version > 701 || (v:version == 701 && has('patch040'))
+
 if !exists("g:syntastic_enable_highlighting")
     let g:syntastic_enable_highlighting = 1
-endif
-
-" Highlighting requires getmatches introduced in 7.1.040
-if v:version < 701 || (v:version == 701 && !has('patch040'))
-    let g:syntastic_enable_highlighting = 0
 endif
 
 let g:SyntasticHighlightingNotifier = {}
@@ -22,19 +20,22 @@ function! g:SyntasticHighlightingNotifier.New()
 endfunction
 
 function! g:SyntasticHighlightingNotifier.enabled()
-    return exists('b:syntastic_enable_highlighting') ? b:syntastic_enable_highlighting : g:syntastic_enable_highlighting
+    return
+        \ s:has_highlighting &&
+        \ (exists('b:syntastic_enable_highlighting') ? b:syntastic_enable_highlighting : g:syntastic_enable_highlighting)
 endfunction
 
-" The function `Syntastic_{filetype}_{checker}_GetHighlightRegex` is used
-" to override default highlighting.  This function must take one arg (an
-" error item) and return a regex to match that item in the buffer.
+" Sets error highlights in the cuirrent window
 function! g:SyntasticHighlightingNotifier.refresh(loclist)
-    let fts = substitute(&ft, '-', '_', 'g')
-    for ft in split(fts, '\.')
-
-        for item in a:loclist.filteredRaw()
+    if self.enabled()
+        call self.reset(a:loclist)
+        let buf = bufnr('')
+        let issues = filter(a:loclist.filteredRaw(), 'v:val["bufnr"] == buf')
+        for item in issues
             let group = item['type'] == 'E' ? 'SyntasticError' : 'SyntasticWarning'
 
+            " The function `Syntastic_{filetype}_{checker}_GetHighlightRegex` is
+            " used to override default highlighting.
             if has_key(item, 'hl')
                 call matchadd(group, '\%' . item['lnum'] . 'l' . item['hl'])
             elseif get(item, 'col')
@@ -48,16 +49,18 @@ function! g:SyntasticHighlightingNotifier.refresh(loclist)
                 call matchadd(group, '\%' . item['lnum'] . 'l\%' . lcol . coltype)
             endif
         endfor
-    endfor
+    endif
 endfunction
 
 " Remove all error highlights from the window
 function! g:SyntasticHighlightingNotifier.reset(loclist)
-    for match in getmatches()
-        if stridx(match['group'], 'Syntastic') == 0
-            call matchdelete(match['id'])
-        endif
-    endfor
+    if s:has_highlighting
+        for match in getmatches()
+            if stridx(match['group'], 'Syntastic') == 0
+                call matchdelete(match['id'])
+            endif
+        endfor
+    endif
 endfunction
 
 " vim: set sw=4 sts=4 et fdm=marker:

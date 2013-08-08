@@ -9,18 +9,13 @@ let s:notifier_types = ['signs', 'balloons', 'highlighting', 'cursor', 'autolocl
 
 " Public methods {{{1
 
-function! g:SyntasticNotifiers.New()
-    let newObj = copy(self)
+function! g:SyntasticNotifiers.Instance()
+    if !exists('s:SyntasticNotifiersInstance')
+        let s:SyntasticNotifiersInstance = copy(self)
+        call s:SyntasticNotifiersInstance._initNotifiers()
+    endif
 
-    let newObj._notifier = {}
-    for type in s:notifier_types
-        let class = substitute(type, '.*', 'Syntastic\u&Notifier', '')
-        let newObj._notifier[type] = g:{class}.New()
-    endfor
-
-    let newObj._enabled_types = copy(s:notifier_types)
-
-    return newObj
+    return s:SyntasticNotifiersInstance
 endfunction
 
 function! g:SyntasticNotifiers.refresh(loclist)
@@ -35,10 +30,26 @@ endfunction
 function! g:SyntasticNotifiers.reset(loclist)
     for type in self._enabled_types
         let class = substitute(type, '.*', 'Syntastic\u&Notifier', '')
+
+        " reset notifiers regardless if they are enabled or not, since
+        " the user might have disabled them since the last refresh();
+        " notifiers MUST be prepared to deal with reset() when disabled
         if has_key(g:{class}, 'reset')
             call self._notifier[type].reset(a:loclist)
         endif
     endfor
+endfunction
+
+" Private methods {{{1
+
+function! g:SyntasticNotifiers._initNotifiers()
+    let self._notifier = {}
+    for type in s:notifier_types
+        let class = substitute(type, '.*', 'Syntastic\u&Notifier', '')
+        let self._notifier[type] = g:{class}.New()
+    endfor
+
+    let self._enabled_types = copy(s:notifier_types)
 endfunction
 
 " vim: set sw=4 sts=4 et fdm=marker:

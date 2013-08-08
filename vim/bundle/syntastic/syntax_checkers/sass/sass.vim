@@ -37,16 +37,40 @@ endif
 function! SyntaxCheckers_sass_sass_GetLocList()
     if !g:syntastic_sass_check_partials && expand('%:t')[0] == '_'
         return []
-    end
-    let makeprg = syntastic#makeprg#build({
-                \ 'exe': 'sass',
-                \ 'args': '--cache-location ' . s:sass_cache_location . ' ' . s:imports . ' --check',
-                \ 'subchecker': 'sass' })
-    let errorformat = '%ESyntax %trror:%m,%C        on line %l of %f,%Z%.%#'
-    let errorformat .= ',%Wwarning on line %l:,%Z%m,Syntax %trror on line %l: %m'
-    let loclist = SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+    endif
 
-    return loclist
+    let makeprg = syntastic#makeprg#build({
+        \ 'exe': 'sass',
+        \ 'args': '--cache-location ' . s:sass_cache_location . ' ' . s:imports . ' --check',
+        \ 'filetype': 'sass',
+        \ 'subchecker': 'sass' })
+
+    let errorformat =
+        \ '%ESyntax %trror: %m,' .
+        \ '%+C              %.%#,' .
+        \ '%C        on line %l of %f\, %.%#,' .
+        \ '%C        on line %l of %f,' .
+        \ '%-G %\+from line %.%#,' .
+        \ '%-G %\+Use --trace for backtrace.,' .
+        \ '%W%>DEPRECATION WARNING on line %l of %f:,' .
+        \ '%+C%>  %.%#,' .
+        \ '%W%>WARNING: on line %l of %f:,' .
+        \ '%+C%>  %.%#,' .
+        \ '%W%>WARNING on line %l of %f: %m,' .
+        \ '%+C%>  %.%#,' .
+        \ '%W%>WARNING on line %l of %f:,' .
+        \ '%Z%m,' .
+        \ '%W%>WARNING: %m,' .
+        \ '%C         on line %l of %f\, %.%#,' .
+        \ '%C         on line %l of %f,' .
+        \ '%-G %\+from line %.%#,' .
+        \ 'Syntax %trror on line %l: %m,' .
+        \ '%-G%.%#'
+
+    return SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat,
+        \ 'postprocess': ['compressWhitespace'] })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

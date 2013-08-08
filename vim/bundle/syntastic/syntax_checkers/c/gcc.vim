@@ -98,12 +98,18 @@ endif
 
 function! SyntaxCheckers_c_gcc_GetLocList()
     let makeprg = g:syntastic_c_compiler . ' -x c -fsyntax-only '
-    let errorformat = '%-G%f:%s:,%-G%f:%l: %#error: %#(Each undeclared ' .
-               \ 'identifier is reported only%.%#,%-G%f:%l: %#error: %#for ' .
-               \ 'each function it appears%.%#,%-GIn file included%.%#,' .
-               \ '%-G %#from %f:%l\,,%f:%l:%c: %trror: %m,%f:%l:%c: ' .
-               \ '%tarning: %m,%f:%l:%c: %m,%f:%l: %trror: %m,' .
-               \ '%f:%l: %tarning: %m,%f:%l: %m'
+    let errorformat =
+        \ '%-G%f:%s:,' .
+        \ '%-G%f:%l: %#error: %#(Each undeclared identifier is reported only%.%#,' .
+        \ '%-G%f:%l: %#error: %#for each function it appears%.%#,' .
+        \ '%-GIn file included%.%#,' .
+        \ '%-G %#from %f:%l\,,' .
+        \ '%f:%l:%c: %trror: %m,' .
+        \ '%f:%l:%c: %tarning: %m,' .
+        \ '%f:%l:%c: %m,' .
+        \ '%f:%l: %trror: %m,' .
+        \ '%f:%l: %tarning: %m,'.
+        \ '%f:%l: %m'
 
     if exists('g:syntastic_c_errorformat')
         let errorformat = g:syntastic_c_errorformat
@@ -112,14 +118,14 @@ function! SyntaxCheckers_c_gcc_GetLocList()
     " add optional user-defined compiler options
     let makeprg .= g:syntastic_c_compiler_options
 
-    let makeprg .= ' ' . shellescape(expand('%')) .
+    let makeprg .= ' ' . syntastic#util#shexpand('%') .
                \ ' ' . syntastic#c#GetIncludeDirs('c')
 
     " determine whether to parse header files as well
     if expand('%') =~? '\.h$'
         if exists('g:syntastic_c_check_header')
             let makeprg = g:syntastic_c_compiler .
-                        \ ' -c ' . shellescape(expand('%')) .
+                        \ ' -c ' . syntastic#util#shexpand('%') .
                         \ ' ' . g:syntastic_c_compiler_options .
                         \ ' ' . syntastic#c#GetNullDevice() .
                         \ ' ' . syntastic#c#GetIncludeDirs('c')

@@ -10,12 +10,12 @@
 "
 "============================================================================
 
-if exists("loaded_ycm_objc_syntax_checker")
+if exists("g:loaded_syntastic_objc_ycm_checker")
     finish
 endif
-let loaded_ycm_objc_syntax_checker = 1
+let g:loaded_syntastic_objc_ycm_checker = 1
 
-runtime syntax_checkers/c/ycm.vim
+runtime! syntax_checkers/c/*.vim
 
 function! SyntaxCheckers_objc_ycm_IsAvailable()
     return SyntaxCheckers_c_ycm_IsAvailable()

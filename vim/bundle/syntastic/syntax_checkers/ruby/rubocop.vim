@@ -19,21 +19,24 @@ endif
 let g:loaded_syntastic_ruby_rubocop_checker=1
 
 function! SyntaxCheckers_ruby_rubocop_IsAvailable()
-    return executable('rubocop')
+    return
+        \ executable('rubocop') &&
+        \ syntastic#util#versionIsAtLeast(syntastic#util#parseVersion('rubocop --version'), [0,9,0])
 endfunction
 
 function! SyntaxCheckers_ruby_rubocop_GetLocList()
     let makeprg = syntastic#makeprg#build({
-                \ 'exe': 'rubocop',
-                \ 'args': '--emacs --silent',
-                \ 'subchecker': 'rubocop' })
+        \ 'exe': 'rubocop',
+        \ 'args': '--format emacs --silent',
+        \ 'filetype': 'ruby',
+        \ 'subchecker': 'rubocop' })
 
-    let errorformat = '%f:%l:\ %t:\ %m'
+    let errorformat = '%f:%l:%c: %t: %m'
 
     let loclist = SyntasticMake({
-                \ 'makeprg': makeprg,
-                \ 'errorformat': errorformat,
-                \ 'subtype': 'Style'})
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat,
+        \ 'subtype': 'Style'})
 
     " convert rubocop severities to error types recognized by syntastic
     for n in range(len(loclist))

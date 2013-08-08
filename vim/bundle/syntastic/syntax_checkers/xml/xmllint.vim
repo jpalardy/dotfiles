@@ -25,21 +25,26 @@ endfunction
 
 function! SyntaxCheckers_xml_xmllint_GetLocList()
     let makeprg = syntastic#makeprg#build({
-                \ 'exe': 'xmllint',
-                \ 'args': '--xinclude --noout --postvalid',
-                \ 'subchecker': 'xmllint' })
-    let errorformat='%E%f:%l: error : %m,' .
-                \ '%-G%f:%l: validity error : Validation failed: no DTD found %m,' .
-                \ '%W%f:%l: warning : %m,' .
-                \ '%W%f:%l: validity warning : %m,' .
-                \ '%E%f:%l: validity error : %m,' .
-                \ '%E%f:%l: parser error : %m,' .
-                \ '%E%f:%l: %m,' .
-                \ '%-Z%p^,' .
-                \ '%-G%.%#'
-    let loclist = SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+        \ 'exe': 'xmllint',
+        \ 'args': '--xinclude --noout --postvalid',
+        \ 'filetype': 'xml',
+        \ 'subchecker': 'xmllint' })
 
-    return loclist
+    let errorformat=
+        \ '%E%f:%l: error : %m,' .
+        \ '%-G%f:%l: validity error : Validation failed: no DTD found %m,' .
+        \ '%W%f:%l: warning : %m,' .
+        \ '%W%f:%l: validity warning : %m,' .
+        \ '%E%f:%l: validity error : %m,' .
+        \ '%E%f:%l: parser error : %m,' .
+        \ '%E%f:%l: %m,' .
+        \ '%-Z%p^,' .
+        \ '%-G%.%#'
+
+    return SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat,
+        \ 'returns': [0, 1, 2, 3, 4, 5] })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

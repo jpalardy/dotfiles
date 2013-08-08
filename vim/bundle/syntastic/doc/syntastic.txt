@@ -153,6 +153,10 @@ current filetype is set to passive. See |'syntastic_mode_map'| for more info.
 Output info about what checkers are available and in use for the current
 filetype.
 
+:SyntasticReset                                              *:SyntasticReset*
+
+Resets the list of errors and turns off all error notifiers.
+
 
 ==============================================================================
 4. Global Options                                   *syntastic-global-options*
@@ -165,9 +169,26 @@ well as on saving >
     let g:syntastic_check_on_open=1
 <
 
+                                                     *'syntastic_check_on_wq'*
+Default: 1
+Normally syntastic runs syntax checks whenever buffers are written to disk.
+If you want to skip these checks when you issue |:wq|, |:x|, and |:ZZ|, set this
+variable to 0. >
+    let g:syntastic_check_on_wq=0
+<
+
+                                                *'syntastic_aggregate_errors'*
+Default: 0
+When enabled, |:SyntasticCheck| runs all checkers that apply, then aggregates
+errors found by all checkers and displays them.  When disabled,
+|:SyntasticCheck| runs each checker in turn, and stops to display the results
+the first time a checker finds any errors. >
+    let g:syntastic_aggregate_errors=1
+<
+
                                               *'syntastic_echo_current_error'*
 Default: 1
-If enabled, syntastic will echo the errror associated with the current line to
+If enabled, syntastic will echo the error associated with the current line to
 the command window. If multiple errors are found, the first will be used. >
     let g:syntastic_echo_current_error=1
 <
@@ -179,8 +200,8 @@ syntax errors: >
     let g:syntastic_enable_signs=1
 <
 
-                   *'syntastic_error_symbol'* *'syntastic_style_error_symbol'*
-               *'syntastic_warning_symbol'* *'syntastic_style_warning_symbol'*
+                     *'syntastic_error_symbol'* *'syntastic_style_error_symbol'*
+                 *'syntastic_warning_symbol'* *'syntastic_style_warning_symbol'*
 Use this option to control what the syntastic |:sign| text contains. Several
 error symobls can be customized:
     syntastic_error_symbol - For syntax errors, defaults to '>>'
@@ -201,7 +222,7 @@ when the mouse is hovered over erroneous lines: >
 <
 Note that vim must be compiled with |+balloon_eval|.
 
-                                            *'syntastic_enable_highlighting'*
+                                             *'syntastic_enable_highlighting'*
 Default: 1
 Use this option to tell syntastic whether to use syntax highlighting to mark
 errors (where possible). Highlighting can be turned off with the following >
@@ -246,6 +267,24 @@ opens. >
     let g:syntastic_loc_list_height=5
 <
 
+                                                    *'syntastic_ignore_files'*
+Default: []
+Use this option to specify files that syntastic should neither check, nor
+include in error lists. It has to be a list of |regular-expression| patterns.
+The full paths of files (see |::p|) are matched against these patterns, and
+the matches are case sensitive. Use |\c| if you need case insensitive
+patterns. >
+    let g:syntastic_ignore_files=['^/usr/include/', '\c\.h$']
+<
+
+                                                    *'syntastic_filetype_map'*
+Default: {}
+Use this option to map non-standard filetypes to standard ones.  Corresponding
+checkers are mapped accordingly, which allows syntastic to check files with
+non-standard filetypes: >
+    let g:syntastic_filetype_map = { 'latex': 'tex',
+                                   \ 'gentoo-metadata': 'xml' }
+<
 
                                                         *'syntastic_mode_map'*
 Default: { "mode": "active",
@@ -265,7 +304,7 @@ The option should be set to something like: >
 "mode" can be mapped to one of two values - "active" or "passive". When set to
 active, syntastic does automatic checking whenever a buffer is saved or
 initially opened.  When set to "passive" syntastic only checks when the user
-calls :SyntasticCheck.
+calls |:SyntasticCheck|.
 
 The exceptions to these rules are defined with "active_filetypes" and
 "passive_filetypes". In passive mode, automatic checks are still done
@@ -322,9 +361,24 @@ statusline: >
 If the buffer had 2 warnings, starting on line 5 then this would appear: >
     [Warn: 5 #2]
 <
+                                                    *'syntastic_full_redraws'*
+Default: 0 in GUI Vim and MacVim, 1 otherwise
+Controls whether syntastic calls |:redraw| or |:redraw!| for screen redraws.
+Changing it can in principle make screen redraws smoother, but it can also
+cause screen flicker, or ghost characters.  Leaving it to the default should
+be safe.
+
+                                                           *'syntastic_debug'*
+Default: 0
+Set this to 1 to enable debugging: >
+    let g:syntastic_debug = 1
+<
+Checkers will then add debugging messages to Vim's |message-history|. You can
+examine these messages with |:mes|.
+
 
 ==============================================================================
-5. Checker Options                                  *syntastic-checker-options*
+5. Checker Options                                 *syntastic-checker-options*
 
 ------------------------------------------------------------------------------
 5.1 Telling syntastic which checker to use.
@@ -357,7 +411,7 @@ This is telling syntastic to run the 'php' checker first, and if no errors are
 found, run 'phpcs', and then 'phpmd'.
 
 ------------------------------------------------------------------------------
-5.2 Configuring specific checkers                  *syntastic-config-makeprg*
+5.2 Configuring specific checkers                   *syntastic-config-makeprg*
 
 Most checkers use the 'syntastic#makeprg#build()' function and provide many
 options by default - in fact you can customise every part of the command
@@ -369,11 +423,14 @@ Checkers that use 'syntastic#makeprg#build()' look like this: >
                 \ 'args': '-a -b -c',
                 \ 'post_args': '--more --args',
                 \ 'tail': '> /tmp/output',
+                \ 'filetype': 'ruby',
                 \ 'subchecker': 'mri' })
 <
 
-All of the parameters above can be overriden by setting global variables -
-even parameters not specified in the call to syntastic#makeprg#build().
+The 'filetype' and 'subchecker' parameters are mandatory.  All of the other
+parameters above are optional (well, you probably need at least 'exe'), and
+can be overriden by setting global variables - even parameters not specified
+in the call to syntastic#makeprg#build().
 
 E.g. To override the checker exe above, you could do this: >
     let g:syntastic_ruby_mri_exe="another_ruby_checker_exe.rb"

@@ -43,18 +43,20 @@ function! syntastic#util#parseShebang()
     return {'exe': '', 'args': []}
 endfunction
 
-" Verify that the 'installed' version is at the 'required' version, if not
-" better.
+" Run 'command' in a shell and parse output as a version string.
+" Returns an array of version components.
+function! syntastic#util#parseVersion(command)
+    return split(matchstr( system(a:command), '\v^\D*\zs\d+(\.\d+)+\ze' ), '\.')
+endfunction
+
+" Verify that the 'installed' version is at least the 'required' version.
 "
-" 'installed' and 'required' must be arrays.  Only the
-" first three elements (major, minor, patch) are looked at.
-"
-" Either array may be less than three elements. The "missing" elements
-" will be assumed to be '0' for the purposes of checking.
+" 'installed' and 'required' must be arrays. If they have different lengths,
+" the "missing" elements will be assumed to be 0 for the purposes of checking.
 "
 " See http://semver.org for info about version numbers.
 function! syntastic#util#versionIsAtLeast(installed, required)
-    for index in [0,1,2]
+    for index in range(max([len(a:installed), len(a:required)]))
         if len(a:installed) <= index
             let installed_element = 0
         else
@@ -117,25 +119,49 @@ function! syntastic#util#bufIsActive(buffer)
     return 0
 endfunction
 
-" Used to sort error lists
-function! syntastic#util#compareErrorItems(a, b)
-    if a:a['lnum'] != a:b['lnum']
-        return a:a['lnum'] - a:b['lnum']
-    elseif a:a['type'] !=? a:b['type']
-        " errors take precedence over warnings
-        return a:a['type'] ==? 'e' ? -1 : 1
-    else
-        return a:a['col'] - a:b['col']
-    endif
+" start in directory a:where and walk up the parent folders until it
+" finds a file matching a:what; return path to that file
+function! syntastic#util#findInParent(what, where)
+    let here = fnamemodify(a:where, ':p')
+
+    while !empty(here)
+        let p = split(globpath(here, a:what), '\n')
+
+        if !empty(p)
+            return fnamemodify(p[0], ':p')
+        elseif here == '/'
+            break
+        endif
+
+        " we use ':h:h' rather than ':h' since ':p' adds a trailing '/'
+        " if 'here' is a directory
+        let here = fnamemodify(here, ':p:h:h')
+    endwhile
+
+    return ''
 endfunction
 
-" List of buffers referenced by the location list
+" Returns unique elements in a list
 function! syntastic#util#unique(list)
     let seen = {}
+    let uniques = []
     for e in a:list
-        let seen[e] = 1
+        if !has_key(seen, e)
+            let seen[e] = 1
+            call add(uniques, e)
+        endif
     endfor
-    return keys(seen)
+    return uniques
+endfunction
+
+" A less noisy shellescape()
+function! syntastic#util#shescape(string)
+    return a:string =~ '\m^[A-Za-z0-9_/.-]\+$' ? a:string : shellescape(a:string, 1)
+endfunction
+
+" A less noisy shellescape(expand())
+function! syntastic#util#shexpand(string)
+    return syntastic#util#shescape(escape(expand(a:string), '|'))
 endfunction
 
 function! syntastic#util#debug(msg)
@@ -144,13 +170,30 @@ function! syntastic#util#debug(msg)
     endif
 endfunction
 
+function! syntastic#util#info(msg)
+    echomsg "syntastic: info: " . a:msg
+endfunction
+
+function! syntastic#util#warn(msg)
+    echohl WarningMsg
+    echomsg "syntastic: warning: " . a:msg
+    echohl None
+endfunction
+
+function! syntastic#util#error(msg)
+    execute "normal \<Esc>"
+    echohl ErrorMsg
+    echomsg "syntastic: error: " . a:msg
+    echohl None
+endfunction
+
 function! syntastic#util#deprecationWarn(msg)
     if index(s:deprecationNoticesIssued, a:msg) >= 0
         return
     endif
 
     call add(s:deprecationNoticesIssued, a:msg)
-    echomsg "syntastic: warning: " . a:msg
+    call syntastic#util#warn(a:msg)
 endfunction
 
 let &cpo = s:save_cpo

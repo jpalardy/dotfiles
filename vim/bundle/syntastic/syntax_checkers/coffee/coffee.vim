@@ -9,29 +9,36 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
+"
+" Note: this script requires CoffeeScript version 1.6.2 or newer.
+"
 if exists("g:loaded_syntastic_coffee_coffee_checker")
     finish
 endif
 let g:loaded_syntastic_coffee_coffee_checker=1
 
 function! SyntaxCheckers_coffee_coffee_IsAvailable()
-    return executable("coffee")
+    return executable("coffee") &&
+        \ syntastic#util#versionIsAtLeast(syntastic#util#parseVersion('coffee --version 2>' . syntastic#util#DevNull()), [1,6,2])
 endfunction
 
 function! SyntaxCheckers_coffee_coffee_GetLocList()
     let makeprg = syntastic#makeprg#build({
-                \ 'exe': 'coffee',
-                \ 'args': '--lint',
-                \ 'subchecker': 'coffee' })
-    let errorformat = '%E%f:%l:%c: %trror: %m,' .
-                \ 'Syntax%trror: In %f\, %m on line %l,' .
-                \ '%EError: In %f\, Parse error on line %l: %m,' .
-                \ '%EError: In %f\, %m on line %l,' .
-                \ '%W%f(%l): lint warning: %m,' .
-                \ '%W%f(%l): warning: %m,' .
-                \ '%E%f(%l): SyntaxError: %m,' .
-                \ '%-Z%p^,' .
-                \ '%-G%.%#'
+        \ 'exe': 'coffee',
+        \ 'args': '-cp',
+        \ 'filetype': 'coffee',
+        \ 'subchecker': 'coffee' })
+
+    let errorformat =
+        \ '%E%f:%l:%c: %trror: %m,' .
+        \ 'Syntax%trror: In %f\, %m on line %l,' .
+        \ '%EError: In %f\, Parse error on line %l: %m,' .
+        \ '%EError: In %f\, %m on line %l,' .
+        \ '%W%f(%l): lint warning: %m,' .
+        \ '%W%f(%l): warning: %m,' .
+        \ '%E%f(%l): SyntaxError: %m,' .
+        \ '%-Z%p^,' .
+        \ '%-G%.%#'
 
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
 endfunction

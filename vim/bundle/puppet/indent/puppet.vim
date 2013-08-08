@@ -68,8 +68,13 @@ function! GetPuppetIndent()
     endif
 
     " Match } }, }; ] ]: ], ]; )
-    if line =~ '^\s*\(}\(,\|;\)\?$\|]:\|],\|];\?$\|)\)'
+    if line =~ '^\s*\(}\(,\|;\)\?$\|]:\|],\|}]\|];\?$\|)\)'
         let ind = indent(s:OpenBrace(v:lnum))
+    endif
+
+    " Don't actually shift over for } else {
+    if line =~ '^\s*}\s*els\(e\|if\).*{\s*$'
+        let ind -= &sw
     endif
 
     return ind

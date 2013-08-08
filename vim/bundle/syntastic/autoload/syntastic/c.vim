@@ -42,17 +42,6 @@ endfunction
 let s:default_includes = [ '.', '..', 'include', 'includes',
             \ '../include', '../includes' ]
 
-" uniquify the input list
-function! s:Unique(list)
-    let l = []
-    for elem in a:list
-        if index(l, elem) == -1
-            let l = add(l, elem)
-        endif
-    endfor
-    return l
-endfunction
-
 " convenience function to determine the 'null device' parameter
 " based on the current operating system
 function! syntastic#c#GetNullDevice()
@@ -78,7 +67,7 @@ function! syntastic#c#GetIncludeDirs(filetype)
         call extend(include_dirs, g:syntastic_{a:filetype}_include_dirs)
     endif
 
-    return join(map(s:Unique(include_dirs), '"-I" . v:val'), ' ')
+    return join(map(syntastic#util#unique(include_dirs), '"-I" . v:val'), ' ')
 endfunction
 
 " read additional compiler flags from the given configuration file
@@ -210,7 +199,7 @@ function! syntastic#c#CheckRuby()
     if executable('ruby')
         if !exists('s:ruby_flags')
             let s:ruby_flags = system('ruby -r rbconfig -e '
-                        \ . '''puts Config::CONFIG["archdir"]''')
+                        \ . '''puts RbConfig::CONFIG["rubyhdrdir"] || RbConfig::CONFIG["archdir"]''')
             let s:ruby_flags = substitute(s:ruby_flags, "\n", '', '')
             let s:ruby_flags = ' -I' . s:ruby_flags
         endif
