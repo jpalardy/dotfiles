@@ -64,3 +64,7 @@ tad() {
   rm -r $d
 }
 
+check_compressed() {
+  curl -s -I --compressed --include "$@" | grep 'Content-Encoding'
+}
+
