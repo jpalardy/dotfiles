@@ -14,6 +14,7 @@ vim_picker() {
       -c "vnoremap <buffer> <CR>  :w! ~/.picked<CR>:qa!<CR>" \
       -R -
 }
+export -f vim_picker
 
 # 1st parameter is command to generate a list
 # 2nd parameter is command to run on selection
