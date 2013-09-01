@@ -54,16 +54,6 @@ serve() {
   python -m SimpleHTTPServer ${1:-8000}
 }
 
-#-------------------------------------------------
-
-tad() {
-  local ts=$(date +%s)
-  local d="$HOME/.throw_away/$ts"
-  mkdir -p $d
-  (cd $d; bash)
-  rm -r $d
-}
-
 check_compressed() {
   curl -s -I --compressed --include "$@" | grep 'Content-Encoding'
 }
