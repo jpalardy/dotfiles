@@ -15,6 +15,9 @@ syntax match moeHeader /^[A-Z][A-Z][A-Z].\+$/
 " @person
 syntax match moePerson "\w\@<!@\w\+"
 
+" #hashtag
+syntax match moeHashtag "\w\@<!#\w\+"
+
 " emphasis
 syntax match moeHighlight     /.* <-$/
 syntax match moeImportant     /.* !$/
@@ -33,6 +36,7 @@ syntax match moeURL         /https\?:[^ ]\+/
 
 hi def link moeHeader        Keyword
 hi def link moePerson        Special
+hi def link moeHashtag       Underlined
 hi def link moeHighlight     Todo
 hi def link moeImportant     Error
 hi def link moeLessImportant Comment
