@@ -92,6 +92,8 @@ nnoremap \<down>  :rightbelow new<CR>
 " like vim-unimpaired, but without all that other code
 nnoremap <silent> [q :cprevious<CR>
 nnoremap <silent> ]q :cnext<CR>
+nnoremap <silent> [l :lprevious<CR>
+nnoremap <silent> ]l :lnext<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MISC
