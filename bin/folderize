@@ -1,9 +1,9 @@
 #!/bin/bash
 
 generate() {
-  find . -maxdepth 1 "$@" -printf "%f %CY/%Cm/\n"
+  find . -maxdepth 1 "$@" -printf "\"%f\" %CY/%Cm/\n"
 }
 
-generate "$@" | awk '{print $2}' | sort | uniq | awk '{print "mkdir -p", $0}'
+generate "$@" | awk '{print $NF}' | sort | uniq | awk '{print "mkdir -p", $0}'
 generate "$@" | sort -k2 | awk '{print "mv -i", $0}'
 
