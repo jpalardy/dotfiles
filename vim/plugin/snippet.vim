@@ -80,6 +80,6 @@ function! Snippet()
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-imap <TAB> <ESC>:call Snippet()<CR>@y
+inoremap <TAB> <ESC>:call Snippet()<CR>@y
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

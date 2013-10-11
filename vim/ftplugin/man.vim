@@ -1,6 +1,6 @@
 
 set ts=4
 
-map q :q<CR>
-map <SPACE> <C-D>
+noremap q :q<CR>
+noremap <SPACE> <C-D>
 

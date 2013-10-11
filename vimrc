@@ -63,18 +63,17 @@ endif
 " SPACEHI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
-autocmd FileType help     NoSpaceHi
-autocmd FileType diff     NoSpaceHi
-autocmd FileType man      NoSpaceHi
-autocmd FileType scratchy NoSpaceHi
-
-autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax *.go NoSpaceHi
+augroup mostly_spacehi
+  autocmd!
+  autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
+  autocmd FileType help     NoSpaceHi
+  autocmd FileType diff     NoSpaceHi
+  autocmd FileType man      NoSpaceHi
+  autocmd FileType scratchy NoSpaceHi
+  autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax *.go NoSpaceHi
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" used by :TOhtml
-let g:html_use_css=0
 
 " use tmux for slime
 let g:slime_target = "tmux"
