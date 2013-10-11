@@ -57,5 +57,3 @@ export LC_ALL="en_US.UTF-8"
 export ACK_COLOR_FILENAME="cyan"
 export ACK_COLOR_MATCH="bold red"
 
-export DBEXT_PROFILE="'type=SQLITE:dbname=db/development.sqlite3'"
-
