@@ -17,7 +17,7 @@ function! Scratchy(...)
   if !empty(a:000)
     let result = call(function("system"), a:000)
     put =result
-    normal ggdd
+    normal! ggdd
   endif
 endfunction
 command -nargs=* Scratchy :call Scratchy(<args>)

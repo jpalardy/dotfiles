@@ -2,15 +2,15 @@
 function! ToggleBox()
   let cline = getline(".")
   if match(cline, "^ \*\\[ \\]") != -1
-    normal ^lrx
+    normal! ^lrx
   elseif match(cline, "^ \*\\[.\\]") != -1
-    execute "normal ^lr "
+    execute "normal! ^lr "
   end
   " not a box line -- don't toggle
-  normal j
+  normal! j
   " position cursor in the box, if there is one
   if match(cline, "^ \*\\[.\\]") != -1
-    normal ^l
+    normal! ^l
   end
 endfunction
 

@@ -56,9 +56,9 @@ function! Snippet()
 
       " replace text with snippet
       if len(string)-1
-        execute "normal v" . (len(string) - 1) . "hgp"
+        execute "normal! v" . (len(string) - 1) . "hgp"
       else
-        execute "normal vgp"
+        execute "normal! vgp"
       endif
 
       " position cursor wrt eol
