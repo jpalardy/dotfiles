@@ -9,16 +9,16 @@ cond_source $HOME/.bash/local/variables.bash
 
 # shell is interactive?
 if [[ $- =~ i ]]; then
+  # completion
+  for file in $HOME/.bash/completion/*; do
+    source $file
+  done
+
   # commands
   for file in $HOME/.bash/commands/*; do
     source $file
   done
   cond_source $HOME/.bash/local/commands.bash
-
-  # completion
-  for file in $HOME/.bash/completion/*; do
-    source $file
-  done
 
   # shell behavior
   source      $HOME/.bash/shell.bash
@@ -28,4 +28,6 @@ if [[ $- =~ i ]]; then
   source      $HOME/.bash/prompt.bash
   cond_source $HOME/.bash/local/prompt.bash
 fi
+
+#source .bash/rvm.bash
 
