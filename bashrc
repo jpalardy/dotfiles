@@ -29,5 +29,3 @@ if [[ $- =~ i ]]; then
   cond_source $HOME/.bash/local/prompt.bash
 fi
 
-#source .bash/rvm.bash
-
