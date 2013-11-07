@@ -32,6 +32,10 @@ vman() {
   \man "$@" | col -b | view - -c "set ft=man nomod"
 }
 
+manfiles() {
+  find $(echo $MANPATH | tr : ' ') -type f
+}
+
 #-------------------------------------------------
 
 du_sort() {
@@ -45,10 +49,6 @@ size_sort() {
 #-------------------------------------------------
 
 alias apg='apg -a 1 -n 20 -m 20 -M SNCL -s'
-
-rm_caches() {
-  ack -ag '\.cache_' --print0 | xargs -0 rm -v 2>/dev/null
-}
 
 serve() {
   python -m SimpleHTTPServer ${1:-8000}
