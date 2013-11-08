@@ -14,16 +14,16 @@ bind up:ctrl;alt;cmd move ${vertical}
 bind down:ctrl;alt;cmd move ${vertical}
 
 # Push Bindings
-bind right:alt  push right
-bind left:alt   push left
-bind up:alt     push up
-bind down:alt   push down
+bind right:ctrl;alt  push right
+bind left:ctrl;alt   push left
+bind up:ctrl;alt     push up
+bind down:ctrl;alt   push down
 
 # Focus Bindings
-bind right:shift    focus right
-bind left:shift     focus left
-bind up:shift       focus up
-bind down:shift     focus down
+bind right:alt    focus right
+bind left:alt     focus left
+bind up:alt       focus up
+bind down:alt     focus down
 
 # Window Hints
 bind esc:cmd hint
