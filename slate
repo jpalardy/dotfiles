@@ -1,0 +1,30 @@
+# This is the default .slate file.
+# If no ~/.slate file exists this is the file that will be used.
+
+config resizePercentOf screenSize
+
+alias center screenOriginX+screenSizeX/2-windowSizeX/2;screenOriginY+screenSizeY/2-windowSizeY/2 windowSizeX;windowSizeY
+alias horizontal screenOriginX;windowTopLeftY screenSizeX;windowSizeY
+alias vertical   windowTopLeftX;screenOriginY windowSizeX;screenSizeY
+
+bind `:alt move ${center}
+bind left:ctrl;alt;cmd move ${horizontal}
+bind right:ctrl;alt;cmd move ${horizontal}
+bind up:ctrl;alt;cmd move ${vertical}
+bind down:ctrl;alt;cmd move ${vertical}
+
+# Push Bindings
+bind right:alt  push right
+bind left:alt   push left
+bind up:alt     push up
+bind down:alt   push down
+
+# Focus Bindings
+bind right:shift    focus right
+bind left:shift     focus left
+bind up:shift       focus up
+bind down:shift     focus down
+
+# Window Hints
+bind esc:cmd hint
+
