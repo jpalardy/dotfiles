@@ -7,7 +7,6 @@ alias center screenOriginX+screenSizeX/2-windowSizeX/2;screenOriginY+screenSizeY
 alias horizontal screenOriginX;windowTopLeftY screenSizeX;windowSizeY
 alias vertical   windowTopLeftX;screenOriginY windowSizeX;screenSizeY
 
-bind `:alt move ${center}
 bind left:ctrl;alt;cmd move ${horizontal}
 bind right:ctrl;alt;cmd move ${horizontal}
 bind up:ctrl;alt;cmd move ${vertical}
@@ -18,6 +17,7 @@ bind right:ctrl;alt  push right
 bind left:ctrl;alt   push left
 bind up:ctrl;alt     push up
 bind down:ctrl;alt   push down
+bind `:ctrl;alt      move ${center}
 
 # Focus Bindings
 bind right:alt    focus right
