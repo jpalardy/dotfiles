@@ -17,7 +17,7 @@ bind right:ctrl;alt  push right
 bind left:ctrl;alt   push left
 bind up:ctrl;alt     push up
 bind down:ctrl;alt   push down
-bind `:ctrl;alt      move ${center}
+bind =:ctrl;alt      move ${center}
 
 # Focus Bindings
 bind right:alt    focus right
