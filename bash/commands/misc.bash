@@ -58,3 +58,5 @@ check_compressed() {
   curl -s -I --compressed --include "$@" | grep 'Content-Encoding'
 }
 
+alias gf=gforth
+
