@@ -19,12 +19,3 @@ bind up:ctrl;alt     push up
 bind down:ctrl;alt   push down
 bind =:ctrl;alt      move ${center}
 
-# Focus Bindings
-bind right:alt    focus right
-bind left:alt     focus left
-bind up:alt       focus up
-bind down:alt     focus down
-
-# Window Hints
-bind esc:cmd hint
-
