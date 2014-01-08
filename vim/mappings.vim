@@ -112,5 +112,7 @@ nnoremap <silent> ]l :lnext<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Tabularize on pipe (<BAR>)
-vnoremap <BAR> :Tab /
+vnoremap <BAR><BAR> :Tab /
+vnoremap <BAR>:     :Tab /:\zs/l0l1<CR>
+vnoremap <BAR>=     :Tab /=<CR>
 
