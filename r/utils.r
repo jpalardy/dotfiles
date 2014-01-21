@@ -9,3 +9,13 @@ pop.sd = function (d) {
   sqrt(pop.var(d))
 }
 
+#-------------------------------------------------
+
+gcd = function(x, y) {
+  ifelse(x %% y != 0, gcd(y, x %% y), y)
+}
+
+lcm = function(x, y) {
+  x * y / gcd(x, y)
+}
+
