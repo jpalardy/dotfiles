@@ -33,6 +33,8 @@ relink .gemrc        $DOTFILES/gemrc
 relink .npmrc        $DOTFILES/npmrc
 relink .jshintrc     $DOTFILES/jshintrc
 
+relink .Rprofile     $DOTFILES/r/Rprofile
+
 relink .slate        $DOTFILES/slate
 
 relink .filter       $DOTFILES/filter

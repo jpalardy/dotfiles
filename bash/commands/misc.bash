@@ -60,3 +60,5 @@ check_compressed() {
 
 alias gf=gforth
 
+alias R="R --quiet"
+
