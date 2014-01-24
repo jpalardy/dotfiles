@@ -1,5 +1,5 @@
 
-"         Scratchy(command, input=None)
+"         Scratchy(command)
 function! Scratchy(...)
   try
     enew
@@ -17,16 +17,8 @@ function! Scratchy(...)
   if !empty(a:000)
     let result = call(function("system"), a:000)
     put =result
-    normal! ggdd
+    normal! gg"_dd
   endif
 endfunction
 command -nargs=* Scratchy :call Scratchy(<args>)
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function! SplitScratchy(...)
-  execute "botright new"
-  call call(function("Scratchy"), a:000)
-endfunction
-command -nargs=* SplitScratchy :call SplitScratchy(<args>)
 
