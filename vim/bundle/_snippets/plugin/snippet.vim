@@ -8,41 +8,48 @@ endfunction
 command -nargs=* SnippetG :call SnippetG(<args>)
 
 function! Snippet(key, value)
+  "echom a:key . ' -> ' . a:value
   if !exists("b:snippets")
     let b:snippets = {}
   endif
-  let b:snippets[a:key] = a:value
+  let b:snippets[tolower(a:key)] = a:value
 endfunction
 command -nargs=* Snippet :call Snippet(<args>)
 
-function! SnippetComplete(key, value)
-  let i = 1
-  while i <= len(a:key)
-     call Snippet(strpart(a:key, 0, i), a:value)
+function! SnippetComplete(...)
+  let key   = a:1
+  let value = a:1
+  if a:0 > 1
+    let value = a:2
+  endif
+  let i = 3
+  while i <= len(key)
+     call Snippet(strpart(key, 0, i), value)
      let i = i + 1
   endwhile
 endfunction
 command -nargs=* SnippetComplete :call SnippetComplete(<args>)
 
 function! SnippetMatch(text)
+  let text = tolower(a:text)
   if exists("b:snippets")
     let snippets = extend(copy(g:snippets), b:snippets)
   else
     let snippets = g:snippets
   endif
 
-  if !has_key(snippets, a:text)
+  if !has_key(snippets, text)
     return ""
   endif
 
-  if type(snippets[a:text]) == 2 " Funcref
+  if type(snippets[text]) == 2 " Funcref
     call inputsave()
-    let result = snippets[a:text](a:text)
+    let result = snippets[text](text)
     call inputrestore()
     return result
   endif
 
-  return snippets[a:text]
+  return snippets[text]
 endfunction
 
 function! SubstringsFromRight(text)
