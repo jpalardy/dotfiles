@@ -1,9 +1,9 @@
 
-let g:snippets["--$"]  = "-------------------------------------------------"
+SnippetG '--', '-------------------------------------------------'
 
 function Snippet_isod(time)
   return strftime("%F")
 endfunction
 
-let g:snippets["isod$"]  = function("Snippet_isod")
+SnippetG 'isod', function("Snippet_isod")
 

@@ -2,6 +2,19 @@
 "-- the master container
 let g:snippets = {}
 
+function! SnippetG(key, value)
+  let g:snippets[a:key] = a:value
+endfunction
+command -nargs=* SnippetG :call SnippetG(<args>)
+
+function! Snippet(key, value)
+  if !exists("b:snippets")
+    let b:snippets = {}
+  endif
+  let b:snippets[a:key] = a:value
+endfunction
+command -nargs=* Snippet :call Snippet(<args>)
+
 function! SnippetMatch(text)
   if exists("b:snippets")
     let snippets = extend(copy(g:snippets), b:snippets)
@@ -9,37 +22,31 @@ function! SnippetMatch(text)
     let snippets = g:snippets
   endif
 
-  let result = ""
-  for key in sort(keys(snippets))
-    if match(a:text, key) != 0
-      continue
-    endif
-    if type(snippets[key]) == 2 " Funcref
-      call inputsave()
-      let result = snippets[key](a:text)
-      call inputrestore()
-    else
-      let result = snippets[key]
-    endif
-    break
-  endfor
+  if !has_key(snippets, a:text)
+    return ""
+  endif
 
-  return result
+  if type(snippets[a:text]) == 2 " Funcref
+    call inputsave()
+    let result = snippets[a:text](a:text)
+    call inputrestore()
+    return result
+  endif
+
+  return snippets[a:text]
 endfunction
 
 function! SubstringsFromRight(text)
   let result = []
-
   let i = 1
   while i <= len(a:text)
      call add(result, strpart(a:text, len(a:text)-i, i))
      let i = i + 1
   endwhile
-
   return result
 endfunction
 
-function! Snippet()
+function! SnippetReplace()
   let @y = "a"
 
   let line_to_cursor = strpart(getline('.'), 0, col('.'))
@@ -78,5 +85,5 @@ function! Snippet()
 endfunction
 
 "-- mappings
-inoremap <TAB> <ESC>:call Snippet()<CR>@y
+inoremap <TAB> <ESC>:call SnippetReplace()<CR>@y
 

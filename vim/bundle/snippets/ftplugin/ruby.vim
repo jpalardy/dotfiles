@@ -1,12 +1,8 @@
 
-if !exists("b:snippets")
-  let b:snippets = {}
-endif
+Snippet '#!', '#!/usr/bin/env ruby'
 
-let b:snippets['#!$'] = '#!/usr/bin/env ruby'
-
-let b:snippets['attr_$']         = 'attr_accessor'
-let b:snippets['attr_accessor$'] = 'attr_reader'
-let b:snippets['attr_reader$']   = 'attr_writer'
-let b:snippets['attr_writer$']   = 'attr_accessor'
+Snippet 'attr_',         'attr_accessor'
+Snippet 'attr_accessor', 'attr_reader'
+Snippet 'attr_reader',   'attr_writer'
+Snippet 'attr_writer',   'attr_accessor'
 
