@@ -104,12 +104,3 @@ nnoremap <silent> ]q :cnext<CR>
 nnoremap <silent> [l :lprevious<CR>
 nnoremap <silent> ]l :lnext<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MISC
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Tabularize on pipe (<BAR>)
-vnoremap <BAR><BAR> :Tabularize /
-vnoremap <BAR>:     :Tabularize /:\zs/l0l1<CR>
-vnoremap <BAR>=     :Tabularize /=<CR>
-
