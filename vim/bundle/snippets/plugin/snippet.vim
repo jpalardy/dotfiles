@@ -1,7 +1,6 @@
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"-- the master container
 let g:snippets = {}
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! SnippetMatch(text)
   if exists("b:snippets")
@@ -15,7 +14,6 @@ function! SnippetMatch(text)
     if match(a:text, key) != 0
       continue
     endif
-
     if type(snippets[key]) == 2 " Funcref
       call inputsave()
       let result = snippets[key](a:text)
@@ -79,7 +77,6 @@ function! Snippet()
   endfor
 endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"-- mappings
 inoremap <TAB> <ESC>:call Snippet()<CR>@y
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
