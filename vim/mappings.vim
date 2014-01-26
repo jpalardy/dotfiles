@@ -57,9 +57,6 @@ nnoremap ,d :g/<C-R>//d<CR>gg
 
 nnoremap <silent> Q :qa<CR>
 
-" buffer list on tab
-nnoremap <tab> :buffers<CR>:buffer<Space>
-
 " easier to reach, overrides TOP and BOTTOM of screen
 nnoremap H ^
 nnoremap L $
@@ -112,7 +109,7 @@ nnoremap <silent> ]l :lnext<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Tabularize on pipe (<BAR>)
-vnoremap <BAR><BAR> :Tab /
-vnoremap <BAR>:     :Tab /:\zs/l0l1<CR>
-vnoremap <BAR>=     :Tab /=<CR>
+vnoremap <BAR><BAR> :Tabularize /
+vnoremap <BAR>:     :Tabularize /:\zs/l0l1<CR>
+vnoremap <BAR>=     :Tabularize /=<CR>
 
