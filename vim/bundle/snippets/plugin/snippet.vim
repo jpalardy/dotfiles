@@ -15,6 +15,15 @@ function! Snippet(key, value)
 endfunction
 command -nargs=* Snippet :call Snippet(<args>)
 
+function! SnippetComplete(key, value)
+  let i = 1
+  while i <= len(a:key)
+     call Snippet(strpart(a:key, 0, i), a:value)
+     let i = i + 1
+  endwhile
+endfunction
+command -nargs=* SnippetComplete :call SnippetComplete(<args>)
+
 function! SnippetMatch(text)
   if exists("b:snippets")
     let snippets = extend(copy(g:snippets), b:snippets)
