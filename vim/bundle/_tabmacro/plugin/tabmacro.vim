@@ -8,6 +8,9 @@ endfunction
 command -nargs=* TabMacro :call TabMacro(<args>)
 
 function! TabMacroify()
+  if !exists("b:tabmacros")
+    return
+  endif
   let line = getline('.')
   for [key, value] in items(b:tabmacros)
     if match(line, key) != -1
