@@ -5,14 +5,25 @@ vim-() {
   vim -s <(printf '\eh')
 }
 
+# http://superuser.com/questions/210054/make-a-pipe-conditional-on-non-empty-return
+pipe_if_not_empty () {
+  head=$(dd bs=1 count=1 2>/dev/null; echo a)
+  head=${head%a}
+  if [ "x$head" != x"" ]; then
+    { printf %s "$head"; cat; } | "$@"
+  fi
+}
+export -f pipe_if_not_empty
+
 # start vim in PAGER mode
 vim_picker() {
-  vim -c "setlocal noreadonly" \
-      -c "setlocal cursorline" \
-      -c "setlocal number" \
-      -c "nnoremap <buffer> <CR> V:w! ~/.picked<CR>:qa!<CR>" \
-      -c "vnoremap <buffer> <CR>  :w! ~/.picked<CR>:qa!<CR>" \
-      -R -
+  pipe_if_not_empty \
+    vim -c "setlocal noreadonly" \
+        -c "setlocal cursorline" \
+        -c "setlocal number" \
+        -c "nnoremap <buffer> <CR> V:w! ~/.picked<CR>:qa!<CR>" \
+        -c "vnoremap <buffer> <CR>  :w! ~/.picked<CR>:qa!<CR>" \
+        -R -
 }
 export -f vim_picker
 
