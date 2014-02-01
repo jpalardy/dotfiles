@@ -1,5 +1,0 @@
-#!/bin/bash
-
-sed -r -e 's/freqt (\S*) (\S*)/SELECT \1, count(*) FROM \2 GROUP BY \1 ORDER BY \1/gi'   \
-       "$@" | sqlpp
-

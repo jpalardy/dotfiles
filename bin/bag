@@ -1,20 +1,13 @@
 #!/bin/bash
 
-die() {
-  echo >&2 "$1"
-  exit 1
-}
-
-#-------------------------------------------------
-
 BAG="$HOME/.bag"
 
 if [ -t 0 ]; then
   if [ ! -f "$BAG" ]; then
-    die "$BAG does not exist"
+    exit
   fi
   cat $BAG
 else
-  cat | tee $BAG
+  cat > $BAG
 fi
 
