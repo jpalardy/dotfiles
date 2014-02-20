@@ -13,6 +13,7 @@ shopt -s progcomp                # programmable completion (should be enabled by
 HISTSIZE=1000                    # history lines in memory
 HISTFILESIZE=1000                # history lines in the file
 HISTCONTROL=ignoreboth           # don't save lines starting with a space, or duplicate lines
+HISTIGNORE="ll:git st"           # don't log these...
 
 # bindings
 
