@@ -1,4 +1,1 @@
-#!/bin/bash
-
-cat "$@" | sed_filter '(^|\/)\.' '(^|\/)node_modules'
-
+(^|\/)\.
