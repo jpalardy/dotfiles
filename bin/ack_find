@@ -48,8 +48,8 @@ if [ -f "$CACHE" ]; then
 fi
 
 if [ -n "$CACHE" ]; then
-  ack -af --sort-files | filter "$HOME/.filter" | filter ".filter" ".gitignore" | tee "$CACHE"
+  ack -af --sort-files | filter "$HOME/.filter" | filter "./.filter" ".gitignore" | tee "$CACHE"
 else
-  ack -af --sort-files | filter "$HOME/.filter" | filter ".filter" ".gitignore"
+  ack -af --sort-files | filter "$HOME/.filter" | filter "./.filter" ".gitignore"
 fi
 
