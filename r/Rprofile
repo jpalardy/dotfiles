@@ -5,6 +5,7 @@ options(width=160)
 .First = function () {
   require(ggplot2)
   require(plyr)
+  require(data.table)
   source("~/dotfiles/r/utils.r")
 }
 
