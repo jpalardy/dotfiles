@@ -2,10 +2,13 @@
 options("repos" = c(CRAN = "http://cran.rstudio.com/"))
 options(width=160)
 
+.libPaths(c(.libPaths(), "~/local/lib/r"))
+
 .First = function () {
-  require(ggplot2)
-  require(plyr)
-  require(data.table)
-  source("~/dotfiles/r/utils.r")
+  if (interactive()) {
+    suppressMessages(require(ggplot2))
+    suppressMessages(require(plyr))
+    suppressMessages(require(data.table))
+  }
 }
 
