@@ -7,7 +7,6 @@ options(width=160)
 .First = function () {
   if (interactive()) {
     suppressMessages(require(ggplot2))
-    suppressMessages(require(plyr))
     suppressMessages(require(data.table))
   }
 }
