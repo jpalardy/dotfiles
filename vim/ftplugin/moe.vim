@@ -1,4 +1,13 @@
 
+function! HandleURL()
+  let s:uri = matchstr(getline("."), "https\\?://[^ ]*")
+  if s:uri != ""
+    silent execute "! open '".s:uri."'"
+    redraw!
+    return 1
+  endif
+endfunction
+
 function! ToggleBox()
   let cline = getline(".")
   if match(cline, "^ \*\\[ \\]") != -1
@@ -14,6 +23,12 @@ function! ToggleBox()
   end
 endfunction
 
-nnoremap <buffer> <CR> :call ToggleBox()<CR>
-vnoremap <buffer> <CR> y:! open <c-r>"<CR>
+function! Activate()
+  if HandleURL()
+    return
+  endif
+  call ToggleBox()
+endfunction
+
+nnoremap <buffer> <CR> :call Activate()<CR>
 
