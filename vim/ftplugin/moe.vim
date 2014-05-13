@@ -15,4 +15,5 @@ function! ToggleBox()
 endfunction
 
 nnoremap <buffer> <CR> :call ToggleBox()<CR>
+vnoremap <buffer> <CR> y:! open <c-r>"<CR>
 
