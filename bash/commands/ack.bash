@@ -23,3 +23,7 @@ gril() {
   OPTIONS="-il" gr  "$@"
 }
 
+af() {
+  ack_find "$@"
+}
+
