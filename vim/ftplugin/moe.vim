@@ -1,28 +1,26 @@
 
-function! HandleURL()
-  let s:uri = matchstr(getline("."), "https\\?://[^ ]*")
-  if s:uri != ""
-    silent execute "! open '".s:uri."'"
-    redraw!
-    return 1
+function! s:HandleURL()
+  let l:uri = matchstr(getline("."), "https\\?://[^ ]*")
+  if l:uri != ""
+    call system("open " . shellescape(l:uri))
   endif
 endfunction
 
-function! ToggleBox()
-  let cline = getline(".")
-  if match(cline, "^ \*\\[ \\]") != -1
+function! s:ToggleBox()
+  let l:cline = getline(".")
+  if match(l:cline, "^ \*\\[ \\]") != -1
     normal! ^lrx
-  elseif match(cline, "^ \*\\[.\\]") != -1
+  elseif match(l:cline, "^ \*\\[.\\]") != -1
     execute "normal! ^lr "
   end
   " not a box line -- don't toggle
   normal! j
   " position cursor in the box, if there is one
-  if match(cline, "^ \*\\[.\\]") != -1
+  if match(l:cline, "^ \*\\[.\\]") != -1
     normal! ^l
   end
 endfunction
 
-nnoremap <buffer> <CR> :call ToggleBox()<CR>
-vnoremap <buffer> <CR> :call HandleURL()<CR>
+nnoremap <buffer> <CR> :call <SID>ToggleBox()<CR>
+vnoremap <buffer> <CR> :call <SID>HandleURL()<CR>
 
