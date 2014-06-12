@@ -23,12 +23,6 @@ function! ToggleBox()
   end
 endfunction
 
-function! Activate()
-  if HandleURL()
-    return
-  endif
-  call ToggleBox()
-endfunction
-
-nnoremap <buffer> <CR> :call Activate()<CR>
+nnoremap <buffer> <CR> :call ToggleBox()<CR>
+vnoremap <buffer> <CR> :call HandleURL()<CR>
 
