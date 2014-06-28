@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APPNAME=${2:-$(basename "$1" ".sh")}
+APPNAME=${2:-$(basename $(basename "$1" ".sh") ".bash")}
 DIR="$APPNAME.app/Contents/MacOS"
 
 if [ -a "$APPNAME.app" ]; then
