@@ -104,3 +104,20 @@ nnoremap <silent> ]q :cnext<CR>
 nnoremap <silent> [l :lprevious<CR>
 nnoremap <silent> ]l :lnext<CR>
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" COLORSCHEME ROTATION
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! RotateColorscheme()
+  if g:colors_name == "railscasts"
+    echom "if"
+    colorscheme 256_xoria
+  else
+    echom "else"
+    colorscheme 256_railscasts
+  endif
+endfunction
+
+nnoremap ,c :call RotateColorscheme()<cr>
+
