@@ -110,13 +110,10 @@ nnoremap <silent> ]l :lnext<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! RotateColorscheme()
-  if g:colors_name == "railscasts"
-    echom "if"
-    colorscheme 256_xoria
-  else
-    echom "else"
-    colorscheme 256_railscasts
-  endif
+  let l:schemes = ["256_xoria", "256_railscasts", "256_jellybeans", "256_wombat"]
+  let l:i = (index(l:schemes, g:colors_name) + 1) % len(l:schemes)
+  execute "colorscheme " . l:schemes[l:i]
+  redraw | echo l:schemes[l:i]
 endfunction
 
 nnoremap ,c :call RotateColorscheme()<cr>

@@ -53,7 +53,7 @@ set diffopt=filler,iwhite
 set spellcapcheck=
 
 if match($TERM, '256color$') != -1
-  colorscheme 256_railscasts
+  colorscheme 256_xoria
 endif
 
 " This is useful for debugging
