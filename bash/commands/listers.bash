@@ -32,7 +32,6 @@ lister_num() {
 lister "g"    "cd"
 lister "qc"   "eval"
 lister "rg"   "rvm use"
-lister "warp" "ssh"     "awk '{print \\\$1}'"
 
 lister_num g 12
 lister_num rg 5
