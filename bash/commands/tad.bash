@@ -7,3 +7,8 @@ tad() {
   rm -r $d
 }
 
+ddt() {
+  local name="$(date +%F)_$(echo "$@" | sed -e "s/ /_/g")"
+  mkdir $name && cd $name
+}
+
