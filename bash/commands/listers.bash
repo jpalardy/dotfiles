@@ -20,8 +20,6 @@ lister() {
 
 lister_num() {
   local name=$1
-  local n=$2
-
   for i in $(seq $2); do
     alias ${name}${i}="$name $i"
   done
@@ -34,5 +32,4 @@ lister "qc"   "eval"
 lister "rg"   "rvm use"
 
 lister_num g 12
-lister_num rg 5
 

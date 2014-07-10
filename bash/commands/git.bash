@@ -39,11 +39,3 @@ git_out_decorate() {
   git log --branches --not --remotes --simplify-by-decoration --decorate --oneline
 }
 
-gll() {
-  git log $1 master@{1}..
-}
-
-gllp() {
-  gll -p
-}
-

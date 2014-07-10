@@ -5,22 +5,12 @@ alias l='ls -l'
 
 h() {
   local COUNT=${COUNT:-25}
-
   if [ -z "$@" ]; then
     history $COUNT
   else
     history | ack "$@" | tail -n $COUNT
   fi
 }
-
-# -F : don't page if less than one screen
-# -i : ignore-case
-# -R : raw-control-char
-# -S : chop-long-lines
-# -c : clear-screen (rather than scroll to clear)
-# -w : hilite-unread
-# -X : no-init (won't clear screen on exit)
-alias less='less -FiRSwX -c '
 
 alias grep='grep --color=auto'
 
@@ -53,12 +43,6 @@ alias apg='apg -a 1 -n 20 -m 20 -M SNCL -s'
 serve() {
   python -m SimpleHTTPServer ${1:-8000}
 }
-
-check_compressed() {
-  curl -s -I --compressed --include "$@" | grep 'Content-Encoding'
-}
-
-alias gf=gforth
 
 alias R="R --quiet"
 

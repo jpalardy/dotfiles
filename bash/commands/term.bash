@@ -21,7 +21,3 @@ fg_bg_random() {
   fg_bg $(shuf -n 1 -i 0-255) $(shuf -n 1 -i 0-255)
 }
 
-title() {
-  printf '\e]2;%s\a' "$*"
-}
-

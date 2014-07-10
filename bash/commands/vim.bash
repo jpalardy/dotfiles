@@ -59,7 +59,3 @@ pick_with_vim() {
 }
 export -f pick_with_vim
 
-vim_swp() {
-  find . -name '.*.sw*'
-}
-
