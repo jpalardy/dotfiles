@@ -29,18 +29,32 @@ warp() {
   # transform seletion in ssh command
   local SSH=${SSH:-ssh}
   if [ $(cat "$TARGET" | wc -l) -gt 1 ]; then
-    SSH=${MULTISSH:-csshX}
+    # determine which clusterssh to use based on os
+    unamestr=`uname`
+    if [[ "$unamestr" == 'Linux' ]]; then
+      SSH=${MULTISSH:-cssh}
+    elif [[ "$unamestr" == 'Darwin' ]]; then
+      SSH=${MULTISSH:-csshX}
+    fi
   fi
-  local COMMAND=$(awk -v cmd=$SSH 'BEGIN {printf cmd} {printf " " $1} END { print "" }' "$TARGET")
+  local COMMAND="$(awk -v cmd=$SSH 'BEGIN {printf cmd} {printf " " $1} END { print "" }' "$TARGET")"
 
   # add the command to the bash history as if we had typed it, will only work if sourced
-  history -s $COMMAND
+  # Determine which history command to use based on shell
+  if [ -n "$BASH_VERSION" ]; then
+    eval "history -s $COMMAND"
+  elif [ -n "$ZSH_VERSION" ]; then
+    eval "print -s $COMMAND"
+  fi
+
   # run the command
-  $COMMAND
+  eval $COMMAND
 }
 
 # allow warp to be sourced without running
 if [[ $_ == $0 ]]; then
   warp
+else
+  # Hide warp from history if using zsh and setopt histignorespace
+  alias warp=" warp"
 fi
-
