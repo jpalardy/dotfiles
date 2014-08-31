@@ -78,6 +78,8 @@ nnoremap < <<
 vnoremap # :call NERDComment(1, "toggle")<CR>
 nnoremap # V:call NERDComment(1, "toggle")<CR>
 
+nnoremap ,wd :windo normal 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPLIT MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
