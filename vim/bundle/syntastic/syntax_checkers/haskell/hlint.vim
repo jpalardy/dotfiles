@@ -10,27 +10,30 @@ if exists('g:loaded_syntastic_haskell_hlint_checker')
 endif
 let g:loaded_syntastic_haskell_hlint_checker = 1
 
-function! SyntaxCheckers_haskell_hlint_IsAvailable()
-    return executable('hlint')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_haskell_hlint_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'hlint',
-        \ 'filetype': 'haskell',
-        \ 'subchecker': 'hlint' })
+function! SyntaxCheckers_haskell_hlint_GetLocList() dict
+    let makeprg = self.makeprgBuild({
+        \ 'fname': syntastic#util#shexpand('%:p')})
 
     let errorformat =
-        \ '%E%f:%l:%c: Error: %m,' .
-        \ '%W%f:%l:%c: Warning: %m,' .
+        \ '%E%f:%l:%v: Error: %m,' .
+        \ '%W%f:%l:%v: Warning: %m,' .
         \ '%C%m'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
+        \ 'defaults': {'vcol': 1},
         \ 'postprocess': ['compressWhitespace'] })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'haskell',
     \ 'name': 'hlint'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

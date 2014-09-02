@@ -12,22 +12,21 @@ if exists('g:loaded_syntastic_ada_gcc_checker')
 endif
 let g:loaded_syntastic_ada_gcc_checker = 1
 
-if !exists('g:syntastic_ada_compiler')
-    let g:syntastic_ada_compiler = 'gcc'
-endif
-
-function! SyntaxCheckers_ada_gcc_IsAvailable()
-    return executable(g:syntastic_ada_compiler)
-endfunction
-
-let s:save_cpo = &cpo
-set cpo&vim
-
 if !exists('g:syntastic_ada_compiler_options')
     let g:syntastic_ada_compiler_options = ''
 endif
 
-function! SyntaxCheckers_ada_gcc_GetLocList()
+let s:save_cpo = &cpo
+set cpo&vim
+
+function! SyntaxCheckers_ada_gcc_IsAvailable() dict
+    if !exists('g:syntastic_ada_compiler')
+        let g:syntastic_ada_compiler = self.getExec()
+    endif
+    return executable(expand(g:syntastic_ada_compiler))
+endfunction
+
+function! SyntaxCheckers_ada_gcc_GetLocList() dict
     return syntastic#c#GetLocList('ada', 'gcc', {
         \ 'errorformat':
         \     '%-G%f:%s:,' .
@@ -40,7 +39,7 @@ endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'ada',
-    \ 'name': 'gcc'})
+    \ 'name': 'gcc' })
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

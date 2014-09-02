@@ -1,5 +1,5 @@
 " Name:    gnupg.vim
-" Last Change: 2013 Sep 09
+" Last Change: 2014 Aug 10
 " Maintainer:  James McCoy <vega.james@gmail.com>
 " Original Author:  Markus Braun <markus.braun@krawel.de>
 " Summary: Vim plugin for transparent editing of gpg encrypted files.
@@ -400,7 +400,14 @@ function s:GPGDecrypt(bufread)
   let filename = expand("<afile>:p")
 
   " clear GPGRecipients and GPGOptions
-  let b:GPGRecipients = copy(g:GPGDefaultRecipients)
+  if type(g:GPGDefaultRecipients) == type([])
+    let b:GPGRecipients = copy(g:GPGDefaultRecipients)
+  else
+    let b:GPGRecipients = []
+    echohl GPGWarning
+    echom "g:GPGDefaultRecipients is not a Vim list, please correct this in your vimrc!"
+    echohl None
+  endif
   let b:GPGOptions = []
 
   " File doesn't exist yet, so nothing to decrypt
@@ -1260,10 +1267,11 @@ endfunction
 " Returns: command output
 "
 function s:GPGSystem(dict)
-  let commandline = printf('%s %s', s:GPGCommand, a:dict.args)
+  let commandline = s:GPGCommand
   if (!empty(g:GPGHomedir))
     let commandline .= ' --homedir ' . shellescape(g:GPGHomedir)
   endif
+  let commandline .= ' ' . a:dict.args
   let commandline .= ' ' . s:stderrredirnull
   call s:GPGDebug(a:dict.level, "command: ". commandline)
 
@@ -1286,10 +1294,11 @@ endfunction
 " redirect - Shell redirect to use, if needed
 "
 function s:GPGExecute(dict)
-  let commandline = printf('%s%s %s', a:dict.ex, s:GPGCommand, a:dict.args)
+  let commandline = printf('%s%s', a:dict.ex, s:GPGCommand)
   if (!empty(g:GPGHomedir))
     let commandline .= ' --homedir ' . shellescape(g:GPGHomedir, 1)
   endif
+  let commandline .= ' ' . a:dict.args
   if (has_key(a:dict, 'redirect'))
     let commandline .= ' ' . a:dict.redirect
   endif

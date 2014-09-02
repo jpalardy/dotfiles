@@ -29,5 +29,5 @@ depend:
 
 #-------------------------------------------------
 
-include deps.mk
+#include deps.mk
 

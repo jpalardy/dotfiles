@@ -10,10 +10,11 @@
 "
 " Tested with checkstyle 5.5
 "============================================================================
+
 if exists("g:loaded_syntastic_java_checkstyle_checker")
     finish
 endif
-let g:loaded_syntastic_java_checkstyle_checker=1
+let g:loaded_syntastic_java_checkstyle_checker = 1
 
 if !exists("g:syntastic_java_checkstyle_classpath")
     let g:syntastic_java_checkstyle_classpath = 'checkstyle-5.5-all.jar'
@@ -23,57 +24,39 @@ if !exists("g:syntastic_java_checkstyle_conf_file")
     let g:syntastic_java_checkstyle_conf_file = 'sun_checks.xml'
 endif
 
-function! SyntaxCheckers_java_checkstyle_IsAvailable()
-    return executable('java')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_java_checkstyle_Preprocess(errors)
-    let out = copy(a:errors)
-    for n in range(len(out))
-        let parts = matchlist(out[n], '\(.*<file name="\)\([^"]\+\)\(">.*\)')
-        if len(parts) >= 4
-            let parts[2] = syntastic#util#decodeXMLEntities(parts[2])
-            let out[n] = join(parts[1:3], '')
-        endif
-    endfor
-    return out
-endfunction
-
-function! SyntaxCheckers_java_checkstyle_GetLocList()
+function! SyntaxCheckers_java_checkstyle_GetLocList() dict
 
     let fname = syntastic#util#shescape( expand('%:p:h') . '/' . expand('%:t') )
 
     if has('win32unix')
-        let fname = substitute(system('cygpath -m ' . fname), '\%x00', '', 'g')
+        let fname = substitute(system('cygpath -m ' . fname), '\m\%x00', '', 'g')
     endif
 
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'java',
-        \ 'args': '-cp ' . g:syntastic_java_checkstyle_classpath .
-        \         ' com.puppycrawl.tools.checkstyle.Main -c ' . g:syntastic_java_checkstyle_conf_file .
-        \         ' -f xml',
-        \ 'fname': fname,
-        \ 'filetype': 'java',
-        \ 'subchecker': 'checkstyle' })
+    let makeprg = self.makeprgBuild({
+        \ 'args_after': '-cp ' . g:syntastic_java_checkstyle_classpath .
+        \       ' com.puppycrawl.tools.checkstyle.Main -c ' .
+        \       syntastic#util#shexpand(g:syntastic_java_checkstyle_conf_file) .
+        \       ' -f xml',
+        \ 'fname': fname })
 
-    let errorformat =
-        \ '%P<file name="%f">,' .
-        \ '%Q</file>,' .
-        \ '%E<error line="%l" column="%c" severity="%trror" message="%m" source="%.%#"/>,' .
-        \ '%E<error line="%l" severity="%trror" message="%m" source="%.%#"/>,' .
-        \ '%E<error line="%l" column="%c" severity="%tarning" message="%m" source="%.%#"/>,' .
-        \ '%E<error line="%l" severity="%tarning" message="%m" source="%.%#"/>,' .
-        \ '%-G%.%#'
+    let errorformat = '%f:%t:%l:%c:%m'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'subtype': 'Style',
-        \ 'preprocess': 'SyntaxCheckers_java_checkstyle_Preprocess',
-        \ 'postprocess': ['cygwinRemoveCR', 'decodeXMLEntities'] })
-
+        \ 'preprocess': 'checkstyle',
+        \ 'subtype': 'Style' })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'java',
-    \ 'name': 'checkstyle'})
+    \ 'name': 'checkstyle',
+    \ 'exec': 'java'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

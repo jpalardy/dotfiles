@@ -15,15 +15,22 @@ if exists('g:loaded_syntastic_haskell_ghc_mod_checker')
 endif
 let g:loaded_syntastic_haskell_ghc_mod_checker = 1
 
-function! SyntaxCheckers_haskell_ghc_mod_IsAvailable()
-    return executable('ghc-mod')
+let s:ghc_mod_new = -1
+
+let s:save_cpo = &cpo
+set cpo&vim
+
+function! SyntaxCheckers_haskell_ghc_mod_IsAvailable() dict
+    " We need either a Vim version that can handle NULs in system() output,
+    " or a ghc-mod version that has the --boundary option.
+    let exe = self.getExec()
+    let s:ghc_mod_new = executable(exe) ? s:GhcModNew(exe) : -1
+    return (s:ghc_mod_new >= 0) && (v:version >= 704 || s:ghc_mod_new)
 endfunction
 
-function! SyntaxCheckers_haskell_ghc_mod_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'ghc-mod check',
-        \ 'filetype': 'haskell',
-        \ 'subchecker': 'ghc_mod' })
+function! SyntaxCheckers_haskell_ghc_mod_GetLocList() dict
+    let makeprg = self.makeprgBuild({
+        \ 'exe': self.getExecEscaped() . ' check' . (s:ghc_mod_new ? ' --boundary=""' : '') })
 
     let errorformat =
         \ '%-G%\s%#,' .
@@ -38,9 +45,28 @@ function! SyntaxCheckers_haskell_ghc_mod_GetLocList()
     return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'postprocess': ['compressWhitespace'] })
+        \ 'postprocess': ['compressWhitespace'],
+        \ 'returns': [0] })
+endfunction
+
+function! s:GhcModNew(exe)
+    let exe = syntastic#util#shescape(a:exe)
+    try
+        let ghc_mod_version = filter(split(system(exe), '\n'), 'v:val =~# ''\m^ghc-mod version''')[0]
+        let ret = syntastic#util#versionIsAtLeast(syntastic#util#parseVersion(ghc_mod_version), [2, 1, 2])
+    catch /\m^Vim\%((\a\+)\)\=:E684/
+        call syntastic#log#error("checker haskell/ghc_mod: can't parse version string (abnormal termination?)")
+        let ret = -1
+    endtry
+    return ret
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'haskell',
-    \ 'name': 'ghc_mod'})
+    \ 'name': 'ghc_mod',
+    \ 'exec': 'ghc-mod' })
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

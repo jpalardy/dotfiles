@@ -7,20 +7,15 @@
 if exists("g:loaded_syntastic_typescript_tsc_checker")
     finish
 endif
-let g:loaded_syntastic_typescript_tsc_checker=1
+let g:loaded_syntastic_typescript_tsc_checker = 1
 
-function! SyntaxCheckers_typescript_tsc_IsAvailable()
-    return executable("tsc")
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-
-function! SyntaxCheckers_typescript_tsc_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'tsc',
+function! SyntaxCheckers_typescript_tsc_GetLocList() dict
+    let makeprg = self.makeprgBuild({
         \ 'args': '--module commonjs',
-        \ 'post_args': '--out ' . syntastic#util#DevNull(),
-        \ 'filetype': 'typescript',
-        \ 'subchecker': 'tsc' })
+        \ 'args_after': '--out ' . syntastic#util#DevNull() })
 
     let errorformat =
         \ '%E%f %#(%l\,%c): error %m,' .
@@ -28,13 +23,21 @@ function! SyntaxCheckers_typescript_tsc_GetLocList()
         \ '%Eerror %m,' .
         \ '%C%\s%\+%m'
 
-    return SyntasticMake({
+    let loclist = SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'defaults': {'bufnr': bufnr("")},
-        \ 'postprocess': ['sort'] })
+        \ 'defaults': {'bufnr': bufnr("")} })
+
+    call self.setWantSort(1)
+
+    return loclist
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'typescript',
     \ 'name': 'tsc'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

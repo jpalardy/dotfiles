@@ -6,10 +6,7 @@ fugitive       https://github.com/tpope/vim-fugitive.git
 json           https://github.com/leshill/vim-json.git
 slime          https://github.com/jpalardy/vim-slime
 spacehi        https://github.com/jpalardy/spacehi.vim.git
-puppet         https://github.com/rodjek/vim-puppet.git
-clojure        https://github.com/vim-scripts/VimClojure.git
 syntastic      https://github.com/scrooloose/syntastic.git
 less           https://github.com/groenewege/vim-less.git
 gnupg          https://github.com/jamessan/vim-gnupg.git
-go             https://github.com/jnwhiteh/vim-golang.git
 jade           https://github.com/digitaltoad/vim-jade.git

@@ -46,18 +46,6 @@ bundle.spacehi:
 	@rm -rf spacehi/.git
 	@find spacehi -name .gitignore | xargs rm
 
-bundle.puppet:
-	@rm -rf puppet
-	git clone --depth=1 https://github.com/rodjek/vim-puppet.git puppet
-	@rm -rf puppet/.git
-	@find puppet -name .gitignore | xargs rm
-
-bundle.clojure:
-	@rm -rf clojure
-	git clone --depth=1 https://github.com/vim-scripts/VimClojure.git clojure
-	@rm -rf clojure/.git
-	@find clojure -name .gitignore | xargs rm
-
 bundle.syntastic:
 	@rm -rf syntastic
 	git clone --depth=1 https://github.com/scrooloose/syntastic.git syntastic
@@ -76,17 +64,11 @@ bundle.gnupg:
 	@rm -rf gnupg/.git
 	@find gnupg -name .gitignore | xargs rm
 
-bundle.go:
-	@rm -rf go
-	git clone --depth=1 https://github.com/jnwhiteh/vim-golang.git go
-	@rm -rf go/.git
-	@find go -name .gitignore | xargs rm
-
 bundle.jade:
 	@rm -rf jade
 	git clone --depth=1 https://github.com/digitaltoad/vim-jade.git jade
 	@rm -rf jade/.git
 	@find jade -name .gitignore | xargs rm
 
-.PHONY: bundle.matchit bundle.nerdcommenter bundle.tabular bundle.coffee-script bundle.fugitive bundle.json bundle.slime bundle.spacehi bundle.puppet bundle.clojure bundle.syntastic bundle.less bundle.gnupg bundle.go bundle.jade
+.PHONY: bundle.matchit bundle.nerdcommenter bundle.tabular bundle.coffee-script bundle.fugitive bundle.json bundle.slime bundle.spacehi bundle.syntastic bundle.less bundle.gnupg bundle.jade
 

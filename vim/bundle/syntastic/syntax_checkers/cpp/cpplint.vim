@@ -31,30 +31,23 @@ if !exists('g:syntastic_cpp_cpplint_thres')
     let g:syntastic_cpp_cpplint_thres = 5
 endif
 
-if ! exists('g:syntastic_cpp_cpplint_args')
-    let g:syntastic_cpp_cpplint_args = '--verbose=3'
-endif
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_cpp_cpplint_IsAvailable()
-    return executable('cpplint.py')
-endfunction
-
-function! SyntaxCheckers_cpp_cpplint_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'cpplint.py',
-        \ 'filetype': 'cpp',
-        \ 'subchecker': 'cpplint' })
+function! SyntaxCheckers_cpp_cpplint_GetLocList() dict
+    let makeprg = self.makeprgBuild({ 'args': '--verbose=3' })
 
     let errorformat = '%A%f:%l:  %m [%t],%-G%.%#'
 
     let loclist = SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'subtype': 'Style' })
+        \ 'subtype': 'Style',
+        \ 'returns': [0, 1] })
 
     " change error types according to the prescribed threshold
-    for n in range(len(loclist))
-        let loclist[n]['type'] = loclist[n]['type'] < g:syntastic_cpp_cpplint_thres ? 'W' : 'E'
+    for e in loclist
+        let e['type'] = e['type'] < g:syntastic_cpp_cpplint_thres ? 'W' : 'E'
     endfor
 
     return loclist
@@ -62,4 +55,10 @@ endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'cpp',
-    \ 'name': 'cpplint'})
+    \ 'name': 'cpplint',
+    \ 'exec': 'cpplint.py'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

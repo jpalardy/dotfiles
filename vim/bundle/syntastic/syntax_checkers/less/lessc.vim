@@ -20,35 +20,40 @@
 if exists("g:loaded_syntastic_less_lessc_checker")
     finish
 endif
-let g:loaded_syntastic_less_lessc_checker=1
+let g:loaded_syntastic_less_lessc_checker = 1
 
 if !exists("g:syntastic_less_options")
-    let g:syntastic_less_options = "--no-color"
+    let g:syntastic_less_options = ""
 endif
 
 if !exists("g:syntastic_less_use_less_lint")
     let g:syntastic_less_use_less_lint = 0
 endif
 
-if g:syntastic_less_use_less_lint
-    let s:check_file = 'node ' . expand('<sfile>:p:h') . '/less-lint.js'
-else
-    let s:check_file = 'lessc'
-endif
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_less_lessc_IsAvailable()
-    return executable('lessc')
+let s:node_file = 'node ' . syntastic#util#shescape(expand('<sfile>:p:h') . syntastic#util#Slash() . 'less-lint.js')
+
+function! SyntaxCheckers_less_lessc_IsAvailable() dict
+    return g:syntastic_less_use_less_lint ? executable('node') : executable(self.getExec())
 endfunction
 
-function! SyntaxCheckers_less_lessc_GetLocList()
-    let makeprg = syntastic#makeprg#build({
+function! SyntaxCheckers_less_lessc_GetLocList() dict
+    if !exists('s:check_file')
+        let s:check_file = g:syntastic_less_use_less_lint ? s:node_file : self.getExecEscaped()
+    endif
+
+    let makeprg = self.makeprgBuild({
         \ 'exe': s:check_file,
         \ 'args': g:syntastic_less_options,
-        \ 'tail': syntastic#util#DevNull(),
-        \ 'filetype': 'less',
-        \ 'subchecker': 'lessc' })
+        \ 'args_after': '--no-color',
+        \ 'tail': '> ' . syntastic#util#DevNull() })
 
-    let errorformat = '%m in %f:%l:%c'
+    let errorformat =
+        \ '%m in %f on line %l\, column %c:,' .
+        \ '%m in %f:%l:%c,' .
+        \ '%-G%.%#'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
@@ -59,3 +64,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'less',
     \ 'name': 'lessc'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

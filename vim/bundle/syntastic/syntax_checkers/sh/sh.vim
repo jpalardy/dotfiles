@@ -13,51 +13,17 @@
 if exists("g:loaded_syntastic_sh_sh_checker")
     finish
 endif
-let g:loaded_syntastic_sh_sh_checker=1
+let g:loaded_syntastic_sh_sh_checker = 1
 
-function! s:GetShell()
-    if !exists('b:shell') || b:shell == ''
-        let b:shell = ''
-        let shebang = getbufline(bufnr('%'), 1)[0]
-        if len(shebang) > 0
-            if match(shebang, 'bash') >= 0
-                let b:shell = 'bash'
-            elseif match(shebang, 'zsh') >= 0
-                let b:shell = 'zsh'
-            elseif match(shebang, 'sh') >= 0
-                let b:shell = 'sh'
-            endif
-        endif
-        " try to use env variable in case no shebang could be found
-        if b:shell == ''
-            let b:shell = fnamemodify(expand('$SHELL'), ':t')
-        endif
-    endif
-    return b:shell
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! s:ForwardToZshChecker()
-    let registry = g:SyntasticRegistry.Instance()
-    if registry.checkable('zsh')
-        return SyntaxCheckers_zsh_zsh_GetLocList()
-    else
-        return []
-    endif
-
-endfunction
-
-
-function! s:IsShellValid()
-    return len(s:GetShell()) > 0 && executable(s:GetShell())
-endfunction
-
-
-function! SyntaxCheckers_sh_sh_IsAvailable()
+function! SyntaxCheckers_sh_sh_IsAvailable() dict
     return s:IsShellValid()
 endfunction
 
-function! SyntaxCheckers_sh_sh_GetLocList()
-    if s:GetShell() == 'zsh'
+function! SyntaxCheckers_sh_sh_GetLocList() dict
+    if s:GetShell() ==# 'zsh'
         return s:ForwardToZshChecker()
     endif
 
@@ -65,19 +31,58 @@ function! SyntaxCheckers_sh_sh_GetLocList()
         return []
     endif
 
-    let makeprg = syntastic#makeprg#build({
+    let makeprg = self.makeprgBuild({
         \ 'exe': s:GetShell(),
-        \ 'args': '-n',
-        \ 'filetype': 'sh',
-        \ 'subchecker': 'sh'})
+        \ 'args_after': '-n' })
 
     let errorformat = '%f: line %l: %m'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
-        \ 'errorformat': errorformat})
+        \ 'errorformat': errorformat })
+endfunction
+
+function! s:GetShell()
+    if !exists('b:shell') || b:shell == ''
+        let b:shell = ''
+        let shebang = syntastic#util#parseShebang()['exe']
+        if shebang != ''
+            if shebang[-strlen('bash'):-1] ==# 'bash'
+                let b:shell = 'bash'
+            elseif shebang[-strlen('zsh'):-1] ==# 'zsh'
+                let b:shell = 'zsh'
+            elseif shebang[-strlen('sh'):-1] ==# 'sh'
+                let b:shell = 'sh'
+            endif
+        endif
+        " try to use env variable in case no shebang could be found
+        if b:shell == ''
+            let b:shell = fnamemodify($SHELL, ':t')
+        endif
+    endif
+    return b:shell
+endfunction
+
+function! s:IsShellValid()
+    let shell = s:GetShell()
+    return shell != '' && executable(shell)
+endfunction
+
+function! s:ForwardToZshChecker()
+    let registry = g:SyntasticRegistry.Instance()
+    let zsh_checkers = registry.getCheckersAvailable('zsh', ['zsh'])
+    if !empty(zsh_checkers)
+        return zsh_checkers[0].getLocListRaw()
+    else
+        return []
+    endif
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'sh',
-    \ 'name': 'sh'})
+    \ 'name': 'sh' })
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:
