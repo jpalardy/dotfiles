@@ -4,8 +4,7 @@
 [color]
   ui = auto
 [alias]
-  st      = status --short
-  stb     = status --short --branch
+  st      = !git_status
   co      = checkout
   out     = log FETCH_HEAD..HEAD
   in      = log HEAD..FETCH_HEAD
