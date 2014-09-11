@@ -15,10 +15,10 @@ for repo in $REPOS; do
   cd $repo
 
   if [ $QUICK == "no" ]; then
-    git pull --ff-only
+    git -c 'color.ui=always' pull --ff-only | grep -v 'Already up-to-date'
   fi
 
-  git status --short --branch
+  git status --short
   echo
 done
 
