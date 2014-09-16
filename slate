@@ -1,0 +1,18 @@
+# This is the default .slate file.
+# If no ~/.slate file exists this is the file that will be used.
+
+config resizePercentOf screenSize
+
+alias center screenOriginX+screenSizeX/2-windowSizeX/2;screenOriginY+screenSizeY/2-windowSizeY/2 windowSizeX;windowSizeY
+alias BROWSER_WIDTH 1150
+
+# b -- like browser -- 992..1200px
+bind b:ctrl;alt move screenOriginX+screenSizeX-${BROWSER_WIDTH};screenOriginY ${BROWSER_WIDTH};screenSizeY
+
+# Push Bindings
+bind right:ctrl;alt push right
+bind  left:ctrl;alt push left
+bind    up:ctrl;alt push up
+bind  down:ctrl;alt push down
+bind     =:ctrl;alt move ${center}
+

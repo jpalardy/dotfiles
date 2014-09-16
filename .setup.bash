@@ -36,6 +36,7 @@ relink .jshintrc     $DOTFILES/jshintrc
 relink .Rprofile     $DOTFILES/r/Rprofile
 
 relink .hydra        $DOTFILES/hydra
+relink .slate        $DOTFILES/slate
 
 relink .filter       $DOTFILES/filter
 
