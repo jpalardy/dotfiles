@@ -46,3 +46,5 @@ serve() {
 
 alias R="R --quiet"
 
+alias cask="brew cask"
+
