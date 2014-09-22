@@ -28,6 +28,7 @@ warp() {
 
   # transform seletion in ssh command
   local SSH=${SSH:-ssh}
+  local COMMAND=""
   if [ $(cat "$TARGET" | wc -l) -gt 1 ]; then
     # determine which clusterssh to use based on os
     unamestr=`uname`
@@ -36,8 +37,10 @@ warp() {
     elif [[ "$unamestr" == 'Darwin' ]]; then
       SSH=${MULTISSH:-csshX}
     fi
+    COMMAND="$(awk -v cmd=$SSH 'BEGIN {printf cmd} {printf " " $1} END { print "" }' "$TARGET")"
+  else
+    COMMAND="$(awk -v cmd=$SSH '{ n = split($1, parts, ":"); if (n == 2) { print cmd, "-p", parts[2], parts[1] } else { print cmd, $1 } }' "$TARGET")"
   fi
-  local COMMAND="$(awk -v cmd=$SSH 'BEGIN {printf cmd} {printf " " $1} END { print "" }' "$TARGET")"
 
   # add the command to the bash history as if we had typed it, will only work if sourced
   # Determine which history command to use based on shell
