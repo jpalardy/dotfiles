@@ -15,3 +15,6 @@ SnippetComplete 'JSON.stringify('
 Snippet         'JSON.stringify(', 'JSON.parse('
 Snippet         'JSON.parse(',     'JSON.'
 
+SnippetComplete 'prototype'
+SnippetComplete 'hasOwnProperty'
+
