@@ -1,29 +1,17 @@
 
+gri() {
+  ack -a --no-group -i "$@"
+}
+
+gril() {
+  ack -a --no-group -il "$@"
+}
+
 ff() {
-  ack -af --sort-files | ack -i --no-color "${@:-.}"
+  ack_find | grep -i --color=none "${@:-.}"
 }
 
 fne() {
   ff "\.$1\$"
-}
-
-gr() {
-  ack -a --no-group $OPTIONS "$@"
-}
-
-grl() {
-  OPTIONS="-l" gr "$@"
-}
-
-gri() {
-  OPTIONS="-i" gr  "$@"
-}
-
-gril() {
-  OPTIONS="-il" gr  "$@"
-}
-
-af() {
-  ack_find "$@"
 }
 
