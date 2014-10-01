@@ -5,6 +5,9 @@
   ui = auto
 [alias]
   st      = !git_status
+  b       = branch
+  ba      = branch -a
+  bav     = branch -a -vvv
   co      = checkout
   out     = log FETCH_HEAD..HEAD
   in      = log HEAD..FETCH_HEAD
