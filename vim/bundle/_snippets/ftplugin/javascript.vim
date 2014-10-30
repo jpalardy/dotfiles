@@ -1,6 +1,7 @@
 
-Snippet 'fn', 'function () {|}'
-Snippet 'fn)', 'function () {|})'
+Snippet 'fn', 'function (|) {}'
+Snippet 'fn)', 'function (|) {})'
+Snippet 'fn;', 'function (|) {};'
 
 SnippetComplete "require", "require('|');"
 
