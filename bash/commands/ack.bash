@@ -13,7 +13,7 @@ ff() {
 
 # grep over ff
 ffg() {
-  grep "$@" $(ff)
+  grep --color=auto "$@" $(ff)
 }
 
 fne() {
