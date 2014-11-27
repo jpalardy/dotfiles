@@ -1,7 +1,10 @@
 
-Snippet 'fn', 'function (|) {}'
-Snippet 'fn)', 'function (|) {})'
-Snippet 'fn;', 'function (|) {};'
+" function definition
+Snippet 'fn', 'function ('
+" no arguments, block
+Snippet '(', '() {|}'
+" block after )
+Snippet ')', ') {|}'
 
 SnippetComplete "require", "require('|');"
 
@@ -18,4 +21,5 @@ Snippet         'JSON.parse(',     'JSON.'
 
 SnippetComplete 'prototype'
 SnippetComplete 'hasOwnProperty'
+SnippetComplete 'setTimeout'
 
