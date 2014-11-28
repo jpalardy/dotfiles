@@ -1,0 +1,46 @@
+#!/bin/bash
+
+red=`tput setaf 1`
+green=`tput setaf 2`
+reset=`tput sgr0`
+
+#-------------------------------------------------
+
+ok_fail() {
+  if [ $? -eq 0 ]; then
+    echo -n "[$green  OK  $reset]"
+  else
+    echo -n "[$red FAIL $reset]"
+  fi
+}
+
+check_bin() {
+  which -s $1
+  ok_fail
+  echo " $1"
+}
+
+check_cask() {
+  test -e /opt/homebrew-cask/Caskroom/$1
+  ok_fail
+  echo " $1"
+}
+
+#-------------------------------------------------
+
+check_bin node
+check_bin jshint
+check_bin jsonlint
+check_bin jq
+check_bin csslint
+echo
+check_bin gcal
+check_bin gpg
+check_bin lua
+check_bin curl
+check_bin wget
+check_bin fswatch
+check_bin R
+echo
+check_cask slate
+
