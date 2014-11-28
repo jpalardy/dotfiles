@@ -1,0 +1,4 @@
+#!/bin/bash
+
+say -v vicki "${@:-done}"
+
