@@ -40,6 +40,7 @@ check_bin lua
 check_bin curl
 check_bin wget
 check_bin fswatch
+check_bin pv
 check_bin R
 echo
 check_cask slate
