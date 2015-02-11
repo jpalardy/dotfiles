@@ -77,6 +77,8 @@ augroup END
 
 " use tmux for slime
 let g:slime_target = "tmux"
+nmap <c-c><c-l> :SlimeSend0 ""<CR>
+nmap <c-c><c-u> :SlimeSend0 "\x15"<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
