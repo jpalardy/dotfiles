@@ -1,0 +1,3 @@
+
+Snippet 'ls', 'ls("package:|")'
+
