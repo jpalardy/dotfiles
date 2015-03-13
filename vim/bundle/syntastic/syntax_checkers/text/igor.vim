@@ -1,7 +1,7 @@
 "============================================================================
-"File:        avrgcc.vim
+"File:        igor.vim
 "Description: Syntax checking plugin for syntastic.vim
-"Maintainer:  Karel <karelishere at gmail dot com>
+"Maintainer:  LCD 47 <lcd047 at gmail dot com>
 "License:     This program is free software. It comes without any warranty,
 "             to the extent permitted by applicable law. You can redistribute
 "             it and/or modify it under the terms of the Do What The Fuck You
@@ -10,17 +10,16 @@
 "
 "============================================================================
 
-if exists('g:loaded_syntastic_arduino_avrgcc_checker')
+if exists('g:loaded_syntastic_text_igor_checker')
     finish
 endif
-let g:loaded_syntastic_arduino_avrgcc_checker = 1
+let g:loaded_syntastic_text_igor_checker = 1
 
-runtime! syntax_checkers/c/*.vim
+runtime! syntax_checkers/docbk/*.vim
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
-    \ 'filetype': 'arduino',
-    \ 'name': 'avrgcc',
-    \ 'exec': 'avr-gcc',
-    \ 'redirect': 'c/avrgcc'})
+    \ 'filetype': 'text',
+    \ 'name': 'igor',
+    \ 'redirect': 'docbk/igor'})
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

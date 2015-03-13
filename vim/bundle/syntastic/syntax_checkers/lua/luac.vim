@@ -47,7 +47,7 @@ endfunction
 function! SyntaxCheckers_lua_luac_GetLocList() dict
     let makeprg = self.makeprgBuild({ 'args_after': '-p' })
 
-    let errorformat =  'luac: %#%f:%l: %m'
+    let errorformat = 'luac: %#%f:%l: %m'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
@@ -62,4 +62,4 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:
