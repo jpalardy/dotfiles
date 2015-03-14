@@ -70,5 +70,11 @@ bundle.jade:
 	@rm -rf jade/.git
 	@find jade -name .gitignore | xargs rm
 
-.PHONY: bundle.matchit bundle.nerdcommenter bundle.tabular bundle.coffee-script bundle.fugitive bundle.json bundle.slime bundle.spacehi bundle.syntastic bundle.less bundle.gnupg bundle.jade
+bundle.golang:
+	@rm -rf golang
+	git clone --depth=1 https://github.com/fatih/vim-go.git golang
+	@rm -rf golang/.git
+	@find golang -name .gitignore | xargs rm
+
+.PHONY: bundle.matchit bundle.nerdcommenter bundle.tabular bundle.coffee-script bundle.fugitive bundle.json bundle.slime bundle.spacehi bundle.syntastic bundle.less bundle.gnupg bundle.jade bundle.golang
 
