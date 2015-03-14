@@ -33,7 +33,7 @@ du_sort() {
 }
 
 size_sort() {
-  find ${1:-.} -type f -printf "%s %p\n" | sort -n | thousands
+  find . -type f "$@" -printf "%s %p\n" | sort -n | thousands
 }
 
 #-------------------------------------------------
