@@ -11,3 +11,4 @@ less           https://github.com/groenewege/vim-less.git
 gnupg          https://github.com/jamessan/vim-gnupg.git
 jade           https://github.com/digitaltoad/vim-jade.git
 golang         https://github.com/fatih/vim-go.git
+surround       https://github.com/tpope/vim-surround.git
