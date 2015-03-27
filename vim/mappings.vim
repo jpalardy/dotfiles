@@ -70,6 +70,9 @@ nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *Nzz
 
+" search selected text
+vnoremap // y/<C-R>"<CR>
+
 " one-key indentation
 nnoremap > >>
 nnoremap < <<
