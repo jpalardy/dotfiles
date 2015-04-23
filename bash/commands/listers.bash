@@ -28,7 +28,7 @@ lister_num() {
 #-------------------------------------------------
 
 lister "g"    "cd"
-lister "qc"   "eval"
+lister "qc"
 lister "rg"   "rvm use"
 
 lister_num g 12

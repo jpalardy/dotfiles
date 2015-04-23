@@ -55,7 +55,7 @@ pick_with_vim() {
   # neat! add this line to the bash history
   # as if we had typed it
   history -s $2 "${lines[@]}"
-  $2 "${lines[@]}"
+  eval $2 "${lines[@]}"
 }
 export -f pick_with_vim
 
