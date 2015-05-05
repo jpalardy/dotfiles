@@ -8,3 +8,5 @@ Snippet '(', '() {|}'
 " block after )
 Snippet ')', ') {|}'
 
+Snippet 'purge', 'rm(list=ls())'
+
