@@ -47,5 +47,7 @@ serve() {
 alias R="R --quiet"
 alias r="R --quiet"
 
+alias octave="octave --quiet"
+
 alias cask="brew cask"
 
