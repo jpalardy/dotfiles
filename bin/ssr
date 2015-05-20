@@ -43,6 +43,7 @@ check_bin wget
 check_bin fswatch
 check_bin pv
 check_bin R
+check_bin utimer
 echo
 check_cask slate
 
