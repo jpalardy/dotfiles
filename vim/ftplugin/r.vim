@@ -1,0 +1,3 @@
+
+setlocal equalprg=pp-r
+

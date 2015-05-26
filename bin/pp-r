@@ -1,0 +1,15 @@
+#!/bin/bash
+
+cat "$@" | awk '
+{
+  sub("^\\s*", "", $0)               # remove front whitespace
+  sub("\\s*\\+\\s*$", "", $0)        # remove trailing +
+  gsub("\\s*\\+\\s*", "\n", $0)      # other + separate lines
+  print
+}
+' | awk '
+NR == 1 {                  prev =      $0; next }  # first line w/o indent
+        { print prev " +"; prev = "  " $0}         # other lines w/ indent
+END     { print prev }                             # last line w/o +
+'
+
