@@ -8,5 +8,6 @@ Snippet '(', '() {|}'
 " block after )
 Snippet ')', ') {|}'
 
-Snippet 'purge', 'rm(list=ls())'
+Snippet 'purge',  'rm(list=ls())'
+SnippetComplete 'legend', 'theme(legend.position="none")'
 
