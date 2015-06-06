@@ -3,9 +3,10 @@
 TYPE=${TYPE:-"C"} # C or T
 
 generate() {
-  find . -maxdepth 1 -type f "$@" -printf "\"%f\" %${TYPE}Y/%${TYPE}m/\n"
+  find . -maxdepth 1 -type f ! -name '.*' "$@" -printf "\"%f\" %${TYPE}Y/%${TYPE}m/\n" # by year/month
+  #find . -maxdepth 1 -type f "$@" -printf "\"%f\" %${TYPE}Y/\n" # by year
 }
 
 generate "$@" | awk '{print "mkdir -p", $NF}' | sort -u
-generate "$@" | sort -k2 | awk '{print "mv -i", $0}'
+generate "$@" | sort -k2 | awk '{print "mv", $0}'
 
