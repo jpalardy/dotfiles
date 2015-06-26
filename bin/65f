@@ -1,0 +1,4 @@
+#!/bin/bash
+
+babel --blacklist useStrict "$@"
+
