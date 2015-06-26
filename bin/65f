@@ -1,4 +1,4 @@
 #!/bin/bash
 
-babel --blacklist useStrict "$@"
+babel --blacklist useStrict "$@" | sed -r -e 's/\{ +/{/g' -e 's/ +\}/}/g'
 
