@@ -12,3 +12,4 @@ gnupg          https://github.com/jamessan/vim-gnupg.git
 jade           https://github.com/digitaltoad/vim-jade.git
 golang         https://github.com/fatih/vim-go.git
 surround       https://github.com/tpope/vim-surround.git
+pig            https://github.com/motus/pig.vim.git

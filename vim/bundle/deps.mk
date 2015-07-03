@@ -82,5 +82,11 @@ bundle.surround:
 	@rm -rf surround/.git
 	@find surround -name .gitignore | xargs rm
 
-.PHONY: bundle.matchit bundle.nerdcommenter bundle.tabular bundle.coffee-script bundle.fugitive bundle.json bundle.slime bundle.spacehi bundle.syntastic bundle.less bundle.gnupg bundle.jade bundle.golang bundle.surround
+bundle.pig:
+	@rm -rf pig
+	git clone --depth=1 https://github.com/motus/pig.vim.git pig
+	@rm -rf pig/.git
+	@find pig -name .gitignore | xargs rm
+
+.PHONY: bundle.matchit bundle.nerdcommenter bundle.tabular bundle.coffee-script bundle.fugitive bundle.json bundle.slime bundle.spacehi bundle.syntastic bundle.less bundle.gnupg bundle.jade bundle.golang bundle.surround bundle.pig
 
