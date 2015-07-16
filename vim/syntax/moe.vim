@@ -16,7 +16,7 @@ syntax match moeHeader /^[A-Z][A-Z][A-Z].\+$/
 syntax match moePerson "\w\@<!@\w\+"
 
 " #hashtag
-syntax match moeHashtag "\w\@<!#\w\+"
+syntax match moeHashtag "\w\@<!#[-a-zA-Z0-9_]\+"
 
 " emphasis
 syntax match moeHighlight     /.* <-$/
