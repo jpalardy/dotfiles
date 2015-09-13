@@ -1,0 +1,7 @@
+#!/bin/bash
+
+brew-graph.rb --installed | dot -Tpng -ograph.png
+open graph.png
+read -p "press any key..."
+rm graph.png
+
