@@ -1,12 +1,7 @@
 
-_pwd() {
-  echo "${ATTR_RESET}${PATH_COLOR}-> $PWD$(__git_ps1)${ATTR_RESET}"
-}
-
-# replacement for 'cd'
-better_cd() {
+# wrap `cd`, add behaviors
+cd() {
   local dest="${@:-"$HOME"}"
-
   if [ -f "$dest" ]; then
     dest=$(dirname "$dest")
   fi
@@ -14,14 +9,9 @@ better_cd() {
   builtin cd "$dest"
   local result=$?
 
-  _pwd
+  echo "${ATTR_RESET}${PATH_COLOR}-> $PWD$(__git_ps1)${ATTR_RESET}"
 
   return $result
-}
-
-# overwrites behavior of 'cd'
-cd() {
-  better_cd "$@"
 }
 
 #-------------------------------------------------
