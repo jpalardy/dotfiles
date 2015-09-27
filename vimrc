@@ -87,6 +87,10 @@ if (target_pane == "")
 endif
 let g:slime_default_config = {"socket_name": "default", "target_pane": target_pane}
 
+let g:NERDCustomDelimiters = {
+  \ 'zinc': { 'left': '%'},
+\ }
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 source $HOME/.vim/mappings.vim
