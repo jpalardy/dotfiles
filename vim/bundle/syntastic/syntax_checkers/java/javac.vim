@@ -73,11 +73,23 @@ endif
 
 " }}}1
 
-command! SyntasticJavacEditClasspath call s:EditClasspath()
+" Constants {{{1
 
-if g:syntastic_java_javac_config_file_enabled
-    command! SyntasticJavacEditConfig call s:EditConfig()
-endif
+let s:_FILE_SHORTCUTS = {
+        \ '%FILE_PATH%':  '%:p',
+        \ '%FILE_NAME%':  '%:t',
+        \ '%FILE_DIR%':   '%:p:h',
+    \ }
+lockvar! s:_FILE_SHORTCUTS
+
+" }}}1
+
+" Commands {{{1
+
+command! SyntasticJavacEditClasspath call s:EditClasspath()
+command! SyntasticJavacEditConfig    call s:EditConfig()
+
+" }}}1
 
 function! SyntaxCheckers_java_javac_IsAvailable() dict " {{{1
     let s:has_maven = executable(expand(g:syntastic_java_maven_executable, 1))
@@ -103,7 +115,7 @@ function! SyntaxCheckers_java_javac_GetLocList() dict " {{{1
     let javac_classpath = ''
 
     for path in split(g:syntastic_java_javac_classpath, s:ClassSep())
-        if path != ''
+        if path !=# ''
             try
                 let ps = glob(path, 1, 1)
             catch
@@ -128,8 +140,13 @@ function! SyntaxCheckers_java_javac_GetLocList() dict " {{{1
     " }}}2
 
     " load custom classpath {{{2
-    if g:syntastic_java_javac_custom_classpath_command != ''
-        let lines = syntastic#util#system(g:syntastic_java_javac_custom_classpath_command)
+    if g:syntastic_java_javac_custom_classpath_command !=# ''
+        " Pre-process the classpath command string a little.
+        let classpath_command = g:syntastic_java_javac_custom_classpath_command
+        for [key, val] in items(s:_FILE_SHORTCUTS)
+            let classpath_command = substitute(classpath_command, '\V' . key, syntastic#util#shexpand(val), 'g')
+        endfor
+        let lines = syntastic#util#system(classpath_command)
         if syntastic#util#isRunningWindows() || has('win32unix')
             let lines = substitute(lines, "\r\n", "\n", 'g')
         endif
@@ -138,7 +155,7 @@ function! SyntaxCheckers_java_javac_GetLocList() dict " {{{1
         endfor
     endif
 
-    if javac_classpath != ''
+    if javac_classpath !=# ''
         let javac_opts .= ' -cp ' . syntastic#util#shexpand(javac_classpath)
     endif
     " }}}2
@@ -157,12 +174,11 @@ function! SyntaxCheckers_java_javac_GetLocList() dict " {{{1
     let errorformat =
         \ '%E%f:%l: error: %m,'.
         \ '%W%f:%l: warning: %m,'.
-        \ '%A%f:%l: %m,'.
-        \ '%+Z%p^,'.
-        \ '%+C%.%#,'.
+        \ '%E%f:%l: %m,'.
+        \ '%Z%p^,'.
         \ '%-G%.%#'
 
-    if output_dir != ''
+    if output_dir !=# ''
         silent! call mkdir(output_dir, 'p')
     endif
     let errors = SyntasticMake({
@@ -170,7 +186,7 @@ function! SyntaxCheckers_java_javac_GetLocList() dict " {{{1
         \ 'errorformat': errorformat,
         \ 'postprocess': ['cygwinRemoveCR'] })
 
-    if output_dir != ''
+    if output_dir !=# ''
         call syntastic#util#rmrf(output_dir)
     endif
     return errors
@@ -188,10 +204,10 @@ function! s:ClassSep() " {{{2
 endfunction " }}}2
 
 function! s:AddToClasspath(classpath, path) " {{{2
-    if a:path == ''
+    if a:path ==# ''
         return a:classpath
     endif
-    return (a:classpath != '') ? a:classpath . s:ClassSep() . a:path : a:path
+    return (a:classpath !=# '') ? a:classpath . s:ClassSep() . a:path : a:path
 endfunction " }}}2
 
 function! s:SplitClasspath(classpath) " {{{2
@@ -274,6 +290,10 @@ function! s:SaveConfig() " {{{2
 endfunction " }}}2
 
 function! s:EditConfig() " {{{2
+    if !g:syntastic_java_javac_config_file_enabled
+        return
+    endif
+
     let command = 'syntastic javac config'
     let winnr = bufwinnr('^' . command . '$')
     if winnr < 0
@@ -299,7 +319,7 @@ endfunction " }}}2
 
 function! s:GetMavenProperties() " {{{2
     let mvn_properties = {}
-    let pom = findfile('pom.xml', '.;')
+    let pom = syntastic#util#findFileInParent('pom.xml', expand('%:p:h', 1))
     if s:has_maven && filereadable(pom)
         if !has_key(g:syntastic_java_javac_maven_pom_properties, pom)
             let mvn_cmd = syntastic#util#shexpand(g:syntastic_java_maven_executable) .
@@ -334,7 +354,7 @@ function! s:GetMavenProperties() " {{{2
 endfunction " }}}2
 
 function! s:GetMavenClasspath() " {{{2
-    let pom = findfile('pom.xml', '.;')
+    let pom = syntastic#util#findFileInParent('pom.xml', expand('%:p:h', 1))
     if s:has_maven && filereadable(pom)
         if !has_key(g:syntastic_java_javac_maven_pom_ftime, pom) || g:syntastic_java_javac_maven_pom_ftime[pom] != getftime(pom)
             let mvn_cmd = syntastic#util#shexpand(g:syntastic_java_maven_executable) .
@@ -378,7 +398,7 @@ function! s:GetMavenClasspath() " {{{2
 endfunction " }}}2
 
 function! s:MavenOutputDirectory() " {{{2
-    let pom = findfile('pom.xml', '.;')
+    let pom = syntastic#util#findFileInParent('pom.xml', expand('%:p:h', 1))
     if s:has_maven && filereadable(pom)
         let mvn_properties = s:GetMavenProperties()
         let output_dir = getcwd()

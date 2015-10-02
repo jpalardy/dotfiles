@@ -35,7 +35,7 @@
 4.8. [How can I pass additional arguments to a checker?](#faqargs)  
 4.9. [Syntastic supports several checkers for my filetype - how do I tell which one(s) to use?](#faqcheckers)  
 4.10. [What is the difference between syntax checkers and style checkers?](#faqstyle)  
-4.11. [I have enabled multiple checkers for the current filetype.  How can I display all of the errors from all of the checkers together?](#faqaggregate)  
+4.11. [I have enabled multiple checkers for the current filetype.  How can I display all errors from all checkers together?](#faqaggregate)  
 4.12. [How can I jump between the different errors without using the location list at the bottom of the window?](#faqlnext)  
 4.13. [The error window is closed automatically when I :quit the current buffer but not when I :bdelete it?](#faqbdelete)  
 5. [Resources](#otherresources)  
@@ -53,21 +53,22 @@ are detected, the user is notified and is happy because they didn't have to
 compile their code or execute their script to find them.
 
 At the time of this writing, syntastic has checking plugins for ActionScript,
-Ada, API Blueprint, AppleScript, AsciiDoc, ASM, BEMHTML, Bro, Bourne shell,
-C, C++, C#, Cabal, Chef, CoffeeScript, Coco, Coq, CSS, Cucumber, CUDA, D,
-Dart, DocBook, Dust, Elixir, Erlang, eRuby, Fortran, Gentoo metadata, GLSL,
-Go, Haml, Haskell, Haxe, Handlebars, HSS, HTML, Java, JavaScript, JSON, JSX,
+Ada, API Blueprint, AppleScript, AsciiDoc, ASM, BEMHTML, Bro, Bourne shell, C,
+C++, C#, Cabal, Chef, CoffeeScript, Coco, Coq, CSS, Cucumber, CUDA, D, Dart,
+DocBook, Dust, Elixir, Erlang, eRuby, Fortran, Gentoo metadata, GLSL, Go,
+Haml, Haskell, Haxe, Handlebars, HSS, HTML, Jade, Java, JavaScript, JSON, JSX,
 LESS, Lex, Limbo, LISP, LLVM intermediate language, Lua, Markdown, MATLAB,
-NASM, Objective-C, Objective-C++, OCaml, Perl, Perl POD, PHP, gettext Portable
-Object, OS X and iOS property lists, Puppet, Python, R, Racket, Relax NG,
-reStructuredText, RPM spec, Ruby, SASS/SCSS, Scala, Slim, SML, Tcl, TeX,
-Texinfo, Twig, TypeScript, Vala, Verilog, VHDL, VimL, xHtml, XML, XSLT, YACC,
-YAML, z80, Zope page templates, and zsh.  See the [wiki][3] for details about
-the corresponding supported checkers.
+Mercury, NASM, Nix, Objective-C, Objective-C++, OCaml, Perl, Perl POD, PHP,
+gettext Portable Object, OS X and iOS property lists, Puppet, Python, QML, R,
+Racket, Relax NG, reStructuredText, RPM spec, Ruby, SASS/SCSS, Scala, Slim,
+SML, Sphinx, SQL, Stylus, Tcl, TeX, Texinfo, Twig, TypeScript, Vala, Verilog,
+VHDL, VimL, xHtml, XML, XSLT, YACC, YAML, z80, Zope page templates, and zsh.
+See the [wiki][3] for details about the corresponding supported checkers.
 
 A number of third-party Vim plugins also provide checkers for syntastic,
-for example: [omnisharp-vim][25], [rust.vim][12], [syntastic-extras][26],
-[syntastic-more][27], and [vim-swift][24].
+for example: [merlin][30], [omnisharp-vim][25], [rust.vim][12],
+[syntastic-extras][26], [syntastic-more][27], [vim-crystal][29],
+[vim-eastwood][28], and [vim-swift][24].
 
 Below is a screenshot showing the methods that Syntastic uses to display syntax
 errors.  Note that, in practise, you will only have a subset of these methods
@@ -158,10 +159,10 @@ following:
 
 ## 3\. Recommended settings
 
-Syntastic has a large number of options that can be configured, and the
-defaults are not particularly well suitable for new users.  It is recommended
-that you start by adding the following lines to your `vimrc` file, and return
-to them after reading the manual (see `:help syntastic` in Vim):
+Syntastic has numerous options that can be configured, and the defaults
+are not particularly well suitable for new users.  It is recommended
+that you start by adding the following lines to your `vimrc` file, and
+return to them after reading the manual (see `:help syntastic` in Vim):
 ```vim
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -196,10 +197,24 @@ which checkers are enabled. You can tell syntastic which checkers (among the
 available ones) you want to run by setting `g:syntastic_<filetype>_checkers` in
 your `vimrc` (see [below](#faqcheckers)).
 
-Another reason it could fail is that either the command line options or the
-error output for a syntax checker may have changed. In this case, make sure you
-have the latest version of the syntax checker installed. If it still fails then
-post an [issue][4] - or better yet, create a pull request.
+A third possible reason is that the `$PATH` seen by syntastic might not be same
+as the `$PATH` in your login shell. Syntastic runs checkers using the shell
+pointed to by Vim's `shell` (or by `g:syntastic_shell`, if set), and that's the
+shell you need to configure to set the proper `$PATH` and environment variables
+for your checkers. You can see syntastic's idea of `$PATH` by running
+```vim
+:echo syntastic#util#system('echo "$PATH"')
+```
+on UNIX and Mac OS-X systems, or
+```vim
+:echo syntastic#util#system('echo %PATH%')
+```
+on Windows.
+
+Finally, another reason it could fail is that either the command line options
+or the error output for a syntax checker may have changed. In this case, make
+sure you have the latest version of the syntax checker installed. If it still
+fails then post an [issue][4] - or better yet, create a pull request.
 
 <a name="faqpython3"></a>
 
@@ -365,7 +380,7 @@ See `:help syntastic_quiet_messages` for details.
 <a name="faqaggregate"></a>
 
 __4.11. Q. I have enabled multiple checkers for the current filetype.  How can I
-display all of the errors from all of the checkers together?__
+display all errors from all checkers together?__
 
 A. Set `g:syntastic_aggregate_errors` to 1 in your `vimrc`:
 ```vim
@@ -396,7 +411,7 @@ work around it:
 
 ```vim
 nnoremap <silent> <C-d> :lclose<CR>:bdelete<CR>
-cabbrev <silent> bd lclose\|bdelete
+cabbrev <silent> bd <C-r>=(getcmdtype()==#':' && getcmdpos()==1 ? 'lclose\|bdelete' : 'bd')<CR>
 ```
 
 <a name="otherresources"></a>
@@ -442,6 +457,9 @@ a look at [jedi-vim][7], [python-mode][8], or [YouCompleteMe][9].
 [25]: https://github.com/OmniSharp/omnisharp-vim
 [26]: https://github.com/myint/syntastic-extras
 [27]: https://github.com/roktas/syntastic-more
+[28]: https://github.com/venantius/vim-eastwood
+[29]: https://github.com/rhysd/vim-crystal
+[30]: https://github.com/the-lambda-church/merlin
 
 <!--
 vim:tw=79:sw=4:

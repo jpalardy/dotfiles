@@ -10,7 +10,7 @@
 "
 "============================================================================
 
-if exists("g:loaded_syntastic_yaml_jsyaml_checker")
+if exists('g:loaded_syntastic_yaml_jsyaml_checker')
     finish
 endif
 let g:loaded_syntastic_yaml_jsyaml_checker = 1
@@ -28,12 +28,13 @@ function! SyntaxCheckers_yaml_jsyaml_GetLocList() dict
     let errorformat =
         \ 'Error on line %l\, col %c:%m,' .
         \ 'JS-YAML: %m at line %l\, column %c:,' .
+        \ 'YAMLException: %m at line %l\, column %c:,' .
         \ '%-G%.%#'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'defaults': {'bufnr': bufnr("")} })
+        \ 'defaults': {'bufnr': bufnr('')} })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

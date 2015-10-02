@@ -1,4 +1,4 @@
-if exists("g:loaded_syntastic_registry") || !exists("g:loaded_syntastic_plugin")
+if exists('g:loaded_syntastic_registry') || !exists('g:loaded_syntastic_plugin')
     finish
 endif
 let g:loaded_syntastic_registry = 1
@@ -42,6 +42,7 @@ let s:_DEFAULT_CHECKERS = {
         \ 'haxe':          ['haxe'],
         \ 'hss':           ['hss'],
         \ 'html':          ['tidy'],
+        \ 'jade':          ['jade_lint'],
         \ 'java':          ['javac'],
         \ 'javascript':    ['jshint', 'jslint'],
         \ 'json':          ['jsonlint', 'jsonval'],
@@ -53,7 +54,9 @@ let s:_DEFAULT_CHECKERS = {
         \ 'lua':           ['luac'],
         \ 'markdown':      ['mdl'],
         \ 'matlab':        ['mlint'],
+        \ 'mercury':       ['mmc'],
         \ 'nasm':          ['nasm'],
+        \ 'nix':           ['nix'],
         \ 'nroff':         ['mandoc'],
         \ 'objc':          ['gcc'],
         \ 'objcpp':        ['gcc'],
@@ -64,6 +67,7 @@ let s:_DEFAULT_CHECKERS = {
         \ 'pod':           ['podchecker'],
         \ 'puppet':        ['puppet', 'puppetlint'],
         \ 'python':        ['python', 'flake8', 'pylint'],
+        \ 'qml':           ['qmllint'],
         \ 'r':             [],
         \ 'racket':        ['racket'],
         \ 'rnc':           ['rnv'],
@@ -76,6 +80,8 @@ let s:_DEFAULT_CHECKERS = {
         \ 'slim':          ['slimrb'],
         \ 'sml':           ['smlnj'],
         \ 'spec':          ['rpmlint'],
+        \ 'sql':           ['sqlint'],
+        \ 'stylus':        ['stylint'],
         \ 'tcl':           ['nagelfar'],
         \ 'tex':           ['lacheck', 'chktex'],
         \ 'texinfo':       ['makeinfo'],
@@ -93,7 +99,7 @@ let s:_DEFAULT_CHECKERS = {
         \ 'yaml':          ['jsyaml'],
         \ 'z80':           ['z80syntaxchecker'],
         \ 'zpt':           ['zptlint'],
-        \ 'zsh':           ['zsh', 'shellcheck'],
+        \ 'zsh':           ['zsh'],
     \ }
 lockvar! s:_DEFAULT_CHECKERS
 
@@ -104,6 +110,7 @@ let s:_DEFAULT_FILETYPE_MAP = {
         \ 'litcoffee': 'coffee',
         \ 'mail': 'text',
         \ 'mkd': 'markdown',
+        \ 'pe-puppet': 'puppet',
         \ 'sgml': 'docbk',
         \ 'sgmllnx': 'docbk',
     \ }
@@ -178,10 +185,16 @@ function! g:SyntasticRegistry.getCheckers(ftalias, hints_list) abort " {{{2
         \ self._filterCheckersByName(checkers_map, names) : [checkers_map[keys(checkers_map)[0]]]
 endfunction " }}}2
 
-" Same as getCheckers(), but keep only the checkers available.  This runs the
+" Same as getCheckers(), but keep only the available checkers.  This runs the
 " corresponding IsAvailable() functions for all checkers.
 function! g:SyntasticRegistry.getCheckersAvailable(ftalias, hints_list) abort " {{{2
     return filter(self.getCheckers(a:ftalias, a:hints_list), 'v:val.isAvailable()')
+endfunction " }}}2
+
+" Same as getCheckers(), but keep only the checkers tyhat are available and
+" disabled.  This runs the corresponding IsAvailable() functions for all checkers.
+function! g:SyntasticRegistry.getCheckersDisabled(ftalias, hints_list) abort " {{{2
+    return filter(self.getCheckers(a:ftalias, a:hints_list), 'v:val.isDisabled() && v:val.isAvailable()')
 endfunction " }}}2
 
 function! g:SyntasticRegistry.getKnownFiletypes() abort " {{{2
@@ -211,15 +224,18 @@ function! g:SyntasticRegistry.echoInfoFor(ftalias_list) abort " {{{2
     if len(ft_list) != 1
         let available = []
         let active = []
+        let disabled = []
 
         for ft in ft_list
             call extend(available, map( self.getNamesOfAvailableCheckers(ft), 'ft . "/" . v:val' ))
             call extend(active, map( self.getCheckersAvailable(ft, []), 'ft . "/" . v:val.getName()' ))
+            call extend(disabled, map( self.getCheckersDisabled(ft, []), 'ft . "/" . v:val.getName()' ))
         endfor
     else
         let ft = ft_list[0]
         let available = self.getNamesOfAvailableCheckers(ft)
         let active = map(self.getCheckersAvailable(ft, []), 'v:val.getName()')
+        let disabled = map(self.getCheckersDisabled(ft, []), 'v:val.getName()')
     endif
 
     let cnt = len(available)
@@ -231,6 +247,13 @@ function! g:SyntasticRegistry.echoInfoFor(ftalias_list) abort " {{{2
     let plural = cnt != 1 ? 's' : ''
     let cklist = cnt ? join(active) : '-'
     echomsg 'Currently enabled checker' . plural . ': ' . cklist
+
+    let cnt = len(disabled)
+    let plural = cnt != 1 ? 's' : ''
+    if len(disabled)
+        let cklist = join(sort(disabled))
+        echomsg 'Checker' . plural . ' disabled for security reasons: ' . cklist
+    endif
 
     " Eclim feels entitled to mess with syntastic's variables {{{3
     if exists(':EclimValidate') && get(g:, 'EclimFileTypeValidate', 1)
@@ -284,7 +307,7 @@ function! g:SyntasticRegistry._loadCheckersFor(filetype) abort " {{{2
         return
     endif
 
-    execute "runtime! syntax_checkers/" . a:filetype . "/*.vim"
+    execute 'runtime! syntax_checkers/' . a:filetype . '/*.vim'
 
     if !has_key(self._checkerMap, a:filetype)
         let self._checkerMap[a:filetype] = {}

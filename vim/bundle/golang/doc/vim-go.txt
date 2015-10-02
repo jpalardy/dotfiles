@@ -71,12 +71,12 @@ add the appropriate lines and execute the plugin's install command.
 <
 
 *  https://github.com/junegunn/vim-plug >
-  
+
     Plug 'fatih/vim-go'
 
 <
 *  https://github.com/Shougo/neobundle.vim >
-  
+
     NeoBundle 'fatih/vim-go'
 <
 
@@ -86,7 +86,7 @@ add the appropriate lines and execute the plugin's install command.
 
 <
 *  Manual >
-  
+
     Copy all of the files into your `~/.vim` directory
 <
 
@@ -110,12 +110,22 @@ https://github.com/Shougo/neosnippet.vim.
 ===============================================================================
 COMMANDS                                                          *go-commands*
 
+                                                                  *:GoPath*
+:GoPath [path]
+
+    GoPath sets and overrides GOPATH with the given {path}. If no {path} is
+    given it shows the current GOPATH. If `""` is given as path, it clears
+    current `GOPATH` which was set with |GoPath| and restores `GOPATH` back to
+    the initial value which was sourced when Vim was started.
+
                                                                   *:GoImport*
-:GoImport [path]
+:GoImport[!] [path]
 
     Import ensures that the provided package {path} is imported in the current
-    Go buffer, using proper style and ordering.  If {path} is already being
+    Go buffer, using proper style and ordering. If {path} is already being
     imported, an error will be displayed and the buffer will be untouched.
+
+    If [!] is given it will download the package with `go get`
 
                                                                 *:GoImportAs*
 :GoImportAs [localname] [path]
@@ -130,9 +140,9 @@ COMMANDS                                                          *go-commands*
     displayed and the buffer will be untouched.
 
                                                                     *:GoLint*
-:GoLint
+:GoLint [packages]
 
-    Run golint for the current Go file.
+    Run golint for the current Go file, or for given packages.
 
                                                                      *:GoDoc*
 :GoDoc [word]
@@ -169,13 +179,19 @@ COMMANDS                                                          *go-commands*
      'xterm-clipboard' otherwise it's get yanked into the `""` register.
 
                                                                      *:GoVet*
-:GoVet
+:GoVet[!] [options]
 
     Run `go vet` for the directory under your current file. Vet examines Go
     source code and reports suspicious constructs, such as Printf calls whose
     arguments do not align with the format string. Vet uses heuristics that do not
     guarantee all reports are genuine problems, but it can find errors not caught
     by the compilers.
+
+    You may optionally pass any valid go tool vet flags/options. In this case,
+    `go tool vet` is run in place of `go vet`. For a full list please see
+    `go tool vet -h`.
+
+    If [!] is not given the first error is jumped to.
 
                                                                      *:GoDef*
 :GoDef [identifier]
@@ -192,41 +208,77 @@ COMMANDS                                                          *go-commands*
     current file is used. If an argument is passed, 'expand' is used as file
     selector. For example use `:GoRun %` to select the current file only.
 
+    You may optionally pass any valid go run flags/options. For a full list
+    please see `go help run`.
+
     If [!] is not given the first error is jumped to.
 
                                                                    *:GoBuild*
-:GoBuild[!] [options]
+:GoBuild[!] [expand]
 
     Build your package with `go build`. It automatically builds only the files
     that depends on the current file. GoBuild doesn't produce a result file.
     Use 'make' to create a result file.
 
     You may optionally pass any valid go build flags/options. For a full list
-    please see `go help build`.
+    please see `go help build`. Options are expanded with 'expand'.
+
+    If [!] is not given the first error is jumped to.
+
+                                                                   *:GoGenerate*
+:GoGenerate[!] [expand]
+
+    Creates or updates your auto-generated source files by running `go
+    generate`.
+
+    You may optionally pass any valid go generate flags/options. For a full list
+    please see `go help generate`. Options are expanded with 'expand'.
 
     If [!] is not given the first error is jumped to.
 
                                                                     *:GoInfo*
 :GoInfo
-    Show type information about the identifer under the cursor. For example
+    Show type information about the identifier under the cursor. For example
     putting it above a function call is going to show the full function
     signature. It uses gocode to get the type informations.
 
 
                                                                  *:GoInstall*
-:GoInstall
+:GoInstall[!] [options]
 
-  Install your package with `go install`.
+    Install your package with `go install`.
+
+    You may optionally pass any valid go install flags/options. For a full list
+    please see `go help install`.
+
+    If [!] is not given the first error is jumped to.
 
                                                                     *:GoTest*
-:GoTest [expand]
+:GoTest[!] [expand]
 
     Run the tests on your _test.go files via in your current directory. Errors
     are populated in quickfix window.  If an argument is passed, 'expand' is
     used as file selector (useful for cases like `:GoTest ./...`).
 
+    You may optionally pass any valid go test flags/options. For a full list
+    please see `go help test`.
+
+    If [!] is not given the first error is jumped to.
+
+                                                              *:GoTestFunc*
+:GoTestFunc[!] [expand]
+
+    Runs :GoTest, but only on the single test function immediate to your
+    cursor using 'go test's '-run' flag.
+
+    Lookup is done starting at the cursor (including that line) moving up till
+    a matching `func Test` pattern is found or top of file is reached. Search
+    will not wrap around when at the top of the file.
+
+    If [!] is not given the first error is jumped to.
+
                                                               *:GoTestCompile*
-:GoTestCompile [expand]
+:GoTestCompile[!] [expand]
 
     Compile your _test.go files via in your current directory. Errors are
     populated in quickfix window.  If an argument is passed, 'expand' is used
@@ -234,17 +286,27 @@ COMMANDS                                                          *go-commands*
     run the tests and capture/fix errors before running the tests or to
     create test binary.
 
+    If [!] is not given the first error is jumped to.
+
                                                                 *:GoCoverage*
-:GoCoverage
+:GoCoverage[!] [options]
 
     Create a coverage profile and open a browser to display the annotated
     source code of the current package.
 
+    You may optionally pass any valid go test flags/options, such as
+    `-covermode set,count,atomic`. For a full list please see `go help test`.
+
+    If [!] is not given the first error is jumped to.
+
                                                                 *:GoErrCheck*
-:GoErrCheck
+:GoErrCheck [options]
 
     Check for unchecked errors in you current package. Errors are populated in
     quickfix window.
+
+    You may optionally pass any valid errcheck flags/options. For a full list
+    please see `errcheck -h`.
 
                                                                    *:GoFiles*
 :GoFiles
@@ -274,12 +336,21 @@ COMMANDS                                                          *go-commands*
 
     Show 'implements' relation for a selected package. A list of interfaces
     for the type that implements an interface under the cursor (or selected
-    package) is shown quickfix list. 
+    package) is shown quickfix list.
                                                                 *:GoRename*
 :GoRename [to]
 
     Rename the identifier under the cursor to the desired new name. If no
     argument is given a prompt will ask for the desired identifier.
+
+
+                                                            *:GoOracleScope*
+:GoOracleScope [path1] [path2] ...
+
+    Changes the custom |g:go_oracle_scope| setting and overrides it with the
+    given import paths. The custom scope is cleared (unset) if `""` is given
+    as the only path. If no arguments is given it prints the current custom
+    scope.
 
                                                               *:GoCallees*
 :GoCallees
@@ -304,27 +375,20 @@ COMMANDS                                                          *go-commands*
     identifier), etc. Almost any piece of syntax may be described, and the
     oracle will try to print all the useful information it can.
 
-                                                              *:GoCallgraph*
-:GoCallgraph
-
-    Shows the 'callgraph' for the entire program. For more info about the
-    indentation checkout the Oracle User Manual:
-    golang.org/s/oracle-user-manual 
-
                                                               *:GoCallstack*
 :GoCallstack
 
     Shows 'callstack' relation for the selected function. An arbitrary path
-    from the root of the callgrap to the selected function is showed in a
+    from the root of the callgraph to the selected function is showed in a
     quickfix list. This may be useful to understand how the function is
-    reached in a given program. 
+    reached in a given program.
 
                                                               *:GoFreevars*
 :GoFreevars
 
     Enumerates the free variables of the selection. “Free variables” is a
     technical term meaning the set of variables that are referenced but not
-    defined within the selection, or loosely speaking, its inputs. 
+    defined within the selection, or loosely speaking, its inputs.
 
     This information is useful if you’re considering whether to refactor the
     selection into a function of its own, as the free variables would be the
@@ -336,11 +400,11 @@ COMMANDS                                                          *go-commands*
 :GoChannelPeers
 
     Shows the set of possible sends/receives on the channel operand of the
-    selected send or receive operation; the selection must be a <- token. 
+    selected send or receive operation; the selection must be a <- token.
 
-    For example, visually select a channel operand in the form of: 
+    For example, visually select a channel operand in the form of:
 
-      "done <- true" 
+      "done <- true"
 
     and call |GoChannelPeers| on it. It will show where it was allocated, and
     the sending and receiving endings.
@@ -351,6 +415,17 @@ COMMANDS                                                          *go-commands*
     The referrers query shows the set of identifiers that refer to the same
     object as does the selected identifier, within any package in the analysis
     scope.
+
+                                                              *:GoMetaLinter*
+:GoMetaLinter [path]
+
+    Calls the underlying `gometalinter` tool and displays all warnings and
+    errors in a quickfix window. By default it lints the files for the path
+    `./...` . This can be changed with the 'path' argument temoporary or with the
+    |g:go_metalinter_path| variable permanently. By default the following
+    linters are enabled: "'vet', 'golint', 'errcheck'". This can be changed
+    with the |g:go_metalinter_enabled| variable. To override the command
+    completely use the variable |g:go_metalinter_command|
 
 
 ===============================================================================
@@ -375,6 +450,10 @@ Calls `go run` for the current file
 
 Calls `go build` for the current package
 
+                                                                *(go-generate)*
+
+Calls `go generate` for the current package
+
 
                                                                  *(go-info)*
 
@@ -389,6 +468,10 @@ Calls `go install` for the current package
                                                                  *(go-test)*
 
 Calls `go test` for the current package
+
+                                                          *(go-test-func)*
+
+Calls `go test -run '...'` for the test function immediate to cursor
 
                                                           *(go-test-compile)*
 
@@ -477,10 +560,6 @@ Show possible callers of selected function
 Describe selected syntax: definition, methods, etc
 
 
-                                                            *(go-callgraph)*
-
-Show the callgraph of the current program.
-
                                                             *(go-callstack)*
 
 Show path from callgraph root to selected function
@@ -497,6 +576,9 @@ Show send/receive corresponding to selected channel op
 
 Show all refs to entity denoted by selected identifier
 
+                                                            *(go-metalinter)*
+
+Calls `go-metalinter` for the current directory
 
 ===============================================================================
 TEXT OBJECTS                                                 *go-text-objects*
@@ -541,6 +623,18 @@ By default it's disabled >
 
   let g:go_auto_type_info = 0
 <
+
+                                                      *'g:go_jump_to_error'*
+
+Use this option to enable/disable passing the bang attribute to the mappings
+|(go-build)|, |(go-run)|, etc..  When enabled it will jump to the first error
+automatically (means it will NOT pass the bang attribute to the appropriate
+command, i.e: (go-run) -> :GoRun ). Note, that calling this doesn't have any
+affect on calling the commands manually. This setting is only useful for
+changing the behaviour of our custom static mappings. By default it's enabled.
+>
+  let g:go_jump_to_error = 1
+<
                                                         *'g:go_fmt_autosave'*
 
 Use this option to auto |:GoFmt| on save. By default it's enabled >
@@ -574,10 +668,10 @@ fails. By default it's disabled. >
 
 Use this option to enable fmt's experimental mode. This experimental mode is
 superior to the current mode as it fully saves the undo history, so undo/redo
-doesn't break. However it's causing problems on some Vim versions. By default
-it's disabled. >
+doesn't break. However it's slows (creates/deletes a file for every save) and
+it's causing problems on some Vim versions. By default it's disabled. >
 
-  let g:go_fmt_experimental = 1
+  let g:go_fmt_experimental = 0
 <
                                               *'g:go_doc_keywordprg_enabled'*
 
@@ -595,6 +689,14 @@ enabled. Disabling it allows you to map something else to the mapping `gd`.
 Default is enabled. >
 
   let g:go_def_mapping_enabled = 1
+<
+                                                    *'g:go_dispatch_enabled'*
+
+Use this option to enable/disable the use of Dispatch to execute the
+`:GoRun`, `:GoBuild` and `:GoGenerate` commands.  More information about Dispatch is
+available at https://github.com/tpope/vim-dispatch. Default is disabled. >
+
+  let g:go_dispatch_enabled = 0
 <
                                                          *'g:go_doc_command'*
 
@@ -630,7 +732,8 @@ is used. Use "neosnippet" for neosnippet.vim: >
 
 Use this option to define the scope of the analysis to be passed for Oracle
 related commands, such as |GoImplements|, |GoCallers|, etc..  By default it's
-not set, so only the current packages go files are passed as scope. For more
+not set, so only the current packages go files are passed as scope. You can
+change it on-the-fly with |GoOracleScope|. For more
 info please have look at Oracle's User Manual:
 https://docs.google.com/document/d/1SLk36YRjjMgKqe490mSRzOPYEDe0Y_WQNRv-EiFYUyw/view#heading=h.nwso96pj07q8
 >
@@ -704,16 +807,60 @@ Highlights build constraints. By default it's disabled. >
 
 	let g:go_highlight_build_constraints = 0
 <
+                                        *'g:go_highlight_string_spellcheck*
+
+Specifies spell checking enabled for strings. Spelling errors are highlighted
+if |spell| is enabled. By default it's enabled. >
+
+	let g:go_highlight_string_spellcheck = 1
+<
+
+                                                *'g:go_autodetect_gopath'*
+
+Automatically modifies GOPATH for certain directory structures, such as for
+the tool godep which has his own dependencies via the `Godeps` folder. What
+this means is that all tools are now working with the newly modified GOPATH.
+So |GoDef| for example jumps to the source inside the `Godeps` (vendored)
+source. Currently `godep` and `gb` is supported, in the near future more tool
+supports will be added. By default it's enabled. >
+
+	let g:go_autodetect_gopath = 1
+<
                                                   *'g:go_textobj_enabled'*
 
 Adds custom text objects. By default it's enabled. >
 
 	let g:go_textobj_enabled = 1
+<
+
+                                                  *'g:go_metalinter_enabled'*
+
+Specifies the currently enabled linters for the |GoMetaLinter| command. By
+default it's using `vet`, `golint` and `errcheck`
+>
+  let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+<
+                                                  *'g:go_metalinter_command'*
+
+Overrides the command to be executed when |GoMetaLinter| is called. This is
+an advanced settings and is for users who want to have a complete control
+over of how `gometalinter` should be executed. By default it's empty.
+>
+  let g:go_metalinter_command = ""
+<
+                                                     *'g:go_metalinter_path'*
+
+Defines the default path to be linted for the |GoMetaLinter| command. By
+default it's set to `./...`, which recursively lints all files underd the
+current directory.
+>
+  let g:go_metalinter_path = "./..."
+<
 
 ===============================================================================
 TROUBLESHOOTING                                         *go-troubleshooting*
 
-I'm using Fish shell but have some problems using Vim-go~
+I'm using Fish shell but have some problems using vim-go~
 
 First environment variables in Fish are applied differently, it should be like:
 >
@@ -721,7 +868,7 @@ First environment variables in Fish are applied differently, it should be like:
 <
 Second, Vim needs a POSIX compatible shell (more info here:
 https://github.com/dag/vim-fish#teach-a-vim-to-fish). If you use Fish to open
-vim, it will make certainx shell based commands fail (means vim-go will fail
+Vim, it will make certain shell based commands fail (means vim-go will fail
 too). To overcome this problem change the default shell by adding the
 following into your .vimrc (on the top of the file):
 >
@@ -734,7 +881,7 @@ or
 	set shell='/bin/sh'
 >
 
-I'm seeing weirds errors during installation of binaries with
+I'm seeing weird errors during installation of binaries with
 GoInstallBinaries:
 
 If you see errors like this:
@@ -754,7 +901,7 @@ You'll see a more detailed error. If this works, vim-go will work too.
 ===============================================================================
 CREDITS                                                         *go-credits*
 
-* Go Authors for offical vim plugins
+* Go Authors for official vim plugins
 * Gocode, Godef, Golint, Oracle, Goimports, Errcheck projects and authors of
   those projects.
 * Other vim-plugins, thanks for inspiration (vim-golang, go.vim, vim-gocode,
