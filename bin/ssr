@@ -29,7 +29,7 @@ check_cask() {
 #-------------------------------------------------
 
 check_bin node
-check_bin jshint
+check_bin eslint
 check_bin jsonlint
 check_bin jq
 check_bin csslint

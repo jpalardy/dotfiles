@@ -1,0 +1,10 @@
+// http://eslint.org/docs/rules/
+rules:
+  space-before-function-paren: [2, {anonymous: "always", named: "never"}]
+  no-multi-spaces: [2, {exceptions: {VariableDeclarator: true}}]
+  func-names: 0
+  id-length: 0
+  no-shadow: 0
+  vars-on-top: 0
+  no-param-reassign: 0
+extends: airbnb/legacy
