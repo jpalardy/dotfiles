@@ -47,3 +47,14 @@ cdf() {
 cdl() {
   pick_with_vim "ls" "cd"
 }
+
+# inspired by zsh
+take() {
+  mkdir -p "$@" && cd "$@"
+}
+
+# inspired by zsh
+..() {
+  cd ..
+}
+
