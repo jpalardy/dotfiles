@@ -1,4 +1,21 @@
-#!/bin/sh
+#!/bin/bash
 
-sort -u "$@"
+COUNT=0
+
+while getopts "c" opt; do
+  case "$opt" in
+    c) COUNT=1
+       ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+#-------------------------------------------------
+
+if [ $COUNT -eq 0 ]; then
+  sort -u "$@"
+else
+  sort -u "$@" | wc -l
+fi
 
