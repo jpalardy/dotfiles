@@ -1,0 +1,14 @@
+#!/bin/bash
+
+(
+set-intersection -c "$@"
+wc -l "$@"
+) | awk '
+
+  NR == 1       { inter_count = $1; next }
+  $2 == "total" { union_count = $1 - inter_count }
+
+  END     { printf "%.3f = %d / %d\n", inter_count/union_count, inter_count, union_count }
+
+'
+
