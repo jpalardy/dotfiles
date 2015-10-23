@@ -1,0 +1,18 @@
+#!/bin/bash
+
+today=$(date +%F)
+
+start=${1:-$today}
+
+forward() {
+  date "-d $start + $1" +%F
+}
+
+(
+echo type 1 2 3 4 5 6
+echo days:   `forward "1 days"`   `forward "2 days"`   `forward "3 days"`   `forward "4 days"`   `forward "5 days"`   `forward "6 days"`
+echo weeks:  `forward "1 weeks"`  `forward "2 weeks"`  `forward "3 weeks"`  `forward "4 weeks"`  `forward "5 weeks"`  `forward "6 weeks"`
+echo months: `forward "1 months"` `forward "2 months"` `forward "3 months"` `forward "4 months"` `forward "5 months"` `forward "6 months"`
+echo years:  `forward "1 years"`  `forward "2 years"`  `forward "3 years"`  `forward "4 years"`  `forward "5 years"`  `forward "6 years"`
+) | column -t
+
