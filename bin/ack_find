@@ -1,14 +1,18 @@
 #!/bin/bash
 
 DEBUG=0
+CACHE=".cache_af"
+WRITE=0
 
-while getopts "df" flag; do
+while getopts "dfw" flag; do
   case $flag in
     d) DEBUG=1
        ;;
     f) if [ -e "$CACHE" ]; then
          rm $CACHE
        fi
+       ;;
+    w) WRITE=1
        ;;
   esac
 done
@@ -47,7 +51,7 @@ if [ -f "$CACHE" ]; then
   exit
 fi
 
-if [ -n "$CACHE" ]; then
+if [ "$WRITE" == "1" ]; then
   ack -af --sort-files | filter "$HOME/.filter" | filter "./.filter" | tee "$CACHE"
 else
   ack -af --sort-files | filter "$HOME/.filter" | filter "./.filter"
