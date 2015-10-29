@@ -24,3 +24,8 @@ endfunction
 nnoremap <buffer> <CR> :call <SID>ToggleBox()<CR>
 vnoremap <buffer> <CR> :call <SID>HandleURL()<CR>
 
+" 0lrx -- add a checkmark
+" f_c$ -- skip to _, delete
+" ^x^l -- line-complete from above
+TabMacro '___', '0lrxf_c$'
+
