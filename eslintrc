@@ -2,6 +2,7 @@
 rules:
   space-before-function-paren: [2, {anonymous: "always", named: "never"}]
   no-multi-spaces: [2, {exceptions: {VariableDeclarator: true}}]
+  spaced-comment: 0
   func-names: 0
   id-length: 0
   no-shadow: 0
