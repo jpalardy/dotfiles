@@ -1,0 +1,19 @@
+#!/bin/bash
+
+echo "$@" | awk -F: '
+
+{
+  minutes = $1
+  seconds = $2
+  duration = minutes * 60 + seconds
+
+  sdur = duration / 1.25
+  printf "1.25 -- %02d:%02d\n", sdur / 60, sdur % 60
+  sdur = duration / 1.50
+  printf "1.5  -- %02d:%02d\n", sdur / 60, sdur % 60
+  sdur = duration / 2.00
+  printf "2    -- %02d:%02d\n", sdur / 60, sdur % 60
+}
+
+'
+
