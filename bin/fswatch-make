@@ -1,4 +1,4 @@
 #!/bin/bash
 
-fswatch ${1:-.} -o | xargs -I% make
+fswatch ${@:-.} -o | xargs -I% make
 
