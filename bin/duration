@@ -9,6 +9,8 @@ echo "$@" | awk -F: '
 
   sdur = duration / 1.25
   printf "1.25 -- %02d:%02d\n", sdur / 60, sdur % 60
+  sdur = duration / 1.33
+  printf "1.33 -- %02d:%02d\n", sdur / 60, sdur % 60
   sdur = duration / 1.50
   printf "1.5  -- %02d:%02d\n", sdur / 60, sdur % 60
   sdur = duration / 2.00
