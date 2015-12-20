@@ -26,7 +26,7 @@ command -nargs=* FPScratchy :call FPScratchy(<args>)
 " replace current buffer
 nmap <ESC>h :FPScratchy "ack_find"<CR>
 " replace current buffer (force cache refresh)
-nmap <ESC>H :FPScratchy "ack_find -f -w"<CR>
+nmap <ESC>H :FPScratchy "ack_find -f"<CR>
 
 " textmate-like command-t
 nmap <ESC>t :botright  new<CR><ESC>h
