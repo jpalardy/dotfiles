@@ -7,3 +7,7 @@ tp() {
   echo
 }
 
+if [ -n "$TMUX_PANE" ]; then
+  echo TMUX_PANE: $TMUX_PANE
+fi
+

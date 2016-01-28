@@ -80,12 +80,7 @@ let g:slime_target = "tmux"
 nmap <c-c><c-l> :SlimeSend0 ""<CR>
 nmap <c-c><c-u> :SlimeSend0 "\x15"<CR>
 
-" auto-target -- this might not be a good idea
-let target_pane = system("cat $HOME/.target_pane")
-if (target_pane == "")
-  let target_pane = ":"
-endif
-let g:slime_default_config = {"socket_name": "default", "target_pane": target_pane}
+let g:slime_default_config = {"socket_name": "default", "target_pane": "%"}
 
 let g:NERDCustomDelimiters = {
   \ 'zinc': { 'left': '%'},
