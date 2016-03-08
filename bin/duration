@@ -2,19 +2,36 @@
 
 echo "$@" | awk -F: '
 
-{
+function printDuration (xspeed, duration) {
+  printf "%-4s -- ", xspeed
+  duration = duration / xspeed
+  if (duration >= 3600) {
+    printf "%02d:", duration / 3600
+  }
+  duration = duration % 3600
+  printf "%02d:", duration / 60
+  duration = duration % 60
+  printf "%02d\n", duration
+}
+
+NF == 3 {
+  hours   = $1
+  minutes = $2
+  seconds = $3
+}
+
+NF == 2 {
+  hours   = 0
   minutes = $1
   seconds = $2
-  duration = minutes * 60 + seconds
+}
 
-  sdur = duration / 1.25
-  printf "1.25 -- %02d:%02d\n", sdur / 60, sdur % 60
-  sdur = duration / 1.33
-  printf "1.33 -- %02d:%02d\n", sdur / 60, sdur % 60
-  sdur = duration / 1.50
-  printf "1.5  -- %02d:%02d\n", sdur / 60, sdur % 60
-  sdur = duration / 2.00
-  printf "2    -- %02d:%02d\n", sdur / 60, sdur % 60
+{
+  duration = hours * 3600 + minutes * 60 + seconds
+  printDuration(1.25, duration)
+  printDuration(1.33, duration)
+  printDuration(1.5, duration)
+  printDuration(2, duration)
 }
 
 '
