@@ -10,7 +10,7 @@ tad() {
 
 # date name directory
 dnd() {
-  local name="$(date +%F)_$(echo "$@" | sed -e "s/ /_/g")"
+  local name="$(date +%F)-$(echo "$@" | sed -e "s/ /-/g")"
   mkdir $name && cd $name
 }
 
