@@ -80,6 +80,14 @@ let g:slime_target = "tmux"
 nmap <c-c><c-l> :SlimeSend0 ""<CR>
 nmap <c-c><c-u> :SlimeSend0 "\x15"<CR>
 
+function! PreservePosSlimeSend()
+  let cursor_pos = getpos('.')
+  execute "normal! vip:SlimeSend\r"
+  call setpos('.', cursor_pos)
+endfunction
+nmap <c-c><c-b> <Plug>SlimeParagraphSend
+nmap <c-c><c-c> :call PreservePosSlimeSend()<CR>
+
 let g:slime_default_config = {"socket_name": "default", "target_pane": "%"}
 
 let g:NERDCustomDelimiters = {
