@@ -7,6 +7,9 @@ alias BROWSER_WIDTH 1150
 # b -- like browser -- 992..1200px
 bind b:ctrl;alt move screenOriginX+screenSizeX-${BROWSER_WIDTH};screenOriginY ${BROWSER_WIDTH};screenSizeY
 
+# r
+bind r:ctrl;alt move screenOriginX+300;screenOriginY 700;screenSizeY
+
 # f -- like fullscreen
 bind f:ctrl;alt move screenOriginX;screenOriginY screenSizeX;screenSizeY
 
