@@ -1,0 +1,4 @@
+#!/bin/bash
+
+qrencode "$1" -t ANSI256 -o -
+
