@@ -1,0 +1,17 @@
+#!/bin/bash
+
+target=$HOME/local/bin/$1
+
+#-------------------------------------------------
+cat > $target <<EOF
+#!/bin/bash
+
+xxx
+
+EOF
+#-------------------------------------------------
+
+chmod +x $target
+
+vim $target
+
