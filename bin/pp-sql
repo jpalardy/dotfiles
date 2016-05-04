@@ -1,19 +1,41 @@
 #!/bin/bash
 
-sed -r -e 's/\bselect\b/SELECT/gi'     \
-       -e 's/\bfrom\b/FROM/gi'         \
-       -e 's/\bwhere\b/WHERE/gi'       \
-       -e 's/\band\b/AND/gi'           \
-       -e 's/\bgroup by\b/GROUP BY/gi' \
-       -e 's/\border by\b/ORDER BY/gi' \
-\
-       -e 's/(\S) +FROM /\1\nFROM /g'         \
-       -e 's/(\S) +WHERE /\1\nWHERE /g'       \
-       -e 's/(\S) +AND /\1\n  AND /g'       \
-       -e 's/(\S) +GROUP BY /\1\nGROUP BY /g' \
-       -e 's/(\S) +ORDER BY /\1\nORDER BY /g' \
-\
-       -e 's/^ +//' \
-       -e 's/^AND /  AND /' \
-       -e 's/ +/ /g' \
-       "$@" \
+cat "$@" | awk '
+
+# all words on the same line
+{
+  for (i = 1; i <= NF; i++) {
+    printf "%s ", $i
+  }
+}
+
+' | sed -r -e 's/ *;? *$/;/' | awk '
+
+BEGIN {
+  prefixes["select"] = ""
+  prefixes["from"]   = "\n"
+  prefixes["where"]  = "\n"
+  prefixes["inner"]  = "\n"
+  prefixes["left"]  = "\n"
+  prefixes["or"]    = " "
+  prefixes["and"]    = "\n  "
+  prefixes["group"]  = "\n"
+  prefixes["order"]  = "\n"
+  prefixes["by"]     = " "
+  prefixes["having"]  = "\n"
+  prefixes["limit"]  = "\n"
+}
+
+# keywords might be fronted by special characters (newlines, etc)
+{
+  for (i = 1; i <= NF; i++) {
+    if (tolower($i) in prefixes) {
+      printf "%s%s", prefixes[tolower($i)], toupper($i)
+    } else {
+      printf " %s", $i
+    }
+  }
+}
+
+'
+
