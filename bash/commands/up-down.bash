@@ -1,7 +1,7 @@
 
 up() {
   if [ "$1" == "-d" ]; then
-    ssh jpalardy.com "cd up-down && rm -v *"
+    ssh jpalardy.com "cd up-down && rm -rfv *"
     return
   fi
   if [ -z "$@" ]; then
@@ -13,7 +13,7 @@ up() {
 
 down() {
   if [ "$1" == "-d" ]; then
-    ssh jpalardy.com "cd up-down && rm -v *"
+    ssh jpalardy.com "cd up-down && rm -rfv *"
     return
   fi
   if [ -z "$@" ]; then
