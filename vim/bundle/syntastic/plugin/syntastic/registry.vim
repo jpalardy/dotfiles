@@ -8,7 +8,8 @@ let g:loaded_syntastic_registry = 1
 let s:_DEFAULT_CHECKERS = {
         \ 'actionscript':  ['mxmlc'],
         \ 'ada':           ['gcc'],
-        \ 'apiblueprint':  ['snowcrash'],
+        \ 'ansible':       ['ansible_lint'],
+        \ 'apiblueprint':  ['drafter'],
         \ 'applescript':   ['osacompile'],
         \ 'asciidoc':      ['asciidoc'],
         \ 'asm':           ['gcc'],
@@ -29,16 +30,17 @@ let s:_DEFAULT_CHECKERS = {
         \ 'd':             ['dmd'],
         \ 'dart':          ['dartanalyzer'],
         \ 'docbk':         ['xmllint'],
+        \ 'dockerfile':    ['dockerfile_lint'],
         \ 'dustjs':        ['swiffer'],
         \ 'elixir':        [],
         \ 'erlang':        ['escript'],
         \ 'eruby':         ['ruby'],
         \ 'fortran':       ['gfortran'],
         \ 'glsl':          ['cgc'],
-        \ 'go':            ['go'],
+        \ 'go':            [],
         \ 'haml':          ['haml'],
         \ 'handlebars':    ['handlebars'],
-        \ 'haskell':       ['ghc_mod', 'hdevtools', 'hlint'],
+        \ 'haskell':       ['hdevtools', 'hlint'],
         \ 'haxe':          ['haxe'],
         \ 'hss':           ['hss'],
         \ 'html':          ['tidy'],
@@ -66,9 +68,11 @@ let s:_DEFAULT_CHECKERS = {
         \ 'po':            ['msgfmt'],
         \ 'pod':           ['podchecker'],
         \ 'puppet':        ['puppet', 'puppetlint'],
+        \ 'pug':           ['pug_lint'],
         \ 'python':        ['python', 'flake8', 'pylint'],
         \ 'qml':           ['qmllint'],
         \ 'r':             [],
+        \ 'rmd':           [],
         \ 'racket':        ['racket'],
         \ 'rnc':           ['rnv'],
         \ 'rst':           ['rst2pseudoxml'],
@@ -86,6 +90,8 @@ let s:_DEFAULT_CHECKERS = {
         \ 'tex':           ['lacheck', 'chktex'],
         \ 'texinfo':       ['makeinfo'],
         \ 'text':          [],
+        \ 'trig':          ['rapper'],
+        \ 'turtle':        ['rapper'],
         \ 'twig':          ['twiglint'],
         \ 'typescript':    ['tsc'],
         \ 'vala':          ['valac'],
@@ -95,8 +101,10 @@ let s:_DEFAULT_CHECKERS = {
         \ 'xhtml':         ['tidy'],
         \ 'xml':           ['xmllint'],
         \ 'xslt':          ['xmllint'],
+        \ 'xquery':        ['basex'],
         \ 'yacc':          ['bison'],
         \ 'yaml':          ['jsyaml'],
+        \ 'yang':          ['pyang'],
         \ 'z80':           ['z80syntaxchecker'],
         \ 'zpt':           ['zptlint'],
         \ 'zsh':           ['zsh'],
@@ -155,8 +163,21 @@ function! g:SyntasticRegistry.Instance() abort " {{{2
 endfunction " }}}2
 
 function! g:SyntasticRegistry.CreateAndRegisterChecker(args) abort " {{{2
-    let checker = g:SyntasticChecker.New(a:args)
     let registry = g:SyntasticRegistry.Instance()
+
+    if has_key(a:args, 'redirect')
+        let [ft, name] = split(a:args['redirect'], '/')
+        call registry._loadCheckersFor(ft, 1)
+
+        let clone = get(registry._checkerMap[ft], name, {})
+        if empty(clone)
+            throw 'Syntastic: Checker ' . a:args['redirect'] . ' redirects to unregistered checker ' . ft . '/' . name
+        endif
+
+        let checker = g:SyntasticChecker.New(a:args, clone)
+    else
+        let checker = g:SyntasticChecker.New(a:args)
+    endif
     call registry._registerChecker(checker)
 endfunction " }}}2
 
@@ -166,7 +187,7 @@ endfunction " }}}2
 " not run).
 function! g:SyntasticRegistry.getCheckers(ftalias, hints_list) abort " {{{2
     let ft = s:_normalise_filetype(a:ftalias)
-    call self._loadCheckersFor(ft)
+    call self._loadCheckersFor(ft, 0)
 
     let checkers_map = self._checkerMap[ft]
     if empty(checkers_map)
@@ -191,7 +212,7 @@ function! g:SyntasticRegistry.getCheckersAvailable(ftalias, hints_list) abort " 
     return filter(self.getCheckers(a:ftalias, a:hints_list), 'v:val.isAvailable()')
 endfunction " }}}2
 
-" Same as getCheckers(), but keep only the checkers tyhat are available and
+" Same as getCheckers(), but keep only the checkers that are available and
 " disabled.  This runs the corresponding IsAvailable() functions for all checkers.
 function! g:SyntasticRegistry.getCheckersDisabled(ftalias, hints_list) abort " {{{2
     return filter(self.getCheckers(a:ftalias, a:hints_list), 'v:val.isDisabled() && v:val.isAvailable()')
@@ -215,7 +236,7 @@ endfunction " }}}2
 
 function! g:SyntasticRegistry.getNamesOfAvailableCheckers(ftalias) abort " {{{2
     let ft = s:_normalise_filetype(a:ftalias)
-    call self._loadCheckersFor(ft)
+    call self._loadCheckersFor(ft, 0)
     return keys(filter( copy(self._checkerMap[ft]), 'v:val.isAvailable()' ))
 endfunction " }}}2
 
@@ -302,8 +323,8 @@ function! g:SyntasticRegistry._filterCheckersByName(checkers_map, list) abort " 
     return filter( map(copy(a:list), 'get(a:checkers_map, v:val, {})'), '!empty(v:val)' )
 endfunction " }}}2
 
-function! g:SyntasticRegistry._loadCheckersFor(filetype) abort " {{{2
-    if has_key(self._checkerMap, a:filetype)
+function! g:SyntasticRegistry._loadCheckersFor(filetype, force) abort " {{{2
+    if !a:force && has_key(self._checkerMap, a:filetype)
         return
     endif
 
