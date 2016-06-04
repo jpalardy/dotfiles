@@ -12,6 +12,10 @@ if !exists("g:slime_target")
   let g:slime_target = "screen"
 end
 
+if !exists("g:slime_preserve_curpos")
+  let g:slime_preserve_curpos = 1
+end
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Screen
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -71,6 +75,31 @@ function! s:TmuxConfig() abort
   if b:slime_config["target_pane"] =~ '\s\+'
     let b:slime_config["target_pane"] = split(b:slime_config["target_pane"])[0]
   endif
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Conemu
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! s:ConemuSend(config, text)
+  let l:prefix = "conemuc -guimacro:" . a:config["HWND"]
+  " use the selection register to send text to ConEmu using the windows
+  " clipboard (see help gui-clipboard)
+  " save the current selection to restore it after send
+  let tmp = @*
+  let @* = a:text
+  call system(l:prefix . " print")
+  let @* = tmp
+endfunction
+
+function! s:ConemuConfig() abort
+  " set destination for send commands, as specified in
+  " http://conemu.github.io/en/GuiMacro.html#Command_line
+  if !exists("b:slime_config")
+    " defaults to the active tab/split of the first found ConEmu window
+    let b:slime_config = {"HWND": "0"}
+  end
+  let b:slime_config["HWND"] = input("Console server HWND: ", b:slime_config["HWND"])
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -163,6 +192,8 @@ function! s:SlimeSendOp(type, ...) abort
 
   let &selection = sel_save
   call setreg('"', rv, rt)
+
+  call s:SlimeRestoreCurPos()
 endfunction
 
 function! s:SlimeSendRange() range abort
@@ -183,6 +214,19 @@ function! s:SlimeSendLines(count) abort
   exe "norm! " . a:count . "yy"
   call s:SlimeSend(@")
   call setreg('"', rv, rt)
+endfunction
+
+function! s:SlimeStoreCurPos()
+  if g:slime_preserve_curpos == 1
+    let s:cur = getcurpos()
+  endif
+endfunction
+
+function! s:SlimeRestoreCurPos()
+  if g:slime_preserve_curpos == 1 && exists("s:cur")
+    call setpos('.', s:cur)
+    unlet s:cur
+  endif
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -222,7 +266,7 @@ command -range -bar -nargs=0 SlimeSend <line1>,<line2>call s:SlimeSendRange()
 command -nargs=+ SlimeSend1 call s:SlimeSend(<q-args> . "\r")
 command -nargs=+ SlimeSend0 call s:SlimeSend(<args>)
 
-noremap <SID>Operator :<c-u>set opfunc=<SID>SlimeSendOp<cr>g@
+noremap <SID>Operator :<c-u>call <SID>SlimeStoreCurPos()<cr>:set opfunc=<SID>SlimeSendOp<cr>g@
 
 noremap <unique> <script> <silent> <Plug>SlimeRegionSend :<c-u>call <SID>SlimeSendOp(visualmode(), 1)<cr>
 noremap <unique> <script> <silent> <Plug>SlimeLineSend :<c-u>call <SID>SlimeSendLines(v:count1)<cr>
