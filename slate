@@ -2,9 +2,9 @@
 config resizePercentOf screenSize
 
 alias center screenOriginX+screenSizeX/2-windowSizeX/2;screenOriginY+screenSizeY/2-windowSizeY/2 windowSizeX;windowSizeY
-alias BROWSER_WIDTH 1150
+alias BROWSER_WIDTH 1250
 
-# b -- like browser -- 992..1200px
+# b -- like browser
 bind b:ctrl;alt move screenOriginX+screenSizeX-${BROWSER_WIDTH};screenOriginY ${BROWSER_WIDTH};screenSizeY
 
 # r
