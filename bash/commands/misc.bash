@@ -51,3 +51,5 @@ alias octave="octave --quiet"
 
 alias cask="brew cask"
 
+alias sqlite3="sqlite3 -header -column -nullvalue NULL"
+
