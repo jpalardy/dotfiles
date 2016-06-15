@@ -1,7 +1,19 @@
 #!/bin/bash
 
-brew-graph.rb --installed | dot -Tpng -ograph.png
+brew-graph.rb --installed > raw.dot
+awk -F'"' '
+NR == FNR && NF == 3 {nodes[$2] = 0}
+NR == FNR && NF == 5 {nodes[$4]++}
+NR == FNR {next}
+
+NF == 3 && nodes[$2] == 0 {
+  print "  \"" $2 "\" [style=filled];"
+  next
+}
+{print}
+' raw.dot raw.dot > annotated.dot
+cat annotated.dot | fdp -Tpng -ograph.png
 open graph.png
 read -p "press any key..."
-rm graph.png
+rm graph.png raw.dot annotated.dot
 
