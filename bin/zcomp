@@ -1,0 +1,12 @@
+#!/bin/bash
+
+(
+echo "original $(cat "$@" | wc -c)"
+echo "gzip  -1 $(cat "$@" | gzip  -1 -c - | wc -c)"
+echo "bzip2 -1 $(cat "$@" | bzip2 -1 -c - | wc -c)"
+echo "xz    -1 $(cat "$@" | xz    -1 -c - | wc -c)"
+echo "gzip  -9 $(cat "$@" | gzip  -9 -c - | wc -c)"
+echo "bzip2 -9 $(cat "$@" | bzip2 -9 -c - | wc -c)"
+echo "xz    -9 $(cat "$@" | xz    -9 -c - | wc -c)"
+) | awk 'NR == 1 {original=$2} {printf "%s %5.1f%%\n", $0, $NF/original*100}'
+
