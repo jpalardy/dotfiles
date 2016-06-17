@@ -82,8 +82,6 @@ nmap <c-c><c-u> :SlimeSend0 "\x15"<CR>
 
 let g:slime_default_config = {"socket_name": "default", "target_pane": "%"}
 
-let g:slime_paste_file = tempname()
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 source $HOME/.vim/mappings.vim
