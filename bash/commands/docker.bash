@@ -1,7 +1,7 @@
 
 docker() {
   if [ -z "$DOCKER_HOST" ]; then
-    eval "$(boot2docker shellinit)"
+    eval "$(docker-machine env)"
   fi
   command docker "$@"
 }
