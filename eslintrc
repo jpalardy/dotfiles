@@ -11,4 +11,5 @@ rules:
   no-param-reassign: 0
   quotes: 0
   key-spacing: 0
+  object-curly-spacing: 0
 extends: airbnb/legacy
