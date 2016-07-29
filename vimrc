@@ -70,8 +70,11 @@ augroup mostly_spacehi
   autocmd FileType diff     NoSpaceHi
   autocmd FileType man      NoSpaceHi
   autocmd FileType scratchy NoSpaceHi
-  autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax *.go NoSpaceHi
+  autocmd FileType go       NoSpaceHi
+  autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax,BufWritePost *.go NoSpaceHi
 augroup END
+
+let g:syntastic_go_checkers=['go','gofmt','govet']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
