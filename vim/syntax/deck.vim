@@ -12,8 +12,8 @@ endif
 syntax match deckDate /\d\d\d\d-\d\d-\d\d/ nextgroup=deckFailGrade,deckPassGrade skipwhite
 syntax match deckUnknownDate /????-??-??/  nextgroup=deckFailGrade,deckPassGrade skipwhite
 
-syntax match deckFailGrade /[012]/ contained
-syntax match deckPassGrade /[345]/ contained
+syntax match deckFailGrade /0/ contained
+syntax match deckPassGrade /1/ contained
 
 syntax match deckBlank /▒/ 
 
