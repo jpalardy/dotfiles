@@ -1,5 +1,9 @@
 
 up() {
+  if [ "$1" == "-a" ]; then
+    rsync -avz --progress * jpalardy.com:up-down/
+    return
+  fi
   if [ "$1" == "-d" ]; then
     ssh jpalardy.com "cd up-down && rm -rfv *"
     return
@@ -12,6 +16,10 @@ up() {
 }
 
 down() {
+  if [ "$1" == "-a" ]; then
+    rsync -avz --progress jpalardy.com:up-down/* .
+    return
+  fi
   if [ "$1" == "-d" ]; then
     ssh jpalardy.com "cd up-down && rm -rfv *"
     return
