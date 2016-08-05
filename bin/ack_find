@@ -1,59 +1,16 @@
 #!/bin/bash
 
-DEBUG=0
-CACHE=".cache_af"
-WRITE=0
-
-while getopts "dfw" flag; do
-  case $flag in
-    d) DEBUG=1
-       ;;
-    f) if [ -e "$CACHE" ]; then
-         rm $CACHE
-       fi
-       ;;
-    w) WRITE=1
-       ;;
-  esac
-done
-
-debug() {
-  if [ "$DEBUG" == "1" ]; then
-    echo >&2 "$@"
-  fi
-}
-
-first_exist() {
-  for f in "$@"; do
-    if [ -f "$f" ]; then
-      echo $f
-      break
+filters() {
+  for filter in "$@"; do
+    if [ -e "$filter" ]; then
+      echo "$filter"
     fi
   done
 }
 
-filter() {
-  local FILTER=$(first_exist "$@")
-  debug "FILTER: $FILTER"
-  if [ -x "$FILTER" ]; then
-    $FILTER
-  elif [ -e "$FILTER" ]; then
-    grep -E -v -f "$FILTER"
-  else
-    cat
-  fi
+ignore_from_filters() {
+  awk '{print "--ignore-dir=" $1}' $(filters $HOME/.filter .filter)
 }
 
-#-------------------------------------------------
-
-if [ -f "$CACHE" ]; then
-  cat "$CACHE"
-  exit
-fi
-
-if [ "$WRITE" == "1" ]; then
-  ack -af --sort-files | filter "$HOME/.filter" | filter "./.filter" | tee "$CACHE"
-else
-  ack -af --sort-files | filter "$HOME/.filter" | filter "./.filter"
-fi
+ack -af --sort-files $(ignore_from_filters) | grep -v '\(^\|\/\)\.'
 
