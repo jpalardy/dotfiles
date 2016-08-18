@@ -13,6 +13,9 @@ shift $((OPTIND-1))
 
 if [ $COUNTDOWN != 0 ]; then
   utimer -c $COUNTDOWN
+  if [ $? -ne 0 ]; then
+    exit
+  fi
 fi
 
 say -v vicki "${@:-done}"
