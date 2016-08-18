@@ -1,0 +1,12 @@
+#!/bin/bash
+
+step() {
+  read -p "# $1"
+  eval $1
+}
+
+step "brew update"
+step "brew outdated"
+step "brew upgrade"
+step "brew cleanup"
+
