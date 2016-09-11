@@ -15,3 +15,11 @@ find_swp() {
   find . -name '.*.sw*'
 }
 
+find_images() {
+  find "$@" -type f | grep --color=no -E '(png|jpe?g|gif)$'
+}
+
+find_exts() {
+  find "$@" -type f -name '*.*' | sed 's/.*\.//'
+}
+

@@ -8,3 +8,7 @@ sum() {
 }
 export -f sum
 
+count() {
+  awk '{counts[$0]++} END {for(c in counts) printf "%6d %s\n", counts[c], c}' "$@" | sort -k2
+}
+
