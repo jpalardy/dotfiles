@@ -48,6 +48,7 @@ alias R="R --quiet"
 alias r="R --quiet"
 
 alias octave="octave-cli --quiet"
+alias maxima="rlwrap maxima --quiet"
 
 alias cask="brew cask"
 

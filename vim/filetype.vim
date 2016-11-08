@@ -5,6 +5,7 @@ augroup other_filetypedetect
   autocmd BufNewFile,BufRead *.txt       setf txt
   autocmd BufNewFile,BufRead *.deck      setf deck
   autocmd BufNewFile,BufRead *.moe       setf moe
+  autocmd BufNewFile,BufRead *.mxm       setf maxima
   " rubies
   autocmd BufNewFile,BufRead *.spec      setf ruby
   autocmd BufNewFile,BufRead Capfile     setf ruby
