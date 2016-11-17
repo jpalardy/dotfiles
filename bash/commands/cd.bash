@@ -45,7 +45,7 @@ cdf() {
 
 # pick from a list of directories (ls) and cd into it
 cdl() {
-  pick_with_vim "ls" "cd"
+  pick_with_vim "ls" "cd" $1
 }
 
 # inspired by zsh
