@@ -35,7 +35,6 @@ relink .eslintrc     $DOTFILES/eslintrc
 
 relink .Rprofile     $DOTFILES/r/Rprofile
 
-relink .hydra        $DOTFILES/hydra
 relink .slate        $DOTFILES/slate
 
 relink .filter       $DOTFILES/filter
