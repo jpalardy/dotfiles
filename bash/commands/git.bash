@@ -37,6 +37,7 @@ git_review() {
 #-------------------------------------------------
 
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset %C(dim white)%an%Creset' --abbrev-commit --date=relative --topo-order --all"
+alias glgdo="glg --date-order"
 
 #-------------------------------------------------
 
