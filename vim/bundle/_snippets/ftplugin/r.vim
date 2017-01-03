@@ -11,7 +11,6 @@ Snippet ')', ') {|}'
 Snippet '=', '<- '
 " magrittr
 Snippet '|', '%>% '
-
-Snippet 'purge',  'rm(list=ls())'
-SnippetComplete 'legend', 'theme(legend.position="none")'
+" %, like in maxima
+Snippet '%', '.Last.value'
 
