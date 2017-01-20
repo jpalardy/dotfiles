@@ -1,4 +1,3 @@
-
 if exists('g:loaded_slime') || &cp || v:version < 700
   finish
 endif
@@ -27,8 +26,14 @@ end
 
 function! s:ScreenSend(config, text)
   call s:WritePasteFile(a:text)
-  call system("screen -S " . shellescape(a:config["sessionname"]) . " -p " . shellescape(a:config["windowname"]) . " -X readreg p " . g:slime_paste_file)
-  call system("screen -S " . shellescape(a:config["sessionname"]) . " -p " . shellescape(a:config["windowname"]) . " -X paste p")
+  call system("screen -S " . shellescape(a:config["sessionname"]) . " -p " . shellescape(a:config["windowname"]) .
+        \ " -X eval \"msgwait 0\"")
+  call system("screen -S " . shellescape(a:config["sessionname"]) . " -p " . shellescape(a:config["windowname"]) .
+        \ " -X eval \"readreg p " . g:slime_paste_file . "\"")
+  call system("screen -S " . shellescape(a:config["sessionname"]) . " -p " . shellescape(a:config["windowname"]) .
+        \ " -X paste p")
+  call system("screen -S " . shellescape(a:config["sessionname"]) . " -p " . shellescape(a:config["windowname"]) .
+        \ " -X eval \"msgwait 5\"")
 endfunction
 
 function! s:ScreenSessionNames(A,L,P)
@@ -278,6 +283,7 @@ command -bar -nargs=0 SlimeConfig call s:SlimeConfig()
 command -range -bar -nargs=0 SlimeSend <line1>,<line2>call s:SlimeSendRange()
 command -nargs=+ SlimeSend1 call s:SlimeSend(<q-args> . "\r")
 command -nargs=+ SlimeSend0 call s:SlimeSend(<args>)
+command! SlimeSendCurrentLine call s:SlimeSend(getline(".") . "\r")
 
 noremap <SID>Operator :<c-u>call <SID>SlimeStoreCurPos()<cr>:set opfunc=<SID>SlimeSendOp<cr>g@
 
