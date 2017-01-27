@@ -15,6 +15,7 @@
   ffm     = merge --ff-only
   ffp     = pull --ff-only
   cp      = cherry-pick
+  rl      = remote -v
 [diff]
   noprefix = true
   tool = vimdiff

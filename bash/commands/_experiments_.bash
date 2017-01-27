@@ -12,3 +12,10 @@ which-edit() {
   vim $(which "$@")
 }
 
+# ldf -- last downloaded file
+ldf() {
+  local file=~/Downloads/$(ls -1t ~/Downloads/ | head -n1)
+  read -p "confirm: $file "
+  mv "$file" .
+}
+
