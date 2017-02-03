@@ -19,3 +19,10 @@ ldf() {
   mv "$file" .
 }
 
+# scratch file
+scr() {
+  local ext="$1"
+  touch "scratch.${ext}"
+  vim "scratch.${ext}"
+}
+
