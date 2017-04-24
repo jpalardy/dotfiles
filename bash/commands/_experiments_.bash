@@ -21,3 +21,10 @@ scr() {
   vim "scratch.${ext}"
 }
 
+implode() {
+  local target=$PWD
+  cd ..
+  read -p "delete $target "
+  rm -rf $target
+}
+
