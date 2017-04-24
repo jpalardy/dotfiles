@@ -16,6 +16,7 @@
   ffp     = pull --ff-only
   cp      = cherry-pick
   rl      = remote -v
+  fp      = fetch --prune
 [diff]
   noprefix = true
   tool = vimdiff
