@@ -18,5 +18,5 @@ if [ $COUNTDOWN != 0 ]; then
   fi
 fi
 
-say -v vicki "${@:-done}"
+say "${@:-done}"
 
