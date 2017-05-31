@@ -21,3 +21,8 @@ implode() {
   rm -rf $target
 }
 
+,s() {
+  pwd
+  git status --short --branch
+}
+
