@@ -14,6 +14,10 @@ ldf() {
   mv "$file" .
 }
 
+wb() {
+  vim "workbook.$1"
+}
+
 implode() {
   local target=$PWD
   cd ..
