@@ -26,7 +26,6 @@ relink .screenrc     $DOTFILES/screenrc
 relink .tmux.conf    $DOTFILES/tmux.conf
 
 relink .irbrc        $DOTFILES/ruby/irbrc
-relink .rvmrc        $DOTFILES/ruby/rvmrc
 relink .gemrc        $DOTFILES/ruby/gemrc
 
 relink .npmrc        $DOTFILES/npmrc
