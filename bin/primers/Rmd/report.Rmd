@@ -1,0 +1,26 @@
+
+```{r, echo=FALSE}
+
+library(data.table)
+library(ggplot2)
+library(scales)
+
+knitr::opts_chunk$set(comment="")
+
+```
+
+```{r}
+
+d <- fread("...")
+setnames(d, c("..."))
+
+ggplot(d, aes(...)) +
+  geom_point() +
+  theme_bw() +
+  theme(
+    panel.grid.minor=element_blank(),
+    legend.position="none"
+  )
+
+```
+
