@@ -1,4 +1,0 @@
-#!/bin/bash
-
-R --quiet -e "rmarkdown::render('"${1}"')"
-
