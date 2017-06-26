@@ -38,7 +38,7 @@ size_sort() {
 
 #-------------------------------------------------
 
-alias apg='apg -a 1 -n 20 -m 20 -M SNCL -s'
+alias pwgen='pwgen -cny 30'
 
 serve() {
   python -m SimpleHTTPServer ${1:-8000}
