@@ -1,21 +1,4 @@
 #!/bin/bash
 
-COUNT=0
-
-while getopts "c" opt; do
-  case "$opt" in
-    c) COUNT=1
-       ;;
-  esac
-done
-
-shift $((OPTIND-1))
-
-#-------------------------------------------------
-
-if [ $COUNT -eq 0 ]; then
-  sort "$@" | uniq -d
-else
-  sort "$@" | uniq -d | wc -l
-fi
+awk '++seen[$0] > 1' "$@"
 

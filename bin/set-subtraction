@@ -1,21 +1,4 @@
 #!/bin/bash
 
-COUNT=0
-
-while getopts "c" opt; do
-  case "$opt" in
-    c) COUNT=1
-       ;;
-  esac
-done
-
-shift $((OPTIND-1))
-
-#-------------------------------------------------
-
-if [ $COUNT -eq 0 ]; then
-  sort $1 $2 $2 | uniq -u
-else
-  sort $1 $2 $2 | uniq -u | wc -l
-fi
+awk 'NR == FNR {lut[$0] = 1; next} !($0 in lut) {print}' "$@"
 
