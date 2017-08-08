@@ -22,4 +22,8 @@ Snippet         'JSON.parse(',     'JSON.'
 SnippetComplete 'prototype'
 SnippetComplete 'hasOwnProperty'
 SnippetComplete 'setTimeout'
+SnippetComplete 'addEventListener'
+SnippetComplete 'preventDefault'
+SnippetComplete 'stopPropagation'
+
 
