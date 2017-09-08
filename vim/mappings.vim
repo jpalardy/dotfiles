@@ -3,6 +3,8 @@
 " F-KEYS MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+nnoremap <F2>   :Errors<CR>:lnext<CR>
+
 nnoremap <F5>   :ToggleSpaceHi<CR>
 inoremap <F5>   <C-o>:ToggleSpaceHi<CR>
 nnoremap <F6>   :set spell!<CR>
