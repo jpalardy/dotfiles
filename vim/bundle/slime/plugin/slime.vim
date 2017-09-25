@@ -86,8 +86,11 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! s:NeovimSend(config, text)
+  " Neovim jobsend is fully asynchronous, it causes some problems with
+  " iPython %cpaste (input buffering: not all lines sent over)
+  " So this s:WritePasteFile can help as a small lock & delay
   call s:WritePasteFile(a:text)
-  call jobsend(str2nr(a:config["jobid"]), add(readfile(g:slime_paste_file), ""))
+  call jobsend(str2nr(a:config["jobid"]), split(a:text, "\n", 1))
 endfunction
 
 function! s:NeovimConfig() abort
@@ -215,12 +218,12 @@ function! s:SlimeSendOp(type, ...) abort
   call s:SlimeRestoreCurPos()
 endfunction
 
-function! s:SlimeSendRange() range abort
+function! s:SlimeSendRange(startline, endline) abort
   call s:SlimeGetConfig()
 
   let rv = getreg('"')
   let rt = getregtype('"')
-  silent exe a:firstline . ',' . a:lastline . 'yank'
+  silent exe a:startline . ',' . a:endline . 'yank'
   call s:SlimeSend(@")
   call setreg('"', rv, rt)
 endfunction
@@ -287,7 +290,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 command -bar -nargs=0 SlimeConfig call s:SlimeConfig()
-command -range -bar -nargs=0 SlimeSend <line1>,<line2>call s:SlimeSendRange()
+command -range -bar -nargs=0 SlimeSend call s:SlimeSendRange(<line1>, <line2>)
 command -nargs=+ SlimeSend1 call s:SlimeSend(<q-args> . "\r")
 command -nargs=+ SlimeSend0 call s:SlimeSend(<args>)
 command! SlimeSendCurrentLine call s:SlimeSend(getline(".") . "\r")
