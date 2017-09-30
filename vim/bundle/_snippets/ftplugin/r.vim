@@ -9,8 +9,11 @@ Snippet '(', '() {|}'
 Snippet ')', ') {|}'
 " equal sign to arrow :-)
 Snippet '=', '<- '
+
 " magrittr
-Snippet '|', '%>% '
+Snippet '|', '%>%'
+Snippet '>', '%>%'
+
 " %, like in maxima
 Snippet '%', '.Last.value'
 
