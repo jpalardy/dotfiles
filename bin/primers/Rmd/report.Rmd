@@ -1,26 +1,36 @@
 
-```{r, echo=FALSE}
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  fig.width=8,
+  fig.align="center",
+  fig.asp=0.618,
+  out.width="100%",
+  echo=FALSE,
+  comment=""
+)
 
 library(data.table)
 library(ggplot2)
 library(scales)
 
-knitr::opts_chunk$set(comment="")
+theme_set(
+  theme_bw() +
+  theme(
+    panel.grid.minor=element_blank(),
+    axis.title.x=element_blank()
+  )
+)
 
 ```
 
-```{r}
+```{r chunk-name}
 
 d <- fread("...")
 setnames(d, c("..."))
 
 ggplot(d, aes(...)) +
-  geom_point() +
-  theme_bw() +
-  theme(
-    panel.grid.minor=element_blank(),
-    legend.position="none"
-  )
+  geom_point()
 
 ```
 
