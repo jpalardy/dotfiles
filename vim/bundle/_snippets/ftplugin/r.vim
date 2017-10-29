@@ -17,3 +17,6 @@ Snippet '>', '%>%'
 " %, like in maxima
 Snippet '%', '.Last.value'
 
+" r block
+Snippet '{r', "```{r |}\n\n```"
+

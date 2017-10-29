@@ -1,0 +1,3 @@
+
+runtime! ftplugin/r.vim
+
