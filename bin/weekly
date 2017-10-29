@@ -1,0 +1,19 @@
+#!/bin/bash
+
+step_pause() {
+  echo "#################################################"
+  read -p "# $1"
+  eval $1
+}
+
+step() {
+  echo "#################################################"
+  read -t 5 -p "# $1"
+  eval $1
+}
+
+step       "brew update"
+step       "brew outdated"
+step_pause "brew upgrade"
+step       "brew cleanup"
+
