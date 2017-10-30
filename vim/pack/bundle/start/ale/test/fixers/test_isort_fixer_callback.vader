@@ -1,0 +1,29 @@
+Before:
+  Save g:ale_python_isort_executable
+
+  " Use an invalid global executable, so we don't match it.
+  let g:ale_python_isort_executable = 'xxxinvalid'
+
+  call ale#test#SetDirectory('/testplugin/test/fixers')
+  silent cd ..
+  silent cd command_callback
+  let g:dir = getcwd()
+
+  let b:bin_dir = has('win32') ? 'Scripts' : 'bin'
+
+After:
+  Restore
+
+  unlet! b:bin_dir
+
+  call ale#test#RestoreDirectory()
+
+Execute(The isort callback should return the correct default values):
+  AssertEqual
+  \ 0,
+  \ ale#fixers#isort#Fix(bufnr(''))
+
+  silent execute 'file ' . fnameescape(g:dir . '/python_paths/with_virtualenv/subdir/foo/bar.py')
+  AssertEqual
+  \ {'command': ale#Escape(ale#path#Winify(g:dir . '/python_paths/with_virtualenv/env/' . b:bin_dir . '/isort')) . ' -' },
+  \ ale#fixers#isort#Fix(bufnr(''))

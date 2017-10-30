@@ -1,0 +1,35 @@
+Before:
+  let g:output = []
+
+  function! TestCallback(buffer, output)
+    let g:output = a:output
+
+    return []
+  endfunction
+
+  call ale#linter#Define('foobar', {
+  \ 'name': 'testlinter',
+  \ 'callback': 'TestCallback',
+  \ 'executable': has('win32') ? 'cmd' : 'cat',
+  \ 'command': has('win32') ? 'type %t' : 'cat %t',
+  \})
+
+After:
+  unlet! g:output
+  delfunction TestCallback
+  call ale#linter#Reset()
+
+Given foobar (Some imaginary filetype):
+  foo
+  bar
+  baz
+
+Execute(ALE should be able to read the %t file):
+  AssertEqual 'foobar', &filetype
+
+  " Sleep a little so the test passes more.
+  sleep 100ms
+  call ale#Lint()
+  call ale#engine#WaitForJobs(2000)
+
+  AssertEqual ['foo', 'bar', 'baz'], g:output

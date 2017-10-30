@@ -1,0 +1,161 @@
+Execute(The GCC handler should ignore other lines of output):
+  AssertEqual
+  \ [],
+  \ ale#handlers#gcc#HandleGCCFormat(347, [
+  \   'foo',
+  \   'bar',
+  \   'baz',
+  \ ])
+
+Execute(GCC errors from included files should be parsed correctly):
+  AssertEqual
+  \ [
+  \   {
+  \     'lnum': 1,
+  \     'col': 1,
+  \     'filename': 'broken.h',
+  \     'type': 'E',
+  \     'text': 'expected identifier or ''('' before ''{'' token',
+  \   },
+  \ ],
+  \ ale#handlers#gcc#HandleGCCFormat(347, [
+  \   'In file included from <stdin>:3:0:',
+  \   'broken.h:1:1: error: expected identifier or ''('' before ''{'' token',
+  \   ' {{{',
+  \   ' ^',
+  \ ])
+
+  AssertEqual
+  \ [
+  \   {
+  \     'lnum': 1,
+  \     'col': 1,
+  \     'filename': 'b.h',
+  \     'type': 'E',
+  \     'text': 'expected identifier or ''('' before ''{'' token',
+  \   },
+  \ ],
+  \ ale#handlers#gcc#HandleGCCFormat(347, [
+  \   'In file included from a.h:1:0,',
+  \   '                 from test.c:3:',
+  \   'b.h:1:1: error: expected identifier or ''('' before ''{'' token',
+  \   ' {{{',
+  \   ' ^',
+  \ ])
+
+  AssertEqual
+  \ [
+  \   {
+  \     'lnum': 1,
+  \     'col': 1,
+  \     'filename': 'b.h',
+  \     'type': 'E',
+  \     'text': 'unknown type name ''bad_type''',
+  \   },
+  \   {
+  \     'lnum': 2,
+  \     'col': 1,
+  \     'filename': 'b.h',
+  \     'type': 'E',
+  \     'text': 'unknown type name ''other_bad_type''',
+  \   },
+  \ ],
+  \ ale#handlers#gcc#HandleGCCFormat(347, [
+  \   'In file included from a.h:1:0,',
+  \   '                 from test.c:3:',
+  \   'b.h:1:1: error: unknown type name ‘bad_type’',
+  \   ' bad_type x;',
+  \   ' ^',
+  \   'b.h:2:1: error: unknown type name ‘other_bad_type’',
+  \   ' other_bad_type y;',
+  \   ' ^',
+  \ ])
+
+Execute(GCC versions should be parsed correctly):
+  AssertEqual [4, 9, 1], ale#handlers#gcc#ParseGCCVersion([
+  \ 'g++ (GCC) 4.9.1 20140922 (Red Hat 4.9.1-10)',
+  \])
+  AssertEqual [4, 8, 4], ale#handlers#gcc#ParseGCCVersion([
+  \ 'gcc (Ubuntu 4.8.4-2ubuntu1~14.04.3) 4.8.4',
+  \ 'Copyright (C) 2013 Free Software Foundation, Inc.',
+  \ 'This is free software; see the source for copying conditions.  There is NO',
+  \ 'warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.',
+  \])
+
+Execute(The GCC handler shouldn't complain about #pragma once for headers):
+  silent file! test.h
+
+  AssertEqual
+  \ [],
+  \ ale#handlers#gcc#HandleGCCFormat(347, [
+  \   '<stdin>:1:1: warning: #pragma once in main file [enabled by default]',
+  \ ])
+
+  silent file! test.hpp
+
+  AssertEqual
+  \ [],
+  \ ale#handlers#gcc#HandleGCCFormat(347, [
+  \   '<stdin>:1:1: warning: #pragma once in main file [enabled by default]',
+  \ ])
+
+Execute(The GCC handler should handle syntax errors):
+  AssertEqual
+  \ [
+  \   {
+  \     'lnum': 6,
+  \     'col': 12,
+  \     'type': 'E',
+  \     'text': 'invalid suffix "p" on integer constant'
+  \   },
+  \   {
+  \     'lnum': 17,
+  \     'col': 5,
+  \     'type': 'E',
+  \     'text': 'invalid suffix "n" on integer constant'
+  \   },
+  \   {
+  \     'lnum': 4,
+  \     'type': 'E',
+  \     'text': 'variable or field ''foo'' declared void'
+  \   },
+  \   {
+  \     'lnum': 4,
+  \     'type': 'E',
+  \     'text': '''cat'' was not declared in this scope'
+  \   },
+  \   {
+  \     'lnum': 12,
+  \     'type': 'E',
+  \     'text': 'expected '';'' before ''o'''
+  \   },
+  \ ],
+  \ ale#handlers#gcc#HandleGCCFormat(347, [
+  \ '<stdin>:6:12: error: invalid suffix "p" on integer constant',
+  \ '<stdin>:17:5: error: invalid suffix "n" on integer constant',
+  \ '<stdin>:4: error: variable or field ''foo'' declared void',
+  \ '<stdin>:4: error: ''cat'' was not declared in this scope',
+  \ '<stdin>:12: error: expected `;'' before ''o''',
+  \ ])
+
+Execute(The GCC handler should handle notes with no previous message):
+  AssertEqual
+  \ [],
+  \ ale#handlers#gcc#HandleGCCFormat(347, [
+  \   '<stdin>:1:1: note: x',
+  \   '<stdin>:1:1: note: x',
+  \ ])
+
+Execute(The GCC handler should interpret - as being the current file):
+  AssertEqual
+  \ [
+  \   {
+  \     'lnum': 6,
+  \     'col': 12,
+  \     'type': 'E',
+  \     'text': 'Some error',
+  \   },
+  \ ],
+  \ ale#handlers#gcc#HandleGCCFormat(347, [
+  \ '-:6:12: error: Some error',
+  \ ])

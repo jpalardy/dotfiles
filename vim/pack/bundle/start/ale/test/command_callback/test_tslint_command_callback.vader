@@ -1,0 +1,39 @@
+Before:
+  Save g:ale_typescript_tslint_executable
+  Save g:ale_typescript_tslint_config_path
+  Save g:ale_typescript_tslint_rules_dir
+  Save g:ale_typescript_tslint_use_global
+
+  unlet! g:ale_typescript_tslint_executable
+  unlet! g:ale_typescript_tslint_config_path
+  unlet! g:ale_typescript_tslint_rules_dir
+  unlet! g:ale_typescript_tslint_use_global
+
+  runtime ale_linters/typescript/tslint.vim
+
+  call ale#test#SetDirectory('/testplugin/test/command_callback')
+  call ale#test#SetFilename('test.ts')
+
+After:
+  Restore
+
+  unlet! b:ale_typescript_tslint_rules_dir
+
+  call ale#test#RestoreDirectory()
+  call ale#linter#Reset()
+
+Execute(The default tslint command should be correct):
+  AssertEqual
+  \ 'cd ' . ale#Escape(expand('%:p:h')) . ' && '
+  \   . 'tslint --format json %t',
+  \ ale_linters#typescript#tslint#GetCommand(bufnr(''))
+
+Execute(The rules directory option should be included if set):
+  let b:ale_typescript_tslint_rules_dir = '/foo/bar'
+
+  AssertEqual
+  \ 'cd ' . ale#Escape(expand('%:p:h')) . ' && '
+  \   . 'tslint --format json'
+  \   . ' -r ' . ale#Escape('/foo/bar')
+  \   . ' %t',
+  \ ale_linters#typescript#tslint#GetCommand(bufnr(''))

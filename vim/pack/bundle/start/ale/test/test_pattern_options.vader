@@ -1,0 +1,32 @@
+Before:
+  Save g:ale_pattern_options
+  Save g:ale_pattern_options_enabled
+  Save &filetype
+
+After:
+  Restore
+
+  unlet! b:ale_enabled
+  unlet! b:some_option
+
+Execute(Buffer variables should be set when filename patterns match):
+  let g:ale_pattern_options = {'baz.*\.js': {
+  \ 'ale_enabled': 1,
+  \ 'some_option': 347,
+  \ '&filetype': 'pattern_option_set_filetype',
+  \}}
+
+  silent! file foobar.js
+
+  call ale#pattern_options#SetOptions()
+
+  Assert !exists('b:ale_enabled')
+  Assert !exists('b:some_option')
+
+  silent! file bazboz.js
+
+  call ale#pattern_options#SetOptions()
+
+  AssertEqual 1, b:ale_enabled
+  AssertEqual 347, b:some_option
+  AssertEqual 'pattern_option_set_filetype', &filetype

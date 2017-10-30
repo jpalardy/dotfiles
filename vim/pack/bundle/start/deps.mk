@@ -1,3 +1,9 @@
+bundle.ale:
+	@rm -rf ale
+	git clone --depth=1 https://github.com/w0rp/ale.git ale
+	@rm -rf ale/.git
+	@find ale -name .gitignore | xargs rm
+
 bundle.fugitive:
 	@rm -rf fugitive
 	git clone --depth=1 https://github.com/tpope/vim-fugitive.git fugitive
@@ -34,5 +40,5 @@ bundle.tabular:
 	@rm -rf tabular/.git
 	@find tabular -name .gitignore | xargs rm
 
-.PHONY: bundle.fugitive bundle.gnupg bundle.nerdcommenter bundle.slime bundle.spacehi bundle.tabular
+.PHONY: bundle.ale bundle.fugitive bundle.gnupg bundle.nerdcommenter bundle.slime bundle.spacehi bundle.tabular
 

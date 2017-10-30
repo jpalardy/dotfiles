@@ -1,0 +1,41 @@
+After:
+  call ale#linter#Reset()
+
+Execute(The shell handler should parse lines correctly):
+  runtime ale_linters/sh/shell.vim
+
+  AssertEqual
+  \ [
+  \   {
+  \     'lnum': 13,
+  \     'text': 'syntax error near unexpected token d',
+  \   },
+  \   {
+  \     'lnum': 7,
+  \     'text': 'line 42: line 36:',
+  \   },
+  \   {
+  \     'lnum': 11,
+  \     'text': 'Syntax error: "(" unexpected',
+  \   },
+  \   {
+  \     'lnum': 95,
+  \     'text': 'parse error near `out=$(( $1 / 1024. )...',
+  \   },
+  \   {
+  \     'lnum': 22,
+  \     'text': ':11: :33: :44:',
+  \   },
+  \   {
+  \     'lnum': 9,
+  \     'text': '`done'' unexpected',
+  \   },
+  \ ],
+  \ ale_linters#sh#shell#Handle(347, [
+  \   'bash: line 13: syntax error near unexpected token d',
+  \   'bash: line 7: line 42: line 36:',
+  \   'sh: 11: Syntax error: "(" unexpected',
+  \   'qfm:95: parse error near `out=$(( $1 / 1024. )...',
+  \   'qfm:22: :11: :33: :44:',
+  \   'foo.sh: syntax error at line 9: `done'' unexpected',
+  \ ])

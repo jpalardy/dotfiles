@@ -1,0 +1,4 @@
+Execute($TMPDIR should be set to a default value if unset):
+  if has('unix')
+    AssertEqual '/tmp', $TMPDIR
+  endif

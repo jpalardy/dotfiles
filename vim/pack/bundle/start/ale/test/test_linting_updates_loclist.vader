@@ -1,0 +1,75 @@
+Before:
+  Save g:ale_set_signs
+  let g:ale_set_signs = 1
+
+  let g:expected_data = [
+  \ {
+  \   'lnum': 1,
+  \   'bufnr': bufnr('%'),
+  \   'vcol': 0,
+  \   'linter_name': 'testlinter',
+  \   'nr': -1,
+  \   'type': 'W',
+  \   'col': 10,
+  \   'text': 'Infix operators must be spaced. [Warning/space-infix-ops]',
+  \   'sign_id': 1000001,
+  \ },
+  \ {
+  \   'lnum': 2,
+  \   'bufnr': bufnr('%'),
+  \   'vcol': 0,
+  \   'linter_name': 'testlinter',
+  \   'nr': -1,
+  \   'type': 'E',
+  \   'col': 10,
+  \   'text': 'Missing semicolon. [Error/semi]',
+  \   'sign_id': 1000002,
+  \ }
+  \]
+
+  function! TestCallback(buffer, output)
+    return [
+    \ {
+    \   'lnum': 1,
+    \   'type': 'W',
+    \   'col': 10,
+    \   'text': 'Infix operators must be spaced. [Warning/space-infix-ops]',
+    \ },
+    \ {
+    \   'lnum': 2,
+    \   'type': 'E',
+    \   'col': 10,
+    \   'text': 'Missing semicolon. [Error/semi]',
+    \ }
+    \]
+  endfunction
+
+  call ale#linter#Define('foobar', {
+  \ 'name': 'testlinter',
+  \ 'callback': 'TestCallback',
+  \ 'executable': has('win32') ? 'cmd': 'true',
+  \ 'command': 'true',
+  \ 'read_buffer': 0,
+  \})
+
+  sign unplace *
+
+After:
+  Restore
+
+  delfunction TestCallback
+
+  unlet! g:expected_data
+  let g:ale_buffer_info = {}
+  call ale#linter#Reset()
+
+Given foobar (Some JavaScript with problems):
+  var y = 3+3;
+  var y = 3
+
+Execute(The loclist should be updated after linting is done):
+  call ale#Lint()
+  call ale#engine#WaitForJobs(2000)
+
+  AssertEqual ['' . bufnr('%')], keys(g:ale_buffer_info)
+  AssertEqual g:expected_data, g:ale_buffer_info[bufnr('%')].loclist

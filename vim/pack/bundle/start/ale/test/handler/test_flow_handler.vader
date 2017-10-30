@@ -1,0 +1,354 @@
+Before:
+  runtime ale_linters/javascript/flow.vim
+
+After:
+  unlet! g:flow_output
+  unlet! g:expected
+  unlet! g:actual
+  call ale#linter#Reset()
+
+Execute(The flow handler should throw away non-JSON lines):
+  AssertEqual
+  \ [],
+  \ ale_linters#javascript#flow#Handle(bufnr(''), [
+  \   'Already up-to-date.',
+  \   '{"flowVersion":"0.50.0","errors":[],"passed":true}',
+  \ ])
+  AssertEqual
+  \ [],
+  \ ale_linters#javascript#flow#Handle(bufnr(''), [
+  \   'foo',
+  \   'bar',
+  \   'baz',
+  \   '{"flowVersion":"0.50.0","errors":[],"passed":true}',
+  \ ])
+
+Execute(The flow handler should process errors correctly.):
+  silent! noautocmd file /home/w0rp/Downloads/graphql-js/src/language/parser.js
+
+  let g:flow_output = {
+  \ "flowVersion": "0.39.0",
+  \ "errors": [
+  \   {
+  \     "kind": "infer",
+  \     "level": "error",
+  \     "message": [
+  \       {
+  \         "context": "  return 1",
+  \         "descr": "number",
+  \         "type": "Blame",
+  \         "loc": {
+  \           "source": expand('%:p'),
+  \           "type": "SourceFile",
+  \           "start": {
+  \             "line": 417,
+  \             "column": 10,
+  \             "offset": 9503
+  \           },
+  \           "end": {
+  \             "line": 417,
+  \             "column": 10,
+  \             "offset": 9504
+  \           }
+  \         },
+  \         "path": expand('%:p'),
+  \         "line": 417,
+  \         "endline": 417,
+  \         "start": 10,
+  \         "end": 10
+  \       },
+  \       {
+  \         "context": v:null,
+  \         "descr": "This type is incompatible with the expected return type of",
+  \         "type": "Comment",
+  \         "path": "",
+  \         "line": 0,
+  \         "endline": 0,
+  \         "start": 1,
+  \         "end": 0
+  \       },
+  \       {
+  \         "context": "function parseArguments(lexer: Lexer<*>): Array<ArgumentNode> {",
+  \         "descr": "array type",
+  \         "type": "Blame",
+  \         "loc": {
+  \           "source": expand('%:p'),
+  \           "type": "SourceFile",
+  \           "start": {
+  \             "line": 416,
+  \             "column": 43,
+  \             "offset": 9472
+  \           },
+  \           "end": {
+  \             "line": 416,
+  \             "column": 61,
+  \             "offset": 9491
+  \           }
+  \         },
+  \         "path": expand('%:p'),
+  \         "line": 416,
+  \         "endline": 416,
+  \         "start": 43,
+  \         "end": 61
+  \       }
+  \     ]
+  \   },
+  \   {
+  \     "kind": "infer",
+  \     "level": "warning",
+  \     "message": [
+  \       {
+  \         "context": "  return peek(lexer, TokenKind.PAREN_L) ?",
+  \         "descr": "unreachable code",
+  \         "type": "Blame",
+  \         "loc": {
+  \           "source": expand('%:p'),
+  \           "type": "SourceFile",
+  \           "start": {
+  \             "line": 419,
+  \             "column": 3,
+  \             "offset": 9508
+  \           },
+  \           "end": {
+  \             "line": 421,
+  \             "column": 7,
+  \             "offset": 9626
+  \           }
+  \         },
+  \         "path": expand('%:p'),
+  \         "line": 419,
+  \         "endline": 421,
+  \         "start": 3,
+  \         "end": 7
+  \       }
+  \     ]
+  \   }
+  \ ],
+  \ "passed": v:false
+  \}
+
+  let g:actual = ale_linters#javascript#flow#Handle(bufnr(''), [json_encode(g:flow_output)])
+  let g:expected = [
+  \ {
+  \   'lnum': 417,
+  \   'type': 'E',
+  \   'col': 10,
+  \   'text': 'number: This type is incompatible with the expected return type of array type',
+  \ },
+  \ {
+  \   'lnum': 419,
+  \   'type': 'W',
+  \   'col': 3,
+  \   'text': 'unreachable code:',
+  \ },
+  \]
+
+  AssertEqual g:expected, g:actual
+
+Execute(The flow handler should fetch the correct location for the currently opened file, even when it's not in the first message.):
+  silent! noautocmd file /Users/rav/Projects/vim-ale-flow/index.js
+
+  let g:flow_output = {
+  \ "flowVersion": "0.44.0",
+  \ "errors": [{
+  \   "operation": {
+  \     "context": "  <Foo foo=\"bar\"/>, document.getElementById('foo')",
+  \     "descr": "React element `Foo`",
+  \     "type": "Blame",
+  \     "loc": {
+  \       "source": expand('%:p'),
+  \       "type": "SourceFile",
+  \       "start": {
+  \         "line": 6,
+  \         "column": 3,
+  \         "offset": 92
+  \       },
+  \       "end": {
+  \         "line": 6,
+  \         "column": 18,
+  \         "offset": 108
+  \       }
+  \     },
+  \     "path": expand('%:p'),
+  \     "line": 6,
+  \     "endline": 6,
+  \     "start": 3,
+  \     "end": 18
+  \   },
+  \   "kind": "infer",
+  \   "level": "error",
+  \   "message": [{
+  \     "context": "module.exports = function(props: Props) {",
+  \     "descr": "property `bar`",
+  \     "type": "Blame",
+  \     "loc": {
+  \       "source": "/Users/rav/Projects/vim-ale-flow/foo.js",
+  \       "type": "SourceFile",
+  \       "start": {
+  \         "line": 9,
+  \         "column": 34,
+  \         "offset": 121
+  \       },
+  \       "end": {
+  \         "line": 9,
+  \         "column": 38,
+  \         "offset": 126
+  \       }
+  \     },
+  \     "path": "/Users/rav/Projects/vim-ale-flow/foo.js",
+  \     "line": 9,
+  \     "endline": 9,
+  \     "start": 34,
+  \     "end": 38
+  \   }, {
+  \     "context": v:null,
+  \     "descr": "Property not found in",
+  \     "type": "Comment",
+  \     "path": "",
+  \     "line": 0,
+  \     "endline": 0,
+  \     "start": 1,
+  \     "end": 0
+  \   }, {
+  \     "context": "  <Foo foo=\"bar\"/>, document.getElementById('foo')",
+  \     "descr": "props of React element `Foo`",
+  \     "type": "Blame",
+  \     "loc": {
+  \       "source": expand('%:p'),
+  \       "type": "SourceFile",
+  \       "start": {
+  \         "line": 6,
+  \         "column": 3,
+  \         "offset": 92
+  \       },
+  \       "end": {
+  \         "line": 6,
+  \         "column": 18,
+  \         "offset": 108
+  \       }
+  \     },
+  \     "path": expand('%:p'),
+  \     "line": 6,
+  \     "endline": 6,
+  \     "start": 3,
+  \     "end": 18
+  \   }]
+  \ }],
+  \ "passed": v:false
+  \}
+
+  let g:actual = ale_linters#javascript#flow#Handle(bufnr(''), [json_encode(g:flow_output)])
+  let g:expected = [
+  \ {
+  \   'lnum': 6,
+  \   'col': 3,
+  \   'type': 'E',
+  \   'text': 'property `bar`: Property not found in props of React element `Foo` See also: React element `Foo`'
+  \ }
+  \]
+
+  AssertEqual g:expected, g:actual
+
+Execute(The flow handler should handle relative paths):
+  silent! noautocmd file /Users/rav/Projects/vim-ale-flow/index.js
+
+  let g:flow_output = {
+  \ "flowVersion": "0.44.0",
+  \ "errors": [{
+  \   "operation": {
+  \     "context": "  <Foo foo=\"bar\"/>, document.getElementById('foo')",
+  \     "descr": "React element `Foo`",
+  \     "type": "Blame",
+  \     "loc": {
+  \       "source": expand('%:p'),
+  \       "type": "SourceFile",
+  \       "start": {
+  \         "line": 6,
+  \         "column": 3,
+  \         "offset": 92
+  \       },
+  \       "end": {
+  \         "line": 6,
+  \         "column": 18,
+  \         "offset": 108
+  \       }
+  \     },
+  \     "path": expand('%:p'),
+  \     "line": 6,
+  \     "endline": 6,
+  \     "start": 3,
+  \     "end": 18
+  \   },
+  \   "kind": "infer",
+  \   "level": "error",
+  \   "message": [{
+  \     "context": "module.exports = function(props: Props) {",
+  \     "descr": "property `bar`",
+  \     "type": "Blame",
+  \     "loc": {
+  \       "source": "vim-ale-flow/foo.js",
+  \       "type": "SourceFile",
+  \       "start": {
+  \         "line": 9,
+  \         "column": 34,
+  \         "offset": 121
+  \       },
+  \       "end": {
+  \         "line": 9,
+  \         "column": 38,
+  \         "offset": 126
+  \       }
+  \     },
+  \     "path": "vim-ale-flow/foo.js",
+  \     "line": 9,
+  \     "endline": 9,
+  \     "start": 34,
+  \     "end": 38
+  \   }, {
+  \     "context": v:null,
+  \     "descr": "Property not found in",
+  \     "type": "Comment",
+  \     "path": "",
+  \     "line": 0,
+  \     "endline": 0,
+  \     "start": 1,
+  \     "end": 0
+  \   }, {
+  \     "context": "  <Foo foo=\"bar\"/>, document.getElementById('foo')",
+  \     "descr": "props of React element `Foo`",
+  \     "type": "Blame",
+  \     "loc": {
+  \       "source": expand('%:p'),
+  \       "type": "SourceFile",
+  \       "start": {
+  \         "line": 6,
+  \         "column": 3,
+  \         "offset": 92
+  \       },
+  \       "end": {
+  \         "line": 6,
+  \         "column": 18,
+  \         "offset": 108
+  \       }
+  \     },
+  \     "path": expand('%:p'),
+  \     "line": 6,
+  \     "endline": 6,
+  \     "start": 3,
+  \     "end": 18
+  \   }]
+  \ }],
+  \ "passed": v:false
+  \}
+
+  let g:actual = ale_linters#javascript#flow#Handle(bufnr(''), [json_encode(g:flow_output)])
+  let g:expected = [
+  \ {
+  \   'lnum': 6,
+  \   'col': 3,
+  \   'type': 'E',
+  \   'text': 'property `bar`: Property not found in props of React element `Foo` See also: React element `Foo`'
+  \ }
+  \]
+
+  AssertEqual g:expected, g:actual

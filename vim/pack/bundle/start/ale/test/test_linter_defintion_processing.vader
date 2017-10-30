@@ -1,0 +1,443 @@
+Before:
+  let g:linter = {}
+
+After:
+  unlet g:linter
+
+Execute (PreProcess should throw when the linter object is not a Dictionary):
+  AssertThrows call ale#linter#PreProcess('')
+  AssertEqual 'The linter object must be a Dictionary', g:vader_exception
+
+Execute (PreProcess should throw when there is no name):
+  AssertThrows call ale#linter#PreProcess({
+  \ 'callback': 'SomeFunction',
+  \ 'executable': 'echo',
+  \ 'command': 'echo',
+  \})
+  AssertEqual '`name` must be defined to name the linter', g:vader_exception
+
+Execute (PreProcess should throw when there is no callback):
+  AssertThrows call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'executable': 'echo',
+  \ 'command': 'echo',
+  \})
+  AssertEqual '`callback` must be defined with a callback to accept output', g:vader_exception
+
+Execute (PreProcess should throw when then callback is not a function):
+  AssertThrows call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'callback': 1,
+  \ 'executable': 'echo',
+  \ 'command': 'echo',
+  \})
+  AssertEqual '`callback` must be defined with a callback to accept output', g:vader_exception
+
+Execute (PreProcess should throw when there is no executable or executable_callback):
+  AssertThrows call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'callback': 'SomeFunction',
+  \ 'command': 'echo',
+  \})
+  AssertEqual 'Either `executable` or `executable_callback` must be defined', g:vader_exception
+
+Execute (PreProcess should throw when executable is not a string):
+  AssertThrows call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'callback': 'SomeFunction',
+  \ 'executable': 123,
+  \ 'command': 'echo',
+  \})
+  AssertEqual '`executable` must be a string if defined', g:vader_exception
+
+Execute (PreProcess should throw when executable_callback is not a callback):
+  AssertThrows call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'callback': 'SomeFunction',
+  \ 'executable_callback': 123,
+  \ 'command': 'echo',
+  \})
+  AssertEqual '`executable_callback` must be a callback if defined', g:vader_exception
+
+Execute (PreProcess should throw when there is no command):
+  AssertThrows call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'callback': 'SomeFunction',
+  \ 'executable': 'echo',
+  \})
+  AssertEqual 'Either `command`, `executable_callback`, `command_chain` must be defined', g:vader_exception
+
+Execute (PreProcess should throw when command is not a string):
+  AssertThrows call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'callback': 'SomeFunction',
+  \ 'executable': 'echo',
+  \ 'command': [],
+  \})
+  AssertEqual '`command` must be a string if defined', g:vader_exception
+
+Execute (PreProcess should throw when command_callback is not a callback):
+  AssertThrows call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'callback': 'SomeFunction',
+  \ 'executable': 'echo',
+  \ 'command_callback': 123,
+  \})
+  AssertEqual '`command_callback` must be a callback if defined', g:vader_exception
+
+Execute (PreProcess should when the output stream isn't a valid string):
+  AssertThrows call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'callback': 'SomeFunction',
+  \ 'executable': 'echo',
+  \ 'command': 'echo',
+  \ 'output_stream': 'xxx',
+  \})
+  AssertEqual "`output_stream` must be 'stdout', 'stderr', or 'both'", g:vader_exception
+
+Execute (PreProcess should not throw when everything is correct):
+  call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'callback': 'SomeFunction',
+  \ 'executable': 'echo',
+  \ 'command': 'echo',
+  \})
+
+Execute (PreProcess should accept an stdout output_stream):
+  call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'callback': 'SomeFunction',
+  \ 'executable': 'echo',
+  \ 'command': 'echo',
+  \ 'output_stream': 'stdout',
+  \})
+
+Execute (PreProcess should accept an stderr output_stream):
+  call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'callback': 'SomeFunction',
+  \ 'executable': 'echo',
+  \ 'command': 'echo',
+  \ 'output_stream': 'stderr',
+  \})
+
+Execute (PreProcess should accept a 'both' output_stream):
+  call ale#linter#PreProcess({
+  \ 'name': 'foo',
+  \ 'callback': 'SomeFunction',
+  \ 'executable': 'echo',
+  \ 'command': 'echo',
+  \ 'output_stream': 'both',
+  \})
+
+Execute(PreProcess should complain if the command_chain is not a List):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command_chain': 'x',
+  \}
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual '`command_chain` must be a List', g:vader_exception
+
+Execute(PreProcess should complain if the command_chain is empty):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command_chain': [],
+  \}
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual '`command_chain` must contain at least one item', g:vader_exception
+
+Execute(PreProcess should complain if the command_chain has no callback):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command_chain': [{}],
+  \}
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual 'The `command_chain` item 0 must define a `callback` function', g:vader_exception
+
+Execute(PreProcess should complain if the command_chain callback is not a function):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command_chain': [{'callback': 2}],
+  \}
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual 'The `command_chain` item 0 must define a `callback` function', g:vader_exception
+
+Execute(PreProcess should accept a chain with one callback):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command_chain': [{'callback': 'foo'}],
+  \}
+  call ale#linter#PreProcess(g:linter)
+
+Execute(PreProcess should complain about invalid output_stream values in the chain):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command_chain': [{'callback': 'foo', 'output_stream': ''}],
+  \}
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual "The `command_chain` item 0 `output_stream` flag must be 'stdout', 'stderr', or 'both'", g:vader_exception
+
+Execute(PreProcess should complain about valid output_stream values in the chain):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command_chain': [{'callback': 'foo', 'output_stream': 'stdout'}],
+  \}
+  call ale#linter#PreProcess(g:linter)
+  let g:linter.command_chain[0].output_stream = 'stderr'
+  call ale#linter#PreProcess(g:linter)
+  let g:linter.command_chain[0].output_stream = 'both'
+  call ale#linter#PreProcess(g:linter)
+
+Execute(PreProcess should complain about invalid chain items at higher indices):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command_chain': [{'callback': 'foo'}, {'callback': 123}],
+  \}
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual 'The `command_chain` item 1 must define a `callback` function', g:vader_exception
+
+Execute(PreProcess should complain when conflicting command options are used):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command': 'foo',
+  \ 'command_chain': [{'callback': 'foo'}],
+  \}
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual 'Only one of `command`, `command_callback`, or `command_chain` should be set', g:vader_exception
+
+  unlet g:linter.command
+  let g:linter.command_callback = 'foo'
+
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual 'Only one of `command`, `command_callback`, or `command_chain` should be set', g:vader_exception
+
+  let g:linter.command = 'foo'
+  unlet g:linter.command_chain
+
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual 'Only one of `command`, `command_callback`, or `command_chain` should be set', g:vader_exception
+
+Execute(PreProcess should process the read_buffer option correctly):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command_chain': [{'callback': 'foo'}, {'callback': 'bar'}],
+  \ 'read_buffer': '0',
+  \}
+
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual '`read_buffer` must be `0` or `1`', g:vader_exception
+
+  let g:linter.read_buffer = 0
+
+  call ale#linter#PreProcess(g:linter)
+
+  let g:linter.read_buffer = 1
+
+  call ale#linter#PreProcess(g:linter)
+
+  unlet g:linter.read_buffer
+  let g:linter.command_chain[0].read_buffer = '0'
+
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual 'The `command_chain` item 0 value for `read_buffer` must be `0` or `1`', g:vader_exception
+
+  let g:linter.command_chain[0].read_buffer = 0
+
+  call ale#linter#PreProcess(g:linter)
+
+  let g:linter.command_chain[1].read_buffer = '0'
+
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual 'The `command_chain` item 1 value for `read_buffer` must be `0` or `1`', g:vader_exception
+
+  let g:linter.command_chain[1].read_buffer = 1
+
+  call ale#linter#PreProcess(g:linter)
+
+Execute(PreProcess should set a default value for read_buffer):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command': 'x',
+  \}
+
+  AssertEqual 1, ale#linter#PreProcess(g:linter).read_buffer
+
+Execute(PreProcess should process the lint_file option correctly):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command': 'x',
+  \ 'lint_file': 'x',
+  \}
+
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual '`lint_file` must be `0` or `1`', g:vader_exception
+
+  let g:linter.lint_file = 0
+
+  AssertEqual 0, ale#linter#PreProcess(g:linter).lint_file
+  " The default for read_buffer should be 1 when lint_file is 0
+  AssertEqual 1, ale#linter#PreProcess(g:linter).read_buffer
+
+  let g:linter.lint_file = 1
+
+  AssertEqual 1, ale#linter#PreProcess(g:linter).lint_file
+  " The default for read_buffer should change to 0 when lint_file is 1.
+  AssertEqual 0, ale#linter#PreProcess(g:linter).read_buffer
+
+  let g:linter.read_buffer = 1
+
+  " We shouldn't be able to set both options to 1 at the same time.
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual 'Only one of `lint_file` or `read_buffer` can be `1`', g:vader_exception
+
+Execute(PreProcess should set a default value for lint_file):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command': 'x',
+  \}
+
+  AssertEqual 0, ale#linter#PreProcess(g:linter).lint_file
+
+Execute(PreProcess should set a default value for aliases):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command': 'x',
+  \}
+
+  AssertEqual [], ale#linter#PreProcess(g:linter).aliases
+
+Execute(PreProcess should complain about invalid `aliases` values):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command': 'x',
+  \ 'aliases': 'foo',
+  \}
+
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual '`aliases` must be a List of String values', g:vader_exception
+
+  let g:linter.aliases = [1]
+
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual '`aliases` must be a List of String values', g:vader_exception
+
+Execute(PreProcess should accept `aliases` lists):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'x',
+  \ 'executable': 'x',
+  \ 'command': 'x',
+  \ 'aliases': [],
+  \}
+
+  AssertEqual [], ale#linter#PreProcess(g:linter).aliases
+
+  let g:linter.aliases = ['foo', 'bar']
+
+  AssertEqual ['foo', 'bar'], ale#linter#PreProcess(g:linter).aliases
+
+Execute(PreProcess should accept tsserver LSP configuration):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'executable': 'x',
+  \ 'command': 'x',
+  \ 'lsp': 'tsserver',
+  \ 'language_callback': 'x',
+  \ 'project_root_callback': 'x',
+  \}
+
+  AssertEqual 'tsserver', ale#linter#PreProcess(g:linter).lsp
+
+  call remove(g:linter, 'executable')
+  let g:linter.executable_callback = 'X'
+
+  call ale#linter#PreProcess(g:linter)
+
+  call remove(g:linter, 'command')
+  let g:linter.command_callback = 'X'
+
+  call ale#linter#PreProcess(g:linter)
+
+Execute(PreProcess should accept stdio LSP configuration):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'executable': 'x',
+  \ 'command': 'x',
+  \ 'lsp': 'stdio',
+  \ 'language_callback': 'x',
+  \ 'project_root_callback': 'x',
+  \}
+
+  AssertEqual 'stdio', ale#linter#PreProcess(g:linter).lsp
+
+  call remove(g:linter, 'executable')
+  let g:linter.executable_callback = 'X'
+
+  call ale#linter#PreProcess(g:linter)
+
+  call remove(g:linter, 'command')
+  let g:linter.command_callback = 'X'
+
+  call ale#linter#PreProcess(g:linter)
+
+Execute(PreProcess should accept LSP server configurations):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'lsp': 'socket',
+  \ 'address_callback': 'X',
+  \ 'language_callback': 'x',
+  \ 'project_root_callback': 'x',
+  \}
+
+  AssertEqual 'socket', ale#linter#PreProcess(g:linter).lsp
+
+Execute(PreProcess should require an address_callback for LSP socket configurations):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'lsp': 'socket',
+  \}
+
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual '`address_callback` must be defined for getting the LSP address', g:vader_exception
+
+Execute(PreProcess should complain about address_callback for non-LSP linters):
+  let g:linter = {
+  \ 'name': 'x',
+  \ 'callback': 'SomeFunction',
+  \ 'executable': 'echo',
+  \ 'command': 'echo',
+  \ 'address_callback': 'X',
+  \}
+
+  AssertThrows call ale#linter#PreProcess(g:linter)
+  AssertEqual '`address_callback` cannot be used when lsp != ''socket''', g:vader_exception

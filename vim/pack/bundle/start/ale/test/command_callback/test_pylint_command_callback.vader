@@ -1,0 +1,85 @@
+Before:
+  Save g:ale_python_pylint_executable
+  Save g:ale_python_pylint_options
+  Save g:ale_python_pylint_use_global
+
+  unlet! g:ale_python_pylint_executable
+  unlet! g:ale_python_pylint_options
+  unlet! g:ale_python_pylint_use_global
+
+  runtime ale_linters/python/pylint.vim
+  call ale#test#SetDirectory('/testplugin/test/command_callback')
+
+  let b:bin_dir = has('win32') ? 'Scripts' : 'bin'
+
+  let b:command_tail = ' --output-format text --msg-template="{path}:{line}:{column}: {msg_id} ({symbol}) {msg}" --reports n %s'
+
+After:
+  Restore
+
+  call ale#test#RestoreDirectory()
+  call ale#linter#Reset()
+
+  unlet! b:bin_dir
+  unlet! b:executable
+
+Execute(The pylint callbacks should return the correct default values):
+  AssertEqual
+  \ 'pylint',
+  \ ale_linters#python#pylint#GetExecutable(bufnr(''))
+  AssertEqual
+  \ ale#Escape('pylint') . ' ' . b:command_tail,
+  \ ale_linters#python#pylint#GetCommand(bufnr(''))
+
+Execute(The pylint executable should be configurable, and escaped properly):
+  let g:ale_python_pylint_executable = 'executable with spaces'
+
+  AssertEqual
+  \ 'executable with spaces',
+  \ ale_linters#python#pylint#GetExecutable(bufnr(''))
+  AssertEqual
+  \ ale#Escape('executable with spaces') . ' ' . b:command_tail,
+  \ ale_linters#python#pylint#GetCommand(bufnr(''))
+
+Execute(The pylint command callback should let you set options):
+  let g:ale_python_pylint_options = '--some-option'
+
+  AssertEqual
+  \ ale#Escape('pylint') . ' --some-option' . b:command_tail,
+  \ ale_linters#python#pylint#GetCommand(bufnr(''))
+
+Execute(The pylint callbacks shouldn't detect virtualenv directories where they don't exist):
+  silent execute 'file ' . fnameescape(g:dir . '/python_paths/no_virtualenv/subdir/foo/bar.py')
+
+  AssertEqual
+  \ 'pylint',
+  \ ale_linters#python#pylint#GetExecutable(bufnr(''))
+  AssertEqual
+  \ ale#Escape('pylint') . ' ' . b:command_tail,
+  \ ale_linters#python#pylint#GetCommand(bufnr(''))
+
+Execute(The pylint callbacks should detect virtualenv directories):
+  silent execute 'file ' . fnameescape(g:dir . '/python_paths/with_virtualenv/subdir/foo/bar.py')
+
+  let b:executable = ale#path#Winify(
+  \ g:dir . '/python_paths/with_virtualenv/env/' . b:bin_dir . '/pylint'
+  \)
+
+  AssertEqual
+  \ b:executable,
+  \ ale_linters#python#pylint#GetExecutable(bufnr(''))
+
+  AssertEqual
+  \ ale#Escape(b:executable) . ' ' . b:command_tail,
+  \ ale_linters#python#pylint#GetCommand(bufnr(''))
+
+Execute(You should able able to use the global pylint instead):
+  silent execute 'file ' . fnameescape(g:dir . '/python_paths/with_virtualenv/subdir/foo/bar.py')
+  let g:ale_python_pylint_use_global = 1
+
+  AssertEqual
+  \ 'pylint',
+  \ ale_linters#python#pylint#GetExecutable(bufnr(''))
+  AssertEqual
+  \ ale#Escape('pylint') . ' ' . b:command_tail,
+  \ ale_linters#python#pylint#GetCommand(bufnr(''))

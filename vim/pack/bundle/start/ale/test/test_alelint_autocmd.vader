@@ -1,0 +1,18 @@
+Before:
+  let g:success = 0
+  let g:ale_run_synchronously = 1
+
+After:
+  let g:ale_run_synchronously = 0
+  let g:ale_buffer_info = {}
+  augroup! VaderTest
+
+Execute (Run a lint cycle, and check that a variable is set in the autocmd):
+  augroup VaderTest
+    autocmd!
+    autocmd User ALELint let g:success = 1
+  augroup end
+
+  call ale#Lint()
+
+  AssertEqual g:success, 1
