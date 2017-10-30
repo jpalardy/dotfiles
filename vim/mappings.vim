@@ -37,9 +37,6 @@ endfunction
 " STRIP -- EMPTY LINE ENDINGS
 nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR>
 vnoremap _$ :call Preserve( "s/\\s\\+$//e")<CR>
-" STRIP -- EMPTY LINE BEGINNINGS
-nnoremap _^ :call Preserve("%s/^\\s\\+//e")<CR>
-vnoremap _^ :call Preserve( "s/^\\s\\+//e")<CR>
 
 " COMMATIZE
 vnoremap ,, :! paste -s -d, -<CR>
@@ -52,10 +49,6 @@ vnoremap ,a :! awk '{print }'<LEFT><LEFT>
 " ONLY KEEP LINES WHICH CONTAIN SEARCH
 nnoremap ,v :v/<C-R>//d<CR>gg
 nnoremap ,d :g/<C-R>//d<CR>gg
-
-" show future dates
-nnoremap ,f :! future<CR>
-vnoremap ,f :w !grep -o -w ....-..-.. \| xargs -n1 future<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER MAPPINGS
