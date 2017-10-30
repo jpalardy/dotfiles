@@ -5,5 +5,5 @@ if [ ! -d $HOME/dotfiles/bin/primers/$1 ]; then
   exit 1
 fi
 
-cp -v -R $HOME/dotfiles/bin/primers/$1 .
+rsync -av $HOME/dotfiles/bin/primers/$1/ .
 
