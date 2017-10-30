@@ -8,7 +8,7 @@ Comment functions so powerful—no comment necessary.
 
 #### [Vim-Plug](https://github.com/junegunn/vim-plug)
 
-1. Add `Plug 'Plug scrooloose/nerdcommenter'` to your vimrc file.
+1. Add `Plug 'scrooloose/nerdcommenter'` to your vimrc file.
 2. Reload your vimrc or restart
 3. Run `:PlugInstall`
 
@@ -88,6 +88,12 @@ let g:NERDAltDelims_java = 1
 
 " Add your own custom formats or override the defaults
 let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
 ```
 
 ### Default mappings

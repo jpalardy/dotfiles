@@ -437,6 +437,9 @@ change the filetype back: >
 |'NERDBlockComIgnoreEmpty'|           Forces right delimiters to be placed
                                       when doing visual-block comments.
 
+|'NERDCommentEmptyLines'|             Specifies if empty lines should be
+                                      commented (useful with regions).
+
 |'NERDCommentWholeLinesInVMode'|      Changes behaviour of visual comments.
 
 |'NERDCreateDefaultMappings'|         Turn the default mappings on/off.
@@ -475,6 +478,9 @@ change the filetype back: >
                                       whether to remove them when
                                       uncommenting.
                                       
+|'NERDTrimTrailingWhitespace'|        Specifies if trailing whitespace
+                                      should be deleted when uncommenting.
+
 |'NERDCompactSexyComs'|               Specifies whether to use the compact
                                       style sexy comments.
 
@@ -559,6 +565,15 @@ Otherwise, the code block would become: >
     }
     /*}  */
 <
+------------------------------------------------------------------------------
+                                                     *'NERDCommentEmptyLines'*
+Values: 0 or 1.
+Default: 0.
+
+This option affects commenting of empty lines. If this option is turned on,
+then empty lines will be commented as well. Useful when commenting regions of
+code.
+
 ------------------------------------------------------------------------------
                                                 *'NERDCommentWholeLinesInVMode'*
 Values: 0, 1 or 2.
@@ -736,6 +751,15 @@ as opposed to this: >
 If you want spaces to be added then set NERDSpaceDelims to 1 in your vimrc.
 
 See also |'NERDRemoveExtraSpaces'|.
+
+------------------------------------------------------------------------------
+                                                  *'NERDTrimTrailingWhitespace'*
+Values: 0 or 1.
+Default 0.
+
+When uncommenting an empty line some whitespace may be left as a result of
+alignment padding. With this option enabled any trailing whitespace will be
+deleted when uncommenting a line.
 
 ------------------------------------------------------------------------------
                                                              *'NERDDefaultAlign'*
@@ -1069,6 +1093,7 @@ Simon Hengel                        htmlcheetah
 Matt Tolton                         javacc
 Ivan Devat                          javascript.jquery
 tpope                               cucumber,pdf
+Lyude Paul                          piglit shader_test
 ==============================================================================
 10. License                                                   *NERDComLicense*
 
