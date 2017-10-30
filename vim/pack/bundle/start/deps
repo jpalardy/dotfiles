@@ -1,0 +1,6 @@
+fugitive       https://github.com/tpope/vim-fugitive.git
+gnupg          https://github.com/jamessan/vim-gnupg.git
+nerdcommenter  https://github.com/scrooloose/nerdcommenter.git
+slime          https://github.com/jpalardy/vim-slime
+spacehi        https://github.com/jpalardy/spacehi.vim.git
+tabular        https://github.com/godlygeek/tabular.git
