@@ -5,10 +5,6 @@
 " VIM, not VI
 set nocompatible
 
-" pathogen bundles
-filetype off
-call pathogen#runtime_append_all_bundles()
-
 " General appearance and behaviour
 filetype plugin indent on
 syntax on
