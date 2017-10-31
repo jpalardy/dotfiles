@@ -70,8 +70,6 @@ augroup mostly_spacehi
   autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax,BufWritePost *.go NoSpaceHi
 augroup END
 
-let g:syntastic_go_checkers=['go','gofmt','govet']
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " use tmux for slime
