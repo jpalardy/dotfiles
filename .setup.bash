@@ -33,6 +33,8 @@ relink .eslintrc     $DOTFILES/eslintrc
 
 relink .Rprofile     $DOTFILES/r/Rprofile
 
+relink .sqliterc     $DOTFILES/sqliterc
+
 relink .slate        $DOTFILES/slate
 
 relink .filter       $DOTFILES/filter
