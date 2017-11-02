@@ -15,4 +15,6 @@ function! s:ToggleBox()
 endfunction
 
 nnoremap <buffer> <CR> :call <SID>ToggleBox()<CR>
+" checks the box, replaces "___" with line from above
+nnoremap <buffer> <tab> :execute "normal 0lrxf_c$"<CR>
 
