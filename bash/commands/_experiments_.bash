@@ -6,6 +6,7 @@ holidays() {
 we() {
   vim $(which "$@")
 }
+complete -c we
 
 # ldf -- last downloaded file
 ldf() {
