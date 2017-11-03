@@ -22,10 +22,6 @@ vman() {
   \man "$@" | col -b | view - -c "set ft=man nomod"
 }
 
-manfiles() {
-  find $(echo $MANPATH | tr : ' ') -type f
-}
-
 #-------------------------------------------------
 
 du_sort() {

@@ -49,11 +49,6 @@ cdl() {
 }
 
 # inspired by zsh
-take() {
-  mkdir -p "$@" && cd "$@"
-}
-
-# inspired by zsh
 ..() {
   cd ..
 }

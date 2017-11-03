@@ -1,8 +1,4 @@
 
-holidays() {
-  gcal -q ${1:-CA_QU} -n
-}
-
 we() {
   vim $(which "$@")
 }
@@ -17,18 +13,6 @@ ldf() {
 
 wb() {
   vim "workbook.$1"
-}
-
-implode() {
-  local target=$PWD
-  cd ..
-  read -p "delete $target "
-  rm -rf $target
-}
-
-,s() {
-  pwd
-  git status --short --branch
 }
 
 check_expiration() {

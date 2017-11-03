@@ -1,13 +1,4 @@
 
-vim() {
-  local output=$(echo "$@" | awk '/^[^: ]+:[0-9]+:.*/ {split($0, fields, ":"); print fields[1], "+" fields[2]}')
-  if [ -z "$output" ]; then
-    command vim "$@"
-  else
-    command vim $output
-  fi
-}
-
 # 1. start vim
 # 2. execute ESC-h
 vim-() {
