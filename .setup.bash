@@ -37,5 +37,3 @@ relink .sqliterc     $DOTFILES/sqliterc
 
 relink .slate        $DOTFILES/slate
 
-relink .filter       $DOTFILES/filter
-

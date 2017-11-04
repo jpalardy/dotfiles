@@ -8,7 +8,7 @@ h() {
   if [ -z "$@" ]; then
     history $COUNT
   else
-    history | ack "$@" | tail -n $COUNT
+    history | grep -i "$@" | tail -n $COUNT
   fi
 }
 

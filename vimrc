@@ -38,7 +38,6 @@ set virtualedit=block
 set scrolloff=1
 
 set equalprg=
-set grepprg=ack\ -ai
 
 " don't insert 2 spaces after punctuation
 set nojoinspaces
