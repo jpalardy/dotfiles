@@ -56,3 +56,5 @@ export LC_ALL="en_US.UTF-8"
 
 export RLWRAP_HOME=$HOME/.rlwrap
 
+export FZF_DEFAULT_OPTS="--height 30 --reverse --border --inline-info"
+
