@@ -3,7 +3,7 @@
 " F-KEYS MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <F2>   :Errors<CR>:lnext<CR>
+nnoremap <F2>   :ALENextWrap<CR>
 
 nnoremap <F5>   :ToggleSpaceHi<CR>
 inoremap <F5>   <C-o>:ToggleSpaceHi<CR>
