@@ -1,3 +1,6 @@
+---
+pagetitle: "TITLE GOES HERE"
+---
 
 ```{r setup, include=FALSE}
 
