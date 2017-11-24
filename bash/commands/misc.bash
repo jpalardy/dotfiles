@@ -46,5 +46,14 @@ alias r="R --quiet"
 alias octave="octave-cli --quiet"
 alias maxima="rlwrap maxima --quiet"
 
+#-------------------------------------------------
+
 alias cask="brew cask"
+
+_cask() {
+  local word=${COMP_WORDS[COMP_CWORD]}
+  local commands="search info install"
+  COMPREPLY=( $(compgen -W "${commands}" -- "$word") )
+}
+complete -F _cask cask
 
