@@ -40,5 +40,17 @@ bundle.tabular:
 	@rm -rf tabular/.git
 	@find tabular -name .gitignore | xargs rm
 
-.PHONY: bundle.ale bundle.fugitive bundle.gnupg bundle.nerdcommenter bundle.slime bundle.spacehi bundle.tabular
+bundle.gitgutter:
+	@rm -rf gitgutter
+	git clone --depth=1 https://github.com/airblade/vim-gitgutter.git gitgutter
+	@rm -rf gitgutter/.git
+	@find gitgutter -name .gitignore | xargs rm
+
+bundle.lightline:
+	@rm -rf lightline
+	git clone --depth=1 https://github.com/itchyny/lightline.vim lightline
+	@rm -rf lightline/.git
+	@find lightline -name .gitignore | xargs rm
+
+.PHONY: bundle.ale bundle.fugitive bundle.gnupg bundle.nerdcommenter bundle.slime bundle.spacehi bundle.tabular bundle.gitgutter bundle.lightline
 

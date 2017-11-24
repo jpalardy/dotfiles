@@ -10,8 +10,6 @@ filetype plugin indent on
 syntax on
 set visualbell t_vb=
 set noerrorbells
-set ruler
-set showcmd
 set showmatch
 set wildmenu
 set wildmode=list:longest,full
@@ -46,6 +44,14 @@ set nojoinspaces
 set diffopt=filler,iwhite
 
 set spellcapcheck=
+
+set updatetime=250
+
+" statusline -related items
+set noruler
+set noshowmode
+set showcmd
+set laststatus=2
 
 if match($TERM, '256color$') != -1
   colorscheme 256_xoria
