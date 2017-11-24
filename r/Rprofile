@@ -6,9 +6,7 @@ options(width=160)
 
 .First = function () {
   if (interactive()) {
-    suppressMessages(require(ggplot2))
-    suppressMessages(require(data.table))
-    suppressMessages(require(magrittr))
+    suppressMessages(require(tidyverse))
   }
 }
 
