@@ -23,3 +23,7 @@ bs() {
   browser-sync start --server --files "$@"
 }
 
+ext-count() {
+  ff | awk -F. '{print $NF}' | count
+}
+
