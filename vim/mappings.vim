@@ -4,6 +4,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nnoremap <F2>   :ALENextWrap<CR>
+nnoremap <F4>   :GitGutterToggle<CR>
 
 nnoremap <F5>   :ToggleSpaceHi<CR>
 inoremap <F5>   <C-o>:ToggleSpaceHi<CR>
