@@ -26,4 +26,5 @@ SnippetComplete 'addEventListener'
 SnippetComplete 'preventDefault'
 SnippetComplete 'stopPropagation'
 
+SnippetComplete 'eslint', '/* eslint no-console: 0, | */'
 
