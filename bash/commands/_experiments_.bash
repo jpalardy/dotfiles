@@ -27,3 +27,12 @@ ext-count() {
   ff | awk -F. '{print $NF}' | count
 }
 
+nins() {
+  npm install --no-save "$@"
+}
+
+npm2svg() {
+  npm ls --json "$@" | npx npm2dot | grep -v "undefined" | twopi -Tsvg -o out.svg -Goverlap=false
+  open -a "Google Chrome" out.svg
+}
+
