@@ -1,8 +1,11 @@
 #!/bin/bash
 
 warp() {
+  # if a first argument is supplied, then use it as the warp file location
+  # otherwise, use the default "$HOME/.warp" location
+  local SOURCE="${1:-$HOME/.warp}"
+
   # ensure SOURCE file exists
-  local SOURCE="$HOME/.warp"
   if [ ! -f "$SOURCE" ]; then
     echo "$SOURCE does not exist..."
     return 1
@@ -39,7 +42,36 @@ warp() {
     fi
     COMMAND="$(awk -v cmd=$SSH 'BEGIN {printf cmd} {printf " " $1} END { print "" }' "$TARGET")"
   else
-    COMMAND="$(awk -v cmd=$SSH '{ n = split($1, parts, ":"); if (n == 2) { print cmd, "-p", parts[2], parts[1] } else { print cmd, $1 } }' "$TARGET")"
+    COMMAND="$(awk -v cmd=$SSH '
+      # -------------------------------------------------
+      # removing trailing comments and whitespace
+      # -------------------------------------------------
+      {
+        sub("\\s*#.*$", "")
+      }
+      # -------------------------------------------------
+      # exactly 1 column:
+      # - address      -> ssh address
+      # - address:port -> ssh -p port address
+      # -------------------------------------------------
+      NF == 1 {
+        n = split($1, parts, ":")    # backward compatibility...
+        if (n == 2) {
+          print cmd, "-p", parts[2], parts[1]
+        } else {
+          print cmd, $1
+        }
+      }
+      # -------------------------------------------------
+      # more than 1 column, use as-is...
+      # - mosh address
+      # - ssh -p port address
+      # - etc...
+      # -------------------------------------------------
+      NF > 1 {
+        print
+      }
+      ' "$TARGET")"
   fi
 
   # add the command to the bash history as if we had typed it, will only work if sourced
@@ -56,7 +88,8 @@ warp() {
 
 # allow warp to be sourced without running
 if [[ $_ == $0 ]]; then
-  warp
+  # pass all arguments to the warp function
+  warp "$@"
 else
   # Hide warp from history if using zsh and setopt histignorespace
   alias warp=" warp"
