@@ -28,7 +28,7 @@ ext-count() {
 }
 
 nins() {
-  npm install --no-save "$@"
+  npm install --no-save --loglevel=error "$@"
 }
 
 npm2svg() {
