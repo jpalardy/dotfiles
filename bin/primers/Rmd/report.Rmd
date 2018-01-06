@@ -13,8 +13,7 @@ knitr::opts_chunk$set(
   comment=""
 )
 
-library(data.table)
-library(ggplot2)
+library(tidyverse)
 library(scales)
 
 theme_set(
@@ -29,8 +28,7 @@ theme_set(
 
 ```{r chunk-name}
 
-d <- fread("...")
-setnames(d, c("..."))
+d <- read_tsv("...")
 
 ggplot(d, aes(...)) +
   geom_point()
