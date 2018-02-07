@@ -8,7 +8,7 @@ up() {
     ssh jpalardy.com "cd up-down && rm -rfv *"
     return
   fi
-  if [ -z "$@" ]; then
+  if [ -z "$1" ]; then
     ssh jpalardy.com "cd up-down && ls -1"
     return
   fi
@@ -24,7 +24,7 @@ down() {
     ssh jpalardy.com "cd up-down && rm -rfv *"
     return
   fi
-  if [ -z "$@" ]; then
+  if [ -z "$1" ]; then
     ssh jpalardy.com "cd up-down && ls -1"
     return
   fi
