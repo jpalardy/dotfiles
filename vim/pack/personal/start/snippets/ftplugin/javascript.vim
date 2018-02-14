@@ -8,9 +8,9 @@ Snippet ')', ') {|}'
 
 SnippetComplete "require", "require('|');"
 
-SnippetComplete 'console.log('
-Snippet         'console.log(',   'console.error('
-Snippet         'console.error(', 'console.'
+Snippet 'cl',  'console.log('
+Snippet 'ce',  'console.error('
+Snippet 'ce*', 'console.error("**** '
 
 Snippet 'for', 'for (var i = 0; i < |; i++) {}'
 Snippet 'fe',  'forEach(function (|) {})'
