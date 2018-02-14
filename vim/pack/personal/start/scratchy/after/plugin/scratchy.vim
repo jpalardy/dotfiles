@@ -17,7 +17,7 @@ command -nargs=* FPScratchy :call FPScratchy(<args>)
 " SCRATCHY MAPPINGS
 
 " replace current buffer
-nmap <ESC>h :FPScratchy "rg --files --sort-files"<CR>
+nmap <ESC>h :FPScratchy "rg --files --no-ignore-parent --sort-files"<CR>
 
 " textmate-like command-t
 nmap <ESC>t :botright  new<CR><ESC>h
