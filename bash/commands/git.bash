@@ -18,3 +18,5 @@ git_diff() {
 
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(yellow)%d%Creset %C(dim white)%an%Creset' --abbrev-commit --date=relative --date-order --all"
 
+alias glg-topo="glg --topo-order"
+
