@@ -24,7 +24,7 @@ bs() {
 }
 
 ext-count() {
-  ff | awk -F. '{print $NF}' | count
+  ff | awk -F. '{print $NF}' | @count
 }
 
 nins() {
