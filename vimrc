@@ -18,6 +18,13 @@ set nowrap
 set linebreak
 set listchars=eol:$,nbsp:%
 
+" lightline
+let g:lightline = {
+  \  'inactive': {
+  \    'left': [['filename', 'modified']]
+  \  }
+\ }
+
 " don't load modelines...
 set nomodeline
 
