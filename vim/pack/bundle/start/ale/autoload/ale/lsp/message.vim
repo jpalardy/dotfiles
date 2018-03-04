@@ -53,7 +53,7 @@ function! ale#lsp#message#DidOpen(buffer, language_id) abort
     \       'uri': ale#path#ToURI(expand('#' . a:buffer . ':p')),
     \       'languageId': a:language_id,
     \       'version': ale#lsp#message#GetNextVersionID(),
-    \       'text': join(l:lines, "\n"),
+    \       'text': join(l:lines, "\n") . "\n",
     \   },
     \}]
 endfunction
@@ -67,7 +67,7 @@ function! ale#lsp#message#DidChange(buffer) abort
     \       'uri': ale#path#ToURI(expand('#' . a:buffer . ':p')),
     \       'version': ale#lsp#message#GetNextVersionID(),
     \   },
-    \   'contentChanges': [{'text': join(l:lines, "\n")}]
+    \   'contentChanges': [{'text': join(l:lines, "\n") . "\n"}]
     \}]
 endfunction
 
@@ -84,5 +84,35 @@ function! ale#lsp#message#DidClose(buffer) abort
     \   'textDocument': {
     \       'uri': ale#path#ToURI(expand('#' . a:buffer . ':p')),
     \   },
+    \}]
+endfunction
+
+let s:COMPLETION_TRIGGER_INVOKED = 1
+let s:COMPLETION_TRIGGER_CHARACTER = 2
+
+function! ale#lsp#message#Completion(buffer, line, column, trigger_character) abort
+    let l:message = [0, 'textDocument/completion', {
+    \   'textDocument': {
+    \       'uri': ale#path#ToURI(expand('#' . a:buffer . ':p')),
+    \   },
+    \   'position': {'line': a:line - 1, 'character': a:column},
+    \}]
+
+    if !empty(a:trigger_character)
+        let l:message[2].context = {
+        \   'triggerKind': s:COMPLETION_TRIGGER_CHARACTER,
+        \   'triggerCharacter': a:trigger_character,
+        \}
+    endif
+
+    return l:message
+endfunction
+
+function! ale#lsp#message#Definition(buffer, line, column) abort
+    return [0, 'textDocument/definition', {
+    \   'textDocument': {
+    \       'uri': ale#path#ToURI(expand('#' . a:buffer . ':p')),
+    \   },
+    \   'position': {'line': a:line - 1, 'character': a:column},
     \}]
 endfunction

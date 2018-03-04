@@ -19,9 +19,9 @@ Context for [SLIME](https://en.wikipedia.org/wiki/SLIME):
     Vim-slime is a humble attempt at getting _some_ of these features into Vim.
     It works with any REPL and isn't tied to Lisp.
 
-Grab some text and send it to a [GNU Screen](http://www.gnu.org/software/screen/) / [tmux](https://tmux.github.io/) / [whimrepl](https://github.com/malyn/lein-whimrepl) / [ConEmu](http://conemu.github.io/) session.
+Grab some text and send it to a [GNU Screen](http://www.gnu.org/software/screen/) / [tmux](https://tmux.github.io/) / [whimrepl](https://github.com/malyn/lein-whimrepl) / [ConEmu](http://conemu.github.io/) session / NeoVim Terminal / Vim Terminal
 
-    VIM ---(text)---> screen / tmux / whimrepl / ConEmu
+    VIM ---(text)---> screen / tmux / whimrepl / ConEmu / NeoVim Terminal / Vim Terminal
 
 Presumably, your session contains a [REPL](http://en.wikipedia.org/wiki/REPL), maybe Clojure, R or python. If you can type text into it, vim-slime can send text to it.
 
@@ -169,6 +169,30 @@ ConEmu console server HWND
 By default the windows clipboard is used to pass the text to ConEmu. If you
 experience issues with this, make sure the `conemuc` executable is in your
 `path`.
+
+### Vim :terminal
+
+Vim :terminal is *not* the default, to use it you will have to add this line to your .vimrc:
+
+    let g:slime_target = "vimterminal"
+
+When you invoke vim-slime for the first time, you will be prompted for more
+configuration.
+
+Vim terminal configuration can be set by using the following in your .vimrc:
+
+    let g:slime_vimterminal_config = {options}
+
+for possible options, see :help term_start()
+
+### NeoVim terminal
+
+NeoVim :terminal is *not* the default, to use it you will have to add this line to your .vimrc:
+
+    let g:slime_target = "neovim"
+
+When you invoke vim-slime for the first time, you will be prompted for more
+configuration.
 
 Advanced Configuration
 ----------------------

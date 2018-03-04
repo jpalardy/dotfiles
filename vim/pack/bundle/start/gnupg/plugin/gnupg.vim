@@ -1,5 +1,5 @@
 " Name:    gnupg.vim
-" Last Change: 2017 Oct 22
+" Last Change: 2018 Jan 23
 " Maintainer:  James McCoy <jamessan@jamessan.com>
 " Original Author:  Markus Braun <markus.braun@krawel.de>
 " Summary: Vim plugin for transparent editing of gpg encrypted files.
@@ -473,6 +473,14 @@ function s:GPGDecrypt(bufread)
 
   " File doesn't exist yet, so nothing to decrypt
   if !filereadable(filename)
+    if !a:bufread
+      redraw!
+      echohl GPGError
+      echom "E484: Can't open file" filename
+      echohl None
+      return
+    endif
+
     " Allow the user to define actions for GnuPG buffers
     silent doautocmd User GnuPG
     silent execute ':doautocmd BufNewFile ' . fnameescape(autocmd_filename)
@@ -482,7 +490,7 @@ function s:GPGDecrypt(bufread)
     " Remove the buffer name ...
     silent 0file
     " ... so we can force it to be absolute
-    exe 'silent file' filename
+    exe 'silent file' fnameescape(filename)
 
     " This is a new file, so force the user to edit the recipient list if
     " they open a new file and public keys are preferred
@@ -607,12 +615,14 @@ function s:GPGDecrypt(bufread)
       call s:GPGDebug(3, "<<<<<<<< Leaving s:GPGDecrypt()")
       return
     endif
-    " Ensure the buffer is only saved by using our BufWriteCmd
-    set buftype=acwrite
-    " Always set the buffer name to the absolute path, otherwise Vim won't
-    " track the correct buffer name when changing directories (due to
-    " buftype=acwrite).
-    exe 'file' filename
+    if a:bufread
+      " Ensure the buffer is only saved by using our BufWriteCmd
+      set buftype=acwrite
+      " Always set the buffer name to the absolute path, otherwise Vim won't
+      " track the correct buffer name when changing directories (due to
+      " buftype=acwrite).
+      exe 'file' fnameescape(filename)
+    endif
   else
     execute silent 'read' fnameescape(filename)
   endif

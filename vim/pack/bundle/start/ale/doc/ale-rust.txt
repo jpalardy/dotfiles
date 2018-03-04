@@ -41,10 +41,52 @@ cargo                                                          *ale-rust-cargo*
 g:ale_rust_cargo_use_check                         *g:ale_rust_cargo_use_check*
                                                    *b:ale_rust_cargo_use_check*
   Type: |Number|
+  Default: `1`
+
+  When set to `1`, this option will cause ALE to use `cargo check` instead of
+  `cargo build` . `cargo check` is supported since version 1.16.0 of Rust.
+
+  ALE will never use `cargo check` when the version of `cargo` is less than
+  0.17.0.
+
+
+g:ale_rust_cargo_check_all_targets         *g:ale_rust_cargo_check_all_targets*
+                                           *b:ale_rust_cargo_check_all_targets*
+  Type: |Number|
   Default: `0`
 
-  When set to `1`, this option will cause ALE to use "cargo check" instead of
-  "cargo build". "cargo check" is supported since version 1.16.0 of Rust.
+  When set to `1`, ALE will set the `--all-targets` option when `cargo check`
+  is used. See |g:ale_rust_cargo_use_check|,
+
+
+g:ale_rust_cargo_default_feature_behavior
+                                    *g:ale_rust_cargo_default_feature_behavior*
+                                    *b:ale_rust_cargo_default_feature_behavior*
+  Type: |String|
+  Default: `default`
+
+  When set to `none`, ALE will set the `--no-default-features` option when
+  invoking `cargo`. Only the features specified in
+  |g:ale_rust_cargo_include_features| will be included when performing the
+  lint check.
+
+  When set to `default`, ALE will instruct `cargo` to build all default
+  features specified in the project's `Cargo.toml` file, in addition to
+  including any additional features defined in
+  |g:ale_rust_cargo_include_features|.
+
+  When set to `all`, ALE will set the `--all-features` option when
+  invoking `cargo`, which will include all features defined in the project's
+  `Cargo.toml` file when performing the lint check.
+
+
+g:ale_rust_cargo_include_features           *g:ale_rust_cargo_include_features*
+                                            *b:ale_rust_cargo_include_features*
+  Type: |String|
+  Default: `''`
+
+  When defined, ALE will set the `--features` option when invoking `cargo` to
+  perform the lint check. See |g:ale_rust_cargo_default_feature_behavior|.
 
 
 ===============================================================================
@@ -58,8 +100,32 @@ g:ale_rust_rls_executable                           *g:ale_rust_rls_executable*
   This variable can be modified to change the executable path for `rls`.
 
 
+g:ale_rust_rls_toolchain                             *g:ale_rust_rls_toolchain*
+                                                     *b:ale_rust_rls_toolchain*
+  Type: |String|
+  Default: `'nightly'`
+
+  This option can be set to change the toolchain used for `rls`. Possible
+  values include `'nightly'`, `'beta'`, and `'stable'`.
+
+  The `rls` server will only be started once per executable.
+
+
 ===============================================================================
 rustc                                                          *ale-rust-rustc*
+
+
+g:ale_rust_rustc_options                             *g:ale_rust_rustc_options*
+                                                     *b:ale_rust_rustc_options*
+  Type: |String|
+  Default: `'-Z no-trans'`
+
+  The variable can be used to change the options passed to `rustc`.
+
+  `-Z no-trans` should only work with nightly builds of Rust. Be careful when
+  setting the options, as running `rustc` could execute code or generate
+  binary files.
+
 
 g:ale_rust_ignore_error_codes                   *g:ale_rust_ignore_error_codes*
                                                 *b:ale_rust_ignore_error_codes*

@@ -108,17 +108,28 @@ Execute (g:ale_lint_on_insert_leave = 0 should bind no events):
 
   AssertEqual [], CheckAutocmd('ALERunOnInsertLeave')
 
-Execute (g:ale_pattern_options_enabled = 0 should bind no events):
-  let g:ale_pattern_options_enabled = 0
-
-  AssertEqual [], CheckAutocmd('ALEPatternOptionsGroup')
-
 Execute (g:ale_pattern_options_enabled = 1 should bind BufReadPost and BufEnter):
   let g:ale_pattern_options_enabled = 1
 
   AssertEqual [
-  \ 'BufEnter * call ale#pattern_options#SetOptions()',
-  \ 'BufReadPost * call ale#pattern_options#SetOptions()',
+  \ 'BufEnter * call ale#pattern_options#SetOptions(str2nr(expand(''<abuf>'')))',
+  \ 'BufReadPost * call ale#pattern_options#SetOptions(str2nr(expand(''<abuf>'')))',
+  \], CheckAutocmd('ALEPatternOptionsGroup')
+
+Execute (g:ale_pattern_options_enabled = 0 should still bind events):
+  let g:ale_pattern_options_enabled = 0
+
+  AssertEqual [
+  \ 'BufEnter * call ale#pattern_options#SetOptions(str2nr(expand(''<abuf>'')))',
+  \ 'BufReadPost * call ale#pattern_options#SetOptions(str2nr(expand(''<abuf>'')))',
+  \], CheckAutocmd('ALEPatternOptionsGroup')
+
+Execute (g:ale_enabled = 0 should still bind pattern events):
+  let g:ale_enabled = 0
+
+  AssertEqual [
+  \ 'BufEnter * call ale#pattern_options#SetOptions(str2nr(expand(''<abuf>'')))',
+  \ 'BufReadPost * call ale#pattern_options#SetOptions(str2nr(expand(''<abuf>'')))',
   \], CheckAutocmd('ALEPatternOptionsGroup')
 
 Execute (g:ale_lint_on_enter = 0 should bind only the BufEnter event):
@@ -155,32 +166,10 @@ Execute (g:ale_lint_on_filetype_changed = 1 should bind the FileType event):
   \ ],
   \ CheckAutocmd('ALERunOnFiletypeChangeGroup')
 
-Execute (g:ale_lint_on_save = 0 should bind no events):
-  let g:ale_lint_on_save = 0
-  let g:ale_fix_on_save = 0
-
-  AssertEqual [], CheckAutocmd('ALERunOnSaveGroup')
-
-Execute (g:ale_lint_on_save = 1 should bind no events):
-  let g:ale_lint_on_save = 1
-  let g:ale_fix_on_save = 0
-
-  AssertEqual [
-  \ 'BufWritePost * call ale#events#SaveEvent(str2nr(expand(''<abuf>'')))',
-  \], CheckAutocmd('ALERunOnSaveGroup')
-
-Execute (g:ale_lint_on_save = 0 and g:ale_fix_on_save = 1 should bind events):
-  let g:ale_lint_on_save = 0
-  let g:ale_fix_on_save = 1
-
-  AssertEqual [
-  \ 'BufWritePost * call ale#events#SaveEvent(str2nr(expand(''<abuf>'')))',
-  \], CheckAutocmd('ALERunOnSaveGroup')
-
-Execute (g:ale_fix_on_save = 1 should bind events even when ALE is disabled):
+Execute (The SaveEvent should always be bound):
   let g:ale_enabled = 0
   let g:ale_lint_on_save = 0
-  let g:ale_fix_on_save = 1
+  let g:ale_fix_on_save = 0
 
   AssertEqual [
   \ 'BufWritePost * call ale#events#SaveEvent(str2nr(expand(''<abuf>'')))',
@@ -202,7 +191,7 @@ Execute (g:ale_echo_cursor = 1 should bind cursor events):
 
 Execute (ALECleanupGroup should include the right commands):
   AssertEqual [
-  \ 'BufUnload * call ale#engine#Cleanup(str2nr(expand(''<abuf>'')))',
+  \ 'BufDelete * call ale#engine#Cleanup(str2nr(expand(''<abuf>'')))',
   \ 'QuitPre * call ale#events#QuitEvent(str2nr(expand(''<abuf>'')))',
   \], CheckAutocmd('ALECleanupGroup')
 

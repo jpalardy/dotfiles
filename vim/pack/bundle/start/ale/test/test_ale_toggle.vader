@@ -3,10 +3,14 @@ Before:
   Save g:ale_set_signs
   Save g:ale_set_lists_synchronously
   Save g:ale_run_synchronously
+  Save g:ale_pattern_options
+  Save g:ale_pattern_options_enabled
 
   let g:ale_set_signs = 1
   let g:ale_set_lists_synchronously = 1
   let g:ale_run_synchronously = 1
+  let g:ale_pattern_options = {}
+  let g:ale_pattern_options_enabled = 1
 
   unlet! b:ale_enabled
 
@@ -131,7 +135,13 @@ Execute(ALEToggle should reset everything and then run again):
   AssertEqual [], getloclist(0), 'The loclist was not cleared'
   AssertEqual [0, []], ale#sign#FindCurrentSigns(bufnr('%')), 'The signs were not cleared'
   AssertEqual [], getmatches(), 'The highlights were not cleared'
-  AssertEqual ['ALECleanupGroup', 'ALEHighlightBufferGroup'], ParseAuGroups()
+  AssertEqual
+  \ [
+  \   'ALECleanupGroup',
+  \   'ALEHighlightBufferGroup',
+  \   'ALERunOnSaveGroup',
+  \ ],
+  \ ParseAuGroups()
 
   " Toggle ALE on, everything should be set up and run again.
   ALEToggle
