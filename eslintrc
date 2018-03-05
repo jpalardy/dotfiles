@@ -1,18 +1,8 @@
 // http://eslint.org/docs/rules/
 rules:
-  space-before-function-paren: [2, {anonymous: "never", named: "never"}]
-  no-multi-spaces: [0, {exceptions: {VariableDeclarator: true}}]
-  spaced-comment: 0
-  func-names: 0
-  id-length: 0
-  no-shadow: 0
-  vars-on-top: 0
-  no-param-reassign: 0
-  quotes: 0
-  key-spacing: 0
-  object-curly-spacing: 0
+  quotes: ["error", "double"]
   comma-dangle: ["error", "always-multiline"]
-  arrow-parens: ["error", "as-needed"]
-  prefer-arrow-callback: 0
-extends: airbnb-base
-// npm info "eslint-config-airbnb-base@latest" peerDependencies
+env:
+  es6: true
+extends: prettier
+// npm install eslint-config-prettier
