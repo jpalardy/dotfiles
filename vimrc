@@ -94,6 +94,16 @@ nmap <c-c><c-u> :SlimeSend0 "\x15"<CR>
 let g:slime_default_config = {"socket_name": "default", "target_pane": "%"}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" prettier
+
+let g:ale_fixers = {}
+let g:ale_fixers['javascript'] = ['prettier']
+let g:ale_fixers['css']        = ['prettier']
+let g:ale_fixers['less']       = ['prettier']
+
+nnoremap ,f :ALEFix<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 source $HOME/.vim/mappings.vim
 

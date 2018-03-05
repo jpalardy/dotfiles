@@ -30,6 +30,7 @@ relink .gemrc        $DOTFILES/ruby/gemrc
 
 relink .npmrc        $DOTFILES/npmrc
 relink .eslintrc     $DOTFILES/eslintrc
+relink .prettierrc   $DOTFILES/prettierrc
 
 relink .Rprofile     $DOTFILES/r/Rprofile
 

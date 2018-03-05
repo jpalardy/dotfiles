@@ -1,8 +1,7 @@
 // http://eslint.org/docs/rules/
 rules:
-  space-before-function-paren: [2, {anonymous: "always", named: "never"}]
+  space-before-function-paren: [2, {anonymous: "never", named: "never"}]
   no-multi-spaces: [0, {exceptions: {VariableDeclarator: true}}]
-  // no-multi-spaces: [2, {exceptions: {VariableDeclarator: true}}]
   spaced-comment: 0
   func-names: 0
   id-length: 0
@@ -13,6 +12,7 @@ rules:
   key-spacing: 0
   object-curly-spacing: 0
   comma-dangle: ["error", "always-multiline"]
+  arrow-parens: ["error", "as-needed"]
+  prefer-arrow-callback: 0
 extends: airbnb-base
-// extends: airbnb-base/legacy
 // npm info "eslint-config-airbnb-base@latest" peerDependencies
