@@ -28,6 +28,11 @@ let g:lightline = {
 " don't load modelines...
 set nomodeline
 
+" with git, ever needed?
+set noswapfile
+set nowritebackup
+set nobackup
+
 " Search options
 set incsearch
 set hlsearch
