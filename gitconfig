@@ -17,6 +17,7 @@
   cp      = cherry-pick
   rl      = remote -v
   fp      = fetch --prune
+  who     = config --get user.email
 [diff]
   noprefix = true
   tool = vimdiff
