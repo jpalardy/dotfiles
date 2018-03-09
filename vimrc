@@ -109,6 +109,12 @@ let g:ale_fixers['less']       = ['prettier']
 nnoremap ,f :ALEFix<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" gitgutter
+
+let g:gitgutter_enabled = 0
+let g:gitgutter_map_keys = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 source $HOME/.vim/mappings.vim
 
