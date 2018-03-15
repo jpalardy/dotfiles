@@ -52,5 +52,11 @@ bundle.lightline:
 	@rm -rf lightline/.git
 	@find lightline -name .gitignore | xargs rm
 
-.PHONY: bundle.ale bundle.fugitive bundle.gnupg bundle.nerdcommenter bundle.slime bundle.spacehi bundle.tabular bundle.gitgutter bundle.lightline
+bundle.surround:
+	@rm -rf surround
+	git clone --depth=1 https://github.com/tpope/vim-surround.git surround
+	@rm -rf surround/.git
+	@find surround -name .gitignore | xargs rm
+
+.PHONY: bundle.ale bundle.fugitive bundle.gnupg bundle.nerdcommenter bundle.slime bundle.spacehi bundle.tabular bundle.gitgutter bundle.lightline bundle.surround
 
