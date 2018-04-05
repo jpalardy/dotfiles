@@ -27,13 +27,13 @@ check_bin eslint
 check_bin jsonlint
 check_bin csslint
 check_bin nodemon
-check_bin npm-check-updates
+check_bin ncu       # npm-check-updates
 check_bin nsp
 check_bin depcheck
 check_bin yarn
 check_bin prettier
 check_bin fixjson
-check_bin yaml2json
+check_bin yaml2json # yamljs
 echo
 check_bin jq
 check_bin R
