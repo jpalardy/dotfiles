@@ -33,6 +33,7 @@ check_bin depcheck
 check_bin yarn
 check_bin prettier
 check_bin fixjson
+check_bin yaml2json
 echo
 check_bin jq
 check_bin R
