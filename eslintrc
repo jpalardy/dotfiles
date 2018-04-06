@@ -2,6 +2,12 @@
 rules:
   quotes: ["error", "double"]
   comma-dangle: ["error", "always-multiline"]
+  func-names: ["error", "as-needed"]
+  space-before-function-paren: "off"
+  arrow-parens: ["error", "as-needed"]
+  max-len: ["warn", 150]
+  generator-star-spacing: "off"
+  object-curly-spacing: "off"
 env:
   es6: true
 extends: airbnb-base
