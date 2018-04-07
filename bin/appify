@@ -1,16 +1,47 @@
 #!/bin/bash
 
 APPNAME=${2:-$(basename $(basename "$1" ".sh") ".bash")}
-DIR="$APPNAME.app/Contents/MacOS"
 
 if [ -a "$APPNAME.app" ]; then
   echo "$PWD/$APPNAME.app already exists :("
   exit 1
 fi
 
-mkdir -p "$DIR"
-cp "$1" "$DIR/$APPNAME"
-chmod +x "$DIR/$APPNAME"
+#-------------------------------------------------
+
+mkdir -p "$APPNAME.app/Contents/MacOS"
+
+cp "$1" "$APPNAME.app/Contents/MacOS/$APPNAME"
+chmod +x "$APPNAME.app/Contents/MacOS/$APPNAME"
+
+#-------------------------------------------------
+
+cat <<EOF >"$APPNAME.app/Contents/Info.plist"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key>
+    <string>$APPNAME</string>
+    <key>CFBundleIconFile</key>
+    <string>icon.icns</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>1.0</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+</dict>
+</plist>
+EOF
+
+mkdir -p "$APPNAME.app/Contents/Resources"
+
+cp icon.icns "$APPNAME.app/Contents/Resources"
+
+#-------------------------------------------------
 
 echo "$PWD/$APPNAME.app"
 
