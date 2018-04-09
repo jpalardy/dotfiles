@@ -2,8 +2,6 @@
 options("repos" = c(CRAN = "http://cran.rstudio.com/"))
 options(width=160)
 
-.libPaths(c(.libPaths(), "~/local/lib/r"))
-
 .First = function () {
   if (interactive()) {
     suppressMessages(require(tidyverse))

@@ -27,7 +27,7 @@ lister_num() {
 
 #-------------------------------------------------
 
-lister "g"    "cd"
+lister "g" "cd"
 lister "qc"
 
 lister_num g 12

@@ -43,8 +43,3 @@ cdl() {
   pick_with_vim "ls" "cd" $1
 }
 
-# inspired by zsh
-..() {
-  cd ..
-}
-
