@@ -30,9 +30,13 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": "%"}
 
 let g:ale_fixers = {}
 let g:ale_fixers['javascript'] = ['prettier']
+let g:ale_fixers['typescript'] = ['prettier']
 let g:ale_fixers['css']        = ['prettier']
 let g:ale_fixers['less']       = ['prettier']
 let g:ale_fixers['json']       = ['fixjson']
+
+let g:ale_linters = {}
+let g:ale_linters['typescript'] = ['tslint', 'tsserver']
 
 nnoremap ,f :ALEFix<CR>
 

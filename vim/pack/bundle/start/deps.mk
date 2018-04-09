@@ -58,5 +58,11 @@ bundle.surround:
 	@rm -rf surround/.git
 	@find surround -name .gitignore | xargs rm
 
-.PHONY: bundle.ale bundle.fugitive bundle.gnupg bundle.nerdcommenter bundle.slime bundle.spacehi bundle.tabular bundle.gitgutter bundle.lightline bundle.surround
+bundle.typescript:
+	@rm -rf typescript
+	git clone --depth=1 https://github.com/leafgarland/typescript-vim.git typescript
+	@rm -rf typescript/.git
+	@find typescript -name .gitignore | xargs rm
+
+.PHONY: bundle.ale bundle.fugitive bundle.gnupg bundle.nerdcommenter bundle.slime bundle.spacehi bundle.tabular bundle.gitgutter bundle.lightline bundle.surround bundle.typescript
 
