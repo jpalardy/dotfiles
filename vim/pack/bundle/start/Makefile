@@ -6,12 +6,7 @@ bundle_tasks = $(dirs:%=bundle.%)
 
 all: $(bundle_tasks)
 
-clean:
-	rm -rf $(dirs)
-
-#-------------------------------------------------
-
-depend:
+.deps.mk: deps
 	@awk '{ \
 	  print "bundle." $$1 ":"; \
 	  print "	@rm -rf", $$1; \
@@ -25,9 +20,15 @@ depend:
 	  printf ".PHONY:"; \
 	  for (i=1; i<=NR; i++) { printf " bundle.%s", targets[i] } \
 	  printf "\n\n"; \
-	}' deps > deps.mk
+	}' $< > $@
+
+clean:
+	rm -rf .deps.mk
+
+reset: clean
+	rm -rf $(dirs)
 
 #-------------------------------------------------
 
-include deps.mk
+-include .deps.mk
 
