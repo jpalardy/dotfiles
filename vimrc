@@ -22,7 +22,7 @@ set listchars=eol:$,nbsp:%
 set nomodeline
 
 " with git, ever needed?
-set noswapfile
+set directory^=~/.vim/swap  " where swap files go
 set nowritebackup
 set nobackup
 
