@@ -1,0 +1,14 @@
+#!/bin/bash
+
+dot=${1:?"missing dot"}
+rc=$2
+
+version="$(date +"%y.%m").$dot"
+if [ -n "$rc" ]; then
+  version="${version}-RC${rc}"
+fi
+
+read -p "tag $version ? "
+
+git tag -a "$version" -m "Tagging $version"
+
