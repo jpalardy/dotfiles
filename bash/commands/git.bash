@@ -16,8 +16,9 @@ git_diff() {
 
 #-------------------------------------------------
 
-alias glg="git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(auto)%d%Creset %C(dim white)%an%Creset'"
-alias glga="glg --all"
-alias glgd="glg --date-order"
-alias glgda="glgd --all"
+alias glg-current="git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(auto)%d%Creset %C(dim white)%an%Creset'"
+alias glg="glg-current --all"
+
+alias glgd-current="glg --date-order"
+alias glgd="glgd-cuccrent --all"
 
