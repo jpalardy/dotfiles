@@ -15,9 +15,11 @@ ok_fail() {
 }
 
 check_bin() {
-  which -s $1
+  local bin_name=$1
+  local pkg_name=${2:-$1}
+  which -s $bin_name
   ok_fail
-  echo " $1"
+  echo " $pkg_name"
 }
 
 #-------------------------------------------------
@@ -27,13 +29,13 @@ check_bin eslint
 check_bin jsonlint
 check_bin csslint
 check_bin nodemon
-check_bin ncu       # npm-check-updates
+check_bin ncu         npm-check-updates
 check_bin nsp
 check_bin depcheck
 check_bin yarn
 check_bin prettier
 check_bin fixjson
-check_bin yaml2json # yamljs
+check_bin yaml2json   yamljs
 echo
 check_bin jq
 check_bin R
