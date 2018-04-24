@@ -5,9 +5,11 @@ rules:
   func-names: ["error", "as-needed"]
   space-before-function-paren: "off"
   arrow-parens: ["error", "as-needed"]
+  arrow-body-style: ["warn", "as-needed", {"requireReturnForObjectLiteral": true}]
   max-len: ["warn", 150]
   generator-star-spacing: "off"
   object-curly-spacing: "off"
+  no-param-reassign: ["error", {"props": false}]
 env:
   es6: true
 extends: airbnb-base
