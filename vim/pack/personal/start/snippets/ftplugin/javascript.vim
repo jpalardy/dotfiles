@@ -3,8 +3,8 @@
 Snippet 'fn', 'function'
 Snippet 'function', 'function |() {}'
 
-Snippet 'fb', '-> {|}'
-Snippet 'af', '() -> {|}'
+Snippet 'fb', '=> {|}'
+Snippet 'af', '() => {|}'
 
 SnippetComplete "require", "require(\"|\");"
 
@@ -12,7 +12,7 @@ Snippet 'cl',  'console.log('
 Snippet 'ce',  'console.error('
 Snippet 'ce*', "console.error(\"**** |\", )"
 
-Snippet 'for', 'for (let i = 0; i < |; i += 1 {}'
+Snippet 'for', 'for (let i = 0; i < |; i += 1) {}'
 Snippet 'fe',  'forEach'
 
 SnippetComplete 'JSON.stringify('
