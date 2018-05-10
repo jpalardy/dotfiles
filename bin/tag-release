@@ -1,5 +1,8 @@
 #!/bin/bash
 
+git tag --sort=creatordate | tail | awk '{print "    ", $0}'
+echo "-------------------------------------------------"
+
 dot=${1:?"missing dot"}
 rc=$2
 
@@ -8,7 +11,7 @@ if [ -n "$rc" ]; then
   version="${version}-RC${rc}"
 fi
 
-read -p "tag $version ? "
+version="$(rlwrap -S "tag: " -P $version -o cat)"
 
 git tag -a "$version" -m "Tagging $version"
 
