@@ -1,10 +1,9 @@
 
-# bash meta-programming, make it generate some redundant functions
-lister() {
+# this function only exists for the duration of this file -- check unset below
+GENERATE_lister() {
   local name=$1
   local command=$2
   local filter=${3:-cat}
-
   eval "
     ${name}() {
       local SOURCE=\"\$HOME/.lists/${name}\"
@@ -15,20 +14,15 @@ lister() {
 
       FILTER=\"${filter}\" pick_with_vim \"cat \$SOURCE\" \"${command}\" \$1
     }
-"
+  "
 }
 
-lister_num() {
-  local name=$1
-  for i in $(seq $2); do
-    alias ${name}${i}="$name $i"
-  done
-}
+GENERATE_lister "g" "cd"
+GENERATE_lister "qc"
 
-#-------------------------------------------------
+for i in $(seq 10); do
+  alias g$i="g $i"
+done
 
-lister "g" "cd"
-lister "qc"
-
-lister_num g 12
+unset GENERATE_lister
 
