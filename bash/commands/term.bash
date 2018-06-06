@@ -1,15 +1,4 @@
 
-term_colors() {
-  local fg bg
-
-  for fg in 0 1 2 3 4 5 6 7; do
-    for bg in 0 1 2 3 4 5 6 7; do
-      fg_bg $fg $bg
-    done
-    echo
-  done
-}
-
 fg_bg() {
   local fg=$1
   local bg=${2:-0}

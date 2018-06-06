@@ -1,6 +1,6 @@
 
 gopath() {
-  export GOPATH=$PWD
-  export PATH=$PWD/bin:$PATH
+  export GOPATH="$PWD"
+  export PATH="$PWD/bin:$PATH"
 }
 

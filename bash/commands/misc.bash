@@ -5,10 +5,10 @@ alias l='ls -l'
 
 h() {
   local COUNT=${COUNT:-25}
-  if [ -z "$@" ]; then
-    history $COUNT
+  if [ $# -eq 0 ]; then
+    history "$COUNT"
   else
-    history | grep -i "$@" | tail -n $COUNT
+    history | grep -i "$@" | tail -n "$COUNT"
   fi
 }
 
@@ -25,11 +25,11 @@ vman() {
 #-------------------------------------------------
 
 du_sort() {
-  du -b --max-depth=1 $1 | sort -n | @thousands
+  du -b --max-depth=1 "$@" | sort -n | @thousands
 }
 
 size_sort() {
-  find . -type f "$@" -printf "%s %p\n" | sort -n | @thousands
+  find . -type f "$@" -printf "%s %p\\n" | sort -n | @thousands
 }
 
 #-------------------------------------------------
@@ -37,7 +37,8 @@ size_sort() {
 alias pwgen='pwgen -cny 30'
 
 serve() {
-  python -m http.server ${1:-8000} || python -m SimpleHTTPServer ${1:-8000}
+  local port="${1:-8000}"
+  python -m http.server "$port" || python -m SimpleHTTPServer "$port"
 }
 
 alias R="R --quiet"
@@ -60,13 +61,14 @@ complete -F _cask cask
 #-------------------------------------------------
 
 we() {
-  vim $(which "$@")
+  vim "$(command -v "$@")"
 }
 complete -c we
 
 # ldf -- last downloaded file
 ldf() {
-  local file=~/Downloads/$(ls -1t ~/Downloads/ | head -n1)
+  local file
+  file="~/Downloads/$(ls -1t ~/Downloads/ | head -n1)"
   read -p "confirm: $file "
   mv "$file" .
 }

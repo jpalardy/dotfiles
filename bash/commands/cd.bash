@@ -6,7 +6,7 @@ cd() {
     dest=$(dirname "$dest")
   fi
 
-  builtin cd "$dest"
+  builtin cd "$dest" || return
   local result=$?
 
   echo "${ATTR_RESET}${PATH_COLOR}-> $PWD$(__git_ps1)${ATTR_RESET}"
@@ -30,9 +30,8 @@ parent_dirs() {
 b() {
   local count=$1
   if [ -n "$count" ]; then
-    count=$(($count + 1))
+    count=$((count + 1))
   fi
-
   pick_with_vim "parent_dirs" "cd" $count
 }
 
@@ -40,6 +39,6 @@ b() {
 
 # pick from a list of directories (ls) and cd into it
 cdl() {
-  pick_with_vim "ls" "cd" $1
+  pick_with_vim "ls" "cd" "$1"
 }
 

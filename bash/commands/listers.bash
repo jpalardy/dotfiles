@@ -1,6 +1,5 @@
 
-# this function only exists for the duration of this file -- check unset below
-GENERATE_lister() {
+generate_lister() {
   local name=$1
   local command=$2
   local filter=${3:-cat}
@@ -17,12 +16,14 @@ GENERATE_lister() {
   "
 }
 
-GENERATE_lister "g" "cd"
-GENERATE_lister "qc"
+generate_lister "g" "cd"
+generate_lister "qc"
 
 for i in $(seq 10); do
   alias g$i="g $i"
 done
 
-unset GENERATE_lister
+#-------------------------------------------------
+
+unset generate_lister
 

@@ -38,7 +38,7 @@ pick_with_vim() {
   fi
 
   if [ -n "$3" ]; then
-    eval "$1" | sed -n $3p > "$TARGET"
+    eval "$1" | sed -n "$3p" > "$TARGET"
   else
     eval "$1" | vim_picker
   fi
@@ -49,13 +49,13 @@ pick_with_vim() {
 
   local old_IFS="$IFS"
   IFS=$'\n'
-  local lines=($(eval ${FILTER:-cat} "$TARGET"))
+  local lines=($(eval "${FILTER:-cat}" "$TARGET"))
   IFS="$old_IFS"
 
   # neat! add this line to the bash history
   # as if we had typed it
-  history -s $2 "${lines[@]}"
-  eval $2 "${lines[@]}"
+  history -s "$2" "${lines[@]}"
+  eval "$2" "${lines[@]}"
 }
 export -f pick_with_vim
 

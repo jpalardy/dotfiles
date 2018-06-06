@@ -5,6 +5,6 @@ jekyll_serve() {
 
 jekyll_publish() {
   local file=$1
-  mv -iv $file _posts/$(date +%F)-$(basename $file)
+  mv -iv "$file" "_posts/$(date +%F)-$(basename "$file")"
 }
 

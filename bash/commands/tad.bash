@@ -1,16 +1,19 @@
 
 # throw-away directory
 tad() {
-  local ts=$(date +%s)
+  local ts
+  ts=$(date +%s)
   local d="$HOME/.throw-away/$ts"
-  mkdir -p $d
-  (cd $d; bash)
-  rm -rf $d
+  mkdir -p "$d"
+  (cd "$d" || exit; bash)
+  rm -rf "$d"
 }
 
 # date name directory
 dnd() {
-  local name="$(date +%F)-$(echo "$@" | sed -e "s/ /-/g")"
-  mkdir $name && cd $name
+  local args="$*"
+  local name
+  name="$(date +%F)-${args// /-}"
+  mkdir "$name" && cd "$name" || return
 }
 

@@ -1,6 +1,5 @@
 
-# this function only exists for the duration of this file -- check unset below
-GENERATE_echo_color() {
+generate_echo_color() {
   local color_name=$1
   local color_num=$2
   local color_escape
@@ -14,14 +13,16 @@ GENERATE_echo_color() {
   "
 }
 
-GENERATE_echo_color black 0
-GENERATE_echo_color red 1
-GENERATE_echo_color green 2
-GENERATE_echo_color yellow 3
-GENERATE_echo_color blue 4
-GENERATE_echo_color magenta 5
-GENERATE_echo_color cyan 6
-GENERATE_echo_color white 7
+generate_echo_color black 0
+generate_echo_color red 1
+generate_echo_color green 2
+generate_echo_color yellow 3
+generate_echo_color blue 4
+generate_echo_color magenta 5
+generate_echo_color cyan 6
+generate_echo_color white 7
 
-unset GENERATE_echo_color
+#-------------------------------------------------
+
+unset generate_echo_color
 
