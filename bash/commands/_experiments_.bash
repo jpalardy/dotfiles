@@ -1,6 +1,17 @@
 
-check_expiration() {
-  echo | openssl s_client -connect $1:443 2>/dev/null | openssl x509 -noout -dates
+check-ssl-cert() {
+  local cert_end_date
+  local days_valid
+  for domain in "$@"; do
+    cert_end_date=$(curl --insecure -v "https://$domain" 2>&1 | awk -F"date: " '/expire date:/ {print $2}')
+    days_valid=$(( ($(date -d "${cert_end_date}" +%s) - $(date +%s)) / 86400 ))
+    echo -n "$domain: "
+    if [ "$days_valid" -ge 30 ]; then
+      echo-green "$days_valid days"
+    else
+      echo-red "$days_valid days"
+    fi
+  done
 }
 
 npm2svg() {
