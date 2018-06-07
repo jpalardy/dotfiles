@@ -10,6 +10,7 @@ generate_echo_color() {
     echo-${color_name}() {
       echo \$ECHO_FLAGS \"${color_escape}\$*${color_reset}\"
     }
+    export -f echo-${color_name}
   "
 }
 

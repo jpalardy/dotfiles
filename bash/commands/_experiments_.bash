@@ -13,6 +13,7 @@ check-ssl-cert() {
     fi
   done
 }
+export -f check-ssl-cert
 
 npm2svg() {
   npm ls --json "$@" | npx npm2dot | grep -v "undefined" | twopi -Tsvg -o out.svg -Goverlap=false
