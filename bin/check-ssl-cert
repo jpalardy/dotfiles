@@ -1,0 +1,21 @@
+#!/bin/bash
+
+COLOR_RESET=$(tput sgr0)
+COLOR_RED=$(tput setaf 1)
+COLOR_GREEN=$(tput setaf 2)
+
+#-------------------------------------------------
+# MAIN
+#-------------------------------------------------
+
+for domain in "$@"; do
+  cert_end_date=$(curl --insecure -v "https://$domain" 2>&1 | awk -F"date: " '/expire date:/ {print $2}')
+  days_valid=$(( ($(date -d "${cert_end_date}" +%s) - $(date +%s)) / 86400 ))
+  echo -n "$domain: "
+  if [ "$days_valid" -ge 30 ]; then
+    echo "${COLOR_GREEN}$days_valid days${COLOR_RESET}"
+  else
+    echo "${COLOR_RED}$days_valid days${COLOR_RESET}"
+  fi
+done
+
