@@ -9,3 +9,13 @@ ffu() {
   rg --files -u | rg "${@:-^}"
 }
 
+ftf() {
+  local path=${1:-.}
+  shift
+  find "$path" -type f "$@"
+}
+
+fne() {
+  ff "\\.$1\$"
+}
+
