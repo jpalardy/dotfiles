@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APPNAME=${2:-$(basename $(basename "$1" ".sh") ".bash")}
+APPNAME="$(basename "${1%%.*}")"
 
 if [ -a "$APPNAME.app" ]; then
   echo "$PWD/$APPNAME.app already exists :("

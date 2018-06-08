@@ -6,8 +6,8 @@ if [ -t 0 ]; then
   if [ ! -f "$BAG" ]; then
     exit
   fi
-  cat $BAG
+  cat "$BAG"
 else
-  cat > $BAG
+  cat > "$BAG"
 fi
 

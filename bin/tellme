@@ -11,9 +11,9 @@ done
 
 shift $((OPTIND-1))
 
-if [ $COUNTDOWN != 0 ]; then
-  utimer -c $COUNTDOWN
-  if [ $? -ne 0 ]; then
+if [ "$COUNTDOWN" != 0 ]; then
+  # early quit
+  if ! utimer -c "$COUNTDOWN"; then
     exit
   fi
 fi

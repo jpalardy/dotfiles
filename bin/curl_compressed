@@ -1,11 +1,11 @@
 #!/bin/bash
 
 do_req() {
-  curl --silent $1 -o /dev/null -w '%{size_download}\n'
-  curl --silent $1 -o /dev/null -w '%{size_download}\n' --compressed
+  curl --silent "$1" -o /dev/null -w '%{size_download}\n'
+  curl --silent "$1" -o /dev/null -w '%{size_download}\n' --compressed
 }
 
-do_req $1 | awk '
+do_req "$1" | awk '
 
 NR == 1 { uncompressed = $1 }
 NR == 2 {   compressed = $1 }

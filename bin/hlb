@@ -8,7 +8,7 @@ fi
 target=$HOME/local/bin/$1
 
 #-------------------------------------------------
-cat > $target <<EOF
+cat > "$target" <<EOF
 #!/bin/bash
 
 xxx
@@ -16,7 +16,7 @@ xxx
 EOF
 #-------------------------------------------------
 
-chmod +x $target
+chmod +x "$target"
 
-vim $target
+vim "$target"
 

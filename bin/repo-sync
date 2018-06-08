@@ -11,8 +11,8 @@ while getopts "q" options; do
 done
 
 for repo in $REPOS; do
-  echo "##" $repo
-  cd $repo
+  echo "## $repo"
+  cd "$repo" || exit
 
   if [ $QUICK == "no" ]; then
     git -c 'color.ui=always' pull --ff-only | grep -v 'Already up-to-date'
