@@ -1,24 +1,19 @@
 #!/bin/bash
 
-red=`tput setaf 1`
-green=`tput setaf 2`
-reset=`tput sgr0`
+COLOR_RESET=$(tput sgr0)
+COLOR_RED=$(tput setaf 1)
+COLOR_GREEN=$(tput setaf 2)
 
 #-------------------------------------------------
-
-ok_fail() {
-  if [ $? -eq 0 ]; then
-    echo -n "[$green  OK  $reset]"
-  else
-    echo -n "[$red FAIL $reset]"
-  fi
-}
 
 check_bin() {
   local bin_name=$1
   local pkg_name=${2:-$1}
-  which -s $bin_name
-  ok_fail
+  if command -v "$bin_name" > /dev/null; then
+    echo -n "[$COLOR_GREEN  OK  $COLOR_RESET]"
+  else
+    echo -n "[$COLOR_RED FAIL $COLOR_RESET]"
+  fi
   echo " $pkg_name"
 }
 
@@ -36,7 +31,9 @@ check_bin yarn
 check_bin prettier
 check_bin fixjson
 check_bin yaml2json   yamljs
+
 echo
+
 check_bin jq
 check_bin R
 check_bin gcal
