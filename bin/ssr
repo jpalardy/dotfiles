@@ -19,6 +19,7 @@ check_bin() {
 
 #-------------------------------------------------
 
+# npm install
 check_bin node
 check_bin eslint
 check_bin jsonlint
@@ -34,6 +35,7 @@ check_bin yaml2json   yamljs
 
 echo
 
+# brew install
 check_bin jq
 check_bin R
 check_bin gcal
@@ -44,4 +46,5 @@ check_bin fswatch
 check_bin pv
 check_bin utimer
 check_bin shellcheck
+check_bin yamllint
 
