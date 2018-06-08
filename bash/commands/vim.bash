@@ -38,7 +38,7 @@ pick_with_vim() {
   fi
 
   if [ -n "$3" ]; then
-    eval "$1" | sed -n "$3p" > "$TARGET"
+    eval "$1" | sed -n $3p > "$TARGET"
   else
     eval "$1" | vim_picker
   fi
