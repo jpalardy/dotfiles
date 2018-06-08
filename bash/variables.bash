@@ -38,7 +38,8 @@ prepend_PATHs "/opt/local"
 prepend_PATHs "$HOME/local"
 prepend_PATHs "$DOTFILES"
 
-PATH=$(prepend_colon ".local/bin" $PATH)
+# very specific
+prepend_PATHs "$HOME/Documents/wiki/.local"
 
 #-------------------------------------------------
 
