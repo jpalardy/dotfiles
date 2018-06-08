@@ -17,7 +17,6 @@ generate_lister() {
 }
 
 generate_lister "g" "cd"
-generate_lister "qc"
 
 for i in $(seq 10); do
   alias g$i="g $i"
