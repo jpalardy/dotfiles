@@ -43,4 +43,5 @@ check_bin wget
 check_bin fswatch
 check_bin pv
 check_bin utimer
+check_bin shellcheck
 
