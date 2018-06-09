@@ -7,10 +7,9 @@ vim-() {
 
 # http://superuser.com/questions/210054/make-a-pipe-conditional-on-non-empty-return
 pipe_if_not_empty () {
-  head=$(dd bs=1 count=1 2>/dev/null; echo a)
-  head=${head%a}
-  if [ "x$head" != x"" ]; then
-    { printf %s "$head"; cat; } | "$@"
+  input=$(cat);
+  if [ "x$input" != x"" ]; then
+    { printf '%s\n' "${input}"; } | "$@"
   fi
 }
 export -f pipe_if_not_empty
