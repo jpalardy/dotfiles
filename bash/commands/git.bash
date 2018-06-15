@@ -20,5 +20,5 @@ alias glg-current="git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(
 alias glg="glg-current --all"
 
 alias glgd-current="glg --date-order"
-alias glgd="glgd-cuccrent --all"
+alias glgd="glgd-current --all"
 
