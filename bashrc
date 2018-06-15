@@ -35,6 +35,13 @@ fi
 
 #-------------------------------------------------
 
+# iterm can start in different places
+if [ "$PWD" != "$HOME" ]; then
+  echo_pwd
+fi
+
+#-------------------------------------------------
+
 unset cond_source
 unset source_all
 

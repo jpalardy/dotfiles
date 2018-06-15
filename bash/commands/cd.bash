@@ -1,4 +1,8 @@
 
+echo_pwd() {
+  echo "${ATTR_RESET}${PATH_COLOR}-> $PWD$(__git_ps1)${ATTR_RESET}"
+}
+
 # wrap `cd`, add behaviors
 cd() {
   local dest="${@:-"$HOME"}"
@@ -9,7 +13,7 @@ cd() {
   builtin cd "$dest" || return
   local result=$?
 
-  echo "${ATTR_RESET}${PATH_COLOR}-> $PWD$(__git_ps1)${ATTR_RESET}"
+  echo_pwd
 
   return $result
 }
