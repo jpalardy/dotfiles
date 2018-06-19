@@ -37,7 +37,7 @@ fi
 
 # iterm can start in different places
 if [ "$PWD" != "$HOME" ]; then
-  echo_pwd
+  PATH_COLOR=$(tput setaf 1) echo_pwd
 fi
 
 #-------------------------------------------------
