@@ -36,7 +36,8 @@ fi
 #-------------------------------------------------
 
 # iterm can start in different places
-if [ "$PWD" != "$HOME" ]; then
+# but not in tmux, because that's expected
+if [ "$PWD" != "$HOME" ] && [ -z "$TMUX_PANE" ]; then
   PATH_COLOR=$(tput setaf 1) echo_pwd
 fi
 
