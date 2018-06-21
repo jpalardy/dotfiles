@@ -22,3 +22,9 @@ alias glg="glg-current --all"
 alias glgd-current="glg --date-order"
 alias glgd="glgd-current --all"
 
+#-------------------------------------------------
+
+git-latety() {
+  glg --author="Jonathan Palardy" --since="${1:-7} days ago"
+}
+
