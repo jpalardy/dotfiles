@@ -58,6 +58,8 @@ _cask() {
 }
 complete -F _cask cask
 
+alias bsd="brew search --desc"
+
 #-------------------------------------------------
 
 we() {
