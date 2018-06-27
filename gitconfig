@@ -16,7 +16,7 @@
   ffp     = pull --ff-only
   cp      = cherry-pick
   rl      = remote -v
-  fp      = fetch --prune
+  fetch   = fetch --prune
   who     = config --get user.email
   mp      = merge --no-commit --no-ff
   ma      = merge --abort
