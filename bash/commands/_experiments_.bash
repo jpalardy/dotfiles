@@ -4,7 +4,7 @@ npm2svg() {
   open -a "Google Chrome" out.svg
 }
 
-function title {
+title() {
   echo -ne "\033]0;"$*"\007"
 }
 
