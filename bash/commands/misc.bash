@@ -58,7 +58,7 @@ _cask() {
 }
 complete -F _cask cask
 
-alias bsd="brew search --desc"
+alias bds="brew desc -s"
 
 #-------------------------------------------------
 
