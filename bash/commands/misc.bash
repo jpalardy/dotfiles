@@ -70,7 +70,7 @@ complete -c we
 # ldf -- last downloaded file
 ldf() {
   local file
-  file="~/Downloads/$(ls -1t ~/Downloads/ | head -n1)"
+  file="$HOME/Downloads/$(ls -1t ~/Downloads/ | head -n1)"
   read -p "confirm: $file "
   mv "$file" .
 }
