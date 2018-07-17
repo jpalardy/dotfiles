@@ -1,4 +1,0 @@
-#!/bin/bash
-
-curl -L -s "$@" | pup 'title text{}'
-
