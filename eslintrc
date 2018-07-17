@@ -11,6 +11,7 @@ rules:
   object-curly-spacing: "off"
   no-param-reassign: ["error", {"props": false}]
   function-paren-newline: "off"
+  class-methods-use-this: "off"
 env:
   es6: true
 extends: airbnb-base
