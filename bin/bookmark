@@ -1,0 +1,12 @@
+#!/bin/bash
+
+url=${1:?missing url}
+
+title=$(curl -L -s "$url" | pup -p 'title text{}')
+date=$(date +%F)
+
+echo
+echo "$date"
+echo "  $title"
+echo "    $url"
+
