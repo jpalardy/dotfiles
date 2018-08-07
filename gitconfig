@@ -4,7 +4,7 @@
 [color]
   ui = auto
 [alias]
-  st      = !git_status
+  st      = status --short --branch
   b       = branch
   ba      = branch -a
   bav     = branch -a -vvv

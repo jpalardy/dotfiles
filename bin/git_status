@@ -1,5 +1,0 @@
-#!/bin/bash
-
-                                                 # don't print branch info w/o an ahead/behind count
-git -c color.ui=always status --short --branch | awk '/^#.*[^]]$/ { next } { print }'
-
