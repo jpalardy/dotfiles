@@ -1,4 +1,9 @@
 
+" helper for below
+function! MultilineString(...)
+  return join(a:000, "\n")
+endfunction
+
 " function definition
 Snippet 'fn', 'function'
 Snippet 'function', 'function |() {}'
@@ -25,5 +30,6 @@ SnippetComplete 'addEventListener'
 SnippetComplete 'preventDefault'
 SnippetComplete 'stopPropagation'
 
-SnippetComplete 'eslint', '/* eslint no-console: 0, | */'
+SnippetComplete 'eslint', MultilineString("/* eslint-disable no-console */",
+                                        \ "/* eslint-disable func-names, prefer-arrow-callback */")
 
