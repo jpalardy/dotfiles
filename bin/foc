@@ -1,0 +1,7 @@
+#!/bin/bash
+
+(
+  rg --files | rg "$@"
+  rg -l "$@"
+) | awk '!seen[$0]++'  # uniq
+
