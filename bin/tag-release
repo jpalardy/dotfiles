@@ -11,6 +11,7 @@ if [ -n "$rc" ]; then
   version="${version}-RC${rc}"
 fi
 
+echo 'git tag -a "'$version'" -m "Tagging '$version'"'
 version="$(rlwrap -S "tag: " -P "$version" -o cat)"
 
 git tag -a "$version" -m "Tagging $version"
