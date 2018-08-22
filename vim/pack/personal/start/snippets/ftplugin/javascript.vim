@@ -32,5 +32,6 @@ SnippetComplete 'preventDefault'
 SnippetComplete 'stopPropagation'
 
 SnippetComplete 'eslint', MultilineString("/* eslint-disable no-console */",
-                                        \ "/* eslint-disable func-names, prefer-arrow-callback */")
+                                        \ "/* eslint-disable func-names, prefer-arrow-callback */",
+                                        \ '/* eslint no-unused-vars: ["error", { "args": "none" }] */')
 
