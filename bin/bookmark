@@ -2,7 +2,7 @@
 
 url=${1:?missing url}
 
-title=$(curl -L -s "$url" | pup -p 'title text{}')
+title=$(curl -L -s "$url" | pup -p --charset utf8 'title json{}' | jq '.[].text' -r)
 date=$(date +%F)
 
 echo
