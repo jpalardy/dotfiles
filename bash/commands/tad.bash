@@ -5,7 +5,15 @@ tad() {
   ts=$(date +%s)
   local d="$HOME/.throw-away/$ts"
   mkdir -p "$d"
-  (cd "$d" || exit; bash)
+  (
+    cd "$d" || exit
+    # git clone on argument
+    if [ -n "$1" ]; then
+      git clone "$1"
+      cd "$(basename "$1" .git)" || exit
+    fi
+    bash
+  )
   rm -rf "$d"
 }
 
