@@ -1,5 +1,5 @@
 #!/bin/bash
 
-brew-graph.rb --installed --highlight-leaves | fdp -Tpng -o brew-deps.png
+brew-graph.rb --installed --highlight-leaves | dot -Tpng -o brew-deps.png
 open brew-deps.png
 

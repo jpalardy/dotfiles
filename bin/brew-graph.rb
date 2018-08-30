@@ -160,7 +160,11 @@ class Dot < Graph
 
   def to_s
     dot = []
-    dot << 'digraph G {'
+    dot << <<END
+digraph G {
+  rankdir=LR;
+  node [style=rounded, shape=box, fontname=Arial, fontsize=14];
+END
     @data.each_key do |node|
       dot << create_node(node, @highlight_leaves && is_leaf?(node))
     end
@@ -177,7 +181,7 @@ class Dot < Graph
   private
 
     def create_node(node, leaf)
-      %Q(  "#{node}"#{leaf ? " [style=filled]" : ""};)
+      %Q(  "#{node}"#{leaf ? ' [style="filled,rounded"]' : ""};)
     end
 
     def create_edge(source, target)
