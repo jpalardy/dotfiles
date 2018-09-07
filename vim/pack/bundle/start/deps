@@ -9,3 +9,4 @@ gitgutter      https://github.com/airblade/vim-gitgutter.git
 lightline      https://github.com/itchyny/lightline.vim
 surround       https://github.com/tpope/vim-surround.git
 typescript     https://github.com/leafgarland/typescript-vim.git
+elixir         https://github.com/elixir-lang/vim-elixir.git
