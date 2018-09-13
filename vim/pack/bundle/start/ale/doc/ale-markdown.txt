@@ -10,7 +10,8 @@ g:ale_markdown_mdl_executable                   *g:ale_markdown_mdl_executable*
   Type: |String|
   Default: `'mdl'`
 
-  See |ale-integrations-local-executables|
+  Override the invoked mdl binary. This is useful for running mdl from
+  binstubs or a bundle.
 
 
 g:ale_markdown_mdl_options                         *g:ale_markdown_mdl_options*
@@ -25,6 +26,39 @@ g:ale_markdown_mdl_options                         *g:ale_markdown_mdl_options*
 prettier                                                *ale-markdown-prettier*
 
 See |ale-javascript-prettier| for information about the available options.
+
+
+===============================================================================
+remark-lint                                          *ale-markdown-remark-lint*
+
+g:ale_markdown_remark_lint_executable   *g:ale_markdown_remark_lint_executable*
+                                        *b:ale_markdown_remark_lint_executable*
+  Type: |String|
+  Default: `'remark'`
+
+  See |ale-integrations-local-executables|
+
+
+g:ale_markdown_remark_lint_options         *g:ale_markdown_remark_lint_options*
+                                           *b:ale_markdown_remark_lint_options*
+  Type: |String|
+  Default: `''`
+
+  This variable can be set to pass additional options to remark-lint.
+
+
+g:ale_markdown_remark_lint_use_global   *g:ale_markdown_remark_lint_use_global*
+                                        *b:ale_markdown_remark_lint_use_global*
+  Type: |Number|
+  Default: `get(g:, 'ale_use_global_executables', 0)`
+
+  See |ale-integrations-local-executables|
+
+
+===============================================================================
+textlint                                                *ale-markdown-textlint*
+
+See |ale-text-textlint|
 
 
 ===============================================================================

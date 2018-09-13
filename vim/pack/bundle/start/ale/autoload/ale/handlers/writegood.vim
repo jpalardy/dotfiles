@@ -4,7 +4,7 @@
 function! ale#handlers#writegood#ResetOptions() abort
     call ale#Set('writegood_options', '')
     call ale#Set('writegood_executable', 'write-good')
-    call ale#Set('writegood_use_global', 0)
+    call ale#Set('writegood_use_global', get(g:, 'ale_use_global_executables', 0))
 endfunction
 
 " Reset the options so the tests can test how they are set.
@@ -58,4 +58,15 @@ function! ale#handlers#writegood#Handle(buffer, lines) abort
     endfor
 
     return l:output
+endfunction
+
+" Define the writegood linter for a given filetype.
+function! ale#handlers#writegood#DefineLinter(filetype) abort
+    call ale#linter#Define(a:filetype, {
+    \   'name': 'writegood',
+    \   'aliases': ['write-good'],
+    \   'executable_callback': 'ale#handlers#writegood#GetExecutable',
+    \   'command_callback': 'ale#handlers#writegood#GetCommand',
+    \   'callback': 'ale#handlers#writegood#Handle',
+    \})
 endfunction

@@ -1,5 +1,5 @@
 function! gitgutter#utility#supports_overscore_sign()
-  if s:windows()
+  if gitgutter#utility#windows()
     return &encoding ==? 'utf-8'
   else
     return &termencoding ==? &encoding || &termencoding == ''
@@ -11,7 +11,7 @@ function! gitgutter#utility#setbufvar(buffer, varname, val)
   let needs_setting = empty(dict)
   let dict[a:varname] = a:val
   if needs_setting
-    call setbufvar(a:buffer, 'gitgutter', dict)
+    call setbufvar(+a:buffer, 'gitgutter', dict)
   endif
 endfunction
 
@@ -50,8 +50,7 @@ function! gitgutter#utility#is_active(bufnr) abort
         \ !pumvisible() &&
         \ s:is_file_buffer(a:bufnr) &&
         \ s:exists_file(a:bufnr) &&
-        \ s:not_git_dir(a:bufnr) &&
-        \ !s:vimdiff(a:bufnr)
+        \ s:not_git_dir(a:bufnr)
 endfunction
 
 function! s:not_git_dir(bufnr) abort
@@ -115,7 +114,7 @@ function! gitgutter#utility#set_repo_path(bufnr) abort
   " *               -2 - not tracked by git
 
   call gitgutter#utility#setbufvar(a:bufnr, 'path', -1)
-  let cmd = gitgutter#utility#cd_cmd(a:bufnr, g:gitgutter_git_executable.' ls-files --error-unmatch --full-name '.gitgutter#utility#shellescape(s:filename(a:bufnr)))
+  let cmd = gitgutter#utility#cd_cmd(a:bufnr, g:gitgutter_git_executable.' ls-files --error-unmatch --full-name -- '.gitgutter#utility#shellescape(s:filename(a:bufnr)))
 
   if g:gitgutter_async && gitgutter#async#available()
     if has('lambda')
@@ -124,10 +123,17 @@ function! gitgutter#utility#set_repo_path(bufnr) abort
             \   'err': {bufnr       -> gitgutter#utility#setbufvar(bufnr, 'path', -2)},
             \ })
     else
-      call gitgutter#async#execute(cmd, a:bufnr, {
-            \   'out': function('s:set_path'),
-            \   'err': function('s:set_path', [-2])
-            \ })
+      if has('nvim') && !has('nvim-0.2.0')
+        call gitgutter#async#execute(cmd, a:bufnr, {
+              \   'out': function('s:set_path'),
+              \   'err': function('s:not_tracked_by_git')
+              \ })
+      else
+        call gitgutter#async#execute(cmd, a:bufnr, {
+              \   'out': function('s:set_path'),
+              \   'err': function('s:set_path', [-2])
+              \ })
+      endif
     endif
   else
     let path = gitgutter#utility#system(cmd)
@@ -139,6 +145,12 @@ function! gitgutter#utility#set_repo_path(bufnr) abort
   endif
 endfunction
 
+if has('nvim') && !has('nvim-0.2.0')
+  function! s:not_tracked_by_git(bufnr)
+    call s:set_path(a:bufnr, -2)
+  endfunction
+endif
+
 function! s:set_path(bufnr, path)
   if a:bufnr == -2
     let [bufnr, path] = [a:path, a:bufnr]
@@ -149,7 +161,7 @@ function! s:set_path(bufnr, path)
 endfunction
 
 function! gitgutter#utility#cd_cmd(bufnr, cmd) abort
-  let cd = s:unc_path(a:bufnr) ? 'pushd' : 'cd'
+  let cd = s:unc_path(a:bufnr) ? 'pushd' : (gitgutter#utility#windows() ? 'cd /d' : 'cd')
   return cd.' '.s:dir(a:bufnr).' && '.a:cmd
 endfunction
 
@@ -193,28 +205,6 @@ function! s:strip_trailing_new_line(line) abort
   return substitute(a:line, '\n$', '', '')
 endfunction
 
-" Returns 1 if any of the given buffer's windows has the `&diff` option set,
-" or 0 otherwise.
-if exists('*win_findbuf')
-  function! s:vimdiff(bufnr) abort
-    for winid in win_findbuf(a:bufnr)
-      if getwinvar(winid, '&diff')
-        return 1
-      endif
-    endfor
-    return 0
-  endfunction
-else
-  function! s:vimdiff(bufnr) abort
-    for winnr in range(1, winnr('$'))
-      if winbufnr(winnr) == a:bufnr && getwinvar(winnr, '&diff')
-        return 1
-      endif
-    endfor
-    return 0
-  endfunction
-endif
-
-function! s:windows()
-  return has('win64') || has('win32') || has('win32unix') || has('win16')
+function! gitgutter#utility#windows()
+  return has('win64') || has('win32') || has('win16')
 endfunction

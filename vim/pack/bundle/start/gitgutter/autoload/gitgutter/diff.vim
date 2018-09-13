@@ -100,7 +100,7 @@ function! gitgutter#diff#run_diff(bufnr, preserve_full_diff) abort
   call s:write_buffer(a:bufnr, buff_file)
 
   " Call git-diff with the temporary files.
-  let cmd .= g:gitgutter_git_executable.' --no-pager'
+  let cmd .= g:gitgutter_git_executable.' --no-pager '.g:gitgutter_git_args
   if s:c_flag
     let cmd .= ' -c "diff.autorefreshindex=0"'
     let cmd .= ' -c "diff.noprefix=false"'
@@ -145,6 +145,10 @@ endfunction
 
 function! gitgutter#diff#handler(bufnr, diff) abort
   call gitgutter#debug#log(a:diff)
+
+  if !bufexists(a:bufnr)
+    return
+  endif
 
   call gitgutter#hunk#set_hunks(a:bufnr, gitgutter#diff#parse_diff(a:diff))
   let modified_lines = gitgutter#diff#process_hunks(a:bufnr, gitgutter#hunk#hunks(a:bufnr))
@@ -331,9 +335,20 @@ endfunction
 
 function! s:write_buffer(bufnr, file)
   let bufcontents = getbufline(a:bufnr, 1, '$')
+
   if getbufvar(a:bufnr, '&fileformat') ==# 'dos'
     call map(bufcontents, 'v:val."\r"')
   endif
+
+  let fenc = getbufvar(a:bufnr, '&fileencoding')
+  if fenc !=# &encoding
+    call map(bufcontents, 'iconv(v:val, &encoding, "'.fenc.'")')
+  endif
+
+  if getbufvar(a:bufnr, '&bomb')
+    let bufcontents[0]='﻿'.bufcontents[0]
+  endif
+
   call writefile(bufcontents, a:file)
 endfunction
 

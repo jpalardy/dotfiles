@@ -4,32 +4,21 @@
 " Author: John Eikenberry <jae@zhar.net>
 " Description: updated to work with go1.10
 
+call ale#Set('go_govet_options', '')
+
 function! ale_linters#go#govet#GetCommand(buffer) abort
+    let l:options = ale#Var(a:buffer, 'go_govet_options')
+
     return ale#path#BufferCdString(a:buffer) . ' go vet .'
-endfunction
-
-function! ale_linters#go#govet#Handler(buffer, lines) abort
-    let l:pattern = '\v^([a-zA-Z]?:?[^:]+):(\d+):?(\d+)?:? ?(.+)$'
-    let l:output = []
-    let l:dir = expand('#' . a:buffer . ':p:h')
-
-    for l:match in ale#util#GetMatches(a:lines, l:pattern)
-        call add(l:output, {
-        \   'filename': ale#path#GetAbsPath(l:dir, l:match[1]),
-        \   'lnum': l:match[2] + 0,
-        \   'col': l:match[3] + 0,
-        \   'text': l:match[4],
-        \   'type': 'E',
-        \})
-    endfor
-    return l:output
+    \   . (!empty(l:options) ? ' ' . l:options : '')
 endfunction
 
 call ale#linter#Define('go', {
-\   'name': 'go vet',
+\   'name': 'govet',
+\   'aliases': ['go vet'],
 \   'output_stream': 'stderr',
 \   'executable': 'go',
 \   'command_callback': 'ale_linters#go#govet#GetCommand',
-\   'callback': 'ale_linters#go#govet#Handler',
+\   'callback': 'ale#handlers#go#Handler',
 \   'lint_file': 1,
 \})

@@ -167,6 +167,20 @@ function Test_filename_with_square_brackets()
 endfunction
 
 
+function Test_filename_leading_dash()
+  call system('touch -- -fixture.txt && git add -- -fixture.txt')
+  edit -fixture.txt
+  normal ggo*
+  call s:trigger_gitgutter()
+
+  let expected = [
+        \ 'line=1  id=3000  name=GitGutterLineAdded',
+        \ 'line=2  id=3001  name=GitGutterLineAdded'
+        \ ]
+  call assert_equal(expected, s:signs('-fixture.txt'))
+endfunction
+
+
 " FIXME: this test fails when it is the first (or only) test to be run
 function Test_follow_symlink()
   let tmp = 'symlink'
@@ -562,4 +576,14 @@ function Test_fix_file_references()
         \ ], "\n")."\n"
 
   call assert_equal(expected, gitgutter#hunk#fix_file_references(filepath, hunk_diff))
+endfunction
+
+
+function Test_encoding()
+  call system('cp ../cp932.txt . && git add cp932.txt')
+  edit ++enc=cp932 cp932.txt
+
+  call s:trigger_gitgutter()
+
+  call assert_equal([], s:signs('cp932.txt'))
 endfunction

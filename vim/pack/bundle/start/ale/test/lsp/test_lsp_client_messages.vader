@@ -16,9 +16,11 @@ Execute(ale#lsp#message#Initialize() should return correct messages):
   \    'processId': getpid(),
   \    'rootPath': '/foo/bar',
   \    'capabilities': {},
+  \    'initializationOptions': {'foo': 'bar'},
+  \    'rootUri': 'file:///foo/bar',
   \   }
   \ ],
-  \ ale#lsp#message#Initialize('/foo/bar')
+  \ ale#lsp#message#Initialize('/foo/bar', {'foo': 'bar'})
 
 Execute(ale#lsp#message#Initialized() should return correct messages):
   AssertEqual [1, 'initialized'], ale#lsp#message#Initialized()
@@ -144,6 +146,35 @@ Execute(ale#lsp#message#Definition() should return correct messages):
   \ ],
   \ ale#lsp#message#Definition(bufnr(''), 12, 34)
 
+Execute(ale#lsp#message#References() should return correct messages):
+  AssertEqual
+  \ [
+  \   0,
+  \   'textDocument/references',
+  \   {
+  \     'textDocument': {
+  \         'uri': ale#path#ToURI(g:dir . '/foo/bar.ts'),
+  \     },
+  \     'position': {'line': 11, 'character': 34},
+  \     'context': {'includeDeclaration': v:false},
+  \   }
+  \ ],
+  \ ale#lsp#message#References(bufnr(''), 12, 34)
+
+Execute(ale#lsp#message#Hover() should return correct messages):
+  AssertEqual
+  \ [
+  \   0,
+  \   'textDocument/hover',
+  \   {
+  \     'textDocument': {
+  \         'uri': ale#path#ToURI(g:dir . '/foo/bar.ts'),
+  \     },
+  \     'position': {'line': 11, 'character': 34},
+  \   }
+  \ ],
+  \ ale#lsp#message#Hover(bufnr(''), 12, 34)
+
 Execute(ale#lsp#tsserver_message#Open() should return correct messages):
   AssertEqual
   \ [
@@ -233,3 +264,29 @@ Execute(ale#lsp#tsserver_message#Definition() should return correct messages):
   \   }
   \ ],
   \ ale#lsp#tsserver_message#Definition(bufnr(''), 347, 12)
+
+Execute(ale#lsp#tsserver_message#References() should return correct messages):
+  AssertEqual
+  \ [
+  \   0,
+  \   'ts@references',
+  \   {
+  \     'file': ale#path#Simplify(g:dir . '/foo/bar.ts'),
+  \     'line': 347,
+  \     'offset': 12,
+  \   }
+  \ ],
+  \ ale#lsp#tsserver_message#References(bufnr(''), 347, 12)
+
+Execute(ale#lsp#tsserver_message#Quickinfo() should return correct messages):
+  AssertEqual
+  \ [
+  \   0,
+  \   'ts@quickinfo',
+  \   {
+  \     'file': ale#path#Simplify(g:dir . '/foo/bar.ts'),
+  \     'line': 347,
+  \     'offset': 12,
+  \   }
+  \ ],
+  \ ale#lsp#tsserver_message#Quickinfo(bufnr(''), 347, 12)

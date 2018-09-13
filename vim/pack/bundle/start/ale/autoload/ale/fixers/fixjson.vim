@@ -3,7 +3,7 @@
 
 call ale#Set('json_fixjson_executable', 'fixjson')
 call ale#Set('json_fixjson_options', '')
-call ale#Set('json_fixjson_use_global', 0)
+call ale#Set('json_fixjson_use_global', get(g:, 'ale_use_global_executables', 0))
 
 function! ale#fixers#fixjson#GetExecutable(buffer) abort
     return ale#node#FindExecutable(a:buffer, 'json_fixjson', [
@@ -17,6 +17,7 @@ function! ale#fixers#fixjson#Fix(buffer) abort
     let l:command = l:executable . ' --stdin-filename ' . l:filename
 
     let l:options = ale#Var(a:buffer, 'json_fixjson_options')
+
     if l:options isnot# ''
         let l:command .= ' ' . l:options
     endif

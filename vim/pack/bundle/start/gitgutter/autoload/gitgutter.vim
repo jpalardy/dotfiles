@@ -3,11 +3,19 @@ let s:t_string = type('')
 " Primary functions {{{
 
 function! gitgutter#all(force) abort
-  for bufnr in s:uniq(tabpagebuflist())
-    let file = expand('#'.bufnr.':p')
-    if !empty(file)
-      call gitgutter#init_buffer(bufnr)
-      call gitgutter#process_buffer(bufnr, a:force)
+  let visible = tabpagebuflist()
+
+  for bufnr in range(1, bufnr('$') + 1)
+    if buflisted(bufnr)
+      let file = expand('#'.bufnr.':p')
+      if !empty(file)
+        if index(visible, bufnr) != -1
+          call gitgutter#init_buffer(bufnr)
+          call gitgutter#process_buffer(bufnr, a:force)
+        elseif a:force
+          call s:reset_tick(bufnr)
+        endif
+      endif
     endif
   endfor
 endfunction
@@ -19,6 +27,7 @@ function! gitgutter#init_buffer(bufnr)
     let p = gitgutter#utility#repo_path(a:bufnr, 0)
     if type(p) != s:t_string || empty(p)
       call gitgutter#utility#set_repo_path(a:bufnr)
+      call s:setup_maps()
     endif
   endif
 endfunction
@@ -45,23 +54,18 @@ function! gitgutter#process_buffer(bufnr, force) abort
       endif
 
     endif
-  else
-    call s:clear(a:bufnr)
   endif
 endfunction
 
 
 function! gitgutter#disable() abort
   " get list of all buffers (across all tabs)
-  let buflist = []
-  for i in range(tabpagenr('$'))
-    call extend(buflist, tabpagebuflist(i + 1))
-  endfor
-
-  for bufnr in s:uniq(buflist)
-    let file = expand('#'.bufnr.':p')
-    if !empty(file)
-      call s:clear(bufnr)
+  for bufnr in range(1, bufnr('$') + 1)
+    if buflisted(bufnr)
+      let file = expand('#'.bufnr.':p')
+      if !empty(file)
+        call s:clear(bufnr)
+      endif
     endif
   endfor
 
@@ -83,6 +87,42 @@ endfunction
 
 " }}}
 
+function! s:setup_maps()
+  if !g:gitgutter_map_keys
+    return
+  endif
+
+  if !hasmapto('<Plug>GitGutterPrevHunk') && maparg('[c', 'n') ==# ''
+    nmap <buffer> [c <Plug>GitGutterPrevHunk
+  endif
+  if !hasmapto('<Plug>GitGutterNextHunk') && maparg(']c', 'n') ==# ''
+    nmap <buffer> ]c <Plug>GitGutterNextHunk
+  endif
+
+  if !hasmapto('<Plug>GitGutterStageHunk') && maparg('<Leader>hs', 'n') ==# ''
+    nmap <buffer> <Leader>hs <Plug>GitGutterStageHunk
+  endif
+  if !hasmapto('<Plug>GitGutterUndoHunk') && maparg('<Leader>hu', 'n') ==# ''
+    nmap <buffer> <Leader>hu <Plug>GitGutterUndoHunk
+  endif
+  if !hasmapto('<Plug>GitGutterPreviewHunk') && maparg('<Leader>hp', 'n') ==# ''
+    nmap <buffer> <Leader>hp <Plug>GitGutterPreviewHunk
+  endif
+
+  if !hasmapto('<Plug>GitGutterTextObjectInnerPending') && maparg('ic', 'o') ==# ''
+    omap <buffer> ic <Plug>GitGutterTextObjectInnerPending
+  endif
+  if !hasmapto('<Plug>GitGutterTextObjectOuterPending') && maparg('ac', 'o') ==# ''
+    omap <buffer> ac <Plug>GitGutterTextObjectOuterPending
+  endif
+  if !hasmapto('<Plug>GitGutterTextObjectInnerVisual') && maparg('ic', 'x') ==# ''
+    xmap <buffer> ic <Plug>GitGutterTextObjectInnerVisual
+  endif
+  if !hasmapto('<Plug>GitGutterTextObjectOuterVisual') && maparg('ac', 'x') ==# ''
+    xmap <buffer> ac <Plug>GitGutterTextObjectOuterVisual
+  endif
+endfunction
+
 function! s:has_fresh_changes(bufnr) abort
   return getbufvar(a:bufnr, 'changedtick') != gitgutter#utility#getbufvar(a:bufnr, 'tick')
 endfunction
@@ -97,19 +137,3 @@ function! s:clear(bufnr)
   call gitgutter#hunk#reset(a:bufnr)
   call s:reset_tick(a:bufnr)
 endfunction
-
-if exists('*uniq')  " Vim 7.4.218
-  function! s:uniq(list)
-    return uniq(sort(a:list))
-  endfunction
-else
-  function! s:uniq(list)
-    let processed = []
-    for e in a:list
-      if index(processed, e) == -1
-        call add(processed, e)
-      endif
-    endfor
-    return processed
-  endfunction
-endif

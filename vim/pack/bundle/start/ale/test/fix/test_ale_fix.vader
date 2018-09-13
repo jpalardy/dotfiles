@@ -17,12 +17,21 @@ Before:
   \ 'testft': [],
   \}
 
+  let g:pre_success = 0
+  let g:post_success = 0
+  augroup VaderTest
+    autocmd!
+    autocmd User ALEFixPre let g:pre_success = 1
+    autocmd User ALEFixPost let g:post_success = 1
+  augroup end
+
   if !has('win32')
     let &shell = '/bin/bash'
   endif
 
   call ale#test#SetDirectory('/testplugin/test')
   call ale#test#SetFilename('test.txt')
+  call ale#linter#PreventLoading('testft')
 
   function AddCarets(buffer, lines) abort
     " map() is applied to the original lines here.
@@ -171,6 +180,7 @@ After:
   unlet! g:ale_emulate_job_failure
   unlet! b:ale_fixers
   unlet! b:ale_fix_on_save
+  augroup! VaderTest
   delfunction AddCarets
   delfunction AddDollars
   delfunction DoNothing
@@ -248,6 +258,25 @@ Expect(Only the second function should be applied):
   $b
   $c
 
+Execute(The * fixers shouldn't be used if an empty list is set for fixers):
+  let g:ale_fixers.testft = []
+  let g:ale_fixers['*'] = ['AddDollars']
+  ALEFix
+
+Expect(Nothing should be changed):
+  a
+  b
+  c
+
+Execute(* fixers should be used if no filetype is matched):
+  let g:ale_fixers = {'*': ['AddDollars']}
+  ALEFix
+
+Expect(The file should be changed):
+  $a
+  $b
+  $c
+
 Execute(ALEFix should allow commands to be run):
   if has('win32')
     " Just skip this test on Windows, we can't run it.
@@ -262,6 +291,15 @@ Expect(An extra line should be added):
   b
   c
   d
+
+Execute(ALEFix should use fixers passed in commandline when provided):
+  let g:ale_fixers.testft = ['RemoveLastLine']
+  ALEFix AddCarets AddDollars
+
+Expect(Only fixers passed via command line should be run):
+  $^a
+  $^b
+  $^c
 
 Execute(ALEFix should allow temporary files to be read):
   if has('win32')
@@ -420,7 +458,7 @@ Execute(ALEFix should save files on the save event):
     \   'nr': -1,
     \   'pattern': '',
     \   'valid': 1,
-    \}], getloclist(0)
+    \}], ale#test#GetLoclistWithoutModule()
   endif
 
 Expect(The buffer should be modified):
@@ -459,7 +497,7 @@ Execute(ALEFix should still lint with no linters to be applied):
     \   'nr': -1,
     \   'pattern': '',
     \   'valid': 1,
-    \}], getloclist(0)
+    \}], ale#test#GetLoclistWithoutModule()
   endif
 
 Expect(The buffer should be the same):
@@ -493,7 +531,7 @@ Execute(ALEFix should still lint when nothing was fixed on save):
     \   'nr': -1,
     \   'pattern': '',
     \   'valid': 1,
-    \}], getloclist(0)
+    \}], ale#test#GetLoclistWithoutModule()
   endif
 
 Expect(The buffer should be the same):
@@ -514,8 +552,6 @@ Execute(ale#fix#InitBufferData() should set up the correct data):
   AssertEqual {
   \ bufnr(''): {
   \   'temporary_directory_list': [],
-  \   'vars': b:,
-  \   'filename': ale#path#Simplify(getcwd() . '/fix_test_file'),
   \   'done': 0,
   \   'lines_before': ['a', 'b', 'c'],
   \   'should_save': 1,
@@ -664,3 +700,9 @@ Expect(The lines in the JSON should be used):
   x
   y
   z
+
+Execute(ALEFix should apply autocmds):
+  let g:ale_fixers.testft = ['AddCarets']
+  ALEFix
+  AssertEqual g:pre_success, 1
+  AssertEqual g:post_success, 1

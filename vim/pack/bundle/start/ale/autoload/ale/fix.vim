@@ -1,10 +1,3 @@
-" This global Dictionary tracks the ALE fix data for jobs, etc.
-" This Dictionary should not be accessed outside of the plugin. It is only
-" global so it can be modified in Vader tests.
-if !has_key(g:, 'ale_fix_buffer_data')
-    let g:ale_fix_buffer_data = {}
-endif
-
 if !has_key(s:, 'job_info_map')
     let s:job_info_map = {}
 endif
@@ -28,8 +21,6 @@ function! ale#fix#ApplyQueuedFixes() abort
     call remove(g:ale_fix_buffer_data, l:buffer)
 
     if l:data.changes_made
-        call setline(1, l:data.output)
-
         let l:start_line = len(l:data.output) + 1
         let l:end_line = len(l:data.lines_before)
 
@@ -38,6 +29,8 @@ function! ale#fix#ApplyQueuedFixes() abort
             silent execute l:start_line . ',' . l:end_line . 'd_'
             call winrestview(l:save)
         endif
+
+        call setline(1, l:data.output)
 
         if l:data.should_save
             if empty(&buftype)
@@ -53,6 +46,8 @@ function! ale#fix#ApplyQueuedFixes() abort
     else
         let l:should_lint = l:data.changes_made
     endif
+
+    silent doautocmd <nomodeline> User ALEFixPost
 
     " If ALE linting is enabled, check for problems with the file again after
     " fixing problems.
@@ -76,6 +71,7 @@ function! ale#fix#ApplyFixes(buffer, output) abort
         if l:data.lines_before != l:lines
             call remove(g:ale_fix_buffer_data, a:buffer)
             execute 'echoerr ''The file was changed before fixing finished'''
+
             return
         endif
     endif
@@ -217,6 +213,7 @@ function! s:RunJob(options) abort
 
     let [l:temporary_file, l:command] = ale#command#FormatCommand(
     \   l:buffer,
+    \   '',
     \   l:command,
     \   l:read_buffer,
     \)
@@ -279,7 +276,7 @@ function! s:RunJob(options) abort
     if get(g:, 'ale_run_synchronously') == 1
         " Run a command synchronously if this test option is set.
         let l:output = systemlist(
-        \   type(l:command) == type([])
+        \   type(l:command) is v:t_list
         \   ?  join(l:command[0:1]) . ' ' . ale#Escape(l:command[2])
         \   : l:command
         \)
@@ -317,10 +314,10 @@ function! s:RunFixer(options) abort
             \   : call(l:Function, [l:buffer, copy(l:input)])
         endif
 
-        if type(l:result) == type(0) && l:result == 0
+        if type(l:result) is v:t_number && l:result == 0
             " When `0` is returned, skip this item.
             let l:index += 1
-        elseif type(l:result) == type([])
+        elseif type(l:result) is v:t_list
             let l:input = l:result
             let l:index += 1
         else
@@ -354,25 +351,41 @@ function! s:RunFixer(options) abort
     call ale#fix#ApplyFixes(l:buffer, l:input)
 endfunction
 
-function! s:GetCallbacks() abort
-    if type(get(b:, 'ale_fixers')) is type([])
+function! s:AddSubCallbacks(full_list, callbacks) abort
+    if type(a:callbacks) is v:t_string
+        call add(a:full_list, a:callbacks)
+    elseif type(a:callbacks) is v:t_list
+        call extend(a:full_list, a:callbacks)
+    else
+        return 0
+    endif
+
+    return 1
+endfunction
+
+function! s:GetCallbacks(buffer, fixers) abort
+    if len(a:fixers)
+        let l:callback_list = a:fixers
+    elseif type(get(b:, 'ale_fixers')) is v:t_list
         " Lists can be used for buffer-local variables only
         let l:callback_list = b:ale_fixers
     else
         " buffer and global options can use dictionaries mapping filetypes to
         " callbacks to run.
-        let l:fixers = ale#Var(bufnr(''), 'fixers')
+        let l:fixers = ale#Var(a:buffer, 'fixers')
         let l:callback_list = []
+        let l:matched = 0
 
         for l:sub_type in split(&filetype, '\.')
-            let l:sub_type_callacks = get(l:fixers, l:sub_type, [])
-
-            if type(l:sub_type_callacks) == type('')
-                call add(l:callback_list, l:sub_type_callacks)
-            else
-                call extend(l:callback_list, l:sub_type_callacks)
+            if s:AddSubCallbacks(l:callback_list, get(l:fixers, l:sub_type))
+                let l:matched = 1
             endif
         endfor
+
+        " If we couldn't find fixers for a filetype, default to '*' fixers.
+        if !l:matched
+            call s:AddSubCallbacks(l:callback_list, get(l:fixers, '*'))
+        endif
     endif
 
     if empty(l:callback_list)
@@ -384,7 +397,7 @@ function! s:GetCallbacks() abort
     " Variables with capital characters are needed, or Vim will complain about
     " funcref variables.
     for l:Item in l:callback_list
-        if type(l:Item) == type('')
+        if type(l:Item) is v:t_string
             let l:Func = ale#fix#registry#GetFunc(l:Item)
 
             if !empty(l:Func)
@@ -408,9 +421,7 @@ function! ale#fix#InitBufferData(buffer, fixing_flag) abort
     " The 'done' flag tells the function for applying changes when fixing
     " is complete.
     let g:ale_fix_buffer_data[a:buffer] = {
-    \   'vars': getbufvar(a:buffer, ''),
     \   'lines_before': getbufline(a:buffer, 1, '$'),
-    \   'filename': expand('#' . a:buffer . ':p'),
     \   'done': 0,
     \   'should_save': a:fixing_flag is# 'save_file',
     \   'temporary_directory_list': [],
@@ -420,19 +431,13 @@ endfunction
 " Accepts an optional argument for what to do when fixing.
 "
 " Returns 0 if no fixes can be applied, and 1 if fixing can be done.
-function! ale#fix#Fix(...) abort
-    if len(a:0) > 1
-        throw 'too many arguments!'
-    endif
-
-    let l:fixing_flag = get(a:000, 0, '')
-
-    if l:fixing_flag isnot# '' && l:fixing_flag isnot# 'save_file'
+function! ale#fix#Fix(buffer, fixing_flag, ...) abort
+    if a:fixing_flag isnot# '' && a:fixing_flag isnot# 'save_file'
         throw "fixing_flag must be either '' or 'save_file'"
     endif
 
     try
-        let l:callback_list = s:GetCallbacks()
+        let l:callback_list = s:GetCallbacks(a:buffer, a:000)
     catch /E700\|BADNAME/
         let l:function_name = join(split(split(v:exception, ':')[3]))
         let l:echo_message = printf(
@@ -445,14 +450,12 @@ function! ale#fix#Fix(...) abort
     endtry
 
     if empty(l:callback_list)
-        if l:fixing_flag is# ''
+        if a:fixing_flag is# ''
             execute 'echom ''No fixers have been defined. Try :ALEFixSuggest'''
         endif
 
         return 0
     endif
-
-    let l:buffer = bufnr('')
 
     for l:job_id in keys(s:job_info_map)
         call remove(s:job_info_map, l:job_id)
@@ -460,12 +463,14 @@ function! ale#fix#Fix(...) abort
     endfor
 
     " Clean up any files we might have left behind from a previous run.
-    call ale#fix#RemoveManagedFiles(l:buffer)
-    call ale#fix#InitBufferData(l:buffer, l:fixing_flag)
+    call ale#fix#RemoveManagedFiles(a:buffer)
+    call ale#fix#InitBufferData(a:buffer, a:fixing_flag)
+
+    silent doautocmd <nomodeline> User ALEFixPre
 
     call s:RunFixer({
-    \   'buffer': l:buffer,
-    \   'input': g:ale_fix_buffer_data[l:buffer].lines_before,
+    \   'buffer': a:buffer,
+    \   'input': g:ale_fix_buffer_data[a:buffer].lines_before,
     \   'callback_index': 0,
     \   'callback_list': l:callback_list,
     \})

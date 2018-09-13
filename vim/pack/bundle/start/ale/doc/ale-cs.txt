@@ -38,8 +38,8 @@ mcsc                                                              *ale-cs-mcsc*
   The paths to search for additional assembly files can be specified using the
   |g:ale_cs_mcsc_assembly_path| or |b:ale_cs_mcsc_assembly_path| variables.
 
-  NOTE: ALE will not any errors in files apart from syntax errors if any one
-  of the source files contains a syntax error. Syntax errors must be fixed
+  NOTE: ALE will not find any errors in files apart from syntax errors if any
+  one of the source files contains a syntax error. Syntax errors must be fixed
   first before other errors will be shown.
 
 
@@ -97,6 +97,12 @@ g:ale_cs_mcsc_assemblies                             *g:ale_cs_mcsc_assemblies*
     \ 'path-to-unityproject/obj/Debug',
     \]
 <
+
+===============================================================================
+uncrustify                                                  *ale-cs-uncrustify*
+
+See |ale-c-uncrustify| for information about the available options.
+
 
 ===============================================================================
   vim:tw=78:ts=2:sts=2:sw=2:ft=help:norl:

@@ -2,6 +2,9 @@
 " Description: Backend execution and job management
 "   Executes linters in the background, using NeoVim or Vim 8 jobs
 
+" Remapping of linter problems.
+let g:ale_type_map = get(g:, 'ale_type_map', {})
+
 " Stores information for each job including:
 "
 " linter: The linter dictionary for the job.
@@ -9,11 +12,6 @@
 " output: The array of lines for the output of the job.
 if !has_key(s:, 'job_info_map')
     let s:job_info_map = {}
-endif
-
-" Associates LSP connection IDs with linter names.
-if !has_key(s:, 'lsp_linter_map')
-    let s:lsp_linter_map = {}
 endif
 
 if !has_key(s:, 'executable_cache_map')
@@ -44,7 +42,7 @@ function! ale#engine#IsExecutable(buffer, executable) abort
 
     " Cache the executable check if we found it, or if the option to cache
     " failing checks is on.
-    if l:result || g:ale_cache_executable_check_failures
+    if l:result || get(g:, 'ale_cache_executable_check_failures', 0)
         let s:executable_cache_map[a:executable] = l:result
     endif
 
@@ -88,17 +86,36 @@ endfunction
 " Register a temporary file to be managed with the ALE engine for
 " a current job run.
 function! ale#engine#ManageFile(buffer, filename) abort
+    call ale#engine#InitBufferInfo(a:buffer)
     call add(g:ale_buffer_info[a:buffer].temporary_file_list, a:filename)
 endfunction
 
 " Same as the above, but manage an entire directory.
 function! ale#engine#ManageDirectory(buffer, directory) abort
+    call ale#engine#InitBufferInfo(a:buffer)
     call add(g:ale_buffer_info[a:buffer].temporary_directory_list, a:directory)
+endfunction
+
+function! ale#engine#CreateFile(buffer) abort
+    " This variable can be set to 1 in tests to stub this out.
+    if get(g:, 'ale_create_dummy_temporary_file')
+        return 'TEMP'
+    endif
+
+    let l:temporary_file = ale#util#Tempname()
+    call ale#engine#ManageFile(a:buffer, l:temporary_file)
+
+    return l:temporary_file
 endfunction
 
 " Create a new temporary directory and manage it in one go.
 function! ale#engine#CreateDirectory(buffer) abort
-    let l:temporary_directory = tempname()
+    " This variable can be set to 1 in tests to stub this out.
+    if get(g:, 'ale_create_dummy_temporary_file')
+        return 'TEMP_DIR'
+    endif
+
+    let l:temporary_directory = ale#util#Tempname()
     " Create the temporary directory for the file, unreadable by 'other'
     " users.
     call mkdir(l:temporary_directory, '', 0750)
@@ -144,7 +161,7 @@ function! s:GatherOutput(job_id, line) abort
     endif
 endfunction
 
-function! s:HandleLoclist(linter_name, buffer, loclist) abort
+function! ale#engine#HandleLoclist(linter_name, buffer, loclist) abort
     let l:info = get(g:ale_buffer_info, a:buffer, {})
 
     if empty(l:info)
@@ -189,6 +206,7 @@ function! s:HandleExit(job_id, exit_code) abort
     let l:linter = l:job_info.linter
     let l:output = l:job_info.output
     let l:buffer = l:job_info.buffer
+    let l:executable = l:job_info.executable
     let l:next_chain_index = l:job_info.next_chain_index
 
     if g:ale_history_enabled
@@ -212,7 +230,8 @@ function! s:HandleExit(job_id, exit_code) abort
     endif
 
     if l:next_chain_index < len(get(l:linter, 'command_chain', []))
-        call s:InvokeChain(l:buffer, l:linter, l:next_chain_index, l:output)
+        call s:InvokeChain(l:buffer, l:executable, l:linter, l:next_chain_index, l:output)
+
         return
     endif
 
@@ -221,73 +240,14 @@ function! s:HandleExit(job_id, exit_code) abort
         call ale#history#RememberOutput(l:buffer, a:job_id, l:output[:])
     endif
 
-    let l:loclist = ale#util#GetFunction(l:linter.callback)(l:buffer, l:output)
+    try
+        let l:loclist = ale#util#GetFunction(l:linter.callback)(l:buffer, l:output)
+    " Handle the function being unknown, or being deleted.
+    catch /E700/
+        let l:loclist = []
+    endtry
 
-    call s:HandleLoclist(l:linter.name, l:buffer, l:loclist)
-endfunction
-
-function! s:HandleLSPDiagnostics(conn_id, response) abort
-    let l:linter_name = s:lsp_linter_map[a:conn_id]
-    let l:filename = ale#path#FromURI(a:response.params.uri)
-    let l:buffer = bufnr(l:filename)
-
-    if l:buffer <= 0
-        return
-    endif
-
-    let l:loclist = ale#lsp#response#ReadDiagnostics(a:response)
-
-    call s:HandleLoclist(l:linter_name, l:buffer, l:loclist)
-endfunction
-
-function! s:HandleTSServerDiagnostics(response, error_type) abort
-    let l:buffer = bufnr(a:response.body.file)
-    let l:info = get(g:ale_buffer_info, l:buffer, {})
-
-    if empty(l:info)
-        return
-    endif
-
-    let l:thislist = ale#lsp#response#ReadTSServerDiagnostics(a:response)
-
-    " tsserver sends syntax and semantic errors in separate messages, so we
-    " have to collect the messages separately for each buffer and join them
-    " back together again.
-    if a:error_type is# 'syntax'
-        let l:info.syntax_loclist = l:thislist
-    else
-        let l:info.semantic_loclist = l:thislist
-    endif
-
-    let l:loclist = get(l:info, 'semantic_loclist', [])
-    \   + get(l:info, 'syntax_loclist', [])
-
-    call s:HandleLoclist('tsserver', l:buffer, l:loclist)
-endfunction
-
-function! s:HandleLSPErrorMessage(error_message) abort
-    execute 'echoerr ''Error from LSP:'''
-
-    for l:line in split(a:error_message, "\n")
-        execute 'echoerr l:line'
-    endfor
-endfunction
-
-function! ale#engine#HandleLSPResponse(conn_id, response) abort
-    let l:method = get(a:response, 'method', '')
-
-    if get(a:response, 'jsonrpc', '') is# '2.0' && has_key(a:response, 'error')
-        " Uncomment this line to print LSP error messages.
-        " call s:HandleLSPErrorMessage(a:response.error.message)
-    elseif l:method is# 'textDocument/publishDiagnostics'
-        call s:HandleLSPDiagnostics(a:conn_id, a:response)
-    elseif get(a:response, 'type', '') is# 'event'
-    \&& get(a:response, 'event', '') is# 'semanticDiag'
-        call s:HandleTSServerDiagnostics(a:response, 'semantic')
-    elseif get(a:response, 'type', '') is# 'event'
-    \&& get(a:response, 'event', '') is# 'syntaxDiag'
-        call s:HandleTSServerDiagnostics(a:response, 'syntax')
-    endif
+    call ale#engine#HandleLoclist(l:linter.name, l:buffer, l:loclist)
 endfunction
 
 function! ale#engine#SetResults(buffer, loclist) abort
@@ -334,8 +294,6 @@ function! ale#engine#SetResults(buffer, loclist) abort
 
         " Call user autocommands. This allows users to hook into ALE's lint cycle.
         silent doautocmd <nomodeline> User ALELintPost
-        " Old DEPRECATED name; call it for backwards compatibility.
-        silent doautocmd <nomodeline> User ALELint
     endif
 endfunction
 
@@ -360,9 +318,6 @@ function! s:RemapItemTypes(type_map, loclist) abort
         endif
     endfor
 endfunction
-
-" Save the temporary directory so we can figure out if files are in it.
-let s:temp_dir = fnamemodify(tempname(), ':h')
 
 function! ale#engine#FixLocList(buffer, linter_name, loclist) abort
     let l:bufnr_map = {}
@@ -391,7 +346,7 @@ function! ale#engine#FixLocList(buffer, linter_name, loclist) abort
         \   'text': l:old_item.text,
         \   'lnum': str2nr(l:old_item.lnum),
         \   'col': str2nr(get(l:old_item, 'col', 0)),
-        \   'vcol': get(l:old_item, 'vcol', 0),
+        \   'vcol': 0,
         \   'type': get(l:old_item, 'type', 'E'),
         \   'nr': get(l:old_item, 'nr', -1),
         \   'linter_name': a:linter_name,
@@ -451,6 +406,20 @@ function! ale#engine#FixLocList(buffer, linter_name, loclist) abort
             " When errors go beyond the end of the file, put them at the end.
             " This is only done for the current buffer.
             let l:item.lnum = l:last_line_number
+        elseif get(l:old_item, 'vcol', 0)
+            " Convert virtual column positions to byte positions.
+            " The positions will be off if the buffer has changed recently.
+            let l:line = getbufline(a:buffer, l:item.lnum)[0]
+
+            let l:item.col = ale#util#Col(l:line, l:item.col)
+
+            if has_key(l:item, 'end_col')
+                let l:end_line = get(l:item, 'end_lnum', l:line) != l:line
+                \   ? getbufline(a:buffer, l:item.end_lnum)[0]
+                \   : l:line
+
+                let l:item.end_col = ale#util#Col(l:end_line, l:item.end_col)
+            endif
         endif
 
         call add(l:new_loclist, l:item)
@@ -495,6 +464,12 @@ endfunction
 " Returns 1 when the job was started successfully.
 function! s:RunJob(options) abort
     let l:command = a:options.command
+
+    if empty(l:command)
+        return 0
+    endif
+
+    let l:executable = a:options.executable
     let l:buffer = a:options.buffer
     let l:linter = a:options.linter
     let l:output_stream = a:options.output_stream
@@ -502,11 +477,12 @@ function! s:RunJob(options) abort
     let l:read_buffer = a:options.read_buffer
     let l:info = g:ale_buffer_info[l:buffer]
 
-    if empty(l:command)
-        return 0
-    endif
-
-    let [l:temporary_file, l:command] = ale#command#FormatCommand(l:buffer, l:command, l:read_buffer)
+    let [l:temporary_file, l:command] = ale#command#FormatCommand(
+    \   l:buffer,
+    \   l:executable,
+    \   l:command,
+    \   l:read_buffer,
+    \)
 
     if s:CreateTemporaryFileForJob(l:buffer, l:temporary_file)
         " If a temporary filename has been formatted in to the command, then
@@ -567,9 +543,12 @@ function! s:RunJob(options) abort
         let s:job_info_map[l:job_id] = {
         \   'linter': l:linter,
         \   'buffer': l:buffer,
+        \   'executable': l:executable,
         \   'output': [],
         \   'next_chain_index': l:next_chain_index,
         \}
+
+        silent doautocmd <nomodeline> User ALEJobStarted
     endif
 
     if g:ale_history_enabled
@@ -579,7 +558,7 @@ function! s:RunJob(options) abort
     if get(g:, 'ale_run_synchronously') == 1
         " Run a command synchronously if this test option is set.
         let s:job_info_map[l:job_id].output = systemlist(
-        \   type(l:command) == type([])
+        \   type(l:command) is v:t_list
         \   ?  join(l:command[0:1]) . ' ' . ale#Escape(l:command[2])
         \   : l:command
         \)
@@ -617,9 +596,8 @@ function! ale#engine#ProcessChain(buffer, linter, chain_index, input) abort
                 \)
             endif
 
+            " If we have a command to run, execute that.
             if !empty(l:command)
-                " We hit a command to run, so we'll execute that
-
                 " The chain item can override the output_stream option.
                 if has_key(l:chain_item, 'output_stream')
                     let l:output_stream = l:chain_item.output_stream
@@ -657,8 +635,9 @@ function! ale#engine#ProcessChain(buffer, linter, chain_index, input) abort
     \}
 endfunction
 
-function! s:InvokeChain(buffer, linter, chain_index, input) abort
+function! s:InvokeChain(buffer, executable, linter, chain_index, input) abort
     let l:options = ale#engine#ProcessChain(a:buffer, a:linter, a:chain_index, a:input)
+    let l:options.executable = a:executable
 
     return s:RunJob(l:options)
 endfunction
@@ -692,44 +671,6 @@ function! s:StopCurrentJobs(buffer, include_lint_file_jobs) abort
     let l:info.active_linter_list = l:new_active_linter_list
 endfunction
 
-function! s:CheckWithLSP(buffer, linter) abort
-    let l:info = g:ale_buffer_info[a:buffer]
-    let l:lsp_details = ale#linter#StartLSP(
-    \   a:buffer,
-    \   a:linter,
-    \   function('ale#engine#HandleLSPResponse'),
-    \)
-
-    if empty(l:lsp_details)
-        return 0
-    endif
-
-    let l:id = l:lsp_details.connection_id
-    let l:root = l:lsp_details.project_root
-
-    " Remember the linter this connection is for.
-    let s:lsp_linter_map[l:id] = a:linter.name
-
-    let l:change_message = a:linter.lsp is# 'tsserver'
-    \   ? ale#lsp#tsserver_message#Geterr(a:buffer)
-    \   : ale#lsp#message#DidChange(a:buffer)
-    let l:request_id = ale#lsp#Send(l:id, l:change_message, l:root)
-
-    " If this was a file save event, also notify the server of that.
-    if a:linter.lsp isnot# 'tsserver'
-    \&& getbufvar(a:buffer, 'ale_save_event_fired', 0)
-      let l:save_message = ale#lsp#message#DidSave(a:buffer)
-      let l:request_id = ale#lsp#Send(l:id, l:save_message, l:root)
-    endif
-
-    if l:request_id != 0
-        if index(l:info.active_linter_list, a:linter.name) < 0
-            call add(l:info.active_linter_list, a:linter.name)
-        endif
-    endif
-
-    return l:request_id != 0
-endfunction
 
 function! s:RemoveProblemsForDisabledLinters(buffer, linters) abort
     " Figure out which linters are still enabled, and remove
@@ -785,12 +726,12 @@ endfunction
 " Returns 1 if the linter was successfully run.
 function! s:RunLinter(buffer, linter) abort
     if !empty(a:linter.lsp)
-        return s:CheckWithLSP(a:buffer, a:linter)
+        return ale#lsp_linter#CheckWithLSP(a:buffer, a:linter)
     else
         let l:executable = ale#linter#GetExecutable(a:buffer, a:linter)
 
         if ale#engine#IsExecutable(a:buffer, l:executable)
-            return s:InvokeChain(a:buffer, a:linter, 0, [])
+            return s:InvokeChain(a:buffer, l:executable, a:linter, 0, [])
         endif
     endif
 
@@ -867,7 +808,7 @@ endfunction
 " The time taken will be a very rough approximation, and more time may be
 " permitted than is specified.
 function! ale#engine#WaitForJobs(deadline) abort
-    let l:start_time = ale#util#ClockMilliseconds()
+    let l:start_time = ale#events#ClockMilliseconds()
 
     if l:start_time == 0
         throw 'Failed to read milliseconds from the clock!'
@@ -898,7 +839,7 @@ function! ale#engine#WaitForJobs(deadline) abort
 
         for l:job_id in l:job_list
             if ale#job#IsRunning(l:job_id)
-                let l:now = ale#util#ClockMilliseconds()
+                let l:now = ale#events#ClockMilliseconds()
 
                 if l:now - l:start_time > a:deadline
                     " Stop waiting after a timeout, so we don't wait forever.
@@ -935,7 +876,7 @@ function! ale#engine#WaitForJobs(deadline) abort
 
     if l:has_new_jobs
         " We have to wait more. Offset the timeout by the time taken so far.
-        let l:now = ale#util#ClockMilliseconds()
+        let l:now = ale#events#ClockMilliseconds()
         let l:new_deadline = a:deadline - (l:now - l:start_time)
 
         if l:new_deadline <= 0
