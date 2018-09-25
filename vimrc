@@ -65,6 +65,12 @@ endif
 " This is useful for debugging
 " set verbose=9
 
+"-------------------------------------------------
+set grepprg=rg\ --vimgrep\ --no-heading
+set grepformat=%f:%l:%c:%m,%f:%l:%m
+nnoremap ,g :copen<CR>:grep! 
+"-------------------------------------------------
+
 source $HOME/.vim/mappings.vim
 source $HOME/.vim/plugins.vim
 
