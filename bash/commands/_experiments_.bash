@@ -13,3 +13,7 @@ hf() {
   head -n $maxLines "$@"
 }
 
+waru() {
+  fswatch "$@" -o | xargs -I% sh -c "${COMMAND:-make}; afplay /System/Library/Sounds/Purr.aiff"
+}
+

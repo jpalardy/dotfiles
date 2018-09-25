@@ -42,6 +42,8 @@ check_bin gcal
 check_bin gpg
 check_bin curl
 check_bin wget
+check_bin fswatch
+check_bin pv
 check_bin utimer
 check_bin shellcheck
 check_bin yamllint
