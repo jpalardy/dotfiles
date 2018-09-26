@@ -12,3 +12,5 @@ endfunction
 SnippetG 'isod', function("Snippet_isod")
 SnippetG 'ts', function("Snippet_ts")
 
+SnippetG 'cr', "⏎"
+
