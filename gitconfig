@@ -21,7 +21,8 @@
   mp      = merge --no-commit --no-ff
   ma      = merge --abort
   dno     = diff --name-only
-  br-age  = for-each-ref --format '%(authordate:iso) %(refname:short)' --sort=-authordate refs/remotes refs/heads
+  age     = for-each-ref --format '%(authordate:iso) %(refname:short)' --sort=-authordate refs/remotes refs/heads
+  gone    = !git branch -vv | grep ': gone'
 [diff]
   noprefix = true
   tool = vimdiff
