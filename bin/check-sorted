@@ -1,0 +1,14 @@
+#!/bin/bash
+
+awk '
+
+$0 < prev {
+  print NR-1 ":", prev
+  print NR   ":", $0
+  exit 1
+}
+
+{ prev = $0 }
+
+' "$@"
+
