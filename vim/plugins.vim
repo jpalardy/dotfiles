@@ -4,15 +4,13 @@
 
 augroup mostly_spacehi
   autocmd!
-  autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax * SpaceHi
+  autocmd Syntax * SpaceHi
   autocmd FileType help     NoSpaceHi
   autocmd FileType diff     NoSpaceHi
   autocmd FileType man      NoSpaceHi
   autocmd FileType scratchy NoSpaceHi
   autocmd FileType go       NoSpaceHi
-  autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax,BufWritePost *.go NoSpaceHi
   autocmd FileType make     NoSpaceHi
-  autocmd BufNewFile,BufReadPost,FilterReadPost,FileReadPost,Syntax,BufWritePost Makefile NoSpaceHi
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
