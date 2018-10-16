@@ -34,6 +34,7 @@ CONTENTS                                                         *ale-contents*
       flawfinder..........................|ale-c-flawfinder|
       gcc.................................|ale-c-gcc|
       uncrustify..........................|ale-c-uncrustify|
+      ccls................................|ale-c-ccls|
     chef..................................|ale-chef-options|
       foodcritic..........................|ale-chef-foodcritic|
     clojure...............................|ale-clojure-options|
@@ -55,6 +56,7 @@ CONTENTS                                                         *ale-contents*
       flawfinder..........................|ale-cpp-flawfinder|
       gcc.................................|ale-cpp-gcc|
       uncrustify..........................|ale-cpp-uncrustify|
+      ccls................................|ale-cpp-ccls|
     c#....................................|ale-cs-options|
       mcs.................................|ale-cs-mcs|
       mcsc................................|ale-cs-mcsc|
@@ -75,6 +77,7 @@ CONTENTS                                                         *ale-contents*
       mix.................................|ale-elixir-mix|
       mix_format..........................|ale-elixir-mix-format|
       dialyxir............................|ale-elixir-dialyxir|
+      elixir-ls...........................|ale-elixir-elixir-ls|
     elm...................................|ale-elm-options|
       elm-format..........................|ale-elm-elm-format|
       elm-make............................|ale-elm-elm-make|
@@ -115,6 +118,7 @@ CONTENTS                                                         *ale-contents*
     haskell...............................|ale-haskell-options|
       brittany............................|ale-haskell-brittany|
       ghc.................................|ale-haskell-ghc|
+      ghc-mod.............................|ale-haskell-ghc-mod|
       cabal-ghc...........................|ale-haskell-cabal-ghc|
       hdevtools...........................|ale-haskell-hdevtools|
       hfmt................................|ale-haskell-hfmt|
@@ -185,6 +189,7 @@ CONTENTS                                                         *ale-contents*
       clang...............................|ale-objc-clang|
       clangd..............................|ale-objc-clangd|
       uncrustify..........................|ale-objc-uncrustify|
+      ccls................................|ale-objc-ccls|
     objcpp................................|ale-objcpp-options|
       clang...............................|ale-objcpp-clang|
       clangd..............................|ale-objcpp-clangd|
@@ -206,6 +211,7 @@ CONTENTS                                                         *ale-contents*
       phpcs...............................|ale-php-phpcs|
       phpmd...............................|ale-php-phpmd|
       phpstan.............................|ale-php-phpstan|
+      psalm...............................|ale-php-psalm|
       php-cs-fixer........................|ale-php-php-cs-fixer|
     po....................................|ale-po-options|
       write-good..........................|ale-po-write-good|
@@ -375,8 +381,8 @@ Notes:
 * Awk: `gawk`
 * Bash: `language-server`, `shell` (-n flag), `shellcheck`, `shfmt`
 * Bourne Shell: `shell` (-n flag), `shellcheck`, `shfmt`
-* C: `cppcheck`, `cpplint`!!, `clang`, `clangd`, `clangtidy`!!, `clang-format`, `cquery`, `flawfinder`, `gcc`, `uncrustify`
-* C++ (filetype cpp): `clang`, `clangd`, `clangcheck`!!, `clangtidy`!!, `clang-format`, `clazy`!!, `cppcheck`, `cpplint`!!, `cquery`, `flawfinder`, `gcc`, `uncrustify`
+* C: `cppcheck`, `cpplint`!!, `clang`, `clangd`, `clangtidy`!!, `clang-format`, `cquery`, `flawfinder`, `gcc`, `uncrustify`, `ccls`
+* C++ (filetype cpp): `clang`, `clangd`, `clangcheck`!!, `clangtidy`!!, `clang-format`, `clazy`!!, `cppcheck`, `cpplint`!!, `cquery`, `flawfinder`, `gcc`, `uncrustify`, `ccls`
 * CUDA: `nvcc`!!
 * C#: `mcs`, `mcsc`!!, `uncrustify`
 * Chef: `foodcritic`
@@ -392,7 +398,7 @@ Notes:
 * Dafny: `dafny`!!
 * Dart: `dartanalyzer`!!, `language_server`, dartfmt!!
 * Dockerfile: `hadolint`
-* Elixir: `credo`, `dialyxir`, `dogma`, `mix`!!
+* Elixir: `credo`, `dialyxir`, `dogma`, `mix`!!, `elixir-ls`
 * Elm: `elm-format, elm-make`
 * Erb: `erb`, `erubi`, `erubis`
 * Erlang: `erlc`, `SyntaxErl`
@@ -402,12 +408,12 @@ Notes:
 * FusionScript: `fusion-lint`
 * Git Commit Messages: `gitlint`
 * GLSL: glslang, `glslls`
-* Go: `gofmt`, `goimports`, `go vet`!!, `golint`, `gotype`!!, `gometalinter`!!, `go build`!!, `gosimple`!!, `staticcheck`!!, `golangserver`, `golangci-lint`!!
+* Go: `gofmt`, `goimports`, `go mod`!!, `go vet`!!, `golint`, `gotype`!!, `gometalinter`!!, `go build`!!, `gosimple`!!, `staticcheck`!!, `golangserver`, `golangci-lint`!!
 * GraphQL: `eslint`, `gqlint`, `prettier`
 * Hack: `hack`, `hackfmt`, `hhast`
 * Haml: `haml-lint`
 * Handlebars: `ember-template-lint`
-* Haskell: `brittany`, `ghc`, `cabal-ghc`, `stylish-haskell`, `stack-ghc`, `stack-build`!!, `ghc-mod`, `stack-ghc-mod`, `hlint`, `hdevtools`, `hfmt`, `hie`
+* Haskell: `brittany`, `ghc`, `cabal-ghc`, `stylish-haskell`, `stack-ghc`, `stack-build`!!, `ghc-mod`, `hlint`, `hdevtools`, `hfmt`, `hie`
 * HTML: `alex`!!, `HTMLHint`, `proselint`, `tidy`, `write-good`
 * Idris: `idris`
 * Java: `checkstyle`, `javac`, `google-java-format`, `PMD`, `javalsp`, `uncrustify`
@@ -428,12 +434,12 @@ Notes:
 * Nim: `nim check`!!
 * nix: `nix-instantiate`
 * nroff: `alex`!!, `proselint`, `write-good`
-* Objective-C: `clang`, `clangd`, `uncrustify`
+* Objective-C: `clang`, `clangd`, `uncrustify`, `ccls`
 * Objective-C++: `clang`, `clangd`, `uncrustify`
 * OCaml: `merlin` (see |ale-ocaml-merlin|), `ols`, `ocamlformat`
 * Pawn: `uncrustify`
 * Perl: `perl -c`, `perl-critic`, `perltidy`
-* PHP: `langserver`, `phan`, `php -l`, `phpcs`, `phpmd`, `phpstan`, `phpcbf`, `php-cs-fixer`
+* PHP: `langserver`, `phan`, `php -l`, `phpcs`, `phpmd`, `phpstan`, `phpcbf`, `php-cs-fixer`, `psalm`!!
 * PO: `alex`!!, `msgfmt`, `proselint`, `write-good`
 * Pod: `alex`!!, `proselint`, `write-good`
 * Pony: `ponyc`
@@ -527,12 +533,13 @@ circumstances.
 ALE will report problems with your code in the following ways, listed with
 their relevant options.
 
-* By updating loclist. (On by default)       - |g:ale_set_loclist|
-* By updating quickfix. (Off by default)     - |g:ale_set_quickfix|
-* By setting error highlights.               - |g:ale_set_highlights|
-* By creating signs in the sign column.      - |g:ale_set_signs|
-* By echoing messages based on your cursor.  - |g:ale_echo_cursor|
-* By showing balloons for your mouse cursor  - |g:ale_set_balloons|
+* By updating loclist. (On by default)             - |g:ale_set_loclist|
+* By updating quickfix. (Off by default)           - |g:ale_set_quickfix|
+* By setting error highlights.                     - |g:ale_set_highlights|
+* By creating signs in the sign column.            - |g:ale_set_signs|
+* By echoing messages based on your cursor.        - |g:ale_echo_cursor|
+* By displaying the preview based on your cursor.  - |g:ale_cursor_detail|
+* By showing balloons for your mouse cursor        - |g:ale_set_balloons|
 
 Please consult the documentation for each option, which can reveal some other
 ways of tweaking the behaviour of each way of displaying problems. You can
@@ -752,12 +759,25 @@ at the cursor taken from LSP linters. The following commands are supported:
 
 |ALEHover| - Print information about the symbol at the cursor.
 
-If |b:ale_set_balloons| is set to `1` and your version of Vim supports the
+If |g:ale_set_balloons| is set to `1` and your version of Vim supports the
 |balloon_show()| function, then "hover" information also show up when you move
 the mouse over a symbol in a buffer. Diagnostic information will take priority
 over hover information for balloons. If a line contains a problem, that
 problem will be displayed in a balloon instead of hover information.
 
+For Vim 8.1+ terminals, mouse hovering is disabled by default. Enabling
+|balloonexpr| commands in terminals can cause scrolling issues in terminals,
+so ALE will not attempt to show balloons unless |g:ale_set_balloons| is set to
+`1` before ALE is loaded.
+
+For enabling mouse support in terminals, you may have to change your mouse
+settings. For example: >
+
+  " Example mouse settings.
+  " You will need to try different settings, depending on your terminal.
+  set mouse=a
+  set ttymouse=xterm
+<
 
 ===============================================================================
 6. Global Options                                                 *ale-options*
@@ -803,6 +823,20 @@ g:ale_change_sign_column_color                 *g:ale_change_sign_column_color*
   The sign column color can only be changed globally in Vim. The sign column
   might produce unexpected results if editing different files in split
   windows.
+
+
+g:ale_close_preview_on_insert                   *g:ale_close_preview_on_insert*
+
+  Type: |Number|
+  Default: `0`
+
+  When this option is set to `1`, ALE's |preview-window| will be automatically
+  closed upon entering Insert Mode. This option can be used in combination
+  with |g:ale_cursor_detail| for automatically displaying the preview window
+  on problem lines, and automatically closing it again when editing text.
+
+  This setting must be set to `1` before ALE is loaded for this behavior
+  to be enabled. See |ale-lint-settings-on-startup|.
 
 
 g:ale_command_wrapper                                   *g:ale_command_wrapper*
@@ -893,6 +927,27 @@ g:ale_completion_max_suggestions             *g:ale_completion_max_suggestions*
   Adjust this option as needed, depending on the complexity of your codebase
   and your available processing power.
 
+g:ale_cursor_detail                                       *g:ale_cursor_detail*
+
+  Type: |Number|
+  Default: `0`
+
+  When this option is set to `1`, ALE's |preview-window| will be automatically
+  opened when the cursor moves onto lines with problems. ALE will search for
+  problems using the same logic that |g:ale_echo_cursor| uses. The preview
+  window will be closed automatically when you move away from the line.
+
+  Messages are only displayed after a short delay. See |g:ale_echo_delay|.
+
+  The preview window is opened without stealing focus, which means your cursor
+  will stay in the same buffer as it currently is.
+
+  The preview window can be closed automatically upon entering Insert mode
+  by setting |g:ale_close_preview_on_insert| to `1`.
+
+  Either this setting or |g:ale_echo_cursor| must be set to `1` before ALE is
+  loaded for messages to be displayed. See |ale-lint-settings-on-startup|.
+
 
 g:ale_echo_cursor                                           *g:ale_echo_cursor*
 
@@ -903,11 +958,14 @@ g:ale_echo_cursor                                           *g:ale_echo_cursor*
   cursor is near a warning or error. ALE will attempt to find the warning or
   error at a column nearest to the cursor when the cursor is resting on a line
   which contains a warning or error. This option can be set to `0` to disable
-  this behaviour.
-  The format of the message can be customizable in |g:ale_echo_msg_format|.
+  this behavior.
 
-  You should set this setting once before ALE is loaded, and restart Vim if
-  you want to change your preferences. See |ale-lint-settings-on-startup|.
+  Messages are only displayed after a short delay. See |g:ale_echo_delay|.
+
+  The format of the message can be customized with |g:ale_echo_msg_format|.
+
+  Either this setting or |g:ale_cursor_detail| must be set to `1` before ALE
+  is loaded for messages to be displayed. See |ale-lint-settings-on-startup|.
 
 
 g:ale_echo_delay                                             *g:ale_echo_delay*
@@ -916,7 +974,7 @@ g:ale_echo_delay                                             *g:ale_echo_delay*
   Default: `10`
 
   Given any integer, this option controls the number of milliseconds before
-  ALE will echo a message for a problem near the cursor.
+  ALE will echo or preview a message for a problem near the cursor.
 
   The value can be increased to decrease the amount of processing ALE will do
   for files displaying a large number of problems.
@@ -1163,6 +1221,12 @@ g:ale_lint_on_text_changed                         *g:ale_lint_on_text_changed*
   ALE will check buffers after a short delay, with a timer which resets on
   each change. The delay can be configured by adjusting the |g:ale_lint_delay|
   variable.
+                                               *ale-linting-interrupts-mapping*
+
+  Due to a bug in Vim, ALE can interrupt mappings with pending key presses,
+  per |timeoutlen|. If this happens, follow the advice for enabling
+  |g:ale_lint_on_insert_leave| below, and set this option to `'normal'`, or
+  disable it entirely.
 
   You should set this setting once before ALE is loaded, and restart Vim if
   you want to change your preferences. See |ale-lint-settings-on-startup|.
@@ -1178,7 +1242,7 @@ g:ale_lint_on_insert_leave                         *g:ale_lint_on_insert_leave*
 
   ALE will not lint files when you escape insert mode with |CTRL-C| by
   default. You can make ALE lint files with this option when you use |CTRL-C|
-  with the following keybind. >
+  with the following mapping. >
 
     " Make using Ctrl+C do the same as Escape, to trigger autocmd commands
     inoremap <C-c> <Esc>
