@@ -5,7 +5,6 @@ nerdcommenter  https://github.com/scrooloose/nerdcommenter.git
 slime          https://github.com/jpalardy/vim-slime
 spacehi        https://github.com/jpalardy/spacehi.vim.git
 tabular        https://github.com/godlygeek/tabular.git
-gitgutter      https://github.com/airblade/vim-gitgutter.git
 lightline      https://github.com/itchyny/lightline.vim
 surround       https://github.com/tpope/vim-surround.git
 typescript     https://github.com/leafgarland/typescript-vim.git

@@ -7,8 +7,6 @@ nnoremap <F2>   :ALENextWrap<CR>
 inoremap <F2>   <C-o>:ALENextWrap<CR>
 nnoremap <F3>   :ALEToggle<CR>
 inoremap <F3>   <C-o>:ALEToggle<CR>
-nnoremap <F4>   :GitGutterToggle<CR>
-inoremap <F4>   <C-o>:GitGutterToggle<CR>
 
 nnoremap <F5>   :ToggleSpaceHi<CR>
 inoremap <F5>   <C-o>:ToggleSpaceHi<CR>

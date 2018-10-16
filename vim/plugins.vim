@@ -40,12 +40,6 @@ let g:ale_linters['typescript'] = ['tslint', 'tsserver']
 nnoremap ,f :ALEFix<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" gitgutter
-
-let g:gitgutter_enabled = 0
-let g:gitgutter_map_keys = 0
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " lightline
 
 let g:lightline = {
