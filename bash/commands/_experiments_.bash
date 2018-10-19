@@ -14,6 +14,8 @@ hf() {
 }
 
 waru() {
-  fswatch "$@" -o | xargs -I% sh -c "${COMMAND:-make}; afplay /System/Library/Sounds/Purr.aiff"
+  local good="/System/Library/Sounds/Purr.aiff"
+  local bad="/System/Library/Sounds/Basso.aiff"
+  fswatch "$@" -o | xargs -I% sh -c "${COMMAND:-make}; if [ \$? -eq 0 ]; then afplay $good; else afplay $bad; fi"
 }
 
