@@ -32,6 +32,10 @@ size_sort() {
   find . -type f "$@" -printf "%s %p\\n" | sort -n | @thousands
 }
 
+mod_sort() {
+  find . -type f "$@" -printf "%T+ %p\\n" | sed -e 's/\........... / /' | sort
+}
+
 #-------------------------------------------------
 
 alias pwgen='pwgen -cny 30'
