@@ -1,4 +1,3 @@
 prefix = ~/local
-package-lock = false
 save-exact = true
 loglevel = error
