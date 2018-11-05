@@ -8,6 +8,7 @@ all: $(bundle_tasks)
 
 .deps.mk: deps
 	@awk '{ \
+		print ".PHONY: bundle." $$1; \
 	  print "bundle." $$1 ":"; \
 	  print "	@rm -rf", $$1; \
 	  print "	git clone --depth=1", $$2, $$1; \
@@ -15,11 +16,6 @@ all: $(bundle_tasks)
 	  print "	@find", $$1, "-name .gitignore | xargs rm"; \
 	  print ""; \
 	  targets[NR] = $$1; \
-	} \
-	END { \
-	  printf ".PHONY:"; \
-	  for (i=1; i<=NR; i++) { printf " bundle.%s", targets[i] } \
-	  printf "\n\n"; \
 	}' $< > $@
 
 clean:
