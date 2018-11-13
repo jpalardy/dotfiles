@@ -2,17 +2,16 @@
 alias rg="rg -i"
 
 ff() {
-  rg --files | rg "${@:-^}"
+  local flags
+  if [ "$1" == "-u" ]; then   # -u belongs to first rg
+    flags="-u"
+    shift
+  fi
+  rg --files $flags | rg "${@:-^}"
 }
 
 ffu() {
-  rg --files -u | rg "${@:-^}"
-}
-
-ftf() {
-  local path=${1:-.}
-  shift
-  find "$path" -type f "$@"
+  ff -u "$@"
 }
 
 fne() {
