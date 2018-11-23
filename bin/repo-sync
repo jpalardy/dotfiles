@@ -2,23 +2,25 @@
 
 REPOS=${REPOS:?"environment variable REPOS is empty"}
 
-QUICK="no"
-
-while getopts "q" options; do
-  case $options in
-    q ) QUICK="yes";;
-  esac
-done
-
-for repo in $REPOS; do
+update_repo() {
+  local repo=$1
   echo "## $repo"
   cd "$repo" || exit
 
-  if [ $QUICK == "no" ]; then
-    git -c 'color.ui=always' pull --ff-only | grep -v 'Already up-to-date'
-  fi
+  git -c 'color.ui=always' pull --ff-only | grep -v 'Already up to date'
+  git -c 'color.ui=always' status --short
 
-  git status --short
   echo
-done
+}
+export -f update_repo
+
+if command -v parallel > /dev/null; then
+  # warms shared ssh connection for parallel
+  ssh droplet.jpalardy.com exit
+  parallel -k update_repo ::: $REPOS
+else
+  for repo in $REPOS; do
+    update_repo "$repo"
+  done
+fi
 

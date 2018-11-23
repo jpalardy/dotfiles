@@ -48,4 +48,5 @@ check_bin utimer
 check_bin shellcheck
 check_bin yamllint
 check_bin pup
+check_bin parallel
 
