@@ -68,7 +68,7 @@ endif
 "-------------------------------------------------
 set grepprg=rg\ --vimgrep\ --no-heading
 set grepformat=%f:%l:%c:%m,%f:%l:%m
-nnoremap ,g :copen<CR>:grep! 
+nnoremap ,g :copen<CR>:grep! -i 
 "-------------------------------------------------
 
 source $HOME/.vim/mappings.vim
