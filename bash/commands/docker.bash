@@ -7,3 +7,7 @@ mysql() {
   docker run -it -v "$PWD":/data -w /data --rm mysql mysql "$@"
 }
 
+alf() {
+  docker run -ti --name alf --rm amazonlinux-fresh
+}
+
