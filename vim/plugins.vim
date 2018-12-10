@@ -33,9 +33,12 @@ let g:ale_fixers['css']        = ['prettier']
 let g:ale_fixers['less']       = ['prettier']
 let g:ale_fixers['json']       = ['fixjson']
 let g:ale_fixers['elixir']     = ['mix_format']
+let g:ale_fixers['rust']       = ['rustfmt']
+let g:ale_fixers['go']         = ['gofmt', 'goimports']
 
 let g:ale_linters = {}
 let g:ale_linters['typescript'] = ['tslint', 'tsserver']
+"let g:ale_linters['rust'] = ['rustc', 'rustfmt']
 
 nnoremap ,f :ALEFix<CR>
 
