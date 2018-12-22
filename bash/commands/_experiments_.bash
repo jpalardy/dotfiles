@@ -33,3 +33,7 @@ set ignorecase
 END
 }
 
+step() {
+  mkdir "$@" && cd "$@"
+}
+
