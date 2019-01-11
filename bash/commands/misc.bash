@@ -79,7 +79,3 @@ ldf() {
   mv "$file" .
 }
 
-wb() {
-  vim "workbook.$1"
-}
-
