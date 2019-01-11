@@ -1,7 +1,7 @@
 #!/bin/bash
 
 path="${1:-"$HOME/Downloads/"}"
-tmpfile=$(mktemp -t ldf)
+tmpfile=$(mktemp)
 
 set trap
 cleanup() {
