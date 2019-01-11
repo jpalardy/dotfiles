@@ -37,3 +37,7 @@ step() {
   mkdir "$@" && cd "$@"
 }
 
+glss() {
+  gl "$HOME/Desktop/screenshots/"
+}
+

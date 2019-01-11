@@ -1,0 +1,20 @@
+#!/bin/bash
+
+path="${1:-"$HOME/Downloads/"}"
+tmpfile=$(mktemp -t ldf)
+
+set trap
+cleanup() {
+  rm -f "$tmpfile" INT TERM EXIT
+}
+trap cleanup INT TERM EXIT
+
+find "$path" -maxdepth 1 -type f -printf "%T@ %p\n" | sort -nr | awk 'BEGIN {print ""} {sub("[^ ]+ ", ""); print}' > "$tmpfile"
+${VISUAL:-${EDITOR:-vi}} "$tmpfile"
+
+awk '
+# done on empty line
+NF == 0 { exit }
+{ printf "mv -v \"%s\" .\n", $0, "." }
+' "$tmpfile" | bash
+
