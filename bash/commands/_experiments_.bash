@@ -8,11 +8,6 @@ title() {
   echo -ne "\033]0;"$*"\007"
 }
 
-hf() {
-  local maxLines=$(($(tput lines) - 2))
-  head -n $maxLines "$@"
-}
-
 plexco() {
   command plexco $?
 }
