@@ -36,3 +36,16 @@ glss() {
   gl "$HOME/Desktop/screenshots/"
 }
 
+# 2019-01-12
+HOME() {
+  if [ "$1" == "-f" ]; then
+    rm -f ~/.HOME
+    shift
+  fi
+  if [ ! -f ~/.HOME ]; then
+    find ~ 2>/dev/null | tee ~/.HOME | rg "$@"
+    return
+  fi
+  rg -N "${@:-" "}" ~/.HOME
+}
+
