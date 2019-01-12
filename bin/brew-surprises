@@ -1,0 +1,46 @@
+#!/bin/bash
+
+whitelist() {
+  cat <<END
+
+awscli
+bash-completion
+coreutils
+dnsmasq
+dos2unix
+ffmpeg
+findutils
+fswatch
+gawk
+gcal
+git
+gnu-sed
+gnu-tar
+gnupg
+go
+graphviz
+imagemagick
+jq
+jpalardy/tap/memora
+nmap
+node
+pandoc
+parallel
+pup
+pwgen
+qrencode
+ripgrep
+rlwrap
+shellcheck
+tidy-html5
+tmux
+utimer
+vim
+wget
+yamllint
+
+END
+}
+
+brew leaves | grep -v -f <(whitelist | grep .)
+
