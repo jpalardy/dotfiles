@@ -17,6 +17,11 @@ let s:default_registry = {
 \       'suggested_filetypes': ['python'],
 \       'description': 'Fix PEP8 issues with autopep8.',
 \   },
+\   'bibclean': {
+\       'function': 'ale#fixers#bibclean#Fix',
+\       'suggested_filetypes': ['bib'],
+\       'description': 'Format bib files using bibclean.',
+\   },
 \   'black': {
 \       'function': 'ale#fixers#black#Fix',
 \       'suggested_filetypes': ['python'],
@@ -56,7 +61,7 @@ let s:default_registry = {
 \   },
 \   'prettier': {
 \       'function': 'ale#fixers#prettier#Fix',
-\       'suggested_filetypes': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'json5', 'graphql', 'markdown', 'vue'],
+\       'suggested_filetypes': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'json5', 'graphql', 'markdown', 'vue', 'html', 'yaml'],
 \       'description': 'Apply prettier to a file.',
 \   },
 \   'prettier_eslint': {
@@ -110,6 +115,11 @@ let s:default_registry = {
 \       'suggested_filetypes': ['javascript'],
 \       'description': 'Fix JavaScript files using standard --fix',
 \   },
+\   'standardrb': {
+\       'function': 'ale#fixers#standardrb#Fix',
+\       'suggested_filetypes': ['ruby'],
+\       'description': 'Fix ruby files with standardrb --fix',
+\   },
 \   'stylelint': {
 \       'function': 'ale#fixers#stylelint#Fix',
 \       'suggested_filetypes': ['css', 'sass', 'scss', 'stylus'],
@@ -159,6 +169,11 @@ let s:default_registry = {
 \       'function': 'ale#fixers#rustfmt#Fix',
 \       'suggested_filetypes': ['rust'],
 \       'description': 'Fix Rust files with Rustfmt.',
+\   },
+\   'textlint': {
+\       'function': 'ale#fixers#textlint#Fix',
+\       'suggested_filetypes': ['text','markdown','asciidoc'],
+\       'description': 'Fix text files with textlint --fix',
 \   },
 \   'hackfmt': {
 \       'function': 'ale#fixers#hackfmt#Fix',
@@ -249,6 +264,11 @@ let s:default_registry = {
 \       'function': 'ale#fixers#uncrustify#Fix',
 \       'suggested_filetypes': ['c', 'cpp', 'cs', 'objc', 'objcpp', 'd', 'java', 'p', 'vala' ],
 \       'description': 'Fix C, C++, C#, ObjectiveC, ObjectiveC++, D, Java, Pawn, and VALA files with uncrustify.',
+\   },
+\   'terraform': {
+\       'function': 'ale#fixers#terraform#Fix',
+\       'suggested_filetypes': ['hcl', 'terraform'],
+\       'description': 'Fix tf and hcl files with terraform fmt.',
 \   },
 \}
 

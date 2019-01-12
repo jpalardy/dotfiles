@@ -99,6 +99,7 @@ A tmux pane can be targeted with any of the following values:
   - "h:i.j" means the tmux session where h is the session identifier 
     (either session name or number), the ith window and the jth pane
   - "%i" means i refers the pane's unique id
+  - "{token}" one of tmux's supported special tokens, like "{right-of}"
 
 To get a list of all the available pane execute the following:
 >
@@ -149,10 +150,18 @@ Vim :terminal is not the default, to use it you will have to add this line to
 your |.vimrc|:
 >
         let g:slime_target = "vimterminal"
-<
+
 Vim terminal configuration can be set by using the following in your .vimrc:
 
     let g:slime_vimterminal_config = {options}
+
+You can specify if you have frequently used commands:
+
+        let g:slime_vimterminal_cmd = "command"
+
+If you use Node, set it as follows:
+
+        let g:slime_vimterminal_cmd = "node"
 
 for possible options, see help term_start()
 

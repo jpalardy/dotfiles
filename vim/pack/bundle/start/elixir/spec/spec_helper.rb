@@ -1,11 +1,11 @@
-# frozen_string_literal: true
-
 require 'rspec/expectations'
 require 'tmpdir'
 require 'vimrunner'
 require 'vimrunner/rspec'
 
 class Buffer
+  FOLD_PLACEHOLDER = '<!-- FOLD -->'.freeze
+
   def initialize(vim, type)
     @file = ".fixture.#{type}"
     @vim = vim
@@ -13,12 +13,9 @@ class Buffer
 
   def reindent(content)
     with_file content do
-      # remove all indentation
-      @vim.normal 'ggVG999<<'
-      # force vim to indent the file
-      @vim.normal 'gg=G'
-      # save the changes
-      sleep 0.1 if ENV['CI']
+      cmd = 'ggVG999<<' # remove all indentation
+      cmd += 'gg=G' # force vim to indent the file
+      @vim.normal cmd
     end
   end
 
@@ -26,13 +23,12 @@ class Buffer
     with_file do
       @vim.normal 'gg'
 
-      content.each_line.each_with_index do |line, index|
-        if index.zero?
-          @vim.type("i#{line.strip}")
-        else
-          @vim.normal 'o'
-          @vim.type(line.strip)
-        end
+      lines = content.each_line
+      count = lines.count
+      @vim.type("i")
+      lines.each_with_index do |line, index|
+        @vim.type("#{line.strip}")
+        @vim.type("<CR>") if index < count - 1
       end
     end
   end
@@ -61,6 +57,18 @@ class Buffer
     syngroups.gsub!(/["'\[\]]/, '').split(', ')
   end
 
+  def fold_and_replace(content, fold_on_line)
+    with_file content do
+      cmd = ":set foldmethod=syntax<CR>"
+      cmd += "zO"
+      cmd += "#{fold_on_line}G"
+      cmd += "zc"
+      cmd += "cc#{FOLD_PLACEHOLDER}<Esc>"
+      cmd += ":.s/\s*//<CR>"
+      @vim.normal(cmd)
+    end
+  end
+
   private
 
   def with_file(content = nil)
@@ -68,14 +76,12 @@ class Buffer
 
     yield if block_given?
 
-    @vim.write
-    @vim.command 'redraw'
+    @vim.normal ":w<CR>:redraw<CR>"
     IO.read(@file)
   end
 
   def edit_file(content)
     File.write(@file, content) if content
-
     @vim.edit @file
   end
 end
@@ -124,14 +130,14 @@ RSpec::Matchers.define :be_typed_with_right_indent do |syntax|
   end
 
   failure_message do |code|
-      <<~EOM
-      Expected
+    <<~EOM
+    Expected
 
-      #{@typed}
-      to be indented as
+    #{@typed}
+    to be indented as
 
-      #{code}
-      EOM
+    #{code}
+    EOM
   end
 end
 
@@ -193,16 +199,57 @@ end
   end
 end
 
+RSpec::Matchers.define :fold_lines do
+  buffer = Buffer.new(VIM, :ex)
+
+  match do |code|
+    @code = code
+
+    pattern = /# fold\s*$/
+
+    placeholder_set = false
+    @expected = code.each_line.reduce([]) do |acc, line|
+      if line =~ pattern
+        if !placeholder_set
+          placeholder_set = true
+          acc << (Buffer::FOLD_PLACEHOLDER + "\n")
+        end
+      else
+        acc << line
+      end
+
+      acc
+    end.join
+
+    fold_on_line = code.each_line.find_index { |l| l =~ pattern } + 1
+    @actual = buffer.fold_and_replace(code, fold_on_line)
+
+    @expected == @actual
+  end
+
+  failure_message do |code|
+    <<~EOF
+    Folded
+
+    #{@code}
+    and unexpectedly got
+
+    #{@actual}
+    EOF
+  end
+end
+
 Vimrunner::RSpec.configure do |config|
   config.reuse_server = true
 
   config.start_vim do
     VIM = Vimrunner.start_gvim
     VIM.add_plugin(File.expand_path('..', __dir__))
-    VIM.command('filetype off')
-    VIM.command('filetype plugin indent on')
-    VIM.command('autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o') # disable automatic comment continuation
-    VIM.normal(":set ignorecase<CR>") # make sure we test ignorecase
+    cmd = ':filetype off<CR>'
+    cmd += ':filetype plugin indent on<CR>'
+    cmd += ':autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o<CR>' # disable automatic comment continuation
+    cmd += ":set ignorecase<CR>" # make sure we test ignorecase
+    VIM.normal(cmd)
     VIM
   end
 end
