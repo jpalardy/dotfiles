@@ -14,9 +14,10 @@ CONTENTS                                                         *ale-contents*
   5. Language Server Protocol Support.....|ale-lsp|
     5.1 Completion........................|ale-completion|
     5.2 Go To Definition..................|ale-go-to-definition|
-    5.3 Find References...................|ale-find-references|
-    5.4 Hovering..........................|ale-hover|
-    5.5 Symbol Search.....................|ale-symbol-search|
+    5.3 Go To Type Definition.............|ale-go-to-type-definition|
+    5.4 Find References...................|ale-find-references|
+    5.5 Hovering..........................|ale-hover|
+    5.6 Symbol Search.....................|ale-symbol-search|
   6. Global Options.......................|ale-options|
     6.1 Highlights........................|ale-highlights|
     6.2 Options for write-good Linter.....|ale-write-good-options|
@@ -53,6 +54,7 @@ CONTENTS                                                         *ale-contents*
       cfn-python-lint.....................|ale-cloudformation-cfn-python-lint|
     cmake.................................|ale-cmake-options|
       cmakelint...........................|ale-cmake-cmakelint|
+      cmake-format........................|ale-cmake-cmakeformat|
     cpp...................................|ale-cpp-options|
       clang...............................|ale-cpp-clang|
       clangd..............................|ale-cpp-clangd|
@@ -139,6 +141,7 @@ CONTENTS                                                         *ale-contents*
       hfmt................................|ale-haskell-hfmt|
       hlint...............................|ale-haskell-hlint|
       stack-build.........................|ale-haskell-stack-build|
+      stack-ghc...........................|ale-haskell-stack-ghc|
       stylish-haskell.....................|ale-haskell-stylish-haskell|
       hie.................................|ale-haskell-hie|
     hcl...................................|ale-hcl-options|
@@ -184,6 +187,7 @@ CONTENTS                                                         *ale-contents*
       languageserver......................|ale-kotlin-languageserver|
     latex.................................|ale-latex-options|
       write-good..........................|ale-latex-write-good|
+      textlint............................|ale-latex-textlint|
     less..................................|ale-less-options|
       lessc...............................|ale-less-lessc|
       prettier............................|ale-less-prettier|
@@ -256,6 +260,7 @@ CONTENTS                                                         *ale-contents*
       cython..............................|ale-pyrex-cython|
     python................................|ale-python-options|
       autopep8............................|ale-python-autopep8|
+      bandit..............................|ale-python-bandit|
       black...............................|ale-python-black|
       flake8..............................|ale-python-flake8|
       isort...............................|ale-python-isort|
@@ -321,6 +326,8 @@ CONTENTS                                                         *ale-contents*
       sqlfmt..............................|ale-sql-sqlfmt|
     stylus................................|ale-stylus-options|
       stylelint...........................|ale-stylus-stylelint|
+    sugarss...............................|ale-sugarss-options|
+      stylelint...........................|ale-sugarss-stylelint|
     tcl...................................|ale-tcl-options|
       nagelfar............................|ale-tcl-nagelfar|
     terraform.............................|ale-terraform-options|
@@ -346,6 +353,12 @@ CONTENTS                                                         *ale-contents*
     verilog/systemverilog.................|ale-verilog-options|
       iverilog............................|ale-verilog-iverilog|
       verilator...........................|ale-verilog-verilator|
+      vlog................................|ale-verilog-vlog|
+      xvlog...............................|ale-verilog-xvlog|
+    vhdl..................................|ale-vhdl-options|
+      ghdl................................|ale-vhdl-ghdl|
+      vcom................................|ale-vhdl-vcom|
+      xvhdl...............................|ale-vhdl-xvhdl|
     vim...................................|ale-vim-options|
       vint................................|ale-vim-vint|
     vim help..............................|ale-vim-help-options|
@@ -421,9 +434,9 @@ Notes:
 * Chef: `foodcritic`
 * Clojure: `joker`
 * CloudFormation: `cfn-python-lint`
-* CMake: `cmakelint`
+* CMake: `cmakelint`, `cmake-format`
 * CoffeeScript: `coffee`, `coffeelint`
-* Crystal: `crystal`!!
+* Crystal: `ameba`!!, `crystal`!!
 * CSS: `csslint`, `prettier`, `stylelint`
 * Cucumber: `cucumber`
 * Cython (pyrex filetype): `cython`
@@ -452,11 +465,11 @@ Notes:
 * Idris: `idris`
 * ISPC: `ispc`!!
 * Java: `checkstyle`, `javac`, `google-java-format`, `PMD`, `javalsp`, `uncrustify`
-* JavaScript: `eslint`, `flow`, `jscs`, `jshint`, `prettier`, `prettier-eslint`, `prettier-standard`, `standard`, `xo`
+* JavaScript: `eslint`, `flow`, `jscs`, `jshint`, `prettier`, `prettier-eslint`, `prettier-standard`, `standard`, `tsserver`, `xo`
 * JSON: `fixjson`, `jsonlint`, `jq`, `prettier`
 * Julia: `languageserver`
 * Kotlin: `kotlinc`!!, `ktlint`!!, `languageserver`
-* LaTeX (tex): `alex`!!, `chktex`, `lacheck`, `proselint`, `redpen`, `vale`, `write-good`
+* LaTeX (tex): `alex`!!, `chktex`, `lacheck`, `proselint`, `redpen`, `vale`, `write-good`, `textlint`
 * Less: `lessc`, `prettier`, `stylelint`
 * LLVM: `llc`
 * Lua: `luac`, `luacheck`
@@ -483,22 +496,24 @@ Notes:
 * proto: `protoc-gen-lint`
 * Pug: `pug-lint`
 * Puppet: `languageserver`, `puppet`, `puppet-lint`
-* Python: `autopep8`, `black`, `flake8`, `isort`, `mypy`, `prospector`, `pycodestyle`, `pydocstyle`, `pyls`, `pyre`, `pylint`!!, `vulture`!!, `yapf`
+* Python: `autopep8`, `bandit`, `black`, `flake8`, `isort`, `mypy`, `prospector`, `pycodestyle`, `pydocstyle`, `pyls`, `pyre`, `pylint`!!, `vulture`!!, `yapf`
 * QML: `qmlfmt`, `qmllint`
 * R: `lintr`
+* Racket: `raco`
 * ReasonML: `merlin`, `ols`, `refmt`
 * reStructuredText: `alex`!!, `proselint`, `redpen`, `rstcheck`, `textlint`, `vale`, `write-good`
 * Re:VIEW: `redpen`
 * RPM spec: `rpmlint`
 * Ruby: `brakeman`, `rails_best_practices`!!, `reek`, `rubocop`, `ruby`, `rufo`, `solargraph`, `standardrb`
 * Rust: `cargo`!!, `rls`, `rustc` (see |ale-integration-rust|), `rustfmt`
-* SASS: `sass-lint`, `stylelint`
+* Sass: `sass-lint`, `stylelint`
 * SCSS: `prettier`, `sass-lint`, `scss-lint`, `stylelint`
 * Scala: `fsc`, `sbtserver`, `scalac`, `scalafmt`, `scalastyle`
 * Slim: `slim-lint`
 * SML: `smlnj`
 * Solidity: `solhint`, `solium`
 * Stylus: `stylelint`
+* SugarSS: `stylelint`
 * SQL: `sqlint`, `sqlfmt`
 * Swift: `swiftlint`, `swiftformat`
 * Tcl: `nagelfar`!!
@@ -508,7 +523,8 @@ Notes:
 * Thrift: `thrift`
 * TypeScript: `eslint`, `prettier`, `tslint`, `tsserver`, `typecheck`
 * VALA: `uncrustify`
-* Verilog: `iverilog`, `verilator`
+* Verilog: `iverilog`, `verilator`, `vlog`, `xvlog`
+* VHDL: `ghdl`, `vcom`, `xvhdl`
 * Vim: `vint`
 * Vim help^: `alex`!!, `proselint`, `write-good`
 * Vue: `prettier`, `vls`
@@ -849,9 +865,23 @@ information returned by LSP servers. The following commands are supported:
 |ALEGoToDefinitionInSplit| - The same, but in a new split.
 |ALEGoToDefinitionInVSplit| - The same, but in a new vertical split.
 
+-------------------------------------------------------------------------------
+5.3 Go To Type Definition                           *ale-go-to-type-definition*
+
+ALE supports jumping to the files and locations where symbols' types are
+defined through any enabled LSP linters. The locations ALE will jump to depend
+on the information returned by LSP servers. The following commands are
+supported:
+
+|ALEGoToTypeDefinition|      - Open the definition of the symbol's type under
+                             the cursor.
+|ALEGoToTypeDefinitionInTab| - The same, but for opening the file in a new tab.
+|ALEGoToTypeDefinitionInSplit| - The same, but in a new split.
+|ALEGoToTypeDefinitionInVSplit| - The same, but in a new vertical split.
+
 
 -------------------------------------------------------------------------------
-5.3 Find References                                       *ale-find-references*
+5.4 Find References                                       *ale-find-references*
 
 ALE supports finding references for symbols though any enabled LSP linters.
 ALE will display a preview window showing the places where a symbol is
@@ -862,7 +892,7 @@ supported:
 
 
 -------------------------------------------------------------------------------
-5.4 Hovering                                                        *ale-hover*
+5.5 Hovering                                                        *ale-hover*
 
 ALE supports "hover" information for printing brief information about symbols
 at the cursor taken from LSP linters. The following commands are supported:
@@ -893,7 +923,7 @@ Documentation for symbols at the cursor can be retrieved using the
 |ALEDocumentation| command. This command is only available for `tsserver`.
 
 -------------------------------------------------------------------------------
-5.5 Symbol Search                                           *ale-symbol-search*
+5.6 Symbol Search                                           *ale-symbol-search*
 
 ALE supports searching for workspace symbols via LSP linters. The following
 commands are supported:
@@ -1556,6 +1586,22 @@ b:ale_loclist_msg_format                             *b:ale_loclist_msg_format*
 
   The strings for configuring `%severity%` are also used for this option.
 
+g:ale_lsp_root                                                 *g:ale_lsp_root*
+b:ale_lsp_root                                                 *b:ale_lsp_root*
+
+  Type: |Dictionary| or |String|
+  Default: {}
+
+  This option is used to determine the project root for the LSP linter. If the
+  value is a |Dictionary|, it maps a linter to either a string containing the
+  project root or a |Funcref| to call to look up the root. The funcref is
+  provided the buffer number as its argument.
+
+  The buffer-specific variable may additionally be a string containing the
+  project root itself.
+
+  If neither variable yields a result, a linter-specific function is invoked to
+  detect a project root. If this, too, yields no result, the linter is disabled.
 
 g:ale_max_buffer_history_size                   *g:ale_max_buffer_history_size*
 
@@ -2328,6 +2374,45 @@ ALEGoToDefinitionInVSplit                           *ALEGoToDefinitionInVSplit*
   command.
 
 
+ALEGoToTypeDefinition                                   *ALEGoToTypeDefinition*
+
+  This works similar to |ALEGoToDefinition| but instead jumps to the
+  definition of a type of a symbol undert the cursor. ALE will jump to a
+  definition if an LSP server provides a location to jump to. Otherwise, ALE
+  will do nothing.
+
+  You can jump back to the position you were at before going to the definition
+  of something with jump motions like CTRL-O. See |jump-motions|.
+
+  A plug mapping `<Plug>(ale_go_to_type_definition)` is defined for this
+  command.
+
+
+ALEGoToTypeDefinitionInTab                         *ALEGoToTypeDefinitionInTab*
+
+  The same as |ALEGoToTypeDefinition|, but opens results in a new tab.
+
+  A plug mapping `<Plug>(ale_go_to_type_definition_in_tab)` is defined for
+  this command.
+
+
+ALEGoToTypeDefinitionInSplit                     *ALEGoToTypeDefinitionInSplit*
+
+  The same as |ALEGoToTypeDefinition|, but opens results in a new split.
+
+  A plug mapping `<Plug>(ale_go_to_type_definition_in_split)` is defined for
+  this command.
+
+
+ALEGoToTypeDefinitionInVSplit                   *ALEGoToTypeDefinitionInVSplit*
+
+  The same as |ALEGoToTypeDefinition|, but opens results in a new vertical
+  split.
+
+  A plug mapping `<Plug>(ale_go_to_type_definition_in_vsplit)` is defined for
+  this command.
+
+
 ALEHover                                                             *ALEHover*
 
   Print brief information about the symbol under the cursor, taken from any
@@ -2543,32 +2628,61 @@ ale#Queue(delay, [linting_flag, buffer_number])                   *ale#Queue()*
   is broken, or when developing ALE itself.
 
 
-ale#engine#CreateDirectory(buffer)               *ale#engine#CreateDirectory()*
+ale#command#CreateDirectory(buffer)             *ale#command#CreateDirectory()*
 
   Create a new temporary directory with a unique name, and manage that
-  directory with |ale#engine#ManageDirectory()|, so it will be removed as soon
+  directory with |ale#command#ManageDirectory()|, so it will be removed as soon
   as possible.
 
   It is advised to only call this function from a callback function for
   returning a linter command to run.
 
 
-ale#engine#CreateFile(buffer)                         *ale#engine#CreateFile()*
+ale#command#CreateFile(buffer)                       *ale#command#CreateFile()*
 
   Create a new temporary file with a unique name, and manage that file with
-  |ale#engine#ManageFile()|, so it will be removed as soon as possible.
+  |ale#command#ManageFile()|, so it will be removed as soon as possible.
 
   It is advised to only call this function from a callback function for
   returning a linter command to run.
 
 
-ale#engine#EscapeCommandPart(command_part)     *ale#engine#EscapeCommandPart()*
+ale#command#EscapeCommandPart(command_part)   *ale#command#EscapeCommandPart()*
 
   Given a |String|, return a |String| with all `%` characters replaced with
   `%%` instead. This function can be used to escape strings which are
   dynamically generated for commands before handing them over to ALE,
   so that ALE doesn't treat any strings with `%` formatting sequences
   specially.
+
+
+ale#command#ManageDirectory(buffer, directory)  *ale#command#ManageDirectory()*
+
+  Like |ale#command#ManageFile()|, but directories and all of their contents
+  will be deleted, akin to `rm -rf directory`, which could lead to loss of
+  data if mistakes are made. This command will also delete any temporary
+  filenames given to it.
+
+  It is advised to use |ale#command#ManageFile()| instead for deleting single
+  files.
+
+
+ale#command#ManageFile(buffer, filename)             *ale#command#ManageFile()*
+
+  Given a buffer number for a buffer currently running some linting tasks
+  and a filename, register a filename with ALE for automatic deletion after
+  linting is complete, or when Vim exits.
+
+  If Vim exits suddenly, ALE will try its best to remove temporary files, but
+  ALE cannot guarantee with absolute certainty that the files will be removed.
+  It is advised to create temporary files in the operating system's managed
+  temporary file directory, such as with |tempname()|.
+
+  Directory names should not be given to this function. ALE will only delete
+  files and symlinks given to this function. This is to prevent entire
+  directories from being accidentally deleted, say in cases of writing
+  `dir . '/' . filename` where `filename` is actually `''`, etc. ALE instead
+  manages directories separetly with the |ale#command#ManageDirectory| function.
 
 
 ale#engine#GetLoclist(buffer)                         *ale#engine#GetLoclist()*
@@ -2585,35 +2699,6 @@ ale#engine#IsCheckingBuffer(buffer)             *ale#engine#IsCheckingBuffer()*
   Given a buffer number, returns `1` when ALE is busy checking that buffer.
 
   This function can be used for status lines, tab names, etc.
-
-
-ale#engine#ManageFile(buffer, filename)               *ale#engine#ManageFile()*
-
-  Given a buffer number for a buffer currently running some linting tasks
-  and a filename, register a filename with ALE for automatic deletion after
-  linting is complete, or when Vim exits.
-
-  If Vim exits suddenly, ALE will try its best to remove temporary files, but
-  ALE cannot guarantee with absolute certainty that the files will be removed.
-  It is advised to create temporary files in the operating system's managed
-  temporary file directory, such as with |tempname()|.
-
-  Directory names should not be given to this function. ALE will only delete
-  files and symlinks given to this function. This is to prevent entire
-  directories from being accidentally deleted, say in cases of writing
-  `dir . '/' . filename` where `filename` is actually `''`, etc. ALE instead
-  manages directories separetly with the |ale#engine#ManageDirectory| function.
-
-
-ale#engine#ManageDirectory(buffer, directory)    *ale#engine#ManageDirectory()*
-
-  Like |ale#engine#ManageFile()|, but directories and all of their contents
-  will be deleted, akin to `rm -rf directory`, which could lead to loss of
-  data if mistakes are made. This command will also delete any temporary
-  filenames given to it.
-
-  It is advised to use |ale#engine#ManageFile()| instead for deleting single
-  files.
 
 
 ale#fix#registry#Add(name, func, filetypes, desc, [aliases])
@@ -2705,7 +2790,7 @@ ale#linter#Define(filetype, linter)                       *ale#linter#Define()*
                            and have been checked at least once.
 
                            Temporary files in directories used for Vim
-                           temporary files with `tempname()` will be asssumed
+                           temporary files with `tempname()` will be assumed
                            to be the buffer being checked, unless the `bufnr`
                            key is also set with a valid number for some other
                            buffer.
@@ -3072,6 +3157,21 @@ ale#statusline#Count(buffer)                           *ale#statusline#Count()*
   `style_error`   -> The number of problems with type `E` and `sub_type == 'style'`
   `style_warning` -> The number of problems with type `W` and `sub_type == 'style'`
   `total`         -> The total number of problems.
+
+
+ale#statusline#FirstProblem(buffer, type)       *ale#statusline#FirstProblem()*
+
+  Returns a copy of the first entry in the `loclist` that matches the supplied
+  buffer number and problem type. If there is no such enty, an empty dictionary
+  is returned.
+  Problem type should be one of the strings listed below:
+
+  `error`         -> Returns the first `loclist` item with type `E` and
+                     `sub_type != 'style'`
+  `warning`       -> First item with type `W` and `sub_type != 'style'`
+  `info`          -> First item with type `I`
+  `style_error`   -> First item with type `E` and `sub_type == 'style'`
+  `style_warning` -> First item with type `W` and `sub_type == 'style'`
 
 
 b:ale_linted                                                     *b:ale_linted*

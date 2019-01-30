@@ -122,7 +122,7 @@ let s:default_registry = {
 \   },
 \   'stylelint': {
 \       'function': 'ale#fixers#stylelint#Fix',
-\       'suggested_filetypes': ['css', 'sass', 'scss', 'stylus'],
+\       'suggested_filetypes': ['css', 'sass', 'scss', 'sugarss', 'stylus'],
 \       'description': 'Fix stylesheet files using stylelint --fix.',
 \   },
 \   'swiftformat': {
@@ -144,6 +144,11 @@ let s:default_registry = {
 \       'function': 'ale#fixers#clangformat#Fix',
 \       'suggested_filetypes': ['c', 'cpp'],
 \       'description': 'Fix C/C++ files with clang-format.',
+\   },
+\   'cmakeformat': {
+\       'function': 'ale#fixers#cmakeformat#Fix',
+\       'suggested_filetypes': ['cmake'],
+\       'description': 'Fix CMake files with cmake-format.',
 \   },
 \   'gofmt': {
 \       'function': 'ale#fixers#gofmt#Fix',
@@ -172,7 +177,7 @@ let s:default_registry = {
 \   },
 \   'textlint': {
 \       'function': 'ale#fixers#textlint#Fix',
-\       'suggested_filetypes': ['text','markdown','asciidoc'],
+\       'suggested_filetypes': ['text','markdown','asciidoc','tex'],
 \       'description': 'Fix text files with textlint --fix',
 \   },
 \   'hackfmt': {
@@ -269,6 +274,11 @@ let s:default_registry = {
 \       'function': 'ale#fixers#terraform#Fix',
 \       'suggested_filetypes': ['hcl', 'terraform'],
 \       'description': 'Fix tf and hcl files with terraform fmt.',
+\   },
+\   'ktlint': {
+\       'function': 'ale#fixers#ktlint#Fix',
+\       'suggested_filetypes': ['kt'],
+\       'description': 'Fix Kotlin files with ktlint.',
 \   },
 \}
 

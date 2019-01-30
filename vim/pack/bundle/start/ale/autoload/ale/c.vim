@@ -79,51 +79,43 @@ function! ale#c#AreSpecialCharsBalanced(option) abort
 endfunction
 
 function! ale#c#ParseCFlags(path_prefix, cflag_line) abort
-    let l:cflags_list = []
-    let l:previous_options = ''
-
-    let l:split_lines = split(a:cflag_line, ' ')
+    let l:split_lines = split(a:cflag_line)
     let l:option_index = 0
 
     while l:option_index < len(l:split_lines)
-        let l:option = l:previous_options . l:split_lines[l:option_index]
-        let l:option_index = l:option_index + 1
+        let l:next_option_index = l:option_index + 1
 
-        " Check if cflag contained an unmatched special character and should not have been splitted
-        if ale#c#AreSpecialCharsBalanced(l:option) == 0 && l:option_index < len(l:split_lines)
-            let l:previous_options = l:option . ' '
-            continue
-        endif
+        " Join space-separated option
+        while l:next_option_index < len(l:split_lines) &&
+            \ stridx(l:split_lines[l:next_option_index], '-') != 0
+            let l:next_option_index += 1
+        endwhile
 
-        " Check if there was spaces after -D/-I and the flag should not have been splitted
-        if l:option is# '-D' || l:option is# '-I'
-            let l:previous_options = l:option
-            continue
-        endif
+        let l:option = join(l:split_lines[l:option_index : l:next_option_index-1], ' ')
+        call remove(l:split_lines, l:option_index, l:next_option_index-1)
+        call insert(l:split_lines, l:option, l:option_index)
 
-        let l:previous_options = ''
-
-
-        " Fix relative paths if needed
-        if stridx(l:option, '-I') >= 0 &&
-           \ stridx(l:option, '-I' . s:sep) < 0
-            let l:rel_path = join(split(l:option, '\zs')[2:], '')
-            let l:rel_path = substitute(l:rel_path, '"', '', 'g')
-            let l:rel_path = substitute(l:rel_path, '''', '', 'g')
-            let l:option = ale#Escape('-I' . a:path_prefix .
-                                      \ s:sep . l:rel_path)
-        endif
-
-        " Parse the cflag
-        if stridx(l:option, '-I') >= 0 ||
-           \ stridx(l:option, '-D') >= 0
-            if index(l:cflags_list, l:option) < 0
-                call add(l:cflags_list, l:option)
+        " Ignore invalid or conflicting options
+        if stridx(l:option, '-') != 0 ||
+            \ stridx(l:option, '-o') == 0 ||
+            \ stridx(l:option, '-c') == 0
+            call remove(l:split_lines, l:option_index)
+            let l:option_index = l:option_index - 1
+        " Fix relative path
+        elseif stridx(l:option, '-I') == 0
+            if !(stridx(l:option, ':') == 2+1 || stridx(l:option, '/') == 2+0)
+                let l:option = '-I' . a:path_prefix . s:sep . l:option[2:]
+                call remove(l:split_lines, l:option_index)
+                call insert(l:split_lines, l:option, l:option_index)
             endif
         endif
+
+        let l:option_index = l:option_index + 1
     endwhile
 
-    return join(l:cflags_list, ' ')
+    call uniq(l:split_lines)
+
+    return join(l:split_lines, ' ')
 endfunction
 
 function! ale#c#ParseCFlagsFromMakeOutput(buffer, make_output) abort
@@ -229,7 +221,7 @@ function! ale#c#ParseCompileCommandsFlags(buffer, file_lookup, dir_lookup) abort
     let l:file_list = get(a:file_lookup, l:basename, [])
 
     for l:item in l:file_list
-        if bufnr(l:item.file) is a:buffer
+        if bufnr(l:item.file) is a:buffer && has_key(l:item, 'command')
             return ale#c#ParseCFlags(l:item.directory, l:item.command)
         endif
     endfor
@@ -242,6 +234,7 @@ function! ale#c#ParseCompileCommandsFlags(buffer, file_lookup, dir_lookup) abort
 
     for l:item in l:dir_list
         if ale#path#Simplify(fnamemodify(l:item.file, ':h')) is? l:dir
+        \&& has_key(l:item, 'command')
             return ale#c#ParseCFlags(l:item.directory, l:item.command)
         endif
     endfor

@@ -41,6 +41,23 @@ function! s:ScreenConfig() abort
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Kitty
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! s:KittySend(config, text)
+  call s:WritePasteFile(a:text)
+  call system("kitty @ send-text --match id:" . shellescape(a:config["window_id"]) .
+    \ " --from-file " . g:slime_paste_file)
+endfunction
+
+function! s:KittyConfig() abort
+  if !exists("b:slime_config")
+    let b:slime_config = {"window_id": 1}
+  end
+  let b:slime_config["window_id"] = input("kitty target window: ", b:slime_config["window_id"])
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tmux
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -331,7 +348,13 @@ function! slime#send(text)
   " so we, possibly, send many strings -- but probably just one
   let pieces = s:_EscapeText(a:text)
   for piece in pieces
-    call s:SlimeDispatch('Send', b:slime_config, piece)
+    if type(piece) == 0  " a number
+      if piece > 0  " sleep accepts only positive count
+        execute 'sleep' piece . 'm'
+      endif
+    else
+      call s:SlimeDispatch('Send', b:slime_config, piece)
+    end
   endfor
 endfunction
 

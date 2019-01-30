@@ -112,7 +112,7 @@ Execute(ale#lsp#message#Completion() should return correct messages):
   \     'textDocument': {
   \         'uri': ale#path#ToURI(g:dir . '/foo/bar.ts'),
   \     },
-  \     'position': {'line': 11, 'character': 34},
+  \     'position': {'line': 11, 'character': 33},
   \   }
   \ ],
   \ ale#lsp#message#Completion(bufnr(''), 12, 34, '')
@@ -126,7 +126,7 @@ Execute(ale#lsp#message#Completion() should return correct messages with a trigg
   \     'textDocument': {
   \         'uri': ale#path#ToURI(g:dir . '/foo/bar.ts'),
   \     },
-  \     'position': {'line': 11, 'character': 34},
+  \     'position': {'line': 11, 'character': 33},
   \     'context': {'triggerKind': 2, 'triggerCharacter': '.'},
   \   }
   \ ],
@@ -141,10 +141,24 @@ Execute(ale#lsp#message#Definition() should return correct messages):
   \     'textDocument': {
   \         'uri': ale#path#ToURI(g:dir . '/foo/bar.ts'),
   \     },
-  \     'position': {'line': 11, 'character': 34},
+  \     'position': {'line': 11, 'character': 33},
   \   }
   \ ],
   \ ale#lsp#message#Definition(bufnr(''), 12, 34)
+
+Execute(ale#lsp#message#TypeDefinition() should return correct messages):
+  AssertEqual
+  \ [
+  \   0,
+  \   'textDocument/typeDefinition',
+  \   {
+  \     'textDocument': {
+  \         'uri': ale#path#ToURI(g:dir . '/foo/bar.ts'),
+  \     },
+  \     'position': {'line': 11, 'character': 33},
+  \   }
+  \ ],
+  \ ale#lsp#message#TypeDefinition(bufnr(''), 12, 34)
 
 Execute(ale#lsp#message#References() should return correct messages):
   AssertEqual
@@ -155,7 +169,7 @@ Execute(ale#lsp#message#References() should return correct messages):
   \     'textDocument': {
   \         'uri': ale#path#ToURI(g:dir . '/foo/bar.ts'),
   \     },
-  \     'position': {'line': 11, 'character': 34},
+  \     'position': {'line': 11, 'character': 33},
   \     'context': {'includeDeclaration': v:false},
   \   }
   \ ],
@@ -181,7 +195,7 @@ Execute(ale#lsp#message#Hover() should return correct messages):
   \     'textDocument': {
   \         'uri': ale#path#ToURI(g:dir . '/foo/bar.ts'),
   \     },
-  \     'position': {'line': 11, 'character': 34},
+  \     'position': {'line': 11, 'character': 33},
   \   }
   \ ],
   \ ale#lsp#message#Hover(bufnr(''), 12, 34)
