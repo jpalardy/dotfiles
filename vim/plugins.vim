@@ -38,6 +38,7 @@ let g:ale_fixers['go']         = ['gofmt', 'goimports']
 
 let g:ale_linters = {}
 let g:ale_linters['typescript'] = ['tslint', 'tsserver']
+let g:ale_linters['go']         = ['gofmt', 'golint', 'govet']
 "let g:ale_linters['rust'] = ['rustc', 'rustfmt']
 
 nnoremap ,f :ALEFix<CR>
