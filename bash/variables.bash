@@ -11,12 +11,21 @@ prepend_colon() {
 # prepend_PATHs(path)
 prepend_PATHs() {
   if [ -d "$1/sbin" ]; then
+    if [ -n "$2" ]; then
+      echo "PATH += $1/sbin" | sed -e "s_${HOME}_~_"
+    fi
     PATH=$(prepend_colon "$1/sbin" "$PATH")
   fi
   if [ -d "$1/bin" ]; then
+    if [ -n "$2" ]; then
+      echo "PATH += $1/bin" | sed -e "s_${HOME}_~_"
+    fi
     PATH=$(prepend_colon "$1/bin" "$PATH")
   fi
   if [ -d "$1/share/man" ]; then
+    if [ -n "$2" ]; then
+      echo "MANPATH += $1/share/man" | sed -e "s_${HOME}_~_"
+    fi
     MANPATH=$(prepend_colon "$1/share/man" "$MANPATH")
   fi
 }
@@ -30,16 +39,23 @@ export DOTFILES="$HOME/dotfiles"
 PATH=""
 MANPATH=""
 
+# obvious
 prepend_PATHs "/usr/X11"
 prepend_PATHs ""
 prepend_PATHs "/usr"
 prepend_PATHs "/usr/local"
-prepend_PATHs "/opt/local"
-prepend_PATHs "$HOME/local"
-prepend_PATHs "$DOTFILES"
+
+# less obvious
+prepend_PATHs "/opt/local" true
+prepend_PATHs "$HOME/local" true
+prepend_PATHs "$DOTFILES" true
 
 # very specific
-prepend_PATHs "$HOME/Documents/wiki/.local"
+prepend_PATHs "$HOME/Documents/wiki/.local" true
+
+# language-specific
+prepend_PATHs "$HOME/go" true
+prepend_PATHs "$HOME/.cargo" true
 
 #-------------------------------------------------
 
