@@ -48,9 +48,9 @@ prepend_PATHs "/usr/local"
 # less obvious
 prepend_PATHs "/opt/local" true
 prepend_PATHs "$HOME/local" true
-prepend_PATHs "$DOTFILES" true
 
 # very specific
+prepend_PATHs "$DOTFILES"
 prepend_PATHs "$HOME/Documents/wiki/.local" true
 
 # language-specific
