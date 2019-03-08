@@ -45,17 +45,12 @@ prepend_PATHs ""
 prepend_PATHs "/usr"
 prepend_PATHs "/usr/local"
 
-# less obvious
-prepend_PATHs "/opt/local" true
-prepend_PATHs "$HOME/local" true
-
 # very specific
 prepend_PATHs "$DOTFILES"
-prepend_PATHs "$HOME/Documents/wiki/.local" true
 
-# language-specific
-prepend_PATHs "$HOME/go" true
-prepend_PATHs "$HOME/.cargo" true
+PATH() {
+  echo "$PATH" | sed -e 's/:/ /g' | xargs -n1 echo
+}
 
 #-------------------------------------------------
 
@@ -72,9 +67,4 @@ export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
 export RLWRAP_HOME="$HOME/.rlwrap"
-
-#-------------------------------------------------
-
-unset prepend_colon
-unset prepend_PATHs
 
