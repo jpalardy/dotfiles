@@ -8,8 +8,8 @@ fi
 COLOR_RED=$(tput setaf 1)
 ATTR_RESET=$(tput sgr0)
 
-export PROMPT_COMMAND=set_prompt
-set_prompt() {
+export PROMPT_COMMAND=show_exit_code
+show_exit_code() {
   local exit=$?
   if [ "$exit" -ne 0 ]; then
     echo -e "${COLOR_RED}exit: ${exit}${ATTR_RESET}"
