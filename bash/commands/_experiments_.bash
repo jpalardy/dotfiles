@@ -62,3 +62,9 @@ implode() {
   rm -rf "$target"
 }
 
+# 2019-04-12
+if command -v xclip > /dev/null; then
+  alias pbcopy='xclip -selection clipboard'
+  alias pbpaste='xclip -selection clipboard -o'
+fi
+
