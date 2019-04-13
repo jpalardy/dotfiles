@@ -51,3 +51,8 @@ if command -v xclip > /dev/null; then
   alias pbpaste='xclip -selection clipboard -o'
 fi
 
+# 2019-04-13
+bootstrap() {
+  echo "curl https://home.jpalardy.com/bs/setup.bash"
+}
+
