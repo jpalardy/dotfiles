@@ -26,20 +26,42 @@ theme_set(
 
 ```
 
+
+
 ```{r loading-data}
-d <- read_tsv("...")
+
+d <- read_tsv("...",
+  col_names=c("...", "..."),
+  col_types=cols(...)
+)
+
+```
+
+
+
+```{r chunk-name}
+
 ggplot(d, aes(...)) +
   geom_point() +
   NULL
+
 ```
+
+
 
 ```{r chunk-name}
   # empty chunk
 ```
 
+
+
 ```{r chunk-name, results="asis"}
-  cat("\n\n## ", header, "\n\n")
+
+cat("\n\n## ", header, "\n\n")
+
 ```
+
+
 
 ## Section with tabs {.tabset}
 
