@@ -45,8 +45,9 @@ serve() {
   python -m http.server "$port" || python -m SimpleHTTPServer "$port"
 }
 
-alias R="R --quiet"
-alias r="R --quiet"
+alias R="R --quiet --vanilla"
+alias r="R"
+alias R.tidyverse="command R --quiet --no-save"
 
 alias octave="octave-cli --quiet"
 alias maxima="rlwrap maxima --quiet"
