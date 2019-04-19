@@ -53,6 +53,6 @@ fi
 
 # 2019-04-13
 bootstrap() {
-  echo "curl https://home.jpalardy.com/bs/setup.bash"
+  echo "curl https://home.jpalardy.com/bootstrap/setup.bash"
 }
 
