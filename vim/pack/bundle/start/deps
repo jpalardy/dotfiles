@@ -10,3 +10,4 @@ surround       https://github.com/tpope/vim-surround.git
 typescript     https://github.com/leafgarland/typescript-vim.git
 elixir         https://github.com/elixir-lang/vim-elixir.git
 toml           https://github.com/cespare/vim-toml.git
+terraform      https://github.com/hashivim/vim-terraform.git
