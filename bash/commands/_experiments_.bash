@@ -51,8 +51,18 @@ if command -v xclip > /dev/null; then
   alias pbpaste='xclip -selection clipboard -o'
 fi
 
+# 2019-04-15
+if [ "$(uname -s)" == "Linux" ]; then
+  alias open=nautilus
+fi
+
 # 2019-04-13
 bootstrap() {
   echo "curl https://home.jpalardy.com/bootstrap/setup.bash"
+}
+
+# 2019-04-16
+podsh() {
+  kubectl exec -ti "$@" /bin/sh
 }
 
