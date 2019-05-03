@@ -61,8 +61,3 @@ bootstrap() {
   echo "curl https://home.jpalardy.com/bootstrap/setup.bash"
 }
 
-# 2019-04-16
-podsh() {
-  kubectl exec -ti "$@" /bin/sh
-}
-
