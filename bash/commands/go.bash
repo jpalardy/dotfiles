@@ -17,3 +17,7 @@ go-project-summary() {
   echo "lines:" $(fne go | xargs cat | wc -l)
 }
 
+gofmt-no-vendor() {
+  find . -type f -name '*.go' -not -path "./vendor/*" -print0 | xargs -0 gofmt -s -l "$@"
+}
+
