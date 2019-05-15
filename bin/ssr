@@ -21,17 +21,13 @@ check_bin() {
 
 # npm install
 check_bin node
-check_bin yarn
 check_bin nodemon
 check_bin eslint
 check_bin prettier
 check_bin jsonlint
 check_bin csslint
 check_bin ncu         npm-check-updates
-check_bin nsp
-check_bin depcheck
 check_bin fixjson
-check_bin yaml2json   yamljs
 
 echo
 
