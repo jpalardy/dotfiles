@@ -1,3 +1,0 @@
-
-Snippet '#!', '#!/bin/bash'
-
