@@ -3,12 +3,9 @@ function! SnipReplace()
   " extract last word, put in register y
   execute "normal! \"xyiw"
 
-  let before = @x
-
   " convert w/ snip command-line
   silent let @x = system("FT=" . shellescape(&ft) . " snip", @x)
   let @x = substitute(@x, "\\n$", "", "") " strip trailing CR
-  echom before "=>" @x
 
   " overwrite-paste
   execute "normal! viw\"xp"
