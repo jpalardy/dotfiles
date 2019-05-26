@@ -12,7 +12,7 @@ BEGIN {
   FIXED["javascript:fn"]       = "function"
   FIXED["javascript:function"] = "function (|) {}"
   FIXED["javascript:fori"]     = "for (let i = 0; i < |; i + = 1) {"
-  FIXED["javascript:fe"]       = "foreach"
+  FIXED["javascript:fe"]       = "forEach"
   FIXED["javascript:)"]        = ") => "
   PREFIX["javascript:json"]       = "JSON.stringify"
   PREFIX["javascript:require"]    = "require(\"|\")"
