@@ -4,6 +4,7 @@ BEGIN {
 
   # global
   FIXED["--"]   = "-------------------------------------------------"
+  FIXED["#--"]  = "#-------------------------------------------------"
   FIXED["isod"] = strftime("%F")
   FIXED["ts"]   = strftime("%s")
   FIXED["cr"]   = "⏎"
@@ -23,6 +24,14 @@ BEGIN {
   FIXED["r:fn"] = "function"
   FIXED["r:|"]  = "%>%"
   FIXED["r:>"]  = "%>%"
+
+  # go
+  FIXED["go://--"]    = "//-------------------------------------------------"
+  FIXED["go:fn"]      = "func |() {\n}"
+  FIXED["go:fori"]    = "for i := 0; i < |; i++ {}"
+  FIXED["go:forr"]    = "for i, _ := range | {}"
+  FIXED["go:handler"] = "func(w http.ResponseWriter, r *http.Request)"
+  PREFIX["go:print"] = "fmt.Printf(\"%v\\n\", |)"
 }
 
 #-------------------------------------------------
