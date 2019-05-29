@@ -1,11 +1,24 @@
 #!/bin/bash
 
-url=${1:?missing url}
+printBookmark() {
+  url=$1
+  title=$(curl -L -s "$url" | pup -p --charset utf8 'head title json{}' | jq '.[].text' -r)
+  date=$(date +%F)
 
-title=$(curl -L -s "$url" | pup -p --charset utf8 'head title json{}' | jq '.[].text' -r)
-date=$(date +%F)
+  echo "$date"
+  echo "  $title"
+  echo "    $url"
+  echo ""
+}
 
-echo "$date"
-echo "  $title"
-echo "    $url"
+# command-line args
+if [ -n "$1" ]; then
+  printBookmark "$1"
+  exit
+fi
+
+# stdin
+while read -r url; do
+  printBookmark "$url"
+done
 

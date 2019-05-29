@@ -1,8 +1,7 @@
 
 # URLs
 /^https?:/ {
-  system("bookmark " $0)
-  print ""
+  print $0 | "bookmark"
   next
 }
 
