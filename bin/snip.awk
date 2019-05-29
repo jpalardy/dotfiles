@@ -51,14 +51,8 @@ NF == 0 {
   }
 }
 
-# no ft, skip
-ft == "" {
-  print
-  next
-}
-
 # exact matches, w/ ft
-{
+ft {
   result = FIXED[ft ":" $0]
   if (result) {
     print result
@@ -67,7 +61,7 @@ ft == "" {
 }
 
 # prefix matches, w/ ft
-{
+ft {
   for (k in PREFIX) {
     if (index(k, ft ":" $0) == 1) {
       print PREFIX[k]
