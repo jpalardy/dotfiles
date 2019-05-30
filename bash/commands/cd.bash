@@ -46,3 +46,8 @@ cdl() {
   pick_with_vim "ls" "cd" "$1"
 }
 
+# pick from a find
+fcd() {
+  pick_with_vim "find ${1:-.}" "cd"
+}
+
