@@ -1,0 +1,18 @@
+#!/bin/bash
+
+find "${1:-.}" | awk '{
+  line=$0
+  sub(".*/", "", line)
+  split(line, parts, ".")
+  numParts=length(parts)
+  if (numParts > 1) {
+    ext = parts[numParts]
+    counts[ext]++
+  }
+}
+END {
+  for(c in counts) {
+    printf "%6d %s\n", counts[c], c
+  }
+}' | sort -n
+
