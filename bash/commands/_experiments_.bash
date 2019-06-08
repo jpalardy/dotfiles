@@ -13,9 +13,9 @@ waru() {
 
 inet() {
   if command -v ip > /dev/null; then
-    ip addr | grep --color -E 'inet[^6].*|'
+    ip addr | grep --color -E 'inet[^6].*|$'
   else
-    ifconfig | grep --color -E 'inet[^6].*|'
+    ifconfig | grep --color -E 'inet[^6].*|$'
   fi
 }
 
