@@ -1,6 +1,20 @@
 
 # throw-away directory
 tad() {
+  local tmux=1
+  while getopts "r" opt; do
+    case "$opt" in
+      # r for "raw"
+      r)
+        tmux=0
+        shift
+        ;;
+      *)
+        echo >&2 "unknown flag: $opt"
+        return 1
+        ;;
+    esac
+  done
   local ts
   ts=$(date +%s)
   local d="$HOME/.throw-away/$ts"
@@ -12,7 +26,11 @@ tad() {
       git clone "$1"
       cd "$(basename "$1" .git)" || exit
     fi
-    bash
+    if [ "$tmux" == 1 ]; then
+      tmux
+    else
+      bash
+    fi
   )
   rm -rf "$d"
 }
