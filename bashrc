@@ -35,14 +35,6 @@ fi
 
 #-------------------------------------------------
 
-# iterm can start in different places
-# but not in tmux, because that's expected
-if [ "$PWD" != "$HOME" ] && [ -z "$TMUX_PANE" ]; then
-  PATH_COLOR=$(tput setaf 1) echo_pwd
-fi
-
-#-------------------------------------------------
-
 unset cond_source
 unset source_all
 
