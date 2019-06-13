@@ -24,6 +24,10 @@ BEGIN {
   FIXED["r:fn"] = "function"
   FIXED["r:|"]  = "%>%"
   FIXED["r:>"]  = "%>%"
+  # rmd
+  FIXED["rmd:fn"] = "function"
+  FIXED["rmd:|"]  = "%>%"
+  FIXED["rmd:>"]  = "%>%"
 
   # go
   FIXED["go://--"]    = "//-------------------------------------------------"
