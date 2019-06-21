@@ -1,0 +1,12 @@
+#!/bin/bash
+
+awk '
+
+/^---$/ {
+  part += 1
+}
+
+{print > FILENAME "." part}
+
+' "$@"
+
