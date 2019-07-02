@@ -1,7 +1,6 @@
 " Vim syntax file
 " Language: moe file -- like .txt but cuter
 " Maintainer: Jonathan Palardy
-" Latest Revision: February 6, 2013
 
 if exists("b:current_syntax")
   finish
@@ -32,6 +31,8 @@ syntax match moeDate        /\d\d\d\d-\d\d-\d\d/
 syntax match moePhoneNumber /\d\d\d.\d\d\d.\d\d\d\d/
 syntax match moeURL         /https\?:[^ ]\+/
 
+syntax match moeBacktick    /`[^`]\+`/
+
 "-------------------------------------------------
 
 hi def link moeHeader        Keyword
@@ -45,6 +46,7 @@ hi def link moeDivider       Comment
 hi def link moeDate          Number
 hi def link moePhoneNumber   Number
 hi def link moeURL           Comment
+hi def link moeBacktick      String
 
 let b:current_syntax = "moe"
 
