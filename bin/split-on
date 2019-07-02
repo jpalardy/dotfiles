@@ -1,0 +1,29 @@
+#!/bin/bash
+
+FLAGS=""
+FILES=""
+
+while [ -n "$1" ]; do
+  case "$1" in
+    -*)
+      FLAGS="$FLAGS $1"
+      ;;
+    *)
+      FILES="$FILES $1"
+  esac
+  shift
+done
+
+awk $FLAGS '
+
+{
+  curr = $1
+  if (prev != curr) {
+    print ""
+  }
+  print $0
+  prev = curr
+}
+
+' $FILES
+
