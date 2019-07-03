@@ -1,23 +1,20 @@
 
-gopath() {
-  export GOPATH="$PWD"
-  export PATH="$PWD/bin:$PATH"
-}
-
-go-where-main() {
-  rg 'package main' -l
-}
-
 go-types() {
-  rg '^type \w+' | awk '{print $3}' | sort | uniq -c | sort -nr
+  command rg '^type\b' -g \!*_test.go --no-heading
 }
 
-go-project-summary() {
-  echo "files:" $(fne go | wc -l) "($(fne go | grep _test.go$ | wc -l) tests)"
-  echo "lines:" $(fne go | xargs cat | wc -l)
+go-overview() {
+  echo "$(fne go | wc -l) files, $(fne go | grep -c _test.go$) tests"
+  echo "$(fne go | xargs cat | wc -l) lines"
+  rg 'package main' -l | awk '!header {print "mains:"; header=1} {print "- " $0}'
 }
 
-gofmt-no-vendor() {
-  find . -type f -name '*.go' -not -path "./vendor/*" -print0 | xargs -0 gofmt -s -l "$@"
+go-get-bin() {
+  GOPATH=$PWD go get -v "$1"
+  cd bin || return
+}
+
+go-lea() {
+  golangci-lint run --enable-all
 }
 
