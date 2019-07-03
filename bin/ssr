@@ -19,31 +19,30 @@ check_bin() {
 
 #-------------------------------------------------
 
-# npm install
-check_bin node
-check_bin nodemon
-check_bin eslint
-check_bin prettier
-check_bin jsonlint
-check_bin csslint
-check_bin ncu         npm-check-updates
-check_bin fixjson
-
-echo
-
-# brew install
+# cli
 check_bin rg          ripgrep
 check_bin jq
-check_bin R
 check_bin gcal
 check_bin gpg
 check_bin curl
 check_bin wget
-check_bin fswatch
-check_bin pv
-check_bin utimer
+check_bin pup
+echo
+
+# linters
+check_bin jsonlint
+check_bin fixjson
+check_bin csslint
 check_bin shellcheck
 check_bin yamllint
-check_bin pup
-check_bin parallel
+
+# node
+if [ -n "$SSR_CHECK_NODE" ]; then
+  echo
+  check_bin node
+  check_bin nodemon
+  check_bin eslint
+  check_bin prettier
+  check_bin ncu         npm-check-updates
+fi
 
