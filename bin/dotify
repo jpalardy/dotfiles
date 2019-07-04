@@ -1,0 +1,24 @@
+#!/bin/bash
+
+awk -e '
+
+BEGIN {
+  print "digraph {"
+  print "  rankdir=LR;"
+  print "  node [style=rounded, shape=box, fontname=Courier, fontsize=16];"
+}
+
+NF != 2 {
+  printf "*** line %d does not have 2 fields: %s\n", NR, $0 > "/dev/stderr"
+}
+
+{
+  printf "  \"%s\" -> \"%s\";\n", $1, $2
+}
+
+END {
+  print "}"
+}
+
+' "$@"
+
