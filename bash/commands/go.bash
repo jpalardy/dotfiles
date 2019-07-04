@@ -18,3 +18,7 @@ go-lea() {
   golangci-lint run --enable-all
 }
 
+go-format-fix() {
+  gofmt -w -s -d .
+}
+
