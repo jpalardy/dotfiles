@@ -1,23 +1,15 @@
 #!/bin/bash
 
-FLAGS=""
-FILES=""
+awk -e '
 
-while [ -n "$1" ]; do
-  case "$1" in
-    -*)
-      FLAGS="$FLAGS $1"
-      ;;
-    *)
-      FILES="$FILES $1"
-  esac
-  shift
-done
-
-awk $FLAGS '
+BEGIN {
+  if (col == "") {
+    col = 1
+  }
+}
 
 {
-  curr = $1
+  curr = $col
   if (prev != curr) {
     print ""
   }
@@ -25,5 +17,5 @@ awk $FLAGS '
   prev = curr
 }
 
-' $FILES
+' "$@"
 
