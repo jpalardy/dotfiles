@@ -1,10 +1,13 @@
 #!/bin/bash
 
+KEY="${1:?"missing key"}"
+shift
+
 awk -e "
 
 {
-  curr = ${KEY:-"\$1"}
-  if (prev != curr) {
+  curr = $KEY
+  if (NR > 1 && prev != curr) {
     print \"\"
   }
   print
