@@ -6,7 +6,7 @@ go-types() {
 go-overview() {
   echo "$(fne go | wc -l) files, $(fne go | grep -c _test.go$) tests"
   echo "$(fne go | xargs cat | wc -l) lines"
-  rg 'package main' -l | awk '!header {print "mains:"; header=1} {print "- " $0}'
+  rg '^package main\b' -l | awk '!header {print "mains:"; header=1} {print "- " $0}'
 }
 
 go-get-bin() {
@@ -20,5 +20,9 @@ go-lea() {
 
 go-format-fix() {
   gofmt -w -s -d .
+}
+
+go-src() {
+  cd "$(go env GOROOT)/src"
 }
 
