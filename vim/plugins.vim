@@ -27,6 +27,7 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-o
 " prettier
 
 let g:ale_fixers = {}
+let g:ale_fixers['*']          = ['remove_trailing_lines', 'trim_whitespace']
 let g:ale_fixers['javascript'] = ['prettier']
 let g:ale_fixers['typescript'] = ['prettier']
 let g:ale_fixers['css']        = ['prettier']
