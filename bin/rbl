@@ -1,0 +1,19 @@
+#!/bin/bash
+
+awk -e "
+
+/^$/ {
+  empties++
+  if (empties == 1) {
+    print
+  }
+  next
+}
+
+{
+  empties = 0
+  print
+}
+
+" "$@"
+
