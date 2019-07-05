@@ -1,21 +1,15 @@
 #!/bin/bash
 
-awk -e '
-
-BEGIN {
-  if (col == "") {
-    col = 1
-  }
-}
+awk -e "
 
 {
-  curr = $col
+  curr = ${KEY:-"\$1"}
   if (prev != curr) {
-    print ""
+    print \"\"
   }
-  print $0
+  print
   prev = curr
 }
 
-' "$@"
+" "$@"
 
