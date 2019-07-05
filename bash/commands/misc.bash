@@ -42,7 +42,7 @@ alias pwgen='pwgen -cny 30'
 
 serve() {
   local port="${1:-8000}"
-  python -m http.server "$port" || python -m SimpleHTTPServer "$port"
+  python3 -m http.server "$port" || python -m SimpleHTTPServer "$port"
 }
 
 alias R="R --quiet --vanilla"
