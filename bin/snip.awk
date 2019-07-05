@@ -8,6 +8,8 @@ BEGIN {
   FIXED["isod"] = strftime("%F")
   FIXED["ts"]   = strftime("%s")
   FIXED["cr"]   = "⏎"
+  FIXED["->"]   = "→"
+  FIXED["=>"]   = "⇨"
 
   # javascript
   FIXED["javascript:fn"]       = "function"
@@ -34,8 +36,10 @@ BEGIN {
   FIXED["go:fn"]      = "func |() {\n}"
   FIXED["go:fori"]    = "for i := 0; i < |; i++ {}"
   FIXED["go:forr"]    = "for i, _ := range | {}"
-  FIXED["go:handler"] = "func(w http.ResponseWriter, r *http.Request)"
-  PREFIX["go:print"] = "fmt.Printf(\"%v\\n\", |)"
+  FIXED["go:handler"] = "func(res http.ResponseWriter, req *http.Request)"
+  PREFIX["go:print"]   = "fmt.Printf(\"%v\\n\", |)"
+  PREFIX["go:handler"] = "handler"
+  PREFIX["go:iferr"]   = "if err != nil {return}"
 }
 
 #-------------------------------------------------
