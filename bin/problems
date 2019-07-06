@@ -1,8 +1,0 @@
-#!/bin/bash
-
-rg -l '(	| +$)' .                    | awk '{print "white:   ", $0}' | grep -v 'Makefile$'
-rg -l ''       .                    | awk '{print "dos2unix:", $0}'
-find . -type f -empty -printf "%P\\n" | awk '{print "empty:   ", $0}'
-find . -type d -empty -printf "%P\\n" | awk '{print "empty:   ", $0 "/"}' | grep -v '\.git'
-find . -name '.*.sw*' -printf "%P\\n" | awk '{print "swap:    ", $0}'
-
