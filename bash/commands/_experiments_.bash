@@ -65,3 +65,8 @@ bootstrap() {
   echo "curl https://home.jpalardy.com/bootstrap/setup.bash"
 }
 
+# 2019-07-08
+2url() {
+  echo "file://$PWD/$1"
+}
+
