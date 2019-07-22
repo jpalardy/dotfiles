@@ -5,7 +5,7 @@ rules:
   func-names: ["error", "as-needed"]
   space-before-function-paren: "off"
   arrow-parens: ["error", "as-needed"]
-  arrow-body-style: ["warn", "as-needed", {"requireReturnForObjectLiteral": true}]
+  arrow-body-style: "off"
   max-len: ["warn", 150]
   generator-star-spacing: "off"
   object-curly-spacing: "off"
