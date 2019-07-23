@@ -49,6 +49,9 @@ vnoremap ," :! awk '{print "\""$0"\""}'<CR>
 " AWK
 vnoremap ,a :! awk '{print }'<LEFT><LEFT>
 
+" PRESS DOWN
+nnoremap ,p :call Preserve("%!uniq")<CR>
+
 " ONLY KEEP LINES WHICH CONTAIN SEARCH
 nnoremap ,v :v/<C-R>//d<CR>gg
 nnoremap ,d :g/<C-R>//d<CR>gg
