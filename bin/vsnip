@@ -1,4 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env awk -f
 
-awk -f "$DOTFILES/bin/vsnip.awk"
+# URLs
+/^https?:/ {
+  print $0 | "bookmark"
+  next
+}
+
+# print everything else as-is
+{
+  print
+}
 
