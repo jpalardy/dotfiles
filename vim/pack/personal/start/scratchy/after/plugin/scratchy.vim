@@ -23,3 +23,6 @@ nmap <ESC>h :FPScratchy "rg --files --no-ignore-parent --sort-files"<CR>
 nmap <ESC>t :botright  new<CR><ESC>h
 nmap <ESC>T :botright vnew<CR><ESC>h
 
+" cheatsheets
+nmap <ESC>c :lcd $WIKI/reference/technical/cheats/<CR><ESC>h
+
