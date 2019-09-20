@@ -1,4 +1,4 @@
 #!/bin/bash
 
-qrencode "$1" -t ANSI256 -o -
+qrencode "$1" -t ANSIUTF8 -o -
 
