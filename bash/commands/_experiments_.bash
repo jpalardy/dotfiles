@@ -1,8 +1,4 @@
 
-title() {
-  echo -ne "\033]0;"$*"\007"
-}
-
 plexco() {
   command plexco $?
 }
@@ -17,10 +13,6 @@ inet() {
   else
     ifconfig | grep --color -E 'inet[^6].*|$'
   fi
-}
-
-glss() {
-  gl "$HOME/Desktop/screenshots/"
 }
 
 # 2019-01-12
@@ -49,24 +41,12 @@ implode() {
   rm -rf "$target"
 }
 
-# 2019-04-12
-if command -v xclip > /dev/null; then
-  alias pbcopy='xclip -selection clipboard'
-  alias pbpaste='xclip -selection clipboard -o'
-fi
-
-# 2019-04-15
-if [ "$(uname -s)" == "Linux" ]; then
-  alias open=nautilus
-fi
-
 # 2019-04-13
 bootstrap() {
   echo "curl https://home.jpalardy.com/bootstrap/setup.bash"
 }
 
-# 2019-07-08
-2url() {
-  echo "file://$PWD/$1"
+# 2019-09-19
+fzrepl () {
+  fzf --print-query --preview="$1" --preview-window='up:99%' < /dev/null
 }
-
