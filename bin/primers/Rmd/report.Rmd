@@ -61,6 +61,15 @@ cat("\n\n## ", header, "\n\n")
 
 ```
 
+```{r html-table}
+
+# library(kableExtra)
+
+d %>%
+  knitr::kable() %>%
+  kable_styling(bootstrap_options=c("striped", "hover"), full_width=FALSE, position="left")
+
+```
 
 
 ## Section with tabs {.tabset}
