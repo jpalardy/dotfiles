@@ -44,6 +44,7 @@ prepend_PATHs "/usr/X11"
 prepend_PATHs ""
 prepend_PATHs "/usr"
 prepend_PATHs "/usr/local"
+prepend_PATHs "$HOME/local"
 
 # very specific
 prepend_PATHs "$DOTFILES"
