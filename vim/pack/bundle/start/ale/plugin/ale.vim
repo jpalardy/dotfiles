@@ -71,12 +71,12 @@ let g:ale_linter_aliases = get(g:, 'ale_linter_aliases', {})
 let g:ale_lint_delay = get(g:, 'ale_lint_delay', 200)
 
 " This flag can be set to 'never' to disable linting when text is changed.
-" This flag can also be set to 'insert' or 'normal' to lint when text is
-" changed only in insert or normal mode respectively.
-let g:ale_lint_on_text_changed = get(g:, 'ale_lint_on_text_changed', 'always')
+" This flag can also be set to 'always' or 'insert' to lint when text is
+" changed in both normal and insert mode, or only in insert mode respectively.
+let g:ale_lint_on_text_changed = get(g:, 'ale_lint_on_text_changed', 'normal')
 
 " This flag can be set to 1 to enable linting when leaving insert mode.
-let g:ale_lint_on_insert_leave = get(g:, 'ale_lint_on_insert_leave', 0)
+let g:ale_lint_on_insert_leave = get(g:, 'ale_lint_on_insert_leave', 1)
 
 " This flag can be set to 0 to disable linting when the buffer is entered.
 let g:ale_lint_on_enter = get(g:, 'ale_lint_on_enter', 1)
@@ -142,6 +142,9 @@ let g:ale_completion_enabled = get(g:, 'ale_completion_enabled', 0)
 " Enable automatic detection of pipenv for Python linters.
 let g:ale_python_auto_pipenv = get(g:, 'ale_python_auto_pipenv', 0)
 
+" This variable can be overridden to set the GO111MODULE environment variable.
+let g:ale_go_go111module = get(g:, 'ale_go_go111module', '')
+
 if g:ale_set_balloons
     call ale#balloon#Enable()
 endif
@@ -151,9 +154,12 @@ if g:ale_completion_enabled
 endif
 
 " Define commands for moving through warnings and errors.
-command! -bar ALEPrevious :call ale#loclist_jumping#Jump('before', 0)
+command! -bar -nargs=* ALEPrevious
+\    :call ale#loclist_jumping#WrapJump('before', <q-args>)
+command! -bar -nargs=* ALENext
+\    :call ale#loclist_jumping#WrapJump('after', <q-args>)
+
 command! -bar ALEPreviousWrap :call ale#loclist_jumping#Jump('before', 1)
-command! -bar ALENext :call ale#loclist_jumping#Jump('after', 0)
 command! -bar ALENextWrap :call ale#loclist_jumping#Jump('after', 1)
 command! -bar ALEFirst :call ale#loclist_jumping#JumpToIndex(0)
 command! -bar ALELast :call ale#loclist_jumping#JumpToIndex(-1)
@@ -213,13 +219,27 @@ command! -bar ALEDocumentation :call ale#hover#ShowDocumentationAtCursor()
 " Search for appearances of a symbol, such as a type name or function name.
 command! -nargs=1 ALESymbolSearch :call ale#symbol#Search(<q-args>)
 
-command! -bar ALEComplete :call ale#completion#AlwaysGetCompletions(0)
+command! -bar ALEComplete :call ale#completion#GetCompletions('ale-manual')
+
+" Rename symbols using tsserver and LSP
+command! -bar ALERename :call ale#rename#Execute()
+
+" Organize import statements using tsserver
+command! -bar ALEOrganizeImports :call ale#organize_imports#Execute()
 
 " <Plug> mappings for commands
 nnoremap <silent> <Plug>(ale_previous) :ALEPrevious<Return>
 nnoremap <silent> <Plug>(ale_previous_wrap) :ALEPreviousWrap<Return>
+nnoremap <silent> <Plug>(ale_previous_error) :ALEPrevious -error<Return>
+nnoremap <silent> <Plug>(ale_previous_wrap_error) :ALEPrevious -wrap -error<Return>
+nnoremap <silent> <Plug>(ale_previous_warning) :ALEPrevious -warning<Return>
+nnoremap <silent> <Plug>(ale_previous_wrap_warning) :ALEPrevious -wrap -warning<Return>
 nnoremap <silent> <Plug>(ale_next) :ALENext<Return>
 nnoremap <silent> <Plug>(ale_next_wrap) :ALENextWrap<Return>
+nnoremap <silent> <Plug>(ale_next_error) :ALENext -error<Return>
+nnoremap <silent> <Plug>(ale_next_wrap_error) :ALENext -wrap -error<Return>
+nnoremap <silent> <Plug>(ale_next_warning) :ALENext -warning<Return>
+nnoremap <silent> <Plug>(ale_next_wrap_warning) :ALENext -wrap -warning<Return>
 nnoremap <silent> <Plug>(ale_first) :ALEFirst<Return>
 nnoremap <silent> <Plug>(ale_last) :ALELast<Return>
 nnoremap <silent> <Plug>(ale_toggle) :ALEToggle<Return>
@@ -245,6 +265,7 @@ nnoremap <silent> <Plug>(ale_find_references) :ALEFindReferences<Return>
 nnoremap <silent> <Plug>(ale_hover) :ALEHover<Return>
 nnoremap <silent> <Plug>(ale_documentation) :ALEDocumentation<Return>
 inoremap <silent> <Plug>(ale_complete) <C-\><C-O>:ALEComplete<Return>
+nnoremap <silent> <Plug>(ale_rename) :ALERename<Return>
 
 " Set up autocmd groups now.
 call ale#events#Init()
@@ -258,6 +279,6 @@ augroup ALECleanupGroup
     autocmd QuitPre * call ale#events#QuitEvent(str2nr(expand('<abuf>')))
 
     if exists('##VimSuspend')
-      autocmd VimSuspend * if exists('*ale#engine#CleanupEveryBuffer') | call ale#engine#CleanupEveryBuffer() | endif
+        autocmd VimSuspend * if exists('*ale#engine#CleanupEveryBuffer') | call ale#engine#CleanupEveryBuffer() | endif
     endif
 augroup END

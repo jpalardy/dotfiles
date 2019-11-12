@@ -16,11 +16,11 @@ function! ale_linters#verilog#xvlog#Handle(buffer, lines) abort
 
     " NOTE: `xvlog` only prints 'INFO' and 'ERROR' messages
     for l:match in ale#util#GetMatches(a:lines, l:pattern)
-      call add(l:output, {
-      \   'lnum': l:match[2] + 0,
-      \   'type': 'E',
-      \   'text': l:match[1],
-      \})
+        call add(l:output, {
+        \   'lnum': l:match[2] + 0,
+        \   'type': 'E',
+        \   'text': l:match[1],
+        \})
     endfor
 
     return l:output
@@ -29,7 +29,7 @@ endfunction
 call ale#linter#Define('verilog', {
 \   'name': 'xvlog',
 \   'output_stream': 'stdout',
-\   'executable_callback': ale#VarFunc('verilog_xvlog_executable'),
-\   'command_callback': 'ale_linters#verilog#xvlog#GetCommand',
+\   'executable': {b -> ale#Var(b, 'verilog_xvlog_executable')},
+\   'command': function('ale_linters#verilog#xvlog#GetCommand'),
 \   'callback': 'ale_linters#verilog#xvlog#Handle',
 \})

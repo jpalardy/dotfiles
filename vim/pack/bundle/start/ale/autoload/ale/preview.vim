@@ -52,7 +52,8 @@ function! ale#preview#ShowSelection(item_list, ...) abort
         let l:filename = l:item.filename
 
         if get(l:options, 'use_relative_paths')
-          let l:filename = substitute(l:item.filename, '^' . getcwd() . l:sep, '', '') " no-custom-checks
+            let l:cwd = getcwd() " no-custom-checks
+            let l:filename = substitute(l:filename, '^' . l:cwd . l:sep, '', '')
         endif
 
         call add(
@@ -70,7 +71,7 @@ endfunction
 
 function! s:Open(open_in_tab) abort
     let l:item_list = get(b:, 'ale_preview_item_list', [])
-    let l:item = get(l:item_list, getcurpos()[1] - 1, {})
+    let l:item = get(l:item_list, getpos('.')[1] - 1, {})
 
     if empty(l:item)
         return

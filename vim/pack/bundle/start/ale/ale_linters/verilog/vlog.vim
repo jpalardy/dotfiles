@@ -17,11 +17,25 @@ function! ale_linters#verilog#vlog#Handle(buffer, lines) abort
     let l:output = []
 
     for l:match in ale#util#GetMatches(a:lines, l:pattern)
-      call add(l:output, {
-      \   'lnum': l:match[2] + 0,
-      \   'type': l:match[1] is? 'Error' ? 'E' : 'W',
-      \   'text': l:match[3],
-      \})
+        call add(l:output, {
+        \   'lnum': l:match[2] + 0,
+        \   'type': l:match[1] is? 'Error' ? 'E' : 'W',
+        \   'text': l:match[3],
+        \})
+    endfor
+
+    "Matches patterns like the following:
+    "** Warning: (vlog-2623) add.v(7): Undefined variable: C.
+    "** Error: (vlog-13294) file.v(1): Identifier must be declared with a port mode: C.
+    " let l:pattern = '^**\s\(\w*\):[a-zA-Z0-9\-\.\_\/ ]\+(\(\d\+\)):\s\+\(.*\)'
+    let l:pattern = '^**\s\(\w*\):\s\([^)]*)\)[a-zA-Z0-9\-\.\_\/ ]\+(\(\d\+\)):\s\+\(.*\)'
+
+    for l:match in ale#util#GetMatches(a:lines, l:pattern)
+        call add(l:output, {
+        \   'lnum': l:match[3] + 0,
+        \   'type': l:match[1] is? 'Error' ? 'E' : 'W',
+        \   'text': l:match[2] . ' ' . l:match[4],
+        \})
     endfor
 
     return l:output
@@ -30,7 +44,7 @@ endfunction
 call ale#linter#Define('verilog', {
 \   'name': 'vlog',
 \   'output_stream': 'stdout',
-\   'executable_callback': ale#VarFunc('verilog_vlog_executable'),
-\   'command_callback': 'ale_linters#verilog#vlog#GetCommand',
+\   'executable': {b -> ale#Var(b, 'verilog_vlog_executable')},
+\   'command': function('ale_linters#verilog#vlog#GetCommand'),
 \   'callback': 'ale_linters#verilog#vlog#Handle',
 \})

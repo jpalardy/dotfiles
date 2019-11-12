@@ -3,6 +3,24 @@ ALE HTML Integration                                         *ale-html-options*
 
 
 ===============================================================================
+fecs                                                            *ale-html-fecs*
+
+`fecs` options for HTMl is the same as the options for JavaScript,
+and both of them reads `./.fecsrc` as the default configuration file.
+See: |ale-javascript-fecs|.
+
+===============================================================================
+html-beautify                                               *ale-html-beautify*
+
+g:ale_html_beautify_options                       *g:ale_html_beautify_options*
+                                                  *b:ale_html_beautify_options*
+  Type: |String|
+  Default: `''`
+
+  This variable can be changed to modify flags given to html-beautify.
+
+
+===============================================================================
 htmlhint                                                    *ale-html-htmlhint*
 
 g:ale_html_htmlhint_executable                 *g:ale_html_htmlhint_executable*

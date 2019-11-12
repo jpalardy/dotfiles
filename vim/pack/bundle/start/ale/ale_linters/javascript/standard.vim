@@ -8,6 +8,7 @@ call ale#Set('javascript_standard_options', '')
 function! ale_linters#javascript#standard#GetExecutable(buffer) abort
     return ale#node#FindExecutable(a:buffer, 'javascript_standard', [
     \   'node_modules/standard/bin/cmd.js',
+    \   'node_modules/semistandard/bin/cmd.js',
     \   'node_modules/.bin/standard',
     \])
 endfunction
@@ -24,7 +25,7 @@ endfunction
 " standard uses eslint and the output format is the same
 call ale#linter#Define('javascript', {
 \   'name': 'standard',
-\   'executable_callback': 'ale_linters#javascript#standard#GetExecutable',
-\   'command_callback': 'ale_linters#javascript#standard#GetCommand',
+\   'executable': function('ale_linters#javascript#standard#GetExecutable'),
+\   'command': function('ale_linters#javascript#standard#GetCommand'),
 \   'callback': 'ale#handlers#eslint#Handle',
 \})

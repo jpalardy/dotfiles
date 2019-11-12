@@ -9,12 +9,20 @@
 Features:
 
 * Syntax highlighting for Elixir and EEx files
-* Filetype detection for `.ex`, `.exs` and `.eex` files
+* Filetype detection for `.ex`, `.exs`, `.eex` and `.leex` files
 * Automatic indentation
+* Integration between Ecto projects and [vim-dadbod][] for running SQL queries
+  on defined Ecto repositories
 
 ## Installation
 
 ### Plugin Managers
+
+```bash
+# vim 8 native package loading
+# http://vimhelp.appspot.com/repeat.txt.html#packages
+git clone https://github.com/elixir-lang/vim-elixir.git ~/.vim/pack/my-packages/start/vim-elixir
+```
 
 ```bash
 # pathogen
@@ -42,9 +50,12 @@ Run [./manual_install.sh](manual_install.sh) to copy the contents of each direct
 We've decided not to include `mix format` integration into `vim-elixir`. If you'd like to set it up yourself, you have the following options:
 
 * For asynchronous execution of the formatter, have a look at [vim-mix-format](https://github.com/mhinz/vim-mix-format)
-* Add it as a `formatprg` (e.g. `set formatprg=mix\ format\ -`)
+* Add it as a `formatprg` (e.g. `setlocal formatprg=mix\ format\ -`)
 
 ## Development
 
 Run the tests: `bundle exec parallel_rspec spec`
-Spawn a vim instance with dev configs: `bin/spawn_vim`
+
+Spawn a container with vim and dev configs: `docker-compose build && docker-compose run vim`
+
+[vim-dadbod]: https://github.com/tpope/vim-dadbod

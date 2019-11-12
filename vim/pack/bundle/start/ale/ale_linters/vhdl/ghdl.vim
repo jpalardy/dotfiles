@@ -6,7 +6,7 @@ call ale#Set('vhdl_ghdl_executable', 'ghdl')
 call ale#Set('vhdl_ghdl_options', '--std=08')
 
 function! ale_linters#vhdl#ghdl#GetCommand(buffer) abort
-   return '%e -s ' . ale#Pad(ale#Var(a:buffer, 'vhdl_ghdl_options')) . ' %t'
+    return '%e -s ' . ale#Pad(ale#Var(a:buffer, 'vhdl_ghdl_options')) . ' %t'
 endfunction
 
 function! ale_linters#vhdl#ghdl#Handle(buffer, lines) abort
@@ -31,7 +31,7 @@ endfunction
 call ale#linter#Define('vhdl', {
 \   'name': 'ghdl',
 \   'output_stream': 'stderr',
-\   'executable_callback': ale#VarFunc('vhdl_ghdl_executable'),
-\   'command_callback': 'ale_linters#vhdl#ghdl#GetCommand',
+\   'executable': {b -> ale#Var(b, 'vhdl_ghdl_executable')},
+\   'command': function('ale_linters#vhdl#ghdl#GetCommand'),
 \   'callback': 'ale_linters#vhdl#ghdl#Handle',
 \})

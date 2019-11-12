@@ -28,7 +28,7 @@ let &l:path =
       \   &g:path
       \ ], ',')
 setlocal includeexpr=elixir#util#get_filename(v:fname)
-setlocal suffixesadd=.ex,.exs,.eex,.erl,.xrl,.yrl,.hrl
+setlocal suffixesadd=.ex,.exs,.eex,.leex,.erl,.xrl,.yrl,.hrl
 
 let &l:define = 'def\(macro\|guard\|delegate\)\=p\='
 
@@ -47,7 +47,5 @@ onoremap <buffer> <silent> <expr> [[ ':silent keeppatterns ?'.b:block_begin.'<CR
 onoremap <buffer> <silent> <expr> ][ ':silent keeppatterns /'.b:block_end  .'<CR>'
 onoremap <buffer> <silent> <expr> [] ':silent keeppatterns ?'.b:block_end  .'<CR>'
 
-silent! setlocal formatoptions-=t formatoptions+=croqlj
-
-let b:undo_ftplugin = 'setlocal sw< sts< et< isk< com< cms< path< inex< sua< def<'.
+let b:undo_ftplugin = 'setlocal sw< sts< et< isk< com< cms< path< inex< sua< def< fo<'.
       \ '| unlet! b:match_ignorecase b:match_words b:block_begin b:block_end'
