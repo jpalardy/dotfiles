@@ -37,10 +37,11 @@ BEGIN {
   FIXED["go:fn"]      = "func |() {\n}"
   FIXED["go:fori"]    = "for i := 0; i < |; i++ {}"
   FIXED["go:forr"]    = "for i, _ := range | {}"
+  FIXED["go:iferr"]   = "if err != nil {return}"
   FIXED["go:handler"] = "func(res http.ResponseWriter, req *http.Request)"
-  PREFIX["go:print"]   = "fmt.Printf(\"%v\\n\", |)"
-  PREFIX["go:handler"] = "handler"
-  PREFIX["go:iferr"]   = "if err != nil {return}"
+  # cycle
+  FIXED["go:fmt."]    = "fmt.Println"
+  FIXED["go:Println"] = "Printf"
 }
 
 #-------------------------------------------------
