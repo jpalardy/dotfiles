@@ -27,6 +27,8 @@ check_bin gpg
 check_bin curl
 check_bin wget
 check_bin pup
+check_bin qrencode
+check_bin pwgen
 echo
 
 # linters
@@ -44,5 +46,13 @@ if [ -n "$SSR_CHECK_NODE" ]; then
   check_bin eslint
   check_bin prettier
   check_bin ncu         npm-check-updates
+fi
+
+# go
+if [ -n "$SSR_CHECK_GO" ]; then
+  echo
+  check_bin goimports
+  check_bin golint
+  check_bin golangci-lint
 fi
 
