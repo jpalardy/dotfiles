@@ -58,7 +58,7 @@ alias cask="brew cask"
 
 _cask() {
   local word=${COMP_WORDS[COMP_CWORD]}
-  local commands="search info install"
+  local commands="list info install uninstall"
   COMPREPLY=( $(compgen -W "${commands}" -- "$word") )
 }
 complete -F _cask cask
