@@ -16,5 +16,8 @@ show_exit_code() {
   fi
 }
 
-PS1='\[${PS1_COLOR}\]\h\[${ATTR_RESET}\] '
+# can be overriden
+PS1_HOSTNAME="${HOSTNAME%%.*}"
+
+PS1='\[${PS1_COLOR}\]${PS1_HOSTNAME}\[${ATTR_RESET}\] '
 
