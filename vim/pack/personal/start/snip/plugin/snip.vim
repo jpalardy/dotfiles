@@ -1,9 +1,7 @@
 
 function! SnipReplace()
   " extract last word, put in register x
-  execute "normal! vb\"xy"
-
-  "echom "copied:" @x
+  execute "normal! v0\"xy"
 
   " convert w/ snip command-line
   silent let @x = system("FT=" . shellescape(&ft) . " snip", @x)
@@ -12,9 +10,9 @@ function! SnipReplace()
   " overwrite-paste
   execute "normal! gv\"xp"
 
-  " if snippet contains a pipe (|), position cursor
-  if match(@x, "|") != -1
-    call search("|", "b")
+  " if snippet contains a block char (▒), position cursor
+  if match(@x, "▒") != -1
+    call search("▒", "b")
     let @x = "xi"
     return
   endif
