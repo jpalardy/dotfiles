@@ -9,9 +9,13 @@ function snip(key, value) {
 }
 
 BEGIN {
-  ft = ENVIRON["FT"]
+  # prefixes
+  pre[1] = ENVIRON["FT"]
+  pre[2] = "*"
 
+  #-------------------------------------------------
   # global
+  #-------------------------------------------------
   snip("*:--",   "-------------------------------------------------")
   snip("*:isod", strftime("%F"))
   snip("*:ts",   strftime("%s"))
@@ -19,47 +23,61 @@ BEGIN {
   snip("*:->",   "→")
   snip("*:=>",   "⇨")
 
+  #-------------------------------------------------
   # javascript
-  snip("javascript:fn",       "function")
-      snip("javascript:function", "function (▒) {}")
-  snip("javascript:fori",     "for (let i = 0; i < ▒; i + = 1) {")
-  snip("javascript:fe",       "forEach(")
-  snip("javascript:)",        ") => ")
+  #-------------------------------------------------
+  snip("javascript:fn",       "function ▒() {\n}")
+  snip("javascript:fori",     "for (let i = 0; i < ▒; i += 1) {")
+  snip("javascript:fe",       "forEach(▒)")
+  snip("javascript:fn-",      "(▒) => {}")
+  snip("javascript:iife",     "(() => {\n▒\n})();")
+  snip("javascript:eslint",   "/* eslint-disable no-console */")
+  snip("javascript:eslint-",  "// eslint-disable-next-line no-console")
 
-  # r
-  snip("r:fn", "function")
-  snip("r:|",  "%>%")
-  snip("r:>",  "%>%")
-  # rmd
-  snip("rmd:fn", "function")
-  snip("rmd:|",  "%>%")
-  snip("rmd:>",  "%>%")
+  #-------------------------------------------------
+  # r and rmd
+  #-------------------------------------------------
+  snip("r:fn", "function"); snip("rmd:fn", "function")
+  snip("r:|",  "%>%");      snip("rmd:|",  "%>%")
+  snip("r:>",  "%>%");      snip("rmd:>",  "%>%")
 
+  #-------------------------------------------------
   # go
-  snip("go:fn",      "func ▒() {\n}")
-  snip("go:fori",    "for i := 0; i < ▒; i++ {}")
-  snip("go:forr",    "for i, _ := range ▒ {}")
-  snip("go:iferr",   "if err != nil {return}")
-  snip("go:handler", "func(res http.ResponseWriter, req *http.Request)")
-  snip("go:fmt.",    "fmt.Println")
-      snip("go:Println", "Printf")
+  #-------------------------------------------------
+  snip("go:fn",          "func ▒() {\n}")
+  snip("go:fori",        "for i := 0; i < ▒; i++ {}")
+  snip("go:forr",        "for i, _ := range ▒ {}")
+  snip("go:iferr",       "if err != nil {return}")
+  snip("go:handler",     "func(res http.ResponseWriter, req *http.Request)")
+  # loop {
+  snip("go:fmt.",        "fmt.Println")
+  snip("go:fmt.Println", "fmt.Printf")
+  snip("go:fmt.Printf",  "fmt.")
+  # }
 }
 
 #-------------------------------------------------
 
 # try to match from the right
-# ft-specific first, global next
+# try ft-specific first, global next
+# try to find longest match
 {
+  _i = -1
+  _text = ""
   for (i = length($0); i > 0; i--) {
     ss = substr($0, i)
-    result = snippets[ft ":" ss]
-    if (!result) {
-      result = snippets["*:" ss]
+    for (j = 1; j <= length(pre); j++) {
+      text = snippets[pre[j] ":" ss]
+      if (text) {
+        _i = i
+        _text = text
+        break
+      }
     }
-    if (result) {
-      print substr($0, 1, i-1) result
+  }
+  if (_text) {
+      print substr($0, 1, _i-1) _text
       next
-    }
   }
 }
 
