@@ -28,3 +28,7 @@ git-latety() {
   glg --author="Jonathan Palardy" --since="${1:-7} days ago"
 }
 
+git_sb() {
+  pick_with_vim "git branch" "git checkout"
+}
+
