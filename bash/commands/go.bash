@@ -14,8 +14,8 @@ go-get-bin() {
   cd bin || return
 }
 
-go-lea() {
-  golangci-lint run --enable-all
+go-lintall() {
+  golangci-lint run --enable-all -v "$@"
 }
 
 go-format-fix() {
