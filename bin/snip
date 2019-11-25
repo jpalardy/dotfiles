@@ -47,7 +47,7 @@ BEGIN {
   snip("go:fn",          "func ▒() {\n}")
   snip("go:fori",        "for i := 0; i < ▒; i++ {}")
   snip("go:forr",        "for i, _ := range ▒ {}")
-  snip("go:iferr",       "if err != nil {return}")
+  snip("go:iferr",       "if err != nil { return err }")
   snip("go:handler",     "func(res http.ResponseWriter, req *http.Request)")
   # loop {
   snip("go:fmt.",        "fmt.Println")
