@@ -37,9 +37,15 @@ BEGIN {
   #-------------------------------------------------
   # r and rmd
   #-------------------------------------------------
-  snip("r:fn", "function"); snip("rmd:fn", "function")
-  snip("r:|",  "%>%");      snip("rmd:|",  "%>%")
-  snip("r:>",  "%>%");      snip("rmd:>",  "%>%")
+  snip("r:fn", "function")
+  snip("r:|",  "%>%")
+  snip("r:>",  "%>%")
+  for (k in snippets) {
+    if (k !~ /^r:/) { continue }
+    v = snippets[k]
+    sub("r:", "rmd:", k)
+    snippets[k] = v
+  }
 
   #-------------------------------------------------
   # go
