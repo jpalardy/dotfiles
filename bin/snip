@@ -40,6 +40,7 @@ BEGIN {
   snip("r:fn", "function")
   snip("r:|",  "%>%")
   snip("r:>",  "%>%")
+  snip("r:_",  ".Last.value");
   for (k in snippets) {
     if (k !~ /^r:/) { continue }
     v = snippets[k]
