@@ -1,14 +1,24 @@
 #!/bin/bash
 
-printBookmark() {
-  url=$1
-  title=$(curl -L -s "$url" | pup -p --charset utf8 'head title json{}' | jq '.[].text' -r)
-  date=$(date +%F)
+FIRST_HEADER=1
 
-  echo "$date"
-  echo "  $title"
+header() {
+  if [ $FIRST_HEADER == 1 ]; then
+    date +%F
+    FIRST_HEADER=0
+    return
+  fi
+  echo # blank line
+}
+
+printBookmark() {
+  local url=$1
+  local title
+  title=$(curl -L -s "$url" | pup -p --charset utf8 'head title json{}' | jq '.[].text' -r)
+
+  header
+  echo "  ${title:-"TITLE NOT FOUND"}"
   echo "    $url"
-  echo ""
 }
 
 # command-line args
