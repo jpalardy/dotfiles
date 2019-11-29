@@ -6,11 +6,7 @@ update_repo() {
   local repo=$1
   echo "## $repo"
   cd "$repo" || exit
-
   git -c 'color.ui=always' pull --ff-only | grep -v 'Already up to date'
-  git -c 'color.ui=always' status --short
-
-  echo
 }
 export -f update_repo
 
@@ -24,3 +20,15 @@ else
   done
 fi
 
+echo "#################################################"
+
+for repo in $REPOS; do
+  cd "$repo" || exit
+  stdout=$(git -c 'color.ui=always' status --short)
+  if [ -z "$stdout" ]; then
+    continue
+  fi
+  echo "## $repo"
+  echo "$stdout"
+  echo
+done
