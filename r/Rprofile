@@ -1,11 +1,9 @@
 
-options("repos" = c(CRAN = "http://cran.rstudio.com/"))
+options("repos" = c(CRAN = "https://cloud.r-project.org"))
 
 .First = function () {
   if (interactive()) {
     options(width=160)
-    require(stats)
-    require(tidyverse)
   }
 }
 
