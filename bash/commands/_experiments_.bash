@@ -50,3 +50,8 @@ bootstrap() {
 fzrepl () {
   fzf --print-query --preview="$1" --preview-window='up:99%' < /dev/null
 }
+
+# 2019-11-30
+function title {
+  echo -ne "\033]0;"$*"\007"
+}
