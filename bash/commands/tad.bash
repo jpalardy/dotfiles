@@ -27,9 +27,9 @@ tad() {
       cd "$(basename "$1" .git)" || exit
     fi
     if [ "$tmux" == 1 ]; then
-      tmux
+      exec tmux
     else
-      bash
+      exec bash
     fi
   )
   rm -rf "$d"
