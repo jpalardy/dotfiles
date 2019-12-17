@@ -54,13 +54,7 @@ alias maxima="rlwrap maxima --quiet"
 #-------------------------------------------------
 
 alias cask="brew cask"
-
-_cask() {
-  local word=${COMP_WORDS[COMP_CWORD]}
-  local commands="list info install uninstall"
-  COMPREPLY=( $(compgen -W "${commands}" -- "$word") )
-}
-complete -F _cask cask
+complete -W "list info install uninstall" cask
 
 alias bds="brew desc -s"
 
