@@ -1,5 +1,5 @@
 
-alias rg="rg -i"
+alias rg="rg -i --sort-files"
 
 ff() {
   local flags
@@ -7,7 +7,7 @@ ff() {
     flags="-u"
     shift
   fi
-  rg --files $flags --sort-files | rg "${@:-^}"
+  rg --files $flags | rg "${@:-^}"
 }
 
 fne() {
