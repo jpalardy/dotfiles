@@ -7,11 +7,7 @@ ff() {
     flags="-u"
     shift
   fi
-  rg --files $flags | rg "${@:-^}"
-}
-
-ffu() {
-  ff -u "$@"
+  rg --files $flags --sort-files | rg "${@:-^}"
 }
 
 fne() {
