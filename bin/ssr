@@ -32,6 +32,7 @@ check_bin pwgen
 echo
 
 # linters
+check_bin node
 check_bin jsonlint
 check_bin fixjson
 check_bin csslint
