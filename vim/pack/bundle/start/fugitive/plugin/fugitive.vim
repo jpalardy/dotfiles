@@ -177,10 +177,29 @@ function! s:Tree(path) abort
   endif
 endfunction
 
+function! s:CeilingDirectories() abort
+  if !exists('s:ceiling_directories')
+    let s:ceiling_directories = []
+    let resolve = 1
+    for dir in split($GIT_CEILING_DIRECTORIES, has('win32') ? ';' : ':', 1)
+      if empty(dir)
+        let resolve = 0
+      elseif resolve
+        call add(s:ceiling_directories, resolve(dir))
+      else
+        call add(s:ceiling_directories, dir)
+      endif
+    endfor
+  endif
+  return s:ceiling_directories + get(g:, 'ceiling_directories', [])
+endfunction
+
 function! FugitiveExtractGitDir(path) abort
   let path = s:Slash(a:path)
   if path =~# '^fugitive:'
     return matchstr(path, '\C^fugitive:\%(//\)\=\zs.\{-\}\ze\%(//\|::\|$\)')
+  elseif empty(path)
+    return ''
   elseif isdirectory(path)
     let path = fnamemodify(path, ':p:s?/$??')
   else
@@ -201,7 +220,7 @@ function! FugitiveExtractGitDir(path) abort
     if root =~# '\v^//%([^/]+/?)?$'
       break
     endif
-    if index(split($GIT_CEILING_DIRECTORIES, ':'), root) >= 0
+    if index(s:CeilingDirectories(), root) >= 0
       break
     endif
     if root ==# $GIT_WORK_TREE && FugitiveIsGitDir(env_git_dir)
@@ -285,6 +304,9 @@ function! s:ProjectionistDetect() abort
   endif
 endfunction
 
+if v:version + has('patch061') < 703
+  runtime! autoload/fugitive.vim
+endif
 let g:io_fugitive = {
       \ 'simplify': function('fugitive#simplify'),
       \ 'resolve': function('fugitive#resolve'),
