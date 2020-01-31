@@ -60,6 +60,7 @@ export MANPATH
 
 export EDITOR="vim"
 export PAGER="less"
+export LESS="-iSFR"
 export BLOCKSIZE="K"
 
 export GZIP="-5"
