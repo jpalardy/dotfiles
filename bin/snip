@@ -71,8 +71,13 @@ BEGIN {
   #-------------------------------------------------
   snip("sql:count.tbl", "SELECT COUNT(*) FROM tbl;")
   snip("sql:count.col", "SELECT col, COUNT(*) FROM tbl GROUP BY col ORDER BY count DESC;")
-  snip("sql:peek", "SELECT * FROM tbl LIMIT 30;")
-  snip("sql:sample", "SELECT * FROM tbl WHERE random() < 0.05 LIMIT 30;")
+  snip("sql:peek",      "SELECT * FROM tbl LIMIT 30;")
+  snip("sql:sample",    "SELECT * FROM tbl WHERE random() < 0.05 LIMIT 30;")
+
+  #-------------------------------------------------
+  # shell
+  #-------------------------------------------------
+  snip("sh:strict", "set -euo pipefail")
 }
 
 #-------------------------------------------------
