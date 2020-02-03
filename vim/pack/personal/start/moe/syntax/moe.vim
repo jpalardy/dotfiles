@@ -8,8 +8,9 @@ endif
 
 "-------------------------------------------------
 
-" a header is a line that starts with (at least) 3 capital letters
-syntax match moeHeader /^[A-Z][A-Z][A-Z].\+$/
+" a header is a line that starts with a capital letter and
+" doesn't have lowercase letters
+syntax match moeHeader /^[A-Z][^a-z]*$/
 
 " @person
 syntax match moePerson "\w\@<!@\w\+"
@@ -25,13 +26,14 @@ syntax match moeLessImportant /.* #$/
 " [TAGS]
 syntax match moeTag     /\[[^]]\+\]/
 
+" `backtick`
+syntax match moeBacktick /`[^`]\+`/
+
 syntax match moeDivider /^-\+$/
 
 syntax match moeDate        /\d\d\d\d-\d\d-\d\d/
 syntax match moePhoneNumber /\d\d\d.\d\d\d.\d\d\d\d/
 syntax match moeURL         /https\?:[^ ]\+/
-
-syntax match moeBacktick    /`[^`]\+`/
 
 "-------------------------------------------------
 
