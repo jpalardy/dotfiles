@@ -1,7 +1,7 @@
 #!/usr/bin/env awk -f
 
 # URLs
-/^https?:/ {
+/^\s*https?:/ {
   print $0 | "bookmark"
   next
 }
