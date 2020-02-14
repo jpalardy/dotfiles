@@ -4,6 +4,7 @@ options("repos" = c(CRAN = "https://cloud.r-project.org"))
 .First = function () {
   if (interactive()) {
     options(width=160)
+    options(tibble.print_min=45)
   }
 }
 

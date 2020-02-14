@@ -1,13 +1,11 @@
 
-.PHONY: all open clean
-all: report.html
-
 %.html: %.Rmd
 	R --vanilla --quiet -e 'rmarkdown::render("$<")'
 
-open: report.html
-	open $^
+.PHONY: build
+build: report.html
 
+.PHONY: clean
 clean:
 	rm -f report.html
 
