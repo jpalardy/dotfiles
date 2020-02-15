@@ -24,5 +24,5 @@ nmap <ESC>t :botright  new<CR><ESC>h
 nmap <ESC>T :botright vnew<CR><ESC>h
 
 " cheatsheets
-nmap <ESC>c :lcd $WIKI/reference/technical/cheats/<CR><ESC>h
+nmap <ESC>c :botright vnew<CR>:lcd $DOTFILES/chunks<CR><ESC>h
 
