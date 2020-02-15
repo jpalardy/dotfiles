@@ -56,9 +56,3 @@ function title {
   echo -ne "\033]0;"$*"\007"
 }
 
-# 2020-02-04
-brew-bins() {
-  brew ls -v "$1" | grep -w bin
-}
-complete -W "$(brew ls)" brew-bins
-
