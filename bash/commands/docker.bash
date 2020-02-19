@@ -11,3 +11,5 @@ alf() {
   docker run -ti --name alf --rm amazonlinux-fresh
 }
 
+alias dcr="docker-compose run --rm"
+
