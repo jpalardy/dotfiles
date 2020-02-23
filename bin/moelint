@@ -1,0 +1,53 @@
+#!/bin/bash
+
+awk '
+
+function report_warning(msg) {
+  warnings++
+  printf "%s:%d:0: %s\n", (FILENAME == "-" ? "<stdin>" : FILENAME), FNR, msg
+}
+
+#-------------------------------------------------
+
+BEGINFILE {
+  prev_date = ""
+  prev_line = 0
+  empty_lines = 0
+}
+
+#-------------------------------------------------
+
+# look for badly sorted date headers
+/^20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/ {
+  date = $0
+  if (date == prev_date) {
+    report_warning("not chronological: repeated from line " prev_line)
+  } else if (date < prev_date) {
+    report_warning("not chronological: after " prev_date " from line " prev_line)
+  }
+  prev_date = date
+  prev_line = FNR
+}
+
+# look for 2+ empty lines
+{
+  if (NF == 0) {
+    empty_lines++
+  } else {
+    empty_lines = 0
+  }
+  if (empty_lines == 2) {
+    report_warning("too many empty lines")
+  }
+}
+
+#-------------------------------------------------
+
+END {
+  if (warnings > 0) {
+    exit 1
+  }
+}
+
+' "$@"
+
