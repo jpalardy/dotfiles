@@ -1,0 +1,4 @@
+#!/bin/bash
+
+tee /dev/stderr | pbcopy
+
