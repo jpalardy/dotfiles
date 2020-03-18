@@ -23,7 +23,7 @@
   dno     = diff --name-only
   age     = for-each-ref --format '%(authordate:iso) %(refname:short)' --sort=-authordate refs/remotes refs/heads
   gone    = !git branch -vv | grep ': gone'
-  gd      = !git branch -vv | awk '/: gone/ {print $1}' | xargs -n1 git branch -D
+  gd      = !git branch -vv | awk '/: gone/ {print $1}' | xargs --no-run-if-empty -n1 git branch -D
 [diff]
   noprefix = true
   tool = vimdiff
