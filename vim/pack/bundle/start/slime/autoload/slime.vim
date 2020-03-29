@@ -234,6 +234,21 @@ function! s:X11Config() abort
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" dtach
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! s:DtachSend(config, text)
+  call system("dtach -p " . b:slime_config["socket_path"], a:text)
+endfunction
+
+function! s:DtachConfig() abort
+  if !exists("b:slime_config")
+    let b:slime_config = {"socket_path": "/tmp/slime"}
+  end
+  let b:slime_config["socket_path"] = input("dtach socket path: ", b:slime_config["socket_path"])
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Helpers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -329,6 +344,18 @@ function! slime#send_lines(count) abort
   silent exe 'normal! ' . a:count . 'yy'
   call slime#send(@")
   call setreg('"', rv, rt)
+endfunction
+
+function! slime#send_cell(cell_delimiter) abort
+  let line_ini = search(a:cell_delimiter, 'bcnW')
+  let line_end = search(a:cell_delimiter, 'nW')
+  if !line_ini
+      let line_ini = 1
+  endif
+  if !line_end
+      let line_end = line("$")
+  endif
+  call slime#send_range(line_ini, line_end)
 endfunction
 
 function! slime#store_curpos()

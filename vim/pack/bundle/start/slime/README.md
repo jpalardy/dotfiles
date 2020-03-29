@@ -147,6 +147,19 @@ Or more reliably by employing [a special token][right-of] as pane index:
 
 [right-of]: http://man.openbsd.org/OpenBSD-current/man1/tmux.1#_right-of_
 
+### dtach
+
+dtach is *not* the default, to use it you will have to add this line to your .vimrc:
+
+    let g:slime_target = "dtach"
+
+When you invoke vim-slime for the first time, you will be prompted for more configuration.
+
+socket_path:
+
+    The path to the Unix-domain socket that the dtach session is attached to.
+    The default is /tmp/slime
+
 ### kitty
 
 kitty is *not* the default, to use it you will have to add this line to your .vimrc:
@@ -269,6 +282,10 @@ By default, vim-slime will try to restore your cursor position after it runs. If
 
     let g:slime_preserve_curpos = 0
 
+If you want to send blocks of code between two delimiters, emulating the cell-like mode of REPL environments like ipython, matlab, etc., you can set the cell delimiter on the `g:slime_cell_delimiter` variable and use the `<Plug>SlimeSendCell` mapping to send the block of code. For example, if your are using ipython you could use the following:
+
+    let g:slime_cell_delimiter = "#%%"
+    nmap <leader>s <Plug>SlimeSendCell
 
 Language Support
 ----------------
