@@ -20,12 +20,13 @@ gnupg
 go
 graphviz
 imagemagick
-jq
 jpalardy/tap/memora
+jq
 nmap
 node
 pandoc
 parallel
+pstree
 pup
 pwgen
 qrencode
