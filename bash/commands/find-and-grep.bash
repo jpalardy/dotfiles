@@ -9,6 +9,7 @@ ff() {
   fi
   rg --files $flags | rg "${@:-^}"
 }
+alias ffu="ff -u"
 
 fne() {
   ff "\\.$1\$"
