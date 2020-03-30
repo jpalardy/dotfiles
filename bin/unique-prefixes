@@ -1,0 +1,42 @@
+#!/bin/bash
+
+awk '
+
+function addToPrefixes(str, depth) {
+  if (depth > length(str)) {
+    prefixes[str] = str
+    return
+  }
+  _prefix = substr(str, 1, depth)
+  # happy path: no conflict
+  if (!(_prefix in prefixes)) {
+    prefixes[_prefix] = str
+    return
+  }
+  _currentStr = prefixes[_prefix]
+  # duplicate
+  if (str == _currentStr) {
+    return
+  }
+  if (_currentStr != "") {
+    prefixes[_prefix] = ""
+    addToPrefixes(_currentStr, depth + 1)
+  }
+  addToPrefixes(str, depth + 1)
+}
+
+{
+  addToPrefixes($0, 1)
+}
+
+END {
+  for (k in prefixes) {
+    if (prefixes[k] == "") {
+      continue
+    }
+    print k "\t" prefixes[k]
+  }
+}
+
+' "$@"
+
