@@ -22,3 +22,16 @@ _complete_g() {
 }
 complete -F _complete_g g
 
+g.add() {
+  local key=${1:-$(basename "$PWD")}
+  local value=${2:-$PWD}
+  if [ $# -lt 2 ]; then
+    echo 2>&1 "$key = $value"
+  fi
+  echo "$key = $value" >> "$HOME/.lists/g"
+}
+
+g.edit() {
+  "$EDITOR" "$HOME/.lists/g"
+}
+
