@@ -4,6 +4,12 @@ g() {
   dst=$(awk -v "key=$1" -F' += +' '
     { LUT[$1] = $2 }
     END {
+      if (!(key in LUT)) {
+        exit
+      }
+      if (LUT[key] !~ /^\//) {
+        printf("%s/", ENVIRON["HOME"])
+      }
       print LUT[key]
     }
   ' "$HOME/.lists/g")
@@ -11,7 +17,6 @@ g() {
     cat "$HOME/.lists/g"
     return
   fi
-  dst="${dst/#\~/$HOME}"
   cd "$dst"
 }
 
@@ -25,6 +30,7 @@ complete -F _complete_g g
 g.add() {
   local key=${1:-$(basename "$PWD")}
   local value=${2:-$PWD}
+  value=${value#$HOME/}
   if [ $# -lt 2 ]; then
     echo 2>&1 "$key = $value"
   fi
