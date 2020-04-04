@@ -2,6 +2,24 @@
 pagetitle: "TITLE GOES HERE"
 ---
 
+```{r}
+
+#
+# Makefile
+#
+# %.html: %.Rmd
+# 	R --vanilla --quiet -e 'rmarkdown::render("$<")'
+# 
+# .PHONY: build
+# build: report.html
+# 
+# .PHONY: clean
+# clean:
+# 	rm -f report.html
+#
+
+```
+
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(
@@ -10,6 +28,7 @@ knitr::opts_chunk$set(
   fig.asp=0.618,
   out.width="100%",
   echo=FALSE,
+  #cache=TRUE, -- FALSE by default
   comment=""
 )
 
