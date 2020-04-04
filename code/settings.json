@@ -1,0 +1,19 @@
+{
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "rust-client.updateOnStartup": true,
+  "editor.formatOnSave": true,
+  "editor.rulers": [
+    80,
+    120
+  ],
+  "editor.minimap.enabled": false,
+  "go.formatTool": "goimports",
+  "go.useLanguageServer": true,
+  "markdown-preview-enhanced.codeBlockTheme": "github.css",
+  "window.zoomLevel": 0
+}
