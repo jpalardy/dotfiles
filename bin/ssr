@@ -39,8 +39,9 @@ check_bin csslint
 check_bin shellcheck
 echo
 
-# linters in brew
+# linters, pretty-printers in brew
 check_bin yamllint
+check_bin pg_format pgformatter
 
 # node
 if [ -n "$SSR_CHECK_NODE" ]; then

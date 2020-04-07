@@ -1,41 +1,4 @@
 #!/bin/bash
 
-cat "$@" | awk '
-
-# all words on the same line
-{
-  for (i = 1; i <= NF; i++) {
-    printf "%s ", $i
-  }
-}
-
-' | sed -r -e 's/ *;? *$/;/' | awk '
-
-BEGIN {
-  prefixes["select"] = ""
-  prefixes["from"]   = "\n"
-  prefixes["where"]  = "\n"
-  prefixes["inner"]  = "\n"
-  prefixes["left"]  = "\n"
-  prefixes["or"]    = " "
-  prefixes["and"]    = "\n  "
-  prefixes["group"]  = "\n"
-  prefixes["order"]  = "\n"
-  prefixes["by"]     = " "
-  prefixes["having"]  = "\n"
-  prefixes["limit"]  = "\n"
-}
-
-# keywords might be fronted by special characters (newlines, etc)
-{
-  for (i = 1; i <= NF; i++) {
-    if (tolower($i) in prefixes) {
-      printf "%s%s", prefixes[tolower($i)], toupper($i)
-    } else {
-      printf " %s", $i
-    }
-  }
-}
-
-'
+pg_format -W 1000 "$@"
 
