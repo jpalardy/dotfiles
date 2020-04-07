@@ -15,5 +15,7 @@
   "go.formatTool": "goimports",
   "go.useLanguageServer": true,
   "markdown-preview-enhanced.codeBlockTheme": "github.css",
-  "window.zoomLevel": 0
+  "window.zoomLevel": 0,
+  "editor.renderControlCharacters": true,
+  "editor.renderWhitespace": "all"
 }
