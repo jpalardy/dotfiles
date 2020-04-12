@@ -78,8 +78,6 @@ vnoremap // y/<C-R>"<CR>
 nnoremap > >>
 nnoremap < <<
 
-nnoremap ,wd :windo normal 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPLIT MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -118,4 +116,10 @@ function! RotateColorscheme()
 endfunction
 
 nnoremap ,c :call RotateColorscheme()<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" QUICK COMMAND
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+command Gzz windo normal Gzz
 
