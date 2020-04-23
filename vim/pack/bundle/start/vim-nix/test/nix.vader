@@ -1,0 +1,547 @@
+Given nix (attribute):
+  {
+    foo = pkgs.callPackage ./examples/foo {};
+  }
+
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  {
+    foo = pkgs.callPackage ./examples/foo {};
+  }
+~~~~~~~
+
+Execute (syntax):
+  AssertEqual SyntaxOf('foo'), 'nixAttribute'
+
+Given nix (attribute-assignment):
+  {
+    foo = rec { };
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertEqual SyntaxOf('rec'), 'nixRecKeyword'
+
+Given nix (attribute-path):
+  {
+    foo.bar.baz = 2;
+  }
+
+Execute (syntax):
+  AssertNotEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertNotEqual SyntaxOf('bar'), 'nixAttribute'
+  AssertEqual SyntaxOf('\.'), 'nixAttributeDot'
+  AssertEqual SyntaxOf('baz'), 'nixAttribute'
+  AssertEqual SyntaxOf('2'), 'nixInteger'
+
+Given nix (attribute-nested):
+  {
+    a = {
+      b = {
+        c = "2}";
+      };
+    };
+  }
+
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  {
+    a = {
+      b = {
+        c = "2}";
+      };
+    };
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('a'), 'nixAttribute'
+  AssertEqual SyntaxOf('b'), 'nixAttribute'
+  AssertEqual SyntaxOf('c'), 'nixAttribute'
+  AssertEqual SyntaxOf('2}'), 'nixSimpleString'
+
+Given nix (attribute-nested-insert-indentation):
+Do (insert):
+  i{\<Enter>a = {\<Enter>b = {\<Enter>c = "2}";\<Enter>};\<Enter>};\<Enter>}\<Esc>
+
+Expect (indentation):
+~~~~~~~
+  {
+    a = {
+      b = {
+        c = "2}";
+      };
+    };
+  }
+
+Given nix (attribute-inherit):
+  {
+    inherit (a.b.c) foo;
+    inherit bar baz;
+  }
+
+Execute (syntax):
+  AssertNotEqual SyntaxOf('c'), 'nixAttribute'
+  AssertEqual SyntaxOf('inherit'), 'nixInherit'
+  AssertEqual SyntaxOf('('), 'nixInheritAttributeScope'
+  AssertEqual SyntaxOf(')'), 'nixInheritAttributeScope'
+  AssertEqual SyntaxOf('\.'), 'nixAttributeDot'
+  AssertEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertEqual SyntaxOf('bar'), 'nixAttribute'
+  AssertEqual SyntaxOf('baz'), 'nixAttribute'
+
+Given nix (attribute-lookup):
+  {
+    foo = attrs."foo.foo";
+    bar = attrs."${foo.bar}";
+    baz = attrs.${foo.baz};
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertEqual SyntaxOf('foo.foo'), 'nixSimpleString'
+  AssertEqual SyntaxOf('bar'), 'nixAttribute'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('}'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('foo.bar'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('baz'), 'nixAttribute'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('}'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('foo.baz'), 'nixInterpolationParam'
+
+Given nix (list):
+  {
+    foo = [
+      a
+      b
+    ];
+  }
+
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  {
+    foo = [
+      a
+      b
+    ];
+  }
+~~~~~~~
+
+Execute (syntax):
+  AssertEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertEqual SyntaxOf('a'), 'nixFunctionCall'
+  AssertEqual SyntaxOf('b'), 'nixFunctionCall'
+
+Given nix (string):
+  "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz"
+
+Execute (syntax):
+  AssertEqual SyntaxOf('"'), 'nixStringDelimiter'
+  AssertEqual SyntaxOf('https'), 'nixSimpleString'
+  AssertEqual SyntaxOf('${'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('}'), 'nixInterpolationDelimiter'
+  AssertEqual SyntaxOf('owner'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('repo'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('rev'), 'nixInterpolationParam'
+
+Given nix (multiline-string):
+  ''
+    line1 ${ref1}
+    ${ref2} line2
+    line3 ${ref3}
+  ''
+
+Execute (syntax):
+  AssertEqual SyntaxOf('line1'), 'nixString'
+  AssertEqual SyntaxOf('line2'), 'nixString'
+  AssertEqual SyntaxOf('line3'), 'nixString'
+  AssertEqual SyntaxOf('ref1'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('ref2'), 'nixInterpolationParam'
+  AssertEqual SyntaxOf('ref3'), 'nixInterpolationParam'
+
+Given nix (multiline-string):
+  ''
+    foo
+        ''${bar}
+        '''
+  baz
+  ''
+
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  ''
+    foo
+        ''${bar}
+        '''
+    baz
+  ''
+~~~~~~~
+
+Given nix (url):
+  https://github.com/LnL7/vim-nix
+
+Execute (syntax):
+  AssertEqual SyntaxOf('https'), 'nixURI'
+  AssertEqual SyntaxOf('github'), 'nixURI'
+  AssertEqual SyntaxOf('nix'), 'nixURI'
+
+Given nix (nix-search-path):
+  assert <foo-bar/blah/xxx.nix>;
+
+Execute (syntax):
+  AssertEqual SyntaxOf('<'), 'nixPathDelimiter'
+  AssertEqual SyntaxOf('foo'), 'nixSearchPath'
+  AssertEqual SyntaxOf('-'), 'nixSearchPath'
+  AssertEqual SyntaxOf('bar'), 'nixSearchPath'
+  AssertEqual SyntaxOf('/'), 'nixSearchPath'
+  AssertEqual SyntaxOf('\.'), 'nixSearchPath'
+  AssertEqual SyntaxOf('>'), 'nixPathDelimiter'
+
+Given nix (nix-paths):
+  [ ~/homefile ./. /etc/passwd ]
+
+Execute (syntax):
+  AssertEqual SyntaxOf('\~/homefile'), 'nixHomePath'
+  AssertEqual SyntaxOf('\./\.'), 'nixPath'
+  AssertEqual SyntaxOf('/etc/passwd'), 'nixPath'
+
+Given nix (let):
+  let
+    foo = true;
+    bar = false;
+  in {
+    result = foo && bar;
+  }
+
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  let
+    foo = true;
+    bar = false;
+  in {
+    result = foo && bar;
+  }
+~~~~~~~
+
+Given nix (let-in-whitespace):
+  let
+
+    foo = true;
+    bar = false;
+
+  in
+
+  {
+    result = foo && bar;
+  }
+
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  let
+
+    foo = true;
+    bar = false;
+
+  in
+
+  {
+    result = foo && bar;
+  }
+~~~~~~~
+
+Execute (syntax):
+  AssertEqual SyntaxOf('let'), 'nixLetExprKeyword'
+  AssertEqual SyntaxOf('in'), 'nixLetExprKeyword'
+  AssertEqual SyntaxOf('foo'), 'nixAttribute'
+  AssertEqual SyntaxOf('bar'), 'nixAttribute'
+  AssertEqual SyntaxOf('result'), 'nixAttribute'
+  AssertEqual SyntaxOf('&&'), 'nixOperator'
+
+Given nix (let-multiline-binding):
+  let
+    result =
+      foo && bar;
+  in
+    result
+
+Do (reindent):
+  vip=
+
+Expect (indentation):
+~~~~~~~
+  let
+    result =
+      foo && bar;
+  in
+    result
+~~~~~~~
+
+Given nix (let-multiline-binding-insert-indentation):
+Do (insert):
+  ilet\<Enter>result =\<Enter>foo && bar;\<Enter>in\<Enter>result\<Esc>
+
+Expect (indentation):
+~~~~~~~
+  let
+    result =
+      foo && bar;
+  in
+    result
+~~~~~~~
+
+Given nix (let-inherit-insert-indentation):
+Do (insert):
+  ilet\<Enter>inherit (attr) foo;\<Enter>in\<Enter>foo\<Esc>
+
+Expect (indentation):
+~~~~~~~
+  let
+    inherit (attr) foo;
+  in
+    foo
+~~~~~~~
+
+Given nix (let-in-indent-sameline):
+Do (let-in-indent-sameline):
+  ilet\<Enter>foo = 111;\<Enter>in foo\<Esc>
+
+Expect (indentation):
+~~~~~~~
+  let
+    foo = 111;
+  in foo
+~~~~~~~
+
+Given nix (builtins):
+  builtins.doesntexist (builtins.map id [
+    hashString (builtins.fetchurl (toString "abort"))
+  ])
+
+Execute (syntax):
+  AssertNotEqual SyntaxOf('doesntexist'), 'nixBuiltin'
+  AssertEqual SyntaxOf('map'), 'nixNamespacedBuiltin'
+  AssertNotEqual SyntaxOf('hashString'), 'nixBuiltin'
+  AssertNotEqual SyntaxOf('hashString'), 'nixNamespacedBuiltin'
+  AssertEqual SyntaxOf('builtins'), 'nixBuiltin'
+  AssertEqual SyntaxOf('\.'), 'nixBuiltin'
+  AssertEqual SyntaxOf('fetchurl'), 'nixNamespacedBuiltin'
+  AssertEqual SyntaxOf('toString'), 'nixSimpleBuiltin'
+  AssertEqual SyntaxOf('abort'), 'nixSimpleString'
+
+Given nix (simple-string-escape):
+  "foo\nbar\"end\${xxx}"
+
+Execute (syntax):
+  AssertEqual SyntaxAt(1, 1), 'nixStringDelimiter'
+  AssertEqual SyntaxOf('foo'), 'nixSimpleString'
+  AssertEqual SyntaxOf('\\n'), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf('bar'), 'nixSimpleString'
+  AssertEqual SyntaxOf('\\"'), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf('end'), 'nixSimpleString'
+  AssertEqual SyntaxOf('\$'), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf('{'), 'nixSimpleString'
+  AssertEqual SyntaxOf('xxx'), 'nixSimpleString'
+  AssertEqual SyntaxOf('}'), 'nixSimpleString'
+  AssertEqual SyntaxAt(1, 22), 'nixStringDelimiter'
+
+Given nix (multiline-string-escape):
+  ''
+    foo'''bar''\nend
+    ''${xxx}
+    $${foo}
+  ''
+
+Execute (syntax):
+  AssertEqual SyntaxOf('foo'), 'nixString'
+  AssertEqual SyntaxOf("'''"), 'nixStringSpecial'
+  AssertEqual SyntaxOf('bar'), 'nixString'
+  AssertEqual SyntaxOf("''\\\\"), 'nixStringSpecial'
+  AssertEqual SyntaxOf('end'), 'nixString'
+  AssertEqual SyntaxOf("''\\$"), 'nixStringSpecial'
+  AssertEqual SyntaxOf('{'), 'nixString'
+  AssertEqual SyntaxOf('xxx'), 'nixString'
+  AssertEqual SyntaxOf('}'), 'nixString'
+  AssertEqual SyntaxOf('\$\$'), 'nixStringSpecial'
+  AssertEqual SyntaxOf('{foo}'), 'nixString'
+
+Given nix (string-escape-errors):
+  ''
+    foo''\abar
+    foo''\nbar
+    ${"foo\xbar"}
+    ${"foo\tbar"}
+    ${"foo \
+       bar"}
+    ${"foo\\bar"}
+    ${"complex\\\\\f\\bar"}
+  ''
+
+Execute (syntax):
+  AssertEqual SyntaxOf("''\\\\a"), 'nixInvalidStringEscape'
+  AssertEqual SyntaxOf("''\\\\n"), 'nixStringSpecial'
+  AssertEqual SyntaxOf("\\\\x"), 'nixInvalidSimpleStringEscape'
+  AssertEqual SyntaxOf("\\\\t"), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("\\\\$"), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("foo\\\\\\zs\\\\"), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("complex\\zs."), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("complex.\\zs."), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("complex..\\zs."), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("complex.*\\zs.\\zebar"), 'nixSimpleStringSpecial'
+  AssertEqual SyntaxOf("complex....\\zs."), 'nixInvalidSimpleStringEscape'
+
+Given nix (lambda-attrs):
+  { # very descriptive comment
+    foo
+    /**/
+    ? # another comment
+    /* yet another comment */
+    # default value here:
+    1
+  , bar ? "xxx"
+  , yyy
+  # last comment
+  , ...
+  }: {
+    result = null;
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('very descriptive comment'), 'nixComment'
+  AssertEqual SyntaxOf('foo'), 'nixArgumentDefinition'
+  AssertEqual SyntaxOf('?'), 'nixOperator'
+  AssertEqual SyntaxOf('/\*\*/'), 'nixComment'
+  AssertEqual SyntaxOf('another comment'), 'nixComment'
+  AssertEqual SyntaxOf('yet another comment'), 'nixComment'
+  AssertEqual SyntaxOf('default value here:'), 'nixComment'
+  AssertEqual SyntaxOf('1'), 'nixInteger'
+  AssertEqual SyntaxOf('bar'), 'nixArgumentDefinition'
+  AssertEqual SyntaxOf('xxx'), 'nixSimpleString'
+  AssertEqual SyntaxOf('yyy'), 'nixArgumentDefinition'
+  AssertEqual SyntaxOf('last comment'), 'nixComment'
+  AssertEqual SyntaxOf('\.\.\.'), 'nixArgumentEllipsis'
+  AssertEqual SyntaxOf('result'), 'nixAttribute'
+  AssertEqual SyntaxOf('null'), 'nixNull'
+
+Given nix (ifexpr):
+  if true then 111 else { a = 222; }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('if'), 'nixIfExprKeyword'
+  AssertEqual SyntaxOf('true'), 'nixBoolean'
+  AssertEqual SyntaxOf('then'), 'nixIfExprKeyword'
+  AssertEqual SyntaxOf('111'), 'nixInteger'
+  AssertEqual SyntaxOf('else'), 'nixIfExprKeyword'
+  AssertEqual SyntaxOf('a'), 'nixAttribute'
+  AssertEqual SyntaxOf('222'), 'nixInteger'
+
+Given nix (multiline-ifexpr):
+  {
+    foo =
+      if true
+      then 111
+      else 222;
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('if'), 'nixIfExprKeyword'
+  AssertEqual SyntaxOf('then'), 'nixIfExprKeyword'
+  AssertEqual SyntaxOf('else'), 'nixIfExprKeyword'
+
+Do (visualblock-coment):
+  02jw\<C-v>2jI# \<Esc>
+
+Expect (indentation):
+~~~~~~~
+  {
+    foo =
+      # if true
+      # then 111
+      # else 222;
+  }
+~~~~~~~
+
+
+Given nix (with-expr):
+  with foo; withfoo
+
+Execute (syntax):
+  AssertEqual SyntaxOf('with'), 'nixWithExprKeyword'
+  AssertEqual SyntaxOf('foo'), 'nixFunctionCall'
+  AssertEqual SyntaxOf('withfoo'), 'nixFunctionCall'
+
+Given nix (with-newline-let-staircase-bug):
+Do (with-newline-let-staircase-bug):
+  iwith foo;\<Return>\<Return>let\<Return>bar = 111;\<Return>in bar\<Esc>
+
+Expect (indentation):
+~~~~~~~
+  with foo;
+
+  let
+    bar = 111;
+  in bar
+~~~~~~~
+
+Given nix (assert-expr):
+  assert true -> false; null
+
+Execute (syntax):
+  AssertEqual SyntaxOf('assert'), 'nixAssertKeyword'
+  AssertEqual SyntaxOf('true'), 'nixBoolean'
+  AssertEqual SyntaxOf('->'), 'nixOperator'
+  AssertEqual SyntaxOf('false'), 'nixBoolean'
+  AssertEqual SyntaxOf('null'), 'nixNull'
+
+Given nix (funarg-let-attrset):
+  { xxx ? null }@yyy:
+
+  bbb@{ ccc, ... }:
+
+  let foo = 11; in let xxx = 22; in {
+    bar = foo + zzz;
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('xxx'), 'nixArgumentDefinition'
+  AssertEqual SyntaxOf('?'), 'nixOperator'
+  AssertEqual SyntaxOf('null'), 'nixNull'
+  AssertEqual SyntaxOf('@'), 'nixArgOperator'
+  AssertEqual SyntaxOf('yyy'), 'nixAttribute'
+  AssertEqual SyntaxOf('bbb'), 'nixAttribute'
+  AssertEqual SyntaxOf('ccc'), 'nixArgumentDefinition'
+  AssertEqual SyntaxOf('let'), 'nixLetExprKeyword'
+  AssertEqual SyntaxOf('bar'), 'nixAttribute'
+
+Given nix (searchpath-versus-lt):
+  {
+    alwaysTrue = 4 < 5;
+    alwaysFalse = 4 > 5;
+    somePath = <foo/bar>;
+    tailTrue = 4 <= 5;
+    tailFalse = 4 >= 5;
+  }
+
+Execute (syntax):
+  AssertEqual SyntaxOf('alwaysTrue.*\zs<'), 'nixOperator'
+  AssertEqual SyntaxOf('alwaysFalse.*\zs>'), 'nixOperator'
+  AssertEqual SyntaxOf('somePath.*\zs<'), 'nixPathDelimiter'
+  AssertEqual SyntaxOf('somePath.*\zs>'), 'nixPathDelimiter'
+  AssertEqual SyntaxOf('tailTrue.*\zs<'), 'nixOperator'
+  AssertEqual SyntaxOf('tailFalse.*\zs>'), 'nixOperator'
