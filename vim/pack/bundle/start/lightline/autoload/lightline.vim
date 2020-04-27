@@ -2,7 +2,7 @@
 " Filename: autoload/lightline.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2019/08/20 14:00:00.
+" Last Change: 2020/03/16 19:10:15.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -24,14 +24,7 @@ function! lightline#update() abort
   let s = winnr('$') == 1 && w > 0 ? [lightline#statusline(0)] : [lightline#statusline(0), lightline#statusline(1)]
   for n in range(1, winnr('$'))
     call setwinvar(n, '&statusline', s[n!=w])
-    call setwinvar(n, 'lightline', n!=w)
   endfor
-endfunction
-
-function! lightline#update_once() abort
-  if !exists('w:lightline') || w:lightline
-    call lightline#update()
-  endif
 endfunction
 
 function! lightline#update_disable() abort
@@ -46,14 +39,13 @@ function! lightline#enable() abort
   call lightline#update()
   augroup lightline
     autocmd!
-    autocmd WinEnter,BufEnter,SessionLoadPost * call lightline#update()
+    autocmd WinEnter,BufEnter,BufDelete,SessionLoadPost,FileChangedShellPost * call lightline#update()
     if !has('patch-8.1.1715')
       autocmd FileType qf call lightline#update()
     endif
     autocmd SessionLoadPost * call lightline#highlight()
     autocmd ColorScheme * if !has('vim_starting') || expand('<amatch>') !=# 'macvim'
           \ | call lightline#update() | call lightline#highlight() | endif
-    autocmd CursorMoved,BufUnload * call lightline#update_once()
   augroup END
   augroup lightline-disable
     autocmd!
@@ -224,7 +216,7 @@ endfunction
 let s:mode = ''
 function! lightline#link(...) abort
   let mode = get(s:lightline._mode_, a:0 ? a:1 : mode(), 'normal')
-  if s:mode == mode
+  if s:mode ==# mode
     return ''
   endif
   let s:mode = mode
@@ -432,7 +424,7 @@ function! s:line(tabline, inactive) abort
     let _ .= i < l + len(lt) - len(l_) && ll[i] < l || ll[i] != ll[i + 1] ? p.left : len(lt[i]) ? s.left : ''
   endfor
   let _ .= '%#LightlineMiddle_' . mode . '#%='
-  for i in reverse(range(len(rt)))
+  for i in range(len(rt) - 1, 0, -1)
     let _ .= '%#LightlineRight_' . mode . '_' . rl[i] . '_' . rl[i + 1] . '#'
     let _ .= i < r + len(rt) - len(r_) && rl[i] < r || rl[i] != rl[i + 1] ? p.right : len(rt[i]) ? s.right : ''
     let _ .= '%#LightlineRight_' . mode . '_' . rl[i] . '#'

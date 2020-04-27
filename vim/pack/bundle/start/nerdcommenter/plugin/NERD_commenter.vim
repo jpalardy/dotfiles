@@ -244,7 +244,7 @@ let s:delimiterMap = {
     \ 'javascript.jquery': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'jess': { 'left': ';' },
     \ 'jgraph': { 'left': '(*', 'right': '*)' },
-    \ 'jinja': { 'left': '<!--', 'right': '-->', 'leftAlt': '{#', 'rightAlt': '#}' },
+    \ 'jinja': { 'left': '{#', 'right': '#}', 'leftAlt': '<!--', 'rightAlt': '-->' },
     \ 'jproperties': { 'left': '#' },
     \ 'jsp': { 'left': '<%--', 'right': '--%>' },
     \ 'julia': { 'left': '# ', 'leftAlt': '#=', 'rightAlt': '=#' },
@@ -370,7 +370,7 @@ let s:delimiterMap = {
     \ 'resolv': { 'left': '#' },
     \ 'rgb': { 'left': '!' },
     \ 'rib': { 'left': '#' },
-    \ 'rmd': { 'left': '#' },
+    \ 'rmd': { 'left': '<!--', 'right': '-->', 'leftalt': '#' },
     \ 'robot': { 'left': '#' },
     \ 'robots': { 'left': '#' },
     \ 'rspec': { 'left': '#' },
@@ -1209,6 +1209,12 @@ function s:InvertComment(firstLine, lastLine)
     endwhile
 endfunction
 
+" Function: NERDCommentIsLineCommented(lineNo)
+" Check if the line is a comment
+" Note this function checks if the line is **completely** a comment
+" Args:
+"   -lineNo:    the line number of the line to check
+" Return: Number, 1 if the line is a comment, 0 else
 function! NERDCommentIsLineCommented(lineNo)
     let theLine = getline(a:lineNo)
     return s:IsInSexyComment(a:lineNo) || s:IsCommentedFromStartOfLine(s:Left(), theLine) || s:IsCommentedFromStartOfLine(s:Left({'alt': 1}), theLine)
@@ -1356,6 +1362,117 @@ function! NERDComment(mode, type) range
 
 endfunction
 
+" Function: NERDCommentIsCharCommented(line, col) abort
+" Check if the character at [line, col] is inside a comment
+" Note the Comment delimeter it self is considered as part of the comment
+" 
+" Args:
+"   -line       the line number of the character
+"   -col        the column number of the character
+" Return: Number, 1 if the character is inside a comment, 0 if is not
+function! NERDCommentIsCharCommented(line, col) abort
+  " Function: s:searchfor(str, line, col, direction, [maxline])
+  " search str in the buffer, including the character at [line, col]
+  " Args: 
+  "   -str:       the string for search
+  "   -line:      the line number where search begins
+  "   -col:       the column number where search begins
+  "   -direction: 0 if forward, and 1 if backward
+  "   -maxline:   the max lines the search would look up
+  "               1 if search only one line
+  "               if not given, search until reaches the begining or end of file
+  " Return: List, in the format of [line, col], where line and col is the
+  "         position of first found result; If str cannot be found, returns
+  "         [0, 0]
+  function! s:searchfor(str, line, col, direction, ...) abort
+    let l:curlinenr = a:line
+    let l:maxline = (a:0 > 0) ? a:1 : (a:direction ? a:line : line('$') - a:line + 1)
+    while abs(curlinenr - a:line) < maxline
+      let linestr = getline(curlinenr)
+      if curlinenr == a:line
+        if !a:direction
+          let l:partstr = strpart(linestr, a:col - strlen(a:str))
+        else
+          let l:partstr = strpart(linestr, 0, a:col + strlen(a:str) - 1)
+        endif
+      else
+        let l:partstr = linestr
+      endif
+      if !a:direction
+        " forward
+        let idx = stridx(partstr, a:str)
+        if idx != -1
+          if curlinenr == a:line
+            let idx += a:col - strlen(a:str)
+          else
+          endif
+          return [curlinenr, idx + 1]
+        endif
+      else
+        " backward
+        let idx = strridx(partstr, a:str)
+        if idx != -1
+          return [curlinenr, idx + 1]
+        endif
+      endif
+      let curlinenr += a:direction ? -1 : 1
+    endwhile
+    return [0, 0]
+  endfunction
+  " Function: s:checkwith(left, right, line, col) abort
+  " check if the char at [line, col] is commented using [left, right] pair
+  " Args:
+  "   -left:      the string begins a comment
+  "   -right:     the string ends a comment
+  "   -line:      the line position of the character
+  "   -col:       the column position of the character
+  " Return: Number, 1 if is in a comment, 0 else
+  function! s:checkwith(left, right, line, col) abort
+    let linecommented  = 0
+    let blockcommented = 0
+    if a:right ==# ''
+      let leftpos = s:searchfor(a:left, a:line, a:col, 1, 1)
+      if leftpos == [0, 0]
+        if !linecommented | let linecommented = 0 | endif
+      else
+        if !linecommented | let linecommented = 1 | endif
+      endif
+    else
+      let leftpos = s:searchfor(a:left, a:line, a:col, 1)
+      if leftpos == [0, 0]
+        if !blockcommented | let blockcommented = 0 | endif
+      else 
+        " call s:searchfor(a:right, a:line, a:col, 0)
+        let rightpos = s:searchfor(a:right, leftpos[0], leftpos[1] + strlen(a:right) + 1, 0)
+        if rightpos != [0, 0]
+          if rightpos[0] < a:line
+            if !blockcommented | let blockcommented = 0 | endif
+          elseif rightpos[0] == a:line
+            if !blockcommented 
+              let blockcommented = (rightpos[1] + strlen(a:right) > a:col) ? 1 : 0
+            endif
+          else " rightpos > a:line
+            if !blockcommented | let blockcommented = 1 | endif
+          endif
+        else
+          if !blockcommented | let blockcommented = 1 | endif
+        endif
+      endif
+    endif
+    return linecommented || blockcommented
+  endfunction
+  return s:checkwith(
+          \ b:NERDCommenterDelims['left'], 
+          \ b:NERDCommenterDelims['right'], 
+          \ a:line, 
+          \ a:col) || 
+        \ s:checkwith(
+          \ b:NERDCommenterDelims['leftAlt'], 
+          \ b:NERDCommenterDelims['rightAlt'], 
+          \ a:line, 
+          \ a:col)
+endfunction
+
 " Function: s:PlaceDelimitersAndInsBetween() function {{{2
 " This is function is called to place comment delimiters down and place the
 " cursor between them
@@ -1390,7 +1507,6 @@ function s:PlaceDelimitersAndInsBetween()
     else
         execute ':normal! ' . insOrApp . left
     endif
-    silent! normal! l
 
     "if needed convert spaces back to tabs and adjust the cursors col
     "accordingly
@@ -1403,7 +1519,7 @@ function s:PlaceDelimitersAndInsBetween()
     if isDelimOnEOL && lenRight ==# 0
         startinsert!
     else
-        startinsert
+        call feedkeys('a', 'ni')
     endif
 endfunction
 

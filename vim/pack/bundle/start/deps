@@ -1,13 +1,14 @@
-ale            https://github.com/w0rp/ale.git
+ale            https://github.com/dense-analysis/ale.git
 fugitive       https://github.com/tpope/vim-fugitive.git
 gnupg          https://github.com/jamessan/vim-gnupg.git
-nerdcommenter  https://github.com/scrooloose/nerdcommenter.git
+nerdcommenter  https://github.com/preservim/nerdcommenter.git
 slime          https://github.com/jpalardy/vim-slime
 spacehi        https://github.com/jpalardy/spacehi.vim.git
 tabular        https://github.com/godlygeek/tabular.git
 lightline      https://github.com/itchyny/lightline.vim
 surround       https://github.com/tpope/vim-surround.git
 typescript     https://github.com/leafgarland/typescript-vim.git
-elixir         https://github.com/elixir-lang/vim-elixir.git
+elixir         https://github.com/elixir-editors/vim-elixir.git
 toml           https://github.com/cespare/vim-toml.git
 vim-nix        https://github.com/LnL7/vim-nix.git
+elm-vim        https://github.com/ElmCast/elm-vim.git
