@@ -163,7 +163,7 @@ class Dot < Graph
     dot << <<END
 digraph G {
   rankdir=LR;
-  node [style=rounded, shape=box, fontname=Arial, fontsize=14];
+  node [style="filled,rounded", shape=box, fontname=Arial, fontsize=14];
 END
     @data.each_key do |node|
       dot << create_node(node, @highlight_leaves && is_leaf?(node))
@@ -181,7 +181,7 @@ END
   private
 
     def create_node(node, leaf)
-      %Q(  "#{node}"#{leaf ? ' [style="filled,rounded"]' : ""};)
+      %Q(  "#{node}"#{leaf ? ' [fontcolor="white", fillcolor="#ff5555"]' : ""};)
     end
 
     def create_edge(source, target)
@@ -228,7 +228,8 @@ EOS
     end
 
     def create_node(node, leaf)
-      fill_color = leaf ? "#C0C0C0" : "#FFFFFF"
+      fill_color = leaf ? "#3C633C" : "#FFFFFF"
+      #fill_color = leaf ? "#C0C0C0" : "#FFFFFF"
 <<-EOS
     <node id="#{node}">
       <data key="d0">

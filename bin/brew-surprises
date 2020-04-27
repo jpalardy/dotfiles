@@ -19,6 +19,7 @@ gnu-tar
 gnupg
 go
 graphviz
+htop
 imagemagick
 jpalardy/tap/memora
 jq
@@ -26,6 +27,7 @@ nmap
 node
 pandoc
 parallel
+pgformatter
 pstree
 pup
 pwgen
