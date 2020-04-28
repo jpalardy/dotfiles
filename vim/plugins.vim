@@ -40,6 +40,7 @@ let g:ale_fixers['json']       = ['fixjson']
 let g:ale_fixers['elixir']     = ['mix_format']
 let g:ale_fixers['rust']       = ['rustfmt']
 let g:ale_fixers['go']         = ['gofmt', 'goimports']
+let g:ale_fixers['elm']        = ['elm-format']
 
 let g:ale_linters = {}
 let g:ale_linters['typescript'] = ['tslint', 'tsserver']
@@ -86,4 +87,10 @@ function! BarTab() range
 endfunction
 
 vnoremap <BAR> :call BarTab()<CR>@y
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" elm-vim
+
+let g:elm_setup_keybindings = 0
+let g:elm_format_autosave = 0
 
