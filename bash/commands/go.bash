@@ -18,8 +18,10 @@ go-lintall() {
   golangci-lint run --enable-all -v "$@"
 }
 
-go-format-fix() {
-  gofmt -w -s -d .
+go-format() {
+  local flag="${1:-"-l"}"
+  gofmt -s "$flag" .
+  goimports "$flag" .
 }
 
 go-src() {
