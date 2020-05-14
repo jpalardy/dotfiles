@@ -1,4 +1,15 @@
 #!/bin/bash
 
-pg_format -W 1000 "$@"
+awk '
+
+{
+  sub(";$", "")
+  print
+}
+
+END {
+  print ";"
+}
+
+' "$@" | pg_format --spaces 2
 
