@@ -39,7 +39,9 @@ b() {
 
 # pick from a list of directories (ls) and cd into it
 cdl() {
-  cd "$1" || return
+  if [ -n "$1" ]; then
+    cd "$1" || return
+  fi
   pick_with_vim "ls" "cd"
 }
 
