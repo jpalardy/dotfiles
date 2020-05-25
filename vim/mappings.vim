@@ -41,6 +41,9 @@ endfunction
 nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR>
 vnoremap _$ :call Preserve( "s/\\s\\+$//e")<CR>
 
+" REMOVE DUPLICATE EMPTY LINES
+nnoremap _B :call Preserve("%!uniqb")<CR>
+
 " COMMATIZE
 vnoremap ,, :! paste -s -d, -<CR>
 " QUOTISIZE
@@ -48,9 +51,6 @@ vnoremap ,' :! awk '{print "'\''"$0"'\''"}'<CR>
 vnoremap ," :! awk '{print "\""$0"\""}'<CR>
 " AWK
 vnoremap ,a :! awk '{print }'<LEFT><LEFT>
-
-" PRESS DOWN
-nnoremap ,p :call Preserve("%!uniq")<CR>
 
 " ONLY KEEP LINES WHICH CONTAIN SEARCH
 nnoremap ,v :v/<C-R>//d<CR>gg
