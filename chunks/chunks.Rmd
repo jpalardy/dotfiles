@@ -48,10 +48,8 @@ theme_set(
 
 ```{r loading-data, message=FALSE}
 
-d <- read_tsv("...",
-  col_names=c("...", "..."),
-  col_types=cols(...)
-)
+d <- read_tsv("...")
+# col_types=cols(...)
 
 ```
 
