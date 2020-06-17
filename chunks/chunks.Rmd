@@ -2,25 +2,24 @@
 pagetitle: "TITLE GOES HERE"
 ---
 
-```{r}
+```{r setup, include=FALSE}
 
 #
 # Makefile
 #
+# RMDs = $(wildcard *.Rmd)
+# HTMLs = $(RMDs:.Rmd=.html)
+# 
 # %.html: %.Rmd
 # 	R --vanilla --quiet -e 'rmarkdown::render("$<")'
 # 
 # .PHONY: build
-# build: report.html
+# build: $(HTMLs)
 # 
 # .PHONY: clean
 # clean:
 # 	rm -f report.html
 #
-
-```
-
-```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(
   fig.width=8,
