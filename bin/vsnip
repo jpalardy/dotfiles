@@ -6,6 +6,17 @@
   next
 }
 
+# spanish accents
+{
+  gsub("a'", "á")
+  gsub("i'", "í")
+  gsub("u'", "ú")
+  gsub("u:", "ü")
+  gsub("e'", "é")
+  gsub("o'", "ó")
+  gsub("n~", "ñ")
+}
+
 # print everything else as-is
 {
   print
