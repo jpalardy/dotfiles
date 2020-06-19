@@ -1,6 +1,10 @@
 #!/usr/bin/env awk -f
 
 function snip(key, value) {
+  if (value == "") {
+    print "missing value for key:", key > "/dev/stderr"
+    exit 1
+  }
   if (snippets[key]) {
     print "duplicate key:", key > "/dev/stderr"
     exit 1
@@ -23,6 +27,7 @@ BEGIN {
   snip("*:->",   "→")
   snip("*:=>",   "⇨")
   snip("*:<->",  "⇆")
+  snip("*:+-",   "±")
   snip("*:*",    "×")
   snip("*:×",    "⋅")
   snip("*:/",    "÷")
