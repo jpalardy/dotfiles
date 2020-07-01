@@ -41,18 +41,3 @@ implode() {
   rm -rf "$target"
 }
 
-# 2019-04-13
-bootstrap() {
-  echo "curl https://home.jpalardy.com/bootstrap/setup.bash"
-}
-
-# 2019-09-19
-fzrepl () {
-  fzf --print-query --preview="$1" --preview-window='up:99%' < /dev/null
-}
-
-# 2019-11-30
-function title {
-  echo -ne "\033]0;"$*"\007"
-}
-
