@@ -1,40 +1,42 @@
 #!/bin/bash
 
-flag="$@"
-
-function relink() {
-  ln -s -v $flag $2 $1
+relink() {
+  if [ "$(readlink "$HOME/$1")" = "$2" ]; then
+    return
+  fi
+  echo "rm -f $HOME/$1"
+  echo "ln -s -v $2 $HOME/$1"
 }
 
 DOTFILES=$(pwd)
 
-cd
+relink .bash         "$DOTFILES/bash"
+relink .bashrc       "$DOTFILES/bash/bashrc"
+relink .bash_profile "$DOTFILES/bash/bash_profile"
+relink .bash_logout  "$DOTFILES/bash/bash_logout"
+relink .inputrc      "$DOTFILES/bash/inputrc"
 
-relink .inputrc      $DOTFILES/inputrc
-relink .bash         $DOTFILES/bash
-relink .bashrc       $DOTFILES/bashrc
-relink .bash_profile $DOTFILES/bash_profile
-relink .bash_logout  $DOTFILES/bash_logout
+relink .zshrc        "$DOTFILES/zsh/zshrc"
 
-relink .vim          $DOTFILES/vim
-relink .vimrc        $DOTFILES/vimrc
+relink .vim          "$DOTFILES/vim"
+relink .vimrc        "$DOTFILES/vim/vimrc"
 
-relink .gitconfig    $DOTFILES/gitconfig
-relink .gitignore    $DOTFILES/gitignore
+relink .gitconfig    "$DOTFILES/git/gitconfig"
+relink .gitignore    "$DOTFILES/git/gitignore"
 
-relink .screenrc     $DOTFILES/screenrc
-relink .tmux.conf    $DOTFILES/tmux.conf
+relink .screenrc     "$DOTFILES/screenrc"
+relink .tmux.conf    "$DOTFILES/tmux.conf"
 
-relink .irbrc        $DOTFILES/ruby/irbrc
-relink .gemrc        $DOTFILES/ruby/gemrc
+relink .irbrc        "$DOTFILES/ruby/irbrc"
+relink .gemrc        "$DOTFILES/ruby/gemrc"
 
-relink .npmrc        $DOTFILES/npmrc
-relink .eslintrc     $DOTFILES/eslintrc
-relink .prettierrc   $DOTFILES/prettierrc
+relink .npmrc        "$DOTFILES/js/npmrc"
+relink .eslintrc     "$DOTFILES/js/eslintrc"
+relink .prettierrc   "$DOTFILES/js/prettierrc"
 
-relink .Rprofile     $DOTFILES/r/Rprofile
+relink .Rprofile     "$DOTFILES/r/Rprofile"
 
-relink .sqliterc     $DOTFILES/sqliterc
+relink .sqliterc     "$DOTFILES/sqliterc"
 
-relink .slate        $DOTFILES/slate
+relink .slate        "$DOTFILES/slate"
 
