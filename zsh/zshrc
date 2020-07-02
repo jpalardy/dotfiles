@@ -1,0 +1,144 @@
+
+export DOTFILES="$HOME/dotfiles"
+
+#-------------------------------------------------
+# VARIABLES
+#-------------------------------------------------
+
+# tabula rasa
+umask 22
+ulimit -c 0
+
+append_path() {
+  test -d "$1/sbin"      && path+="$1/sbin"
+  test -d "$1/bin"       && path+="$1/bin"
+  test -d "$1/share/man" && manpath+="$1/share/man"
+}
+
+prepend_path() {
+  test -d "$1/sbin"      && path=("$1/sbin" $path)
+  test -d "$1/bin"       && path=("$1/bin" $path)
+  test -d "$1/share/man" && manpath=("$1/share/man" $manpath)
+}
+
+path=()
+manpath=()
+
+append_path "$DOTFILES"
+append_path "$HOME/local"
+append_path "/usr/local"
+append_path "/usr"
+append_path ""
+append_path "/usr/X11"
+
+export EDITOR="vim"
+export PAGER="less"
+export BLOCKSIZE="K"
+
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+export RLWRAP_HOME="$HOME/.rlwrap"
+
+if [ -n "$TMUX" ]; then
+  export TERM="screen-256color"
+else
+  export TERM="xterm-256color"
+fi
+
+#-------------------------------------------------
+# SHELL
+#-------------------------------------------------
+
+# crucial
+setopt nobeep
+
+# history-related
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+setopt hist_ignore_space
+setopt extended_history
+setopt append_history
+
+# history-related
+HISTFILE=~/.zsh_history
+HISTSIZE=1000
+SAVEHIST=1000
+
+# prompt
+setopt prompt_subst
+
+# completion
+autoload -U compinit
+compinit
+setopt list_rows_first
+
+#-------------------------------------------------
+# PROMPT
+#-------------------------------------------------
+
+PS1_COLOR=7 # white
+
+# for debugging
+PS4='+%N:%i:%_>'
+
+PS1='%F{$PS1_COLOR}%m%f '
+RPS1='%F{236}%/%f' # gray-ish
+
+# COLOR_RED=$(tput setaf 1)
+# ATTR_RESET=$(tput sgr0)
+#
+# export PROMPT_COMMAND=show_exit_code
+# show_exit_code() {
+#   local exit=$?
+#   if [ "$exit" -ne 0 ]; then
+#     echo -e "${COLOR_RED}exit: ${exit}${ATTR_RESET}"
+#   fi
+# }
+
+#-------------------------------------------------
+# ZLE
+#-------------------------------------------------
+
+# emacs
+bindkey -e
+
+# magic-space!
+bindkey ' ' magic-space
+
+# up/down history search
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
+
+# press Alt+. to insert the last word from the previous command
+autoload -U smart-insert-last-word
+zle -N smart-insert-last-word
+bindkey "\e." smart-insert-last-word
+
+# replacements
+bindkey -s "\e\`" '$(!!)'
+bindkey -s "\eh" "vim-\n"
+bindkey -s "\ew" "warp\n"
+
+# delete until slash
+backward-kill-dir () {
+  local WORDCHARS=${WORDCHARS/\/}
+  zle backward-kill-word
+}
+zle -N backward-kill-dir
+bindkey "^f" backward-kill-dir
+
+#-------------------------------------------------
+# COMMANDS
+#-------------------------------------------------
+
+for f in "$DOTFILES"/zsh/commands/*.zsh; do
+  source $f
+done
+
+#-------------------------------------------------
+# LOCAL
+#-------------------------------------------------
+
+[ -e "$DOTFILES"/zsh/local.zsh ] && source "$DOTFILES"/zsh/local.zsh
+

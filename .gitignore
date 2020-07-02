@@ -1,4 +1,5 @@
 bash/local
+zsh/local.zsh
 vim/spell/
 vim/.netrwhist
 vim/swap/
