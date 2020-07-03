@@ -72,6 +72,7 @@ setopt prompt_subst
 autoload -U compinit
 compinit
 setopt list_rows_first
+zstyle ':completion:*' menu select
 
 #-------------------------------------------------
 # PROMPT
