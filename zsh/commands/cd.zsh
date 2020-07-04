@@ -1,4 +1,13 @@
 
+# wrap `cd`, add behaviors
+cd() {
+  local dest="${@:-"$HOME"}"
+  if [ -f "$dest" ]; then
+    dest=$(dirname "$dest")
+  fi
+  builtin cd "$dest"
+}
+
 # HELPER -- generate the list of parent directories
 parent_dirs() {
   local d="${1:-$PWD}"
