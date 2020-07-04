@@ -50,8 +50,9 @@ fi
 # SHELL
 #-------------------------------------------------
 
-# crucial
+# behavior
 setopt nobeep
+setopt interactive_comments
 
 # history-related
 setopt hist_ignore_dups
@@ -59,8 +60,6 @@ setopt hist_find_no_dups
 setopt hist_ignore_space
 setopt extended_history
 setopt append_history
-
-# history-related
 HISTFILE=~/.zsh_history
 HISTSIZE=1000
 SAVEHIST=1000
@@ -72,6 +71,9 @@ setopt prompt_subst
 autoload -U compinit
 compinit
 setopt list_rows_first
+setopt list_packed
+LISTMAX=250
+
 zstyle ':completion:*' menu select
 
 #-------------------------------------------------
