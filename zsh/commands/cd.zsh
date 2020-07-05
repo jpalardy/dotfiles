@@ -8,23 +8,9 @@ cd() {
   builtin cd "$dest"
 }
 
-# HELPER -- generate the list of parent directories
-parent_dirs() {
-  local d="${1:-$PWD}"
-  while true; do
-    echo "$d"
-    test "$d" = '/' && break
-    d=${d:h}
-  done
-}
-
-# pick from parent directories and cd into it
+# go back n times
 b() {
-  local count=$1
-  if [ -n "$count" ]; then
-    count=$((count + 1))
-  fi
-  pick_with_vim "parent_dirs" "cd" $count
+  repeat ${1:-1}; cd ..
 }
 
 # pick from a list of directories (ls) and cd into it
