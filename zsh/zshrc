@@ -73,8 +73,8 @@ compinit
 setopt list_rows_first
 setopt list_packed
 LISTMAX=250
-
 zstyle ':completion:*' menu select
+zstyle ':completion:*' completer _expand_alias _complete _ignored
 
 #-------------------------------------------------
 # PROMPT
