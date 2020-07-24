@@ -14,7 +14,7 @@ header() {
 printBookmark() {
   local url=$1
   local title
-  title=$(curl -L -s "$url" | pup -p --charset utf8 'head title json{}' | jq '.[].text' -r)
+  title=$(curl -k -L -s "$url" | pup -p --charset utf8 'head title json{}' | jq '.[].text' -r)
 
   header
   echo "  ${title:-"TITLE NOT FOUND"}"
