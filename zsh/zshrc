@@ -80,12 +80,12 @@ zstyle ':completion:*' completer _expand_alias _complete _ignored
 # PROMPT
 #-------------------------------------------------
 
-PS1_COLOR=7 # white
+PS1_COLORS=(7) # white
 
 # for debugging
 PS4='+%N:%i:%_>'
 
-PS1='%F{$PS1_COLOR}%m%f '
+PS1='%F{$PS1_COLORS[1]}%K{$PS1_COLORS[2]}%m%f%k '
 RPS1='%F{236}%/%f' # gray-ish
 
 # COLOR_RED=$(tput setaf 1)
