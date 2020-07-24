@@ -24,6 +24,7 @@ let g:slime_dont_ask_default = 1
 nmap <c-c><c-l> :SlimeSend0 ""<CR>
 nmap <c-c><c-u> :SlimeSend0 "\x15"<CR>
 nmap <c-c>q     :SlimeSend0 "q"<CR>
+nmap <c-c><cr>  <c-c><c-c>}j
 
 let g:slime_cell_delimiter = "#--"
 nmap <c-c>d <Plug>SlimeSendCell
