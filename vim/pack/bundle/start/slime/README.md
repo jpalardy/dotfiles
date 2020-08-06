@@ -294,6 +294,8 @@ If you want to send blocks of code between two delimiters, emulating the cell-li
     let g:slime_cell_delimiter = "#%%"
     nmap <leader>s <Plug>SlimeSendCell
 
+⚠️  it's recommended to use `b:slime_cell_delimiter` and set the variable in `ftplugin` for each relevant filetype.
+
 
 Advanced Configuration: Overrides
 ---------------------------------
@@ -396,7 +398,7 @@ might tweak the text without explicit configuration:
   * [matlab](ftplugin/matlab/slime.vim)
   * [ocaml](ftplugin/ocaml/slime.vim)
   * [python](ftplugin/python/slime.vim) / [ipython](ftplugin/python/slime.vim) -- [README](ftplugin/python)
-  * [scala](ftplugin/scala/slime.vim)
+  * [scala](ftplugin/scala/slime.vim) / [ammonite](ftplugin/scala/slime.vim) -- [README](ftplugin/scala)
   * [sml](ftplugin/sml/slime.vim)
   * [stata](ftplugin/stata/slime.vim)
 
