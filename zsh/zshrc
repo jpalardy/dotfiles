@@ -85,19 +85,12 @@ PS1_COLORS=(7) # white
 # for debugging
 PS4='+%N:%i:%_>'
 
-PS1='%F{$PS1_COLORS[1]}%K{$PS1_COLORS[2]}%m%f%k '
+# exit code in red if != 0
+# %m: hostname
+# %F,%f, %K,%k: fg/bg color set/reset
+PS1='%(?..%F{red}exit: $?
+)%F{$PS1_COLORS[1]}%K{$PS1_COLORS[2]}%m%f%k '
 RPS1='%F{236}%/%f' # gray-ish
-
-# COLOR_RED=$(tput setaf 1)
-# ATTR_RESET=$(tput sgr0)
-#
-# export PROMPT_COMMAND=show_exit_code
-# show_exit_code() {
-#   local exit=$?
-#   if [ "$exit" -ne 0 ]; then
-#     echo -e "${COLOR_RED}exit: ${exit}${ATTR_RESET}"
-#   fi
-# }
 
 #-------------------------------------------------
 # ZLE
