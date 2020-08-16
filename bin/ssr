@@ -31,6 +31,13 @@ check_bin qrencode
 check_bin pwgen
 echo
 
+# experimental
+check_bin bat
+check_bin fzf
+check_bin htop
+check_bin pstree
+echo
+
 # linters in npm
 check_bin node
 check_bin jsonlint

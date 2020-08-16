@@ -4,9 +4,8 @@ whitelist() {
   cat <<END
 
 awscli
-bash-completion
+bat
 coreutils
-dnsmasq
 dos2unix
 ffmpeg
 findutils
