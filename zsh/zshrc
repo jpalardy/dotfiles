@@ -9,12 +9,14 @@ export DOTFILES="$HOME/dotfiles"
 umask 22
 ulimit -c 0
 
+# helper: removed later
 append_path() {
   test -d "$1/sbin"      && path+="$1/sbin"
   test -d "$1/bin"       && path+="$1/bin"
   test -d "$1/share/man" && manpath+="$1/share/man"
 }
 
+# helper: removed later
 prepend_path() {
   test -d "$1/sbin"      && path=("$1/sbin" $path)
   test -d "$1/bin"       && path=("$1/bin" $path)
@@ -149,4 +151,11 @@ done
 #-------------------------------------------------
 
 [ -e "$DOTFILES"/zsh/local.zsh ] && source "$DOTFILES"/zsh/local.zsh
+
+#-------------------------------------------------
+# CLEANUP
+#-------------------------------------------------
+
+unset -f append_path
+unset -f prepend_path
 
