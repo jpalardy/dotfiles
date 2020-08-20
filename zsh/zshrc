@@ -92,7 +92,7 @@ PS4='+%N:%i:%_>'
 # %F,%f, %K,%k: fg/bg color set/reset
 PS1='%(?..%F{red}exit: $?
 )%F{$PS1_COLORS[1]}%K{$PS1_COLORS[2]}%m%f%k '
-RPS1='%F{236}%/%f' # gray-ish
+RPS1='%F{241}%~%f' # gray-ish
 
 #-------------------------------------------------
 # ZLE
