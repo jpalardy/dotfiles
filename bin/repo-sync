@@ -2,6 +2,9 @@
 
 REPOS=${REPOS:?"environment variable REPOS is empty"}
 
+# warm ssh connection, ugly...
+ssh droplet.jpalardy.com exit
+
 quick=0
 
 if [[ $1 == "-q" ]]; then
