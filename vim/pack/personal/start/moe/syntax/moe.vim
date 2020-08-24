@@ -19,8 +19,6 @@ syntax match moePerson "\w\@<!@\w\+"
 syntax match moeHashtag "\w\@<!#[-a-zA-Z0-9_]\+"
 
 " emphasis
-syntax match moeHighlight     /.* <-$/
-syntax match moeImportant     /.* !$/
 syntax match moeLessImportant /.* #$/
 
 " [TAGS]
