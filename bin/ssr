@@ -38,6 +38,7 @@ echo
 
 # experimental
 check_bin bat
+check_bin dust
 check_bin fzf
 check_bin htop
 check_bin pstree
