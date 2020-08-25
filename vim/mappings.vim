@@ -41,8 +41,9 @@ endfunction
 nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR>
 vnoremap _$ :call Preserve( "s/\\s\\+$//e")<CR>
 
-" REMOVE DUPLICATE EMPTY LINES
-nnoremap _B :call Preserve("%s/\\_^\\n\\{2,}/\\r/")<CR>
+" DEDUP ADJACENT EMPTY LINES
+"nnoremap _B :call Preserve("%s/\\_^\\n\\{2,}/\\r/")<CR>
+nnoremap _B :call Preserve("g/^\\_$\\n\\_^$/d")<CR>
 
 " COMMATIZE
 vnoremap ,, :! paste -s -d, -<CR>
