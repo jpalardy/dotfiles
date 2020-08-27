@@ -42,6 +42,7 @@ check_bin dust
 check_bin fzf
 check_bin htop
 check_bin pstree
+check_bin fswatch
 echo
 
 # linters in npm
