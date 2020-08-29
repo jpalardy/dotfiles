@@ -24,6 +24,7 @@ BEGIN {
   snip("*:isod", strftime("%F"))
   snip("*:ts",   strftime("%s"))
   snip("*:√",    "✅")
+  snip("*:x",    "❌")
   snip("*:!",    "⚠️")
   snip("*:cr",   "⏎")
   snip("*:->",   "→")
