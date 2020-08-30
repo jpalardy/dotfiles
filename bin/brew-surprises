@@ -7,9 +7,11 @@ awscli
 bat
 coreutils
 dos2unix
+dust
 ffmpeg
 findutils
 fswatch
+fzf
 gawk
 gcal
 git
@@ -20,8 +22,10 @@ go
 graphviz
 htop
 imagemagick
+iproute2mac
 jpalardy/tap/memora
 jq
+mtr
 nmap
 node
 pandoc
