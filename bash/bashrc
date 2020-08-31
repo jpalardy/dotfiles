@@ -17,11 +17,7 @@ cond_source "$HOME"/.bash/local/variables.bash
 
 # shell is interactive?
 if [[ $- =~ i ]]; then
-  # completion
-  source_all  "$HOME"/.bash/completion/*
-
   # commands
-  source_all  "$HOME"/.bash/commands/*
   cond_source "$HOME"/.bash/local/commands.bash
 
   # shell behavior
