@@ -138,6 +138,11 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
+# emulate bash's complete-filename on meta-/
+zle -C complete-files complete-word _generic
+zstyle ':completion:complete-files:*' completer _files
+bindkey "\e/" complete-files
+
 #-------------------------------------------------
 # COMMANDS
 #-------------------------------------------------
