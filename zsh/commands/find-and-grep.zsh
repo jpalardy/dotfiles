@@ -22,3 +22,7 @@ find-white() {
   rg -l '\r' .   | awk -v hl="$(tput setaf 8)" -v reset="$COLOR_RESET" '{print hl "dos:" reset, $0}' # gray
 }
 
+find-empty() {
+  find . -type "${1:-f}" -empty
+}
+
