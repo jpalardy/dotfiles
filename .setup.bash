@@ -12,7 +12,6 @@ DOTFILES=$(pwd)
 
 echo "set -e"
 
-relink .bash         "$DOTFILES/bash"
 relink .bashrc       "$DOTFILES/bash/bashrc"
 relink .bash_profile "$DOTFILES/bash/bash_profile"
 relink .bash_logout  "$DOTFILES/bash/bash_logout"

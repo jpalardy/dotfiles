@@ -1,36 +1,157 @@
 
-cond_source() {
-  if [ -f "$1" ]; then
-    source "$1"
+export DOTFILES="$HOME/dotfiles"
+
+#-------------------------------------------------
+# VARIABLES
+#-------------------------------------------------
+
+# tabula rasa
+umask 22
+ulimit -c 0
+
+# helper: removed later
+append_colon() {
+  if [ -z "$2" ]; then
+    echo "$1"
+  else
+    echo "$2:$1"
   fi
 }
 
-source_all() {
-  for file in "$@"; do
-    source "$file"
-  done
+# helper: removed later
+append_path() {
+  test -d "$1/sbin"      && PATH=$(append_colon "$1/sbin" "$PATH")
+  test -d "$1/bin"       && PATH=$(append_colon "$1/bin" "$PATH")
+  test -d "$1/share/man" && MANPATH=$(append_colon "$1/share/man" "$MANPATH")
 }
 
-# variables
-source      "$HOME"/.bash/variables.bash
-cond_source "$HOME"/.bash/local/variables.bash
+# helper: removed later
+prepend_colon() {
+  if [ -z "$2" ]; then
+    echo "$1"
+  else
+    echo "$1:$2"
+  fi
+}
 
-# shell is interactive?
-if [[ $- =~ i ]]; then
-  # commands
-  cond_source "$HOME"/.bash/local/commands.bash
+# helper: removed later
+prepend_path() {
+  test -d "$1/sbin"      && PATH=$(prepend_colon "$1/sbin" "$PATH")
+  test -d "$1/bin"       && PATH=$(prepend_colon "$1/bin" "$PATH")
+  test -d "$1/share/man" && MANPATH=$(prepend_colon "$1/share/man" "$MANPATH")
+}
 
-  # shell behavior
-  source      "$HOME"/.bash/shell.bash
-  cond_source "$HOME"/.bash/local/shell.bash
+PATH=""
+MANPATH=""
 
-  # prompt
-  source      "$HOME"/.bash/prompt.bash
-  cond_source "$HOME"/.bash/local/prompt.bash
+append_path "$DOTFILES"
+append_path "$HOME/local"
+append_path "/usr/local"
+append_path "/usr"
+append_path ""
+append_path "/usr/X11"
+
+export PATH
+export MANPATH
+
+export EDITOR="vim"
+export PAGER="less"
+export BLOCKSIZE="K"
+
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+export RLWRAP_HOME="$HOME/.rlwrap"
+
+if [ -n "$TMUX" ]; then
+  export TERM="screen-256color"
+else
+  export TERM="xterm-256color"
 fi
 
 #-------------------------------------------------
+# SHELL
+#-------------------------------------------------
 
-unset cond_source
-unset source_all
+# behavior
+shopt -s checkhash               # build a hash of the commands in PATH, look there first, in PATH after
+shopt -s checkwinsize            # automatically update the values of LINES and COLUMNS
+shopt -s no_empty_cmd_completion # don't look in PATH if I haven't typed anything
+shopt -s progcomp                # programmable completion (should be enabled by default)
 
+# history-related
+shopt -s cmdhist                 # save a multiple-line command in the same history entry
+shopt -s histappend              # append (rather than overwrite) the HISTFILE when the shell exits
+HISTSIZE=1000                    # history lines in memory
+HISTFILESIZE=1000                # history lines in the file
+HISTCONTROL=ignoreboth           # don't save lines starting with a space, or duplicate lines
+
+# completion
+load_bash_completion() {
+  for dir in /usr/local/etc /etc; do
+    if [ -e ${dir}/bash_completion ]; then
+      source ${dir}/bash_completion
+      complete -r vim 2>/dev/null
+      complete -r sqlite3 2>/dev/null
+      return
+    fi
+  done
+  echo "no bash-completion"
+}
+load_bash_completion
+unset load_bash_completion
+
+#-------------------------------------------------
+# PROMPT
+#-------------------------------------------------
+
+COLOR_RED=$(tput setaf 1)
+ATTR_RESET=$(tput sgr0)
+
+export PROMPT_COMMAND=show_exit_code
+show_exit_code() {
+  local exit=$?
+  if [ "$exit" -ne 0 ]; then
+    echo -e "${COLOR_RED}exit: ${exit}${ATTR_RESET}"
+  fi
+}
+
+# can be overriden
+PS1_HOSTNAME="${HOSTNAME%%.*}"
+
+PS1='\[${PS1_COLOR}\]${PS1_HOSTNAME}\[${ATTR_RESET}\] '
+
+#-------------------------------------------------
+# READLINE
+#-------------------------------------------------
+
+# up/down history search
+bind '"\e[A"':history-search-backward
+bind '"\e[B"':history-search-forward
+
+# the dreaded backspace
+bind '"\C-?": backward-delete-char'
+stty erase ^?
+
+#-------------------------------------------------
+# COMMANDS
+#-------------------------------------------------
+
+for f in "$DOTFILES"/bash/commands/*.bash; do
+  source $f
+done
+
+#-------------------------------------------------
+# LOCAL
+#-------------------------------------------------
+
+[ -e "$DOTFILES"/bash/local.bash ] && source "$DOTFILES"/bash/local.bash
+
+#-------------------------------------------------
+# CLEANUP
+#-------------------------------------------------
+
+unset -f append_path
+unset -f append_colon
+unset -f prepend_path
+unset -f prepend_colon
