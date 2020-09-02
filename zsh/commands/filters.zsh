@@ -15,3 +15,7 @@ __uniq() {
   awk '!seen[$0]++'
 }
 
+__count-ext() {
+  print -l **/*(:t:e) | __count | sort -n
+}
+

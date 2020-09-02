@@ -1,4 +1,0 @@
-#!/bin/bash
-
-eval LC_ALL=C "$@"
-

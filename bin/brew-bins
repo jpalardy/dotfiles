@@ -1,4 +1,0 @@
-#!/bin/bash
-
-brew ls -v "$@" | grep -w bin
-
