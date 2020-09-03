@@ -8,7 +8,7 @@ __sum() {
 }
 
 __count() {
-  awk '{counts[$0]++} END {for(c in counts) printf "%6d %s\n", counts[c], c}' "$@" | sort -k2
+  awk '{counts[$0]++} END {for(c in counts) printf "%6d %s\n", counts[c], c}' "$@" | sort -n
 }
 
 __uniq() {
@@ -16,6 +16,6 @@ __uniq() {
 }
 
 __count-ext() {
-  print -l **/*(:t:e) | __count | sort -n
+  print -l **/*(:t:e) | __count
 }
 
