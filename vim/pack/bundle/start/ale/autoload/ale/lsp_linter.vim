@@ -227,7 +227,7 @@ function! ale#lsp_linter#OnInit(linter, details, Callback) abort
     let l:command = a:details.command
 
     let l:config = ale#lsp_linter#GetConfig(l:buffer, a:linter)
-    let l:language_id = ale#util#GetFunction(a:linter.language_callback)(l:buffer)
+    let l:language_id = ale#linter#GetLanguage(l:buffer, a:linter)
 
     call ale#lsp#UpdateConfig(l:conn_id, l:buffer, l:config)
 
@@ -265,7 +265,14 @@ function! s:StartLSP(options, address, executable, command) abort
             call ale#lsp#MarkConnectionAsTsserver(l:conn_id)
         endif
 
-        let l:command = ale#command#FormatCommand(l:buffer, a:executable, a:command, 0, v:false)[1]
+        let l:command = ale#command#FormatCommand(
+        \   l:buffer,
+        \   a:executable,
+        \   a:command,
+        \   0,
+        \   v:false,
+        \   [],
+        \)[1]
         let l:command = ale#job#PrepareCommand(l:buffer, l:command)
         let l:ready = ale#lsp#StartProgram(l:conn_id, a:executable, l:command)
     endif

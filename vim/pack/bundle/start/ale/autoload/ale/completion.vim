@@ -5,7 +5,7 @@ scriptencoding utf-8
 " The omnicompletion menu is shown through a special Plug mapping which is
 " only valid in Insert mode. This way, feedkeys() won't send these keys if you
 " quit Insert mode quickly enough.
-inoremap <silent> <Plug>(ale_show_completion_menu) <C-x><C-o>
+inoremap <silent> <Plug>(ale_show_completion_menu) <C-x><C-o><C-p>
 " If we hit the key sequence in normal mode, then we won't show the menu, so
 " we should restore the old settings right away.
 nnoremap <silent> <Plug>(ale_show_completion_menu) :call ale#completion#RestoreCompletionOptions()<CR>
@@ -16,7 +16,8 @@ onoremap <silent> <Plug>(ale_show_completion_menu) <Nop>
 let g:ale_completion_delay = get(g:, 'ale_completion_delay', 100)
 let g:ale_completion_excluded_words = get(g:, 'ale_completion_excluded_words', [])
 let g:ale_completion_max_suggestions = get(g:, 'ale_completion_max_suggestions', 50)
-let g:ale_completion_tsserver_autoimport = get(g:, 'ale_completion_tsserver_autoimport', 0)
+let g:ale_completion_autoimport = get(g:, 'ale_completion_autoimport', 0)
+let g:ale_completion_tsserver_remove_warnings = get(g:, 'ale_completion_tsserver_remove_warnings', 0)
 
 let s:timer_id = -1
 let s:last_done_pos = []
@@ -323,6 +324,12 @@ function! ale#completion#AutomaticOmniFunc(findstart, base) abort
     endif
 endfunction
 
+function! s:OpenCompletionMenu(...) abort
+    if !&l:paste
+        call ale#util#FeedKeys("\<Plug>(ale_show_completion_menu)")
+    endif
+endfunction
+
 function! ale#completion#Show(result) abort
     if ale#util#Mode() isnot# 'i'
         return
@@ -343,10 +350,7 @@ function! ale#completion#Show(result) abort
     let l:source = get(get(b:, 'ale_completion_info', {}), 'source', '')
 
     if l:source is# 'ale-automatic' || l:source is# 'ale-manual'
-        call timer_start(
-        \   0,
-        \   {-> ale#util#FeedKeys("\<Plug>(ale_show_completion_menu)")}
-        \)
+        call timer_start(0, function('s:OpenCompletionMenu'))
     endif
 
     if l:source is# 'ale-callback'
@@ -397,10 +401,14 @@ function! ale#completion#ParseTSServerCompletions(response) abort
     let l:names = []
 
     for l:suggestion in a:response.body
-        call add(l:names, {
-        \ 'word': l:suggestion.name,
-        \ 'source': get(l:suggestion, 'source', ''),
-        \})
+        let l:kind = get(l:suggestion, 'kind', '')
+
+        if g:ale_completion_tsserver_remove_warnings == 0 || l:kind isnot# 'warning'
+            call add(l:names, {
+            \ 'word': l:suggestion.name,
+            \ 'source': get(l:suggestion, 'source', ''),
+            \})
+        endif
     endfor
 
     return l:names
@@ -413,12 +421,22 @@ function! ale#completion#ParseTSServerCompletionEntryDetails(response) abort
 
     for l:suggestion in a:response.body
         let l:displayParts = []
+        let l:local_name = v:null
 
         for l:action in get(l:suggestion, 'codeActions', [])
             call add(l:displayParts, l:action.description . ' ')
         endfor
 
         for l:part in l:suggestion.displayParts
+            " Stop on stop on line breaks for the menu.
+            if get(l:part, 'kind') is# 'lineBreak'
+                break
+            endif
+
+            if get(l:part, 'kind') is# 'localName'
+                let l:local_name = l:part.text
+            endif
+
             call add(l:displayParts, l:part.text)
         endfor
 
@@ -431,11 +449,17 @@ function! ale#completion#ParseTSServerCompletionEntryDetails(response) abort
 
         " See :help complete-items
         let l:result = {
-        \   'word': l:suggestion.name,
+        \   'word': (
+        \       l:suggestion.name is# 'default'
+        \       && l:suggestion.kind is# 'alias'
+        \       && !empty(l:local_name)
+        \           ? l:local_name
+        \           : l:suggestion.name
+        \   ),
         \   'kind': ale#completion#GetCompletionSymbols(l:suggestion.kind),
         \   'icase': 1,
         \   'menu': join(l:displayParts, ''),
-        \   'dup': g:ale_completion_tsserver_autoimport,
+        \   'dup': g:ale_completion_autoimport,
         \   'info': join(l:documentationParts, ''),
         \}
 
@@ -517,19 +541,60 @@ function! ale#completion#ParseLSPCompletions(response) abort
             continue
         endif
 
+        " Don't use LSP items with additional text edits when autoimport for
+        " completions is turned off.
+        if !empty(get(l:item, 'additionalTextEdits'))
+        \&& !g:ale_completion_autoimport
+            continue
+        endif
+
         let l:doc = get(l:item, 'documentation', '')
 
         if type(l:doc) is v:t_dict && has_key(l:doc, 'value')
             let l:doc = l:doc.value
         endif
 
-        call add(l:results, {
+        let l:result = {
         \   'word': l:word,
         \   'kind': ale#completion#GetCompletionSymbols(get(l:item, 'kind', '')),
         \   'icase': 1,
         \   'menu': get(l:item, 'detail', ''),
         \   'info': (type(l:doc) is v:t_string ? l:doc : ''),
-        \})
+        \}
+
+        if has_key(l:item, 'additionalTextEdits')
+            let l:text_changes = []
+
+            for l:edit in l:item.additionalTextEdits
+                call add(l:text_changes, {
+                \ 'start': {
+                \   'line': l:edit.range.start.line + 1,
+                \   'offset': l:edit.range.start.character + 1,
+                \ },
+                \ 'end': {
+                \   'line': l:edit.range.end.line + 1,
+                \   'offset': l:edit.range.end.character + 1,
+                \ },
+                \ 'newText': l:edit.newText,
+                \})
+            endfor
+
+            if !empty(l:text_changes)
+                let l:result.user_data = json_encode({
+                \   'codeActions': [{
+                \       'description': 'completion',
+                \       'changes': [
+                \           {
+                \               'fileName': expand('#' . l:buffer . ':p'),
+                \               'textChanges': l:text_changes,
+                \           }
+                \       ],
+                \   }],
+                \})
+            endif
+        endif
+
+        call add(l:results, l:result)
     endfor
 
     if has_key(l:info, 'prefix')
@@ -628,12 +693,16 @@ function! s:OnReady(linter, lsp_details) abort
     call ale#lsp#RegisterCallback(l:id, l:Callback)
 
     if a:linter.lsp is# 'tsserver'
+        if get(g:, 'ale_completion_tsserver_autoimport') is 1
+            execute 'echom `g:ale_completion_tsserver_autoimport` is deprecated. Use `g:ale_completion_autoimport` instead.'''
+        endif
+
         let l:message = ale#lsp#tsserver_message#Completions(
         \   l:buffer,
         \   b:ale_completion_info.line,
         \   b:ale_completion_info.column,
         \   b:ale_completion_info.prefix,
-        \   g:ale_completion_tsserver_autoimport,
+        \   g:ale_completion_autoimport,
         \)
     else
         " Send a message saying the buffer has changed first, otherwise
@@ -836,6 +905,8 @@ function! ale#completion#Done() abort
 endfunction
 
 augroup ALECompletionActions
+    autocmd!
+
     autocmd CompleteDone * call ale#completion#HandleUserData(v:completed_item)
 augroup END
 
