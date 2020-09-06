@@ -18,7 +18,6 @@ set pastetoggle=<F8>
 
 nnoremap <ESC>l :set list!<CR>
 nnoremap <ESC>n :set number!<CR>
-nnoremap <ESC>N :set relativenumber!<CR>
 nnoremap <ESC><SPACE> :nohl<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -42,7 +41,6 @@ nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR>
 vnoremap _$ :call Preserve( "s/\\s\\+$//e")<CR>
 
 " DEDUP ADJACENT EMPTY LINES
-"nnoremap _B :call Preserve("%s/\\_^\\n\\{2,}/\\r/")<CR>
 nnoremap _B :call Preserve("g/^\\_$\\n\\_^$/d")<CR>
 
 " COMMATIZE
