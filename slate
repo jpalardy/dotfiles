@@ -10,8 +10,8 @@ bind b:ctrl;alt move screenOriginX+screenSizeX-${BROWSER_WIDTH};screenOriginY ${
 # r
 bind r:ctrl;alt move screenOriginX+300;screenOriginY 780;screenSizeY
 
-# f -- like fullscreen
-bind f:ctrl;alt move screenOriginX;screenOriginY screenSizeX;screenSizeY
+# t -- like terminal; 80x25
+bind t:ctrl;alt move screenSizeX/3;screenSizeY/3 570;455
 
 # Push Bindings
 bind right:ctrl;alt push right
