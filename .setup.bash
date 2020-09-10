@@ -21,7 +21,6 @@ relink .zshrc        "$DOTFILES/zsh/zshrc"
 relink .zlogout      "$DOTFILES/zsh/zlogout"
 
 relink .vim          "$DOTFILES/vim"
-relink .vimrc        "$DOTFILES/vim/vimrc"
 
 relink .gitconfig    "$DOTFILES/git/gitconfig"
 relink .gitignore    "$DOTFILES/git/gitignore"
