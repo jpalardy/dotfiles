@@ -12,7 +12,8 @@ h() {
   fi
 }
 
-alias grep='grep --color=auto'
+alias grep='grep -E --color=auto'
+alias sed='sed -E'
 
 inet() {
   if command -v ip > /dev/null; then
