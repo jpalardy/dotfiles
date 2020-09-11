@@ -15,6 +15,8 @@ h() {
 alias grep='grep -E --color=auto'
 alias sed='sed -E'
 
+alias ding='ding $?'
+
 inet() {
   if command -v ip > /dev/null; then
     ip addr | grep --color -E 'inet[^6].*|$'

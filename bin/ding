@@ -1,0 +1,14 @@
+#!/bin/bash
+
+lastexit=${1:-0}
+if ! command -v afplay &>/dev/null; then
+  exit 1
+fi
+
+if [ "$lastexit" -ne 0 ]; then
+  afplay "/System/Library/Sounds/Basso.aiff"
+  exit 1
+fi
+
+afplay "/System/Library/Sounds/Purr.aiff"
+
