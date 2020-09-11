@@ -74,3 +74,8 @@ nnoremap ,g :copen<CR>:grep! -i
 source $HOME/.vim/mappings.vim
 source $HOME/.vim/plugins.vim
 
+"-------------------------------------------------
+" adding special vim-specific scripts
+
+let $PATH = $DOTFILES . "/bin/vim-helpers:" . $PATH
+
