@@ -164,6 +164,7 @@ class Dot < Graph
 digraph G {
   rankdir=LR;
   node [style="filled,rounded", shape=box, fontname=Arial, fontsize=14];
+  graph [overlap=false; splines=true];
 END
     @data.each_key do |node|
       dot << create_node(node, @highlight_leaves && is_leaf?(node))

@@ -5,5 +5,5 @@ echo
 brew outdated
 read -p "press any key..."
 brew upgrade
-brew cleanup
+brew cleanup -s
 
