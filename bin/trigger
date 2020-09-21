@@ -41,5 +41,5 @@ if fswatch -M | grep --quiet kqueue; then
   monitor="-m kqueue_monitor"
 fi
 
-fswatch $monitor "$@" -o | xargs -I% sh -c "$COMMAND; ding \$?"
+fswatch $monitor --event Updated "$@" -o | xargs -I% sh -c "$COMMAND; ding \$?"
 
