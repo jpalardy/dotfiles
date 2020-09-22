@@ -19,3 +19,7 @@ __count-ext() {
   print -l **/*(:t:e) | __count
 }
 
+__cut() {
+  cut -c "1-${COLUMNS}" "$@"
+}
+
