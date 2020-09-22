@@ -2,13 +2,16 @@
 alias center screenOriginX+screenSizeX/2-windowSizeX/2;screenOriginY+screenSizeY/2-windowSizeY/2 windowSizeX;windowSizeY
 alias BROWSER_WIDTH 1250
 
-# b -- like browser
+# b -- mnemo: browser
 bind b:ctrl;alt move screenOriginX+screenSizeX-${BROWSER_WIDTH};screenOriginY ${BROWSER_WIDTH};screenSizeY
+
+# l -- mnemo: large, maximize horizontally
+bind l:ctrl;alt move screenOriginX;windowTopLeftY screenSizeX;windowSizeY
 
 # r
 bind r:ctrl;alt move screenOriginX+300;screenOriginY 780;screenSizeY
 
-# t -- like terminal; 80x25
+# t -- mnemo: terminal, 80x25
 bind t:ctrl;alt move screenSizeX/3;screenSizeY/3 570;455
 
 # Push Bindings
