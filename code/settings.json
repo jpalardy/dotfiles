@@ -11,14 +11,18 @@
     80,
     120
   ],
-  "editor.minimap.enabled": false,
-  "go.formatTool": "goimports",
-  "go.useLanguageServer": true,
-  "markdown-preview-enhanced.codeBlockTheme": "github.css",
-  "window.zoomLevel": 0,
   "editor.renderControlCharacters": true,
   "editor.renderWhitespace": "all",
-  "gitlens.currentLine.enabled": false,
+  "editor.minimap.enabled": false,
+  "window.zoomLevel": 0,
+  "go.formatTool": "goimports",
+  "go.useLanguageServer": true,
+  "go.lintTool": "golangci-lint",
   "gitlens.hovers.currentLine.over": "line",
-  "gitlens.codeLens.enabled": false
+  "gitlens.currentLine.enabled": false,
+  "gitlens.codeLens.enabled": false,
+  "gitlens.menus": {
+    "editorGroup": false
+  },
+  "gitlens.blame.compact": false
 }
