@@ -121,17 +121,18 @@ bindkey -s "\e\`" '$(!!)'
 bindkey -s "\eh" "vim-\n"
 bindkey -s "\ew" "warp\n"
 
+# word deletion
+SELECT_WORD_STYLE=whitespace
+autoload select-word-style
+select-word-style $SELECT_WORD_STYLE
 # delete until slash
 backward-kill-word-bash () {
   select-word-style bash
   zle backward-kill-word
-  select-word-style shell # restore
+  select-word-style $SELECT_WORD_STYLE
 }
 zle -N backward-kill-word-bash
 bindkey "^f" backward-kill-word-bash
-
-autoload select-word-style
-select-word-style shell
 
 # enable ctrl-x-e to edit command line
 autoload -U edit-command-line
