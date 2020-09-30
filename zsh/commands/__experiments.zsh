@@ -25,6 +25,10 @@ bu() {
     while [ $p != "/" ]; do
       echo $p
       p=${p:h}
-    done | fzf --layout=reverse
+    done | fzf
   )
 }
+
+# 2020-09-29
+alias fzf="fzf --reverse --info=hidden --height=20"
+
