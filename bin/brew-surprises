@@ -8,9 +8,9 @@ bat
 coreutils
 dos2unix
 dust
+entr
 ffmpeg
 findutils
-fswatch
 fzf
 gawk
 gcal
