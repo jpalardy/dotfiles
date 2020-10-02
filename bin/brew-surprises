@@ -32,7 +32,6 @@ pandoc
 parallel
 pgformatter
 pstree
-pup
 pwgen
 qrencode
 ripgrep

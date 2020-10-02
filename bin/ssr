@@ -26,7 +26,6 @@ check_bin gcal
 check_bin gpg
 check_bin curl
 check_bin wget
-check_bin pup
 check_bin qrencode
 check_bin pwgen
 echo
