@@ -1,4 +1,4 @@
-#!/usr/bin/env awk -f
+#!/usr/bin/env awk-f
 
 function snip(key, value) {
   if (value == "") {
