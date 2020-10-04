@@ -23,5 +23,4 @@ endfunction
 
 "-- mappings
 inoremap <TAB> <ESC>:call SnipReplace()<CR>@x
-vnoremap <TAB> !vsnip<CR>
 

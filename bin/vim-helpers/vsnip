@@ -1,7 +1,0 @@
-#!/usr/bin/env awk -f
-
-# print everything else as-is
-{
-  print
-}
-
