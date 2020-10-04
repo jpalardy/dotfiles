@@ -4,7 +4,7 @@ rules:
   comma-dangle: ["error", "always-multiline"]
   func-names: ["error", "as-needed"]
   space-before-function-paren: "off"
-  arrow-parens: ["error", "as-needed"]
+  arrow-parens: "off"
   arrow-body-style: "off"
   max-len: ["warn", 150]
   generator-star-spacing: "off"
