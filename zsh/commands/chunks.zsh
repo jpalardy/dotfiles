@@ -7,8 +7,8 @@ chunks() {
   $EDITOR "$DOTFILES/chunks/chunks.$1"
 }
 
-_complete_chunks() {
+_chunks() {
   compadd $(ls "$DOTFILES/chunks/" | awk -F. '{print $NF}')
 }
-compdef _complete_chunks chunks
+compdef _chunks chunks
 

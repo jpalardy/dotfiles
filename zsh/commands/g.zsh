@@ -37,8 +37,8 @@ g() {
   cd "$dst"
 }
 
-_complete_g() {
+_g() {
   compadd $(awk -F' += +' '{ print $1 }' "$HOME/.lists/g")
 }
-compdef _complete_g g
+compdef _g g
 

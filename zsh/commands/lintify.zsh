@@ -16,8 +16,8 @@ lintify() {
   esac
 }
 
-_complete_lintify() {
+_lintify() {
   compadd go js
 }
-compdef _complete_lintify lintify
+compdef _lintify lintify
 
