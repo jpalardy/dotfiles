@@ -14,7 +14,7 @@ implode() {
 }
 
 # 2020-08-29
-alias -g _V='| vim -R -'
+alias -g _V='|& vim -R -'
 alias -g _G='| rg'
 
 # 2020-09-27
