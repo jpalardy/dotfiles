@@ -33,6 +33,10 @@ append_path "/usr"
 append_path ""
 append_path "/usr/X11"
 
+if [ -d /usr/local/share/zsh-completions ]; then
+  fpath=(/usr/local/share/zsh-completions $fpath)
+fi
+
 export EDITOR="vim"
 export PAGER="less"
 export BLOCKSIZE="K"
