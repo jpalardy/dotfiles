@@ -7,6 +7,12 @@ $if Bash
   Space: magic-space
 $endif
 
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+# the dreaded backspace
+"\C-?": backward-delete-char
+
 "\e`": "$(!!)"
 
 "\C-f": unix-filename-rubout

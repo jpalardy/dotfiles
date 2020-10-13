@@ -122,18 +122,6 @@ PS1_HOSTNAME="${HOSTNAME%%.*}"
 PS1='\[${PS1_COLOR}\]${PS1_HOSTNAME}\[${ATTR_RESET}\] '
 
 #-------------------------------------------------
-# READLINE
-#-------------------------------------------------
-
-# up/down history search
-bind '"\e[A"':history-search-backward
-bind '"\e[B"':history-search-forward
-
-# the dreaded backspace
-bind '"\C-?": backward-delete-char'
-stty erase ^?
-
-#-------------------------------------------------
 # COMMANDS
 #-------------------------------------------------
 
