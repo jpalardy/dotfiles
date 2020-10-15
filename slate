@@ -11,9 +11,6 @@ bind l:ctrl;alt move screenOriginX;windowTopLeftY screenSizeX;windowSizeY
 # r
 bind r:ctrl;alt move screenOriginX+300;screenOriginY 780;screenSizeY
 
-# t -- mnemo: terminal, 80x25
-bind t:ctrl;alt move screenSizeX/3;screenSizeY/3 570;455
-
 # Push Bindings
 bind right:ctrl;alt push right
 bind  left:ctrl;alt push left
