@@ -1,8 +1,15 @@
 
-My config files :)
+## dotfiles
 
-* take what you want
-* make sure you read the "code"
+My config files for:
 
-More details to come.
+- [bash][/bash]
+- [zsh][/zsh]
+- [vim][/vim]
+
+Also, some [scripts](/bin) and a bunch of other tool/language
+configs.
+
+I don't fully recommend using blindly (too customized to myself),
+but take anything that's useful to you.
 
