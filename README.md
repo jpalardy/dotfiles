@@ -3,9 +3,9 @@
 
 My config files for:
 
-- [bash][/bash]
-- [zsh][/zsh]
-- [vim][/vim]
+- [bash](/bash)
+- [zsh](/zsh)
+- [vim](/vim)
 
 Also, some [scripts](/bin) and a bunch of other tool/language
 configs.
