@@ -70,10 +70,12 @@ HOME() {
     rm -f ~/.HOME
     shift
   fi
-  if [ ! -f ~/.HOME ]; then
-    find ~ 2>/dev/null | tee ~/.HOME | rg "$@"
-    return
-  fi
-  rg -N "${@:-" "}" ~/.HOME
+  (
+    if [ -f ~/.HOME ]; then
+      cat ~/.HOME
+    else
+      find ~ 2>/dev/null | tee ~/.HOME
+    fi
+  ) | rg "${@:-" "}"
 }
 
