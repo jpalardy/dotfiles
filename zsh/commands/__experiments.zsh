@@ -13,21 +13,3 @@ implode() {
   rm -rf "$target"
 }
 
-# 2020-08-29
-alias -g _V='|& vim -R -'
-
-# 2020-09-27
-# pick parent with fzf
-bu() {
-  cd $(
-    local p=$PWD
-    while [ $p != "/" ]; do
-      echo $p
-      p=${p:h}
-    done | fzf
-  )
-}
-
-# 2020-09-29
-alias fzf="fzf --reverse --info=hidden --height=20"
-

@@ -3,6 +3,8 @@ alias ls='ls --color=auto'
 alias ll='ls -l'
 alias l='ls -l'
 
+alias -g _V='|& vim -R -'
+
 h() {
   local COUNT=${COUNT:-25}
   if [ $# -eq 0 ]; then
@@ -14,6 +16,7 @@ h() {
 
 alias grep='grep -E --color=auto'
 alias sed='sed -E'
+alias fzf="fzf --reverse --info=hidden --height=20"
 
 alias ding='ding $?'
 
