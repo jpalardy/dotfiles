@@ -74,7 +74,7 @@ endfunction
 function! s:TmuxSend(config, text)
   call s:WritePasteFile(a:text)
   call s:TmuxCommand(a:config, "load-buffer " . g:slime_paste_file)
-  call s:TmuxCommand(a:config, "paste-buffer -p -d -t " . shellescape(a:config["target_pane"]))
+  call s:TmuxCommand(a:config, "paste-buffer -d -t " . shellescape(a:config["target_pane"]))
 endfunction
 
 function! s:TmuxPaneNames(A,L,P)
@@ -107,7 +107,7 @@ endfunction
 
 function! s:NeovimConfig() abort
   if !exists("b:slime_config")
-    let b:slime_config = {"jobid": "3"}
+    let b:slime_config = {"jobid": get(g:, "slime_last_channel", "")}
   end
   let b:slime_config["jobid"] = input("jobid: ", b:slime_config["jobid"])
 endfunction
