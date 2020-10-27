@@ -24,5 +24,6 @@
   "gitlens.menus": {
     "editorGroup": false
   },
-  "gitlens.blame.compact": false
+  "gitlens.blame.compact": false,
+  "extensions.ignoreRecommendations": false
 }
