@@ -13,3 +13,15 @@ implode() {
   rm -rf "$target"
 }
 
+# 2020-10-28
+tmr() {
+  if [ $# -eq 0 ]; then
+    tmux
+    return
+  fi
+  tmux new-session "$*; exec $SHELL"
+}
+
+# 2020-10-28
+alias reload!="source ~/.zshrc"
+
