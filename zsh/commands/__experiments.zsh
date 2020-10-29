@@ -25,3 +25,8 @@ tmr() {
 # 2020-10-28
 alias reload!="source ~/.zshrc"
 
+# 2020-10-28
+vimgrep() {
+  vim -c ":grep -i $*"
+}
+
