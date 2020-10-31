@@ -37,6 +37,8 @@ if [ -d /usr/local/share/zsh-completions ]; then
   fpath=(/usr/local/share/zsh-completions $fpath)
 fi
 
+fpath=("$DOTFILES/zsh/functions" $fpath)
+
 export EDITOR="vim"
 export PAGER="less"
 export BLOCKSIZE="K"
