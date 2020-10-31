@@ -5,6 +5,8 @@ alias l='ls -l'
 
 alias -g _V='|& vim -R -'
 
+alias reload!="source ~/.zshrc"
+
 h() {
   local COUNT=${COUNT:-25}
   if [ $# -eq 0 ]; then

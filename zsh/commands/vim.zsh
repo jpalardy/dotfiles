@@ -47,3 +47,7 @@ pick_with_vim() {
   eval "$2" $(< "$TARGET")
 }
 
+vimgrep() {
+  vim -c ":grep -i $*"
+}
+
