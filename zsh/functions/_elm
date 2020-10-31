@@ -1,0 +1,6 @@
+#compdef elm
+
+_elm() {
+  compadd repl init reactor make install bump diff publish
+}
+
