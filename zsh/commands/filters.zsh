@@ -8,7 +8,24 @@ __sum() {
 }
 
 __count() {
-  awk '{counts[$0]++} END {for(c in counts) printf "%6d %s\n", counts[c], c}' "$@" | sort -n
+  local min_count=1
+  if [ "$1" = "-d" ]; then
+    min_count=2
+    shift
+  fi
+  awk -v min_count="$min_count" '
+    { counts[$0]++ }
+    END {
+      for(c in counts) {
+        if (counts[c] >= min_count) {
+          printf "%6d %s\n", counts[c], c
+        }
+      }
+    }' "$@" | sort -n
+}
+
+__dupes() {
+  awk '++seen[$0] == 2'
 }
 
 __uniq() {
