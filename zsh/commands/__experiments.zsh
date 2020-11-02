@@ -22,3 +22,6 @@ tmr() {
   tmux new-session "$*; exec $SHELL"
 }
 
+# 2020-10-30
+alias tm=tmux
+
