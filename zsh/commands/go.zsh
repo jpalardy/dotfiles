@@ -14,9 +14,7 @@ go-get-bin() {
   cd bin || return
 }
 
-go-lintall() {
-  golangci-lint run --enable-all -v "$@"
-}
+alias go-lintall="golangci-lint run --enable-all -v"
 
 go-format() {
   local flag="${1:-"-l"}"

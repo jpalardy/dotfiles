@@ -51,7 +51,6 @@ serve() {
 }
 
 alias R="R --quiet --no-save --no-restore"
-alias r="R"
 
 alias octave="octave-cli --quiet"
 alias maxima="rlwrap maxima --quiet"

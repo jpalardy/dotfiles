@@ -16,7 +16,3 @@ git_diff() {
 
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(auto)%d%Creset %C(dim white)%an%Creset'"
 
-git-latety() {
-  glg --author="Jonathan Palardy" --since="${1:-7} days ago"
-}
-
