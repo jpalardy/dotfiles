@@ -25,3 +25,6 @@ tmr() {
 # 2020-10-30
 alias tm=tmux
 
+# 2020-11-02
+alias tmrw="tmux rename-window $PWD:t"
+
