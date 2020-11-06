@@ -32,3 +32,8 @@ cdl() {
   pick_with_vim "ls" "cd"
 }
 
+# pick from a list of files (recursively) and cd into it
+cdf() {
+  pick_with_vim "ff" "cd"
+}
+
