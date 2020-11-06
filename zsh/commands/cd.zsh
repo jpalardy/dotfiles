@@ -31,9 +31,25 @@ cdl() {
   fi
   pick_with_vim "ls" "cd"
 }
+# fzf variant
+cdlz() {
+  local selection=""
+  selection=$(ls | fzf)
+  if [ "$selection" != "" ]; then
+    cd "$selection"
+  fi
+}
 
 # pick from a list of files (recursively) and cd into it
 cdf() {
   pick_with_vim "ff" "cd"
+}
+# fzf variant
+cdfz() {
+  local selection=""
+  selection=$(ff | fzf)
+  if [ "$selection" != "" ]; then
+    cd "$selection"
+  fi
 }
 
