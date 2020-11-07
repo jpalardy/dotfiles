@@ -25,7 +25,7 @@ bu() {
 }
 
 # pick from a list of directories (ls) and cd into it
-cdl() {
+cdlv() {
   if [ -n "$1" ]; then
     cd "$1" || return
   fi
@@ -34,22 +34,24 @@ cdl() {
 # fzf variant
 cdlz() {
   local selection=""
-  selection=$(ls | fzf)
+  selection=$(ls | fzf -q "$1")
   if [ "$selection" != "" ]; then
     cd "$selection"
   fi
 }
+alias cdl="cdlz"
 
 # pick from a list of files (recursively) and cd into it
-cdf() {
+cdfv() {
   pick_with_vim "ff" "cd"
 }
 # fzf variant
 cdfz() {
   local selection=""
-  selection=$(ff | fzf)
+  selection=$(ff | fzf -q "$1")
   if [ "$selection" != "" ]; then
     cd "$selection"
   fi
 }
+alias cdf="cdfz"
 
