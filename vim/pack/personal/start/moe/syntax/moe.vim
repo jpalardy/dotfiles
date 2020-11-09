@@ -30,7 +30,7 @@ syntax match moeBacktick /`[^`]\+`/
 syntax match moeDivider /^-\+$/
 
 syntax match moeDate        /\d\d\d\d-\d\d-\d\d/
-syntax match moePhoneNumber /\d\d\d.\d\d\d.\d\d\d\d/
+syntax match moePhoneNumber /\<\(1\.\)\?\d\d\d\.\d\d\d\.\d\d\d\d\>/
 syntax match moeURL         /https\?:[^ ]\+/
 
 "-------------------------------------------------
