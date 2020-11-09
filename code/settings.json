@@ -26,5 +26,8 @@
     "editorGroup": false
   },
   "gitlens.blame.compact": false,
-  "extensions.ignoreRecommendations": false
+  "extensions.ignoreRecommendations": false,
+  "files.exclude": {
+    ".vscode/": true
+  }
 }
