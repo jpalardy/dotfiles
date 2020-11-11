@@ -22,6 +22,7 @@ check_bin() {
 # cli
 check_bin rg          ripgrep
 check_bin jq
+check_bin gron
 check_bin gcal
 check_bin gpg
 check_bin curl
