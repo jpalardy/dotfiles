@@ -28,3 +28,5 @@ alias tm=tmux
 # 2020-11-02
 alias tmrw="tmux rename-window $PWD:t"
 
+# 2020-11-12
+alias rsy="rsync -av --progress"
