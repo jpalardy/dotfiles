@@ -15,13 +15,17 @@ b() {
 
 # pick parent with fzf
 bu() {
-  cd $(
+  local selection=""
+  selection=$(
     local p=$PWD
     while [ $p != "/" ]; do
       echo $p
       p=${p:h}
     done | fzf
   )
+  if [ "$selection" != "" ]; then
+    cd "$selection"
+  fi
 }
 
 # pick from a list of directories (ls) and cd into it
