@@ -33,7 +33,7 @@ __uniq() {
 }
 
 __count-ext() {
-  print -l **/*(:t:e) | __count
+  print -l **/*(:e) | __count
 }
 
 __cut() {
