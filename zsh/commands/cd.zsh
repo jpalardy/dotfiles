@@ -15,17 +15,13 @@ b() {
 
 # pick parent with fzf
 bu() {
-  local selection=""
-  selection=$(
+  run-not-blank cd $(
     local p=$PWD
     while [ $p != "/" ]; do
       echo $p
       p=${p:h}
     done | fzf
   )
-  if [ "$selection" != "" ]; then
-    cd "$selection"
-  fi
 }
 
 # pick from a list of directories (ls) and cd into it
@@ -37,11 +33,7 @@ cdlv() {
 }
 # fzf variant
 cdlz() {
-  local selection=""
-  selection=$(ls | fzf -q "$1")
-  if [ "$selection" != "" ]; then
-    cd "$selection"
-  fi
+  run-not-blank cd $(ls | fzf -q "$1")
 }
 alias cdl="cdlz"
 
@@ -51,11 +43,13 @@ cdfv() {
 }
 # fzf variant
 cdfz() {
-  local selection=""
-  selection=$(ff | fzf -q "$1")
-  if [ "$selection" != "" ]; then
-    cd "$selection"
-  fi
+  run-not-blank cd $(ff | fzf -q "$1")
 }
 alias cdf="cdfz"
 
+run-not-blank() {
+  if [ $# -lt 2 ]; then
+    return
+  fi
+  "$@"
+}
