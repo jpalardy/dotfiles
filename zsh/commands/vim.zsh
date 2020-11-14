@@ -1,8 +1,7 @@
 
-# 1. start vim
-# 2. execute ESC-h
+# start vim, execute ESC-h
 vim-() {
-  vim -s <(printf '\eh')
+  vim -c 'normal h'
 }
 
 vimgrep() {
