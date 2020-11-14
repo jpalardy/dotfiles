@@ -24,28 +24,13 @@ bu() {
   )
 }
 
-# pick from a list of directories (ls) and cd into it
-cdlv() {
-  if [ -n "$1" ]; then
-    cd "$1" || return
-  fi
-  pick_with_vim "ls" "cd"
-}
-# fzf variant
-cdlz() {
+cdl() {
   run-not-blank cd $(ls | fzf -q "$1")
 }
-alias cdl="cdlz"
 
-# pick from a list of files (recursively) and cd into it
-cdfv() {
-  pick_with_vim "ff" "cd"
-}
-# fzf variant
-cdfz() {
+cdf() {
   run-not-blank cd $(ff | fzf -q "$1")
 }
-alias cdf="cdfz"
 
 run-not-blank() {
   if [ $# -lt 2 ]; then
