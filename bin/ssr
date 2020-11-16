@@ -41,6 +41,7 @@ check_bin bat
 check_bin dust
 check_bin fzf
 check_bin htop
+check_bin tree
 check_bin pstree
 check_bin entr
 echo
