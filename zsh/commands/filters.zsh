@@ -33,7 +33,7 @@ __uniq() {
 }
 
 __count-ext() {
-  print -l **/*(:e) | __count
+  ff "$@" | awk -F/ '$NF ~ /\./ {sub(".*[.]", ""); print}' | __count
 }
 
 __cut() {
