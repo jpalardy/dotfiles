@@ -70,16 +70,19 @@ compdef _command_names we
 #-------------------------------------------------
 
 HOME() {
+  local force=0
   if [ "$1" = "-f" ]; then
-    rm -f ~/.HOME
+    force=1
     shift
   fi
-  (
-    if [ -f ~/.HOME ]; then
-      cat ~/.HOME
-    else
-      find ~ 2>/dev/null | tee ~/.HOME
+  if [[ "$force" = 1 || ! -e ~/.HOME ]]; then
+    if [ $# = 0 ]; then
+      find ~ 2>/dev/null > ~/.HOME
+      return
     fi
-  ) | rg "${@:-" "}"
+    find ~ 2>/dev/null | tee ~/.HOME | rg "$@"
+    return
+  fi
+  rg "${@:-"."}" ~/.HOME --no-line-number
 }
 
