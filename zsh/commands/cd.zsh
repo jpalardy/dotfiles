@@ -3,7 +3,7 @@
 cd() {
   local dest="${@:-"$HOME"}"
   if [ -f "$dest" ]; then
-    dest=$(dirname "$dest")
+    dest=${dest:h}
   fi
   builtin cd "$dest"
 }
