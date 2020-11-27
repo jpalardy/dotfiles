@@ -6,6 +6,7 @@ whitelist() {
 awscli
 bat
 coreutils
+derailed/k9s/k9s
 dos2unix
 dust
 entr
@@ -20,16 +21,17 @@ gnu-tar
 gnupg
 go
 graphviz
+gron
 htop
 imagemagick
 iproute2mac
 jpalardy/tap/memora
 jq
+kubectx
 mtr
 nmap
 node
 pandoc
-parallel
 pgformatter
 pstree
 pwgen
@@ -39,9 +41,11 @@ rlwrap
 shellcheck
 tidy-html5
 tmux
+tree
 utimer
 vim
 wget
+xsv
 yamllint
 
 END

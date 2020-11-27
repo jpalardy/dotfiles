@@ -1,5 +1,36 @@
 #!/usr/bin/env ruby
 
+#:`brew graph` [options] <formula1> <formula2> ... | `--installed` | `--all`
+#:
+#:Create a dependency graph of Homebrew formulae.
+#:
+#:Options:
+#:
+#: `-h`, `--help`            Print this help message.
+#: `-f`, `--format FORMAT`   Specify FORMAT of graph (dot, graphml). Default: dot
+#: `--highlight-leaves`    Highlight formulae that are not dependencies of another
+#:                         formula. Default: false
+#: `--highlight-outdated`  Highlight formulae that are outdated. Default: false
+#: `-o`, `--output FILE`     Write output to FILE instead of stdout
+#: `--installed`           Create graph for installed Homebrew formulae
+#: `--all`                 Create graph for all Homebrew formulae
+#:
+#:Examples:
+#:
+#:`brew graph` `--installed`
+#: Create a dependency graph of installed formulae and
+#: print it in DOT format to stdout.
+#:
+#:`brew graph` `-f` graphml `--installed`
+#: Same as before, but output GraphML markup.
+#:
+#:`brew graph` <graphviz> <python>
+#: Create a dependency graph of 'graphviz' and 'python' and
+#: print it in DOT format to stdout.
+#:
+#:`brew graph` `-f` graphml `-o` deps.graphml <graphviz> <python>
+#: Same as before, but output GraphML markup to a file named 'deps.graphml'.
+
 require 'optparse'
 
 class BrewGraph
@@ -7,10 +38,9 @@ class BrewGraph
   def initialize(argv)
     @options = parse_options(argv)
 
-    # If there's one or more remaining arguments, take the first one
-    # and assume that it is the name of a formula
+    # Assume that any remaining arguments are formula names.
     if argv.length >= 1
-      @formula = argv.first
+      @formulae = argv.dup
     end
   end
 
@@ -20,15 +50,17 @@ class BrewGraph
     format = @options[:format]
     output = @options[:output]
     highlight_leaves = @options[:highlight_leaves]
+    highlight_outdated = @options[:highlight_outdated]
 
     data = if installed
         deps(:installed)
       elsif all
         deps(:all)
-      elsif @formula
-        deps(@formula)
+      elsif @formulae
+        deps(@formulae)
       else
-        abort 'This command requires one of --installed or --all, or a formula argument'
+        abort %Q{This command requires one of --installed or --all, or one or more formula arguments.
+See brew graph --help.}
       end
 
     if installed
@@ -36,8 +68,8 @@ class BrewGraph
     end
 
     graph = case format
-        when :dot then Dot.new(data, highlight_leaves)
-        when :graphml then GraphML.new(data, highlight_leaves)
+        when :dot then Dot.new(data, highlight_leaves, highlight_outdated && outdated)
+        when :graphml then GraphML.new(data, highlight_leaves, highlight_outdated && outdated)
       end
 
     if output
@@ -55,10 +87,17 @@ class BrewGraph
       options[:installed] = false
       options[:format] = :dot
       options[:highlight_leaves] = false
+      options[:highlight_outdated] = false
 
       opts = OptionParser.new do |opts|
 
-        opts.banner = 'Usage: brew-graph [-f] [-o] [--highlight-leaves] [--all] [--installed] formula'
+        opts.banner = %Q{Usage: brew-graph [options] <formula1> <formula2> ... | --installed | --all
+Examples:
+  brew graph --installed                                - Create a dependency graph of all installed formulae and print it in dot format to stdout.
+  brew graph -f graphml --installed                     - Same as before, but output GraphML markup.
+  brew graph -f graphml graphviz python                 - Create a dependency graph of the 'graphviz' and 'python' formulae and print it in GraphML markup to stdout.
+  brew graph -f graphml -o deps.graphml graphviz python - Same as before, but output to a file named 'deps.graphml'.
+}
 
         opts.on('-h', '--help'  ) do
           puts opts
@@ -75,6 +114,11 @@ class BrewGraph
           options[:highlight_leaves] = true
         end
 
+        opts.on('--highlight-outdated', [:highlight_outdated],
+                'Highlight formulae that are outdated. Default: false') do
+          options[:highlight_outdated] = true
+        end
+
         opts.on('-o', '--output FILE',
                 'Write output to FILE instead of stdout') do |o|
           options[:output] = o
@@ -89,7 +133,6 @@ class BrewGraph
                 'Create graph for installed Homebrew formulae') do
           options[:installed] = true
         end
-
       end
 
       begin
@@ -97,7 +140,7 @@ class BrewGraph
       rescue OptionParser::InvalidOption,
              OptionParser::InvalidArgument,
              OptionParser::MissingArgument => e
-        abort "#{e.message.capitalize}\n#{opts}"
+        abort "#{e.message.capitalize}\nSee brew graph --help."
       end
 
       options
@@ -113,18 +156,44 @@ class BrewGraph
       data
     end
 
+    def outdated
+      brew_outdated.split("\n")
+    end
+
     def brew_deps(arg)
       case arg
-        when :all then %x[brew deps --all]
-        when :installed then %x[brew deps --installed]
-        else # Treat argument as the name of a formula
-          out = %x[brew deps #{arg}]
+        when :all then %x[brew deps --1 --all]
+        when :installed then %x[brew deps --1 --installed]
+        else # Treat arg as a list of formulae
+          out = %x[brew deps --for-each #{arg.join(' ')}]
           unless $? == 0 # Check exit code
             abort
           end
-          # Transform output to the form "formula: dep1 dep2 dep3 ..."
-          "#{arg}: #{out.split("\n").map { |dep| dep.strip }.join(' ')}"
+          # Output is of the form
+          #   formula1: dep1 dep2 dep3 ...
+          #   formula2: dep1 dep2 dep3 ...
+          # We need to add additional lines
+          #   dep1:
+          #   dep2:
+          #   dep3:
+          # for all dependencies.
+          # This is consistent with the output of 'brew deps --installed'.
+          # Also, the GraphML markup language requires a separate <node>
+          # block for each node in the graph.
+          res = {}
+          out.split("\n").each do |line|
+            formula,deps = line.split(':')
+            res[formula] = deps.strip
+            deps.split(' ').each do |dep|
+              res[dep] = '' unless res.has_key? dep
       end
+    end
+          res.map { |k, v| "#{k}: #{v}" }.join("\n")
+      end
+    end
+
+    def brew_outdated
+      %x[brew outdated]
     end
 
     def print_deps(data)
@@ -145,14 +214,19 @@ end
 
 class Graph
 
-  def initialize(data, highlight_leaves)
+  def initialize(data, highlight_leaves, outdated)
     @data = data
     @dependencies = data.values.flatten.uniq
     @highlight_leaves = highlight_leaves
+    @outdated = outdated
   end
 
   def is_leaf?(node)
     !@dependencies.include?(node)
+  end
+
+  def is_outdated?(node)
+    @outdated.include?(node)
   end
 end
 
@@ -167,7 +241,7 @@ digraph G {
   graph [overlap=false; splines=true];
 END
     @data.each_key do |node|
-      dot << create_node(node, @highlight_leaves && is_leaf?(node))
+      dot << create_node(node, @highlight_leaves && is_leaf?(node), @outdated && is_outdated?(node))
     end
     @data.each_pair do |source, targets|
       next if targets.nil?
@@ -181,8 +255,8 @@ END
 
   private
 
-    def create_node(node, leaf)
-      %Q(  "#{node}"#{leaf ? ' [fontcolor="white", fillcolor="#ff5555"]' : ""};)
+    def create_node(node, is_leaf, is_outdated)
+      %Q(  "#{node}"#{is_outdated ? ' [fontcolor="white", fillcolor="#b22a2a"]' : is_leaf ? ' [fontcolor="white", fillcolor="#ff5555"]' : ''};)
     end
 
     def create_edge(source, target)
@@ -197,7 +271,7 @@ class GraphML < Graph
     out << header
     out << '  <graph edgedefault="directed" id="G">'
     @data.each_key do |node|
-      out << create_node(node, @highlight_leaves && is_leaf?(node))
+      out << create_node(node, @highlight_leaves && is_leaf?(node), @outdated && is_outdated?(node))
     end
     @data.each_pair do |source, targets|
       next if targets.nil?
@@ -228,9 +302,8 @@ class GraphML < Graph
 EOS
     end
 
-    def create_node(node, leaf)
-      fill_color = leaf ? "#3C633C" : "#FFFFFF"
-      #fill_color = leaf ? "#C0C0C0" : "#FFFFFF"
+    def create_node(node, is_leaf, is_outdated)
+      fill_color = is_outdated ? '#FF6666': is_leaf ? '#C0C0C0' : '#FFFFFF'
 <<-EOS
     <node id="#{node}">
       <data key="d0">
