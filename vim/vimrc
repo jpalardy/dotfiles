@@ -46,7 +46,7 @@ set equalprg=
 set nojoinspaces
 
 " vimdiff
-set diffopt=filler,iwhite
+set diffopt=filler,iwhite,vertical
 
 set spellcapcheck=
 
