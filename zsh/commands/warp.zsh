@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# reset -- if sourced multiple times
+unalias warp 2>/dev/null
+
 warp() {
   # if a first argument is supplied, then use it as the warp file location
   # otherwise, use the default "$HOME/.warp" location
