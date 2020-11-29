@@ -1,37 +1,21 @@
-#!/bin/bash
+#!/bin/zsh
 
 REPOS=${REPOS:?"environment variable REPOS is empty"}
 
 # warm ssh connection, ugly...
 ssh droplet.jpalardy.com exit
 
-quick=0
-
-if [[ $1 == "-q" ]]; then
-  quick=1
-  shift
-fi
-
-cmd=""
+cmd=()
 i=0
-for repo in $REPOS; do
-  i=$((i + 1))
-  if [[ $i == 1 ]]; then
-    if [[ -z $TMUX ]]; then
-      cmd+="tmux new-session "
-    else
-      cmd+="tmux split-window "
-    fi
+for repo in ${=REPOS}; do
+  let i=i+1
+  if [[ $i == 1 && -z $TMUX ]]; then
+    cmd+="new-session 'cd $repo; git st; exec $SHELL'"
   else
-    cmd+="\; split-window "
+    cmd+="split-window 'cd $repo; git st; exec $SHELL'"
   fi
-  cmd+="'cd $repo; "
-  if [[ $quick == 0 ]]; then
-    cmd+="git fp; "
-  fi
-  cmd+="git st; exec $SHELL'"
 done
-cmd+="\; select-layout even-vertical"
+cmd+="select-layout even-vertical"
 
-eval "$cmd"
+eval "tmux ${(j:\; :)cmd}"
 
