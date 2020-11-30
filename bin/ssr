@@ -62,7 +62,6 @@ check_bin pg_format pgformatter
 if [ -n "$SSR_CHECK_NODE" ]; then
   echo
   check_bin nodemon
-  check_bin eslint
   check_bin prettier
   check_bin ncu         npm-check-updates
 fi
@@ -70,8 +69,8 @@ fi
 # go
 if [ -n "$SSR_CHECK_GO" ]; then
   echo
+  check_bin gofumpt
   check_bin goimports
-  check_bin golint
   check_bin golangci-lint
 fi
 

@@ -20,9 +20,18 @@ go-format() {
   local flag="${1:-"-l"}"
   gofmt -s "$flag" .
   goimports "$flag" .
+  gofumpt -s "$flag" .
 }
 
 go-src() {
   cd "$(go env GOROOT)/src"
+}
+
+go-tools-howto() {
+  cat <<END
+cd ~/go/
+go get mvdan.cc/gofumpt
+go get golang.org/x/tools/cmd/goimports
+END
 }
 
