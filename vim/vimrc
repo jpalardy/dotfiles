@@ -59,6 +59,9 @@ set noshowmode
 set showcmd
 set laststatus=2
 
+" tabs
+set tabpagemax=100
+
 if match($TERM, '256color$') != -1
   colorscheme 256_xoria
 endif
