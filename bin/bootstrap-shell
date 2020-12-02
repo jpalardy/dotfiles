@@ -1,0 +1,20 @@
+#!/bin/bash
+
+cat <<END
+
+(cat <<EOF
+
+syntax on
+
+set hlsearch
+set incsearch
+set ignorecase
+
+set nowrap
+
+EOF
+) >> ~/.vimrc
+
+
+END
+
