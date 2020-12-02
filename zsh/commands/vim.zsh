@@ -5,6 +5,7 @@ vim-() {
 }
 
 vimgrep() {
-  vim -c ":grep -i $*"
+  vim -q <(rg --vimgrep "$@")
 }
+alias vg=vimgrep
 
