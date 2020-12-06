@@ -23,7 +23,7 @@ set nomodeline
 
 " with git, ever needed?
 set directory^=~/.vim/swap  " where swap files go
-set noswapfile
+"set noswapfile -- back to swp, for now
 set nowritebackup
 set nobackup
 
