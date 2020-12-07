@@ -4,6 +4,22 @@ remove_casks() {
   awk -F'"' 'NR == FNR {lut[$0] = 1; next} !($2 in lut) {print}' <(brew list --cask) -
 }
 
-brew-graph.rb --installed --highlight-leaves | remove_casks | neato -Tpng -o brew-deps.png
+change_color_expected() {
+  awk '
+    NR == FNR {
+      key = "\"" $1 "\""
+      ignore[key] = 1
+      next
+    }
+
+    /fillcolor/ && ($1 in ignore) {
+      sub(/fillcolor="[^"]+"/, "fillcolor=\"#3BB3FF\"", $0)
+    }
+
+    { print }
+  ' "$@"
+}
+
+brew-graph.rb --installed --highlight-leaves | remove_casks | change_color_expected ~/.brew-ignore - | neato -Tpng -o brew-deps.png
 open brew-deps.png
 
