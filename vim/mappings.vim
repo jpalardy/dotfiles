@@ -45,9 +45,11 @@ nnoremap _B :call Preserve("g/^\\_$\\n\\_^$/d")<CR>
 
 " COMMATIZE
 vnoremap ,, :! paste -s -d, -<CR>
+" ARRAY-IFY
+vnoremap ,[ :! jq -R . \| jq -s . -c<CR>
 " QUOTISIZE
-vnoremap ,' :! awk '{print "'\''"$0"'\''"}'<CR>
-vnoremap ," :! awk '{print "\""$0"\""}'<CR>
+vnoremap ,' :! jq -R . \| sed -e "s/\"/'/g"<CR>
+vnoremap ," :! jq -R .<CR>
 " AWK
 vnoremap ,a :! awk '{print }'<LEFT><LEFT>
 
