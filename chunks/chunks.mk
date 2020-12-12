@@ -6,8 +6,18 @@
 # sample rule
 #-------------------------------------------------
 
+RMDs = $(wildcard *.Rmd)
+HTMLs = $(RMDs:.Rmd=.html)
+
 %.html: %.Rmd
 	R --vanilla --quiet -e 'rmarkdown::render("$<")'
+
+.PHONY: build
+build: $(HTMLs)
+
+.PHONY: clean
+clean:
+	rm -f report.html
 
 #-------------------------------------------------
 # 99% makefile -- http://nuclear.mutantstargoat.com/articles/make/

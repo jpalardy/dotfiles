@@ -4,23 +4,6 @@ pagetitle: "TITLE GOES HERE"
 
 ```{r setup, include=FALSE}
 
-#
-# Makefile
-#
-# RMDs = $(wildcard *.Rmd)
-# HTMLs = $(RMDs:.Rmd=.html)
-# 
-# %.html: %.Rmd
-# 	R --vanilla --quiet -e 'rmarkdown::render("$<")'
-# 
-# .PHONY: build
-# build: $(HTMLs)
-# 
-# .PHONY: clean
-# clean:
-# 	rm -f report.html
-#
-
 knitr::opts_chunk$set(
   fig.width=8,
   fig.align="center",
@@ -47,14 +30,17 @@ theme_set(
 
 ```{r loading-data, message=FALSE}
 
-d <- read_tsv("...",
-       col_names=c("...", "...") #,
-#       col_types=cols(
-         #"..." = col_datetime(),
-         #"..." = col_character(),
-         #"..." = col_factor(),
-         #"..." = col_number(),
-#     )
+#d <- read_tsv("...")
+d <- read_csv("...")
+
+#d <- read_tsv("...", col_names=c("...", "..."),
+d <- read_csv("...", col_names=c("...", "..."),
+       col_types=cols(
+         "..." = col_datetime(),
+         "..." = col_character(),
+         "..." = col_factor(),
+         "..." = col_number(),
+     )
 )
 
 ```
