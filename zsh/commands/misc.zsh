@@ -79,10 +79,10 @@ HOME() {
   if [[ "$force" = 1 || ! -e ~/.HOME ]]; then
     if [ $# = 0 ]; then
       find ~ 2>/dev/null > ~/.HOME
-      return
+      return 0
     fi
     find ~ 2>/dev/null | tee ~/.HOME | rg "$@"
-    return
+    return 0
   fi
   rg "${@:-"."}" ~/.HOME --no-line-number
 }
