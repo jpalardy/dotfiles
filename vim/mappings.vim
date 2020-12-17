@@ -68,9 +68,10 @@ noremap <up> gk
 noremap <down> gj
 
 " search next/previous -- center in page
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *Nzz
+" TODO still needed?
+"nnoremap n nzz
+"nnoremap N Nzz
+nnoremap * *N
 
 " search selected text
 vnoremap // y/<C-R>"<CR>
