@@ -20,3 +20,6 @@ ORDER BY col DESC;
 WHERE random() < 0.05
 LIMIT 30
 
+-- .pgpass @ 600
+-- hostname:port:database:username:password
+
