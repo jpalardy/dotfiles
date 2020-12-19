@@ -53,3 +53,11 @@ dep = $(obj:.o=.d)
 libfoo:
 	$(MAKE) -C libs/foo
 
+#-------------------------------------------------
+# required VAR
+#-------------------------------------------------
+
+ifndef VAR
+$(error VAR is not set)
+endif
+
