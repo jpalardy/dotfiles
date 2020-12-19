@@ -13,28 +13,15 @@ implode() {
   rm -rf "$target"
 }
 
-# 2020-10-28
-tmr() {
-  if [ $# -eq 0 ]; then
-    tmux
-    return
-  fi
-  tmux new-session "$*; exec $SHELL"
-}
-
-# 2020-10-30
-alias tm=tmux
-
-# 2020-11-02
-alias tmrw='tmux rename-window $PWD:t'
+# 2020-12-19
+alias tls="tmux ls"
 
 # 2020-11-12
 alias rsy="rsync -av --progress"
 
 # 2020-11-18
 git-switch-master-to-main() {
-  cat <<END
-
+  echo '
 FIRST TIME
 1. git branch -m master main
 2. git push -u origin main
@@ -47,7 +34,6 @@ FIRST TIME
 OTHER CLONES
 1. git branch -m master main
 2. git branch -u origin/main
-
-END
+'
 }
 
