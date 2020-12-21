@@ -10,9 +10,9 @@ i=0
 for repo in ${=REPOS}; do
   let i=i+1
   if [[ $i == 1 && -z $TMUX ]]; then
-    cmd+="new-session 'cd $repo; git fp; git st; exec $SHELL'"
+    cmd+="new-session 'cd $repo; git fp; git st; git incoming; exec $SHELL'"
   else
-    cmd+="split-window 'cd $repo; git fp; git st; exec $SHELL'"
+    cmd+="split-window 'cd $repo; git fp; git st; git incoming; exec $SHELL'"
   fi
 done
 cmd+="select-layout even-vertical"
