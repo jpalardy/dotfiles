@@ -17,7 +17,7 @@ git_diff() {
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(auto)%d%Creset %C(dim white)%an%Creset' --all"
 
 # inspired by https://preslav.me/2020/03/01/use-the-git-history/
-git-changes-count() {
+git-count-changes() {
   git log --name-only --format=format: "$@" | grep . | __count
 }
 
