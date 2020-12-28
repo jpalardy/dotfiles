@@ -8,12 +8,17 @@ BEGIN {
   print "  node [style=rounded, shape=box, fontname=Courier, fontsize=16];"
 }
 
-NF != 2 {
-  printf "*** line %d does not have 2 fields: %s\n", NR, $0 > "/dev/stderr"
+NF == 1 {
+  printf "  \"%s\";\n", $1
+  next
 }
 
-{
+NF == 2 {
   printf "  \"%s\" -> \"%s\";\n", $1, $2
+}
+
+NF > 2 {
+  printf "*** line %d has too many fields: %s\n", NF, $0 > "/dev/stderr"
 }
 
 END {
