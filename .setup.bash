@@ -28,13 +28,12 @@ relink .gitignore    "$DOTFILES/git/gitignore"
 relink .screenrc     "$DOTFILES/screenrc"
 relink .tmux.conf    "$DOTFILES/tmux.conf"
 
-relink .irbrc        "$DOTFILES/ruby/irbrc"
-relink .gemrc        "$DOTFILES/ruby/gemrc"
-
-relink .npmrc        "$DOTFILES/js/npmrc"
-relink .prettierrc   "$DOTFILES/js/prettierrc"
-
-relink .Rprofile     "$DOTFILES/r/Rprofile"
+# lang
+relink .irbrc        "$DOTFILES/lang/ruby/irbrc"
+relink .gemrc        "$DOTFILES/lang/ruby/gemrc"
+relink .npmrc        "$DOTFILES/lang/js/npmrc"
+relink .prettierrc   "$DOTFILES/lang/js/prettierrc"
+relink .Rprofile     "$DOTFILES/lang/r/Rprofile"
 
 relink .sqliterc     "$DOTFILES/sqliterc"
 

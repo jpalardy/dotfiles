@@ -3,10 +3,10 @@ lintify() {
   local lang="$1"
   case "$lang" in
     go)
-      cp -v "$DOTFILES/go/golangci.yml" .golangci.yml
+      cp -v "$DOTFILES/lang/go/golangci.yml" .golangci.yml
       ;;
     js)
-      cp -v "$DOTFILES/js/eslintrc" .eslintrc
+      cp -v "$DOTFILES/lang/js/eslintrc" .eslintrc
       npm install --save-dev eslint eslint-config-airbnb-base eslint-plugin-import
       ;;
     *)
