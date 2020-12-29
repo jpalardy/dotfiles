@@ -1,16 +1,20 @@
 #!/bin/bash
 
+first=1
+
 relink() {
   if [ "$(readlink "$HOME/$1")" = "$2" ]; then
     return
+  fi
+  if [[ $first = 1 ]]; then
+    echo "set -e"
+    first=0
   fi
   echo "rm -f $HOME/$1"
   echo "ln -s -v $2 $HOME/$1"
 }
 
 DOTFILES=$(pwd)
-
-echo "set -e"
 
 relink .bashrc       "$DOTFILES/bash/bashrc"
 relink .bash_profile "$DOTFILES/bash/bash_profile"
@@ -35,7 +39,7 @@ relink .npmrc        "$DOTFILES/lang/js/npmrc"
 relink .prettierrc   "$DOTFILES/lang/js/prettierrc"
 relink .Rprofile     "$DOTFILES/lang/r/Rprofile"
 
+# misc
 relink .sqliterc     "$DOTFILES/sqliterc"
-
 relink .slate        "$DOTFILES/slate"
 
