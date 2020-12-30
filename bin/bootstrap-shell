@@ -1,9 +1,6 @@
 #!/bin/bash
 
-cat <<END
-
-(cat <<EOF
-
+echo 'echo "
 syntax on
 
 set hlsearch
@@ -11,10 +8,5 @@ set incsearch
 set ignorecase
 
 set nowrap
-
-EOF
-) >> ~/.vimrc
-
-
-END
+" >> ~/.vimrc'
 
