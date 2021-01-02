@@ -4,7 +4,7 @@ chunks() {
     echo >&2 "missing extension"
     return 1
   fi
-  $EDITOR "$DOTFILES/chunks/chunks.$1"
+  $EDITOR -R "$DOTFILES/chunks/chunks.$1"
 }
 
 _chunks() {
