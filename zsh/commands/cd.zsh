@@ -29,7 +29,12 @@ cdl() {
 }
 
 cdf() {
-  run-not-blank cd $(ff | fzf -q "$1")
+  local flags
+  if [ "$1" = "-u" ]; then   # -u belongs to ff
+    flags="-u"
+    shift
+  fi
+  run-not-blank cd $(ff $flags | fzf -q "$1")
 }
 
 run-not-blank() {
