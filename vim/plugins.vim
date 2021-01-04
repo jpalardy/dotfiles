@@ -41,6 +41,7 @@ let g:ale_fixers['elixir']     = ['mix_format']
 let g:ale_fixers['rust']       = ['rustfmt']
 let g:ale_fixers['go']         = ['gofmt', 'goimports']
 let g:ale_fixers['elm']        = ['elm-format']
+let g:ale_fixers['html']       = ['prettier']
 
 let g:ale_linters = {}
 let g:ale_linters['typescript'] = ['tslint', 'tsserver']
