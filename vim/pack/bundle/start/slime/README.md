@@ -57,18 +57,23 @@ Usage
 
 Put your cursor over the text you want to send and type:
 
-    C-c, C-c       --- the same as slime
+<kbd>ctrl-c</kbd> <kbd>ctrl-c</kbd> _--- the same as slime_
 
-_You can just hold `Ctrl` and double-tap `c`._
+_(You can just hold `ctrl` and double-tap `c`.)_
 
-The current paragraph, what would be selected if you typed `vip`, is automatically
-selected. To control exactly what is sent, you can manually select text before calling vim-slime.
+The current paragraph — what would be selected if you typed `vip` — is automatically selected.
 
-Vim-slime needs to know where to send your text, it will prompt you. Vim-slime
-will remember your answers and won't prompt you again. But if you need to
-reconfigure, type:
+To control exactly what is sent, you can manually select text before calling vim-slime.
 
-    C-c, v         --- mnemonic: "variables"
+Config prompt
+--------------
+
+Vim-slime needs to know where to send your text, it will prompt you.
+It will remember your answers and won't prompt you again.
+
+But, if you want to reconfigure, to force the config prompt again, type:
+
+<kbd>ctrl-c</kbd> <kbd>v</kbd> _--- mnemonic: "variables"_
 
 or call:
 
@@ -177,6 +182,28 @@ kitty target window
 
     This is the id of the kitty window that you wish to target.
     See e.g. the value of $KITTY_WINDOW_ID in the target window.
+
+kitty listen on
+
+    Specifies where kitty should listen to control messages.
+    See e.g. the value of $KITTY_LISTEN_ON in the target window.
+
+    Can be left blank if:
+    - KITTY_LISTEN_ON is exported in the shell running vim
+    - running vim (but not nvim) inside kitty
+
+To work properly, `kitty` must also be started with the following options:
+
+```sh
+kitty -o allow_remote_control=yes --listen-on unix:/tmp/mykitty
+```
+
+See more [here](https://sw.kovidgoyal.net/kitty/remote-control.html). This can also be added to your `kitty.conf` file as:
+
+```
+allow_remote_control yes
+listen_on unix:/tmp/mykitty
+```
 
 ### X11
 
@@ -405,6 +432,7 @@ Many languages are supported without modifications, while [others](ftplugin)
 might tweak the text without explicit configuration:
 
   * [coffee-script](ftplugin/coffee/slime.vim)
+  * [elm](ftplugin/elm/slime.vim)
   * [fsharp](ftplugin/fsharp/slime.vim)
   * [haskell](ftplugin/haskell/slime.vim) / [lhaskell](ftplugin/haskell/slime.vim) -- [README](ftplugin/haskell)
   * [matlab](ftplugin/matlab/slime.vim)
