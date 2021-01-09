@@ -23,6 +23,10 @@ alias whence="whence -avS"
 
 alias ding='ding $?'
 
+alias tls="tmux ls"
+
+alias rsy="rsync -av --progress"
+
 inet() {
   if command -v ip > /dev/null; then
     ip addr | grep --color -E 'inet[^6].*|$'
