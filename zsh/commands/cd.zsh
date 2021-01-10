@@ -29,13 +29,29 @@ cdl() {
 }
 
 cdf() {
-  local flags
-  if [ "$1" = "-u" ]; then   # -u belongs to ff
-    flags="-u"
-    shift
+  local vim_after=0
+  local ff_flags=""
+  while true; do
+    if [ "$1" = "-u" ]; then   # -u belongs to ff
+      ff_flags="-u"
+      shift
+      continue
+    fi
+    if [ "$1" = "-v" ]; then   # -v belongs to "vim"
+      vim_after=1
+      shift
+      continue
+    fi
+    break
+  done
+  local target
+  target=$(ff $ff_flags | fzf -q "$1")
+  run-not-blank cd "$target"
+  if [ $vim_after = 1 ]; then
+    run-not-blank vim "${target:t}"
   fi
-  run-not-blank cd $(ff $flags | fzf -q "$1")
 }
+alias cdfv="cdf -v"
 
 run-not-blank() {
   if [ $# -lt 2 ]; then
