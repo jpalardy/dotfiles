@@ -13,3 +13,6 @@ implode() {
   rm -rf "$target"
 }
 
+# 2021-01-13
+alias -g _F='"$(fzf)"'
+
