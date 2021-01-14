@@ -24,6 +24,18 @@ bu() {
   )
 }
 
+# cd .. until a .git directory is found
+cd_() {
+  local p=$PWD
+  while [ $p != "/" ]; do
+    if [ -d "$p/.git" ]; then
+      cd "$p"
+      break
+    fi
+    p=${p:h}
+  done
+}
+
 cdl() {
   run-not-blank cd $(ls | fzf -q "$1")
 }
