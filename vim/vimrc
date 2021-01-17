@@ -17,6 +17,7 @@ set backspace=indent,eol,start
 set nowrap
 set linebreak
 set listchars=eol:$,nbsp:%
+set cursorline
 
 " don't load modelines...
 set nomodeline
