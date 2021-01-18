@@ -42,10 +42,12 @@ let g:ale_fixers['rust']       = ['rustfmt']
 let g:ale_fixers['go']         = ['gofmt', 'goimports']
 let g:ale_fixers['elm']        = ['elm-format']
 let g:ale_fixers['html']       = ['prettier']
+let g:ale_fixers['python']     = ['yapf']
 
 let g:ale_linters = {}
 let g:ale_linters['typescript'] = ['tslint', 'tsserver']
 let g:ale_linters['go']         = ['gofmt', 'govet']
+let g:ale_linters['python']     = ['flake8', 'pylint']
 "let g:ale_linters['rust'] = ['rustc', 'rustfmt']
 
 nnoremap ,f :ALEFix<CR>
