@@ -1,0 +1,33 @@
+#!/bin/bash
+
+jq . "$@" | awk '
+
+# start of an array, print with whitespace
+/\[$/ {
+  inside_array = 1
+  printf "%s", $0
+  next
+}
+
+# closing array, ltrim only
+/^ +]/ {
+  inside_array = 0
+  sub(/^ +/, "")
+  print
+  next
+}
+
+# trim inside array
+inside_array {
+  sub(/^ +/, "")
+  printf "%s", $0
+  next
+}
+
+# non-array lines
+{
+  print
+}
+
+'
+
