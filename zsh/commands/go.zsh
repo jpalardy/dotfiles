@@ -28,10 +28,10 @@ go-src() {
 }
 
 go-tools-howto() {
-  cat <<END
-cd ~/go/
-go get mvdan.cc/gofumpt
-go get golang.org/x/tools/cmd/goimports
-END
+  echo '
+    cd ~/go/
+    go get mvdan.cc/gofumpt
+    go get golang.org/x/tools/cmd/goimports
+  '
 }
 

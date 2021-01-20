@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cat "$@" | awk '
+awk '
 {
   gsub(" [|][>] ", " |>\n  ", $0)
   print
 }
-'
+' "$@"
 
