@@ -18,6 +18,7 @@ set nowrap
 set linebreak
 set listchars=eol:$,nbsp:%
 set cursorline
+set cursorlineopt=number
 
 " don't load modelines...
 set nomodeline
