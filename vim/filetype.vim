@@ -5,6 +5,7 @@ augroup other_filetypedetect
   autocmd BufNewFile,BufRead *.deck      setf deck
   autocmd BufNewFile,BufRead *.moe       setf moe
   autocmd BufNewFile,BufRead *.mxm       setf maxima
+  autocmd BufNewFile,BufRead *.csv       setf csv
 augroup END
 
 augroup cursor_position
