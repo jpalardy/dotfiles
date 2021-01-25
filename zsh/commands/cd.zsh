@@ -2,6 +2,10 @@
 # wrap `cd`, add behaviors
 cd() {
   local dest="${@:-"$HOME"}"
+  if [ "$dest" = "_" ]; then
+    cd_ "$dest"
+    return
+  fi
   if [ -f "$dest" ]; then
     dest=${dest:h}
   fi
