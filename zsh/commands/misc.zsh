@@ -4,6 +4,7 @@ alias ll='ls -l'
 alias l='ls -l'
 
 alias -g _V='|& vim -R -'
+alias -g _T="\$(date +%F)"
 
 alias reload!="source ~/.zshrc"
 
