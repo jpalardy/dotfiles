@@ -15,9 +15,7 @@ tad() {
         ;;
     esac
   done
-  local ts
-  ts=$(date +%s)
-  local d="$HOME/.throw-away/$ts"
+  local d="$HOME/.throw-away/$(date +%s)"
   mkdir -p "$d"
   (
     cd "$d" || exit
