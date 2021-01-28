@@ -19,7 +19,6 @@ h() {
 
 alias grep='grep -E --color=auto'
 alias sed='sed -E'
-alias fzf="fzf --reverse --info=hidden --height=20 --cycle"
 alias whence="whence -avS"
 
 alias ding='ding $?'

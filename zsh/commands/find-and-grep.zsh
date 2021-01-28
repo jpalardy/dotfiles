@@ -27,3 +27,9 @@ find-empty() {
   find . -type "${1:-f}" -empty
 }
 
+#-------------------------------------------------
+# fzf
+#-------------------------------------------------
+
+export FZF_DEFAULT_OPTS='--reverse --info=hidden --height=20 --cycle --border --multi'
+
