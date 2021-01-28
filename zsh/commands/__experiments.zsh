@@ -13,3 +13,11 @@ implode() {
   rm -rf "$target"
 }
 
+# 2021-01-28
+tcd() {
+  tmux capture-pane -b temp-capture-buffer "$@"
+  tmux save-buffer -b temp-capture-buffer -
+  tmux delete-buffer -b capture-buffer
+}
+alias tcd="tcd -t {last}"
+
