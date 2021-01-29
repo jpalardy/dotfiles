@@ -25,7 +25,7 @@ git_heads_() {
 }
 
 # inspired by https://preslav.me/2020/03/01/use-the-git-history/
-git-count-changes() {
+git-cc() {
   git log --name-only --format=format: "$@" | grep . | __count
 }
 
