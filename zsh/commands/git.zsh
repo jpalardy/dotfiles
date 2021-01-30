@@ -10,10 +10,6 @@ gcp() {
   git commit -av -m '-' && git push
 }
 
-git_diff() {
-  git diff -w "$@" | vim -R -
-}
-
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(auto)%d%Creset %C(dim white)%an%Creset' \$(git_heads_)"
 
 git_heads_() {
@@ -28,6 +24,7 @@ git_heads_() {
 git-cc() {
   git log --name-only --format=format: "$@" | grep . | __count
 }
+compdef _git git-cc=git_log
 
 git-switch-master-to-main() {
   echo '
