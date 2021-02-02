@@ -38,6 +38,11 @@ theme(
 
 scale_x_datetime(breaks=date_breaks("week"), labels=date_format("%m/%d"))
 
+# details from: ?strptime
+# %b / %B -- short/full month
+# %F -- %Y-%m-%d
+# %T -- %H:%M:%S
+
 #-------------------------------------------------
 # HTML table for tibbles
 #-------------------------------------------------

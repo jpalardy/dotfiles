@@ -10,12 +10,11 @@ knitr::opts_chunk$set(
   fig.asp=0.618,
   out.width="100%",
   echo=FALSE,
-  #cache=TRUE, -- FALSE by default
   comment=""
 )
 
 library(tidyverse)
-#library(lubridate)
+library(lubridate)
 library(scales)
 
 theme_set(
