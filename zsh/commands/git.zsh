@@ -10,6 +10,10 @@ gcp() {
   git commit -av -m '-' && git push
 }
 
+git_diff() {
+  git diff "$@" |& vim -R -
+}
+
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(auto)%d%Creset %C(dim white)%an%Creset' \$(git_heads_)"
 
 git_heads_() {
