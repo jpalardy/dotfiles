@@ -7,3 +7,5 @@ linters:
     - lll
     - nlreturn
     - godot
+    - gci
+    - testpackage
