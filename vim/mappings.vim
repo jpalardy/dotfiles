@@ -125,3 +125,9 @@ nnoremap ,c :call RotateColorscheme()<cr>
 
 command Gzz windo normal Gzz
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" GIT
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap ,s :vert botright Git<cr>
+

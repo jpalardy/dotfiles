@@ -22,7 +22,6 @@
   gone      = !git branch -vv | grep ': gone'
   gd        = !git branch -vv | awk '/: gone/ {print $1}' | xargs --no-run-if-empty -n1 git branch -D
   untracked = ls-files --others --exclude-standard
-  av        = !vim -c 'Gstatus | only'
 [diff]
   noprefix = true
   tool = vimdiff
