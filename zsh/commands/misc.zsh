@@ -94,5 +94,8 @@ HOME() {
 
 #-------------------------------------------------
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+for f in /usr/local/opt/fzf/shell/key-bindings.zsh \
+         /usr/share/doc/fzf/examples/key-bindings.zsh; do
+  [ -f "$f" ] && source "$f"
+done
 
