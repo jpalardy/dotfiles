@@ -1,5 +1,6 @@
 awscli
 bat
+cloc
 coreutils
 derailed/k9s/k9s
 dos2unix

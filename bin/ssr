@@ -45,6 +45,7 @@ check_bin tree
 check_bin pstree
 check_bin entr
 check_bin tldr
+check_bin cloc
 echo
 
 # linters in npm
