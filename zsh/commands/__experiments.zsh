@@ -23,3 +23,6 @@ tcd() {
 }
 alias tcd="tcd -t {last}"
 
+# 2021-02-09
+alias dead-links='find . -xtype l'
+
