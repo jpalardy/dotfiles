@@ -14,6 +14,8 @@ implode() {
 }
 
 # 2021-01-28
+# reset -- if sourced multiple times
+unalias tcd 2>/dev/null
 tcd() {
   tmux capture-pane -b temp-capture-buffer "$@"
   tmux save-buffer -b temp-capture-buffer -
