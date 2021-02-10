@@ -231,6 +231,8 @@ let s:delimiterMap = {
     \ 'jgraph': { 'left': '(*', 'right': '*)' },
     \ 'jinja': { 'left': '{#', 'right': '#}', 'leftAlt': '<!--', 'rightAlt': '-->' },
     \ 'jproperties': { 'left': '#' },
+    \ 'jsonc': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
+    \ 'jsonnet': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'jsp': { 'left': '<%--', 'right': '--%>' },
     \ 'julia': { 'left': '# ', 'leftAlt': '#=', 'rightAlt': '=#' },
     \ 'kivy': { 'left': '#' },
@@ -292,6 +294,7 @@ let s:delimiterMap = {
     \ 'newlisp': { 'left': ';' },
     \ 'nginx': { 'left': '#' },
     \ 'nimrod': { 'left': '#' },
+    \ 'nix': { 'left': '#' },
     \ 'nroff': { 'left': '\"' },
     \ 'nsis': { 'left': '#' },
     \ 'ntp': { 'left': '#' },
@@ -350,12 +353,13 @@ let s:delimiterMap = {
     \ 'rc': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'rebol': { 'left': ';' },
     \ 'registry': { 'left': ';' },
+    \ 'rego': { 'left': '#' },
     \ 'remind': { 'left': '#' },
     \ 'renpy': { 'left': '# ' },
     \ 'resolv': { 'left': '#' },
     \ 'rgb': { 'left': '!' },
     \ 'rib': { 'left': '#' },
-    \ 'rmd': { 'left': '<!--', 'right': '-->', 'leftalt': '#' },
+    \ 'rmd': { 'left': '<!--', 'right': '-->', 'leftAlt': '#' },
     \ 'robot': { 'left': '#' },
     \ 'robots': { 'left': '#' },
     \ 'rspec': { 'left': '#' },
@@ -703,7 +707,7 @@ function s:CommentBlock(top, bottom, lSide, rSide, forceNested )
     "alternative delimiters (if THEY are) as the comment will be better and more
     "accurate with multipart delimiters
     let switchedDelims = 0
-    if !s:Multipart() && g:NERDAllowAnyVisualDelims && s:AltMultipart()
+    if !s:Multipart() && !g:NERDAllowAnyVisualDelims && s:AltMultipart()
         let switchedDelims = 1
         call s:SwitchToAlternativeDelimiters(0)
     endif
@@ -2149,7 +2153,7 @@ endfunction
 " Function: s:Esc(str)
 " Escapes all the tricky chars in the given string
 function s:Esc(str)
-    let charsToEsc = '*/\."&$+'
+    let charsToEsc = '*/\."&$+[]'
     return escape(a:str, charsToEsc)
 endfunction
 

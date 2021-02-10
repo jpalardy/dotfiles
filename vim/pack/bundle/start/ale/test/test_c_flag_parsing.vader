@@ -38,6 +38,14 @@ Execute(The make command should be correct):
   \   . 'make -n',
   \ ale#c#GetMakeCommand(bufnr(''))
 
+Execute(Should recognize GNUmakefile as a makefile):
+  call ale#test#SetFilename('test_c_projects/gnumakefile_project/file.c')
+
+  AssertEqual
+  \ ale#path#CdString(ale#path#Simplify(g:dir. '/test_c_projects/gnumakefile_project'))
+  \   . 'make -n --always-make',
+  \ ale#c#GetMakeCommand(bufnr(''))
+
 Execute(The CFlags parser should be able to parse include directives):
   call ale#test#SetFilename('test_c_projects/makefile_project/subdir/file.c')
 
@@ -482,6 +490,7 @@ Execute(We should include several important flags):
   \ . ' -idirafter ' . ale#Escape(ale#path#Simplify(g:dir. '/test_c_projects/makefile_project/incafter'))
   \ . ' -iframework ' . ale#Escape(ale#path#Simplify(g:dir . '/test_c_projects/makefile_project/incframework'))
   \ . ' -include ' . ale#Escape(ale#path#Simplify(g:dir . '/test_c_projects/makefile_project/foo bar'))
+  \ . ' -imacros ' . ale#Escape(ale#path#Simplify(g:dir . '/test_c_projects/makefile_project/incmacros'))
   \ . ' -Dmacro="value"'
   \ . ' -DGoal=9'
   \ . ' -D macro2'
@@ -511,6 +520,8 @@ Execute(We should include several important flags):
   \     'incframework',
   \     '-include',
   \     '''foo bar''',
+  \     '-imacros',
+  \     'incmacros',
   \     '-Dmacro="value"',
   \     '-DGoal=9',
   \     '-D',
@@ -559,6 +570,7 @@ Execute(We should quote the flags we need to quote):
   \ . ' -idirafter ' . ale#Escape(ale#path#Simplify(g:dir. '/test_c_projects/makefile_project/incafter'))
   \ . ' -iframework ' . ale#Escape(ale#path#Simplify(g:dir . '/test_c_projects/makefile_project/incframework'))
   \ . ' -include ' . ale#Escape(ale#path#Simplify(g:dir . '/test_c_projects/makefile_project/foo bar'))
+  \ . ' -imacros ' . ale#Escape(ale#path#Simplify(g:dir . '/test_c_projects/makefile_project/incmacros'))
   \ . ' ' . ale#Escape('-Dmacro="value"')
   \ . ' -DGoal=9'
   \ . ' -D macro2'
@@ -591,6 +603,8 @@ Execute(We should quote the flags we need to quote):
   \     'incframework',
   \     '-include',
   \     '''foo bar''',
+  \     '-imacros',
+  \     'incmacros',
   \     '-Dmacro="value"',
   \     '-DGoal=9',
   \     '-D',

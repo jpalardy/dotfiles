@@ -38,11 +38,13 @@ let s:default_ale_linter_aliases = {
 "
 " NOTE: Update the g:ale_linters documentation when modifying this.
 let s:default_ale_linters = {
+\   'apkbuild': ['apkbuild_lint', 'secfixes_check'],
 \   'csh': ['shell'],
 \   'elixir': ['credo', 'dialyxir', 'dogma'],
 \   'go': ['gofmt', 'golint', 'go vet'],
 \   'hack': ['hack'],
 \   'help': [],
+\   'inko': ['inko'],
 \   'perl': ['perlcritic'],
 \   'perl6': [],
 \   'python': ['flake8', 'mypy', 'pylint', 'pyright'],
@@ -392,6 +394,16 @@ function! ale#linter#Get(original_filetypes) abort
     endfor
 
     return reverse(l:combined_linters)
+endfunction
+
+function! ale#linter#RemoveIgnored(buffer, filetype, linters) abort
+    " Apply ignore lists for linters only if needed.
+    let l:ignore_config = ale#Var(a:buffer, 'linters_ignore')
+    let l:disable_lsp = ale#Var(a:buffer, 'disable_lsp')
+
+    return !empty(l:ignore_config) || l:disable_lsp
+    \   ? ale#engine#ignore#Exclude(a:filetype, a:linters, l:ignore_config, l:disable_lsp)
+    \   : a:linters
 endfunction
 
 " Given a buffer and linter, get the executable String for the linter.

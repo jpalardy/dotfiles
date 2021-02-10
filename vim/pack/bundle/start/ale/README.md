@@ -1,4 +1,4 @@
-# Asynchronous Lint Engine [![Travis CI Build Status](https://travis-ci.com/dense-analysis/ale.svg?branch=master)](https://travis-ci.com/dense-analysis/ale) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/r0ef1xu8xjmik58d/branch/master?svg=true)](https://ci.appveyor.com/project/dense-analysis/ale) [![Join the chat at https://gitter.im/vim-ale/Lobby](https://badges.gitter.im/vim-ale/Lobby.svg)](https://gitter.im/vim-ale/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Asynchronous Lint Engine [![GitHub Build Status](https://github.com/dense-analysis/ale/workflows/CI/badge.svg)](https://github.com/dense-analysis/ale/actions?query=event%3Apush+workflow%3ACI+branch%3Amaster++) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/r0ef1xu8xjmik58d/branch/master?svg=true)](https://ci.appveyor.com/project/dense-analysis/ale) [![Join the chat at https://gitter.im/vim-ale/Lobby](https://badges.gitter.im/vim-ale/Lobby.svg)](https://gitter.im/vim-ale/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 ![ALE Logo by Mark Grealish - https://www.bhalash.com/](https://user-images.githubusercontent.com/3518142/59195920-2c339500-8b85-11e9-9c22-f6b7f69637b8.jpg)
@@ -53,6 +53,7 @@ other content at [w0rp.com](https://w0rp.com).
     5. [Find References](#usage-find-references)
     6. [Hovering](#usage-hover)
     7. [Symbol Search](#usage-symbol-search)
+    8. [Refactoring: Rename, Actions](#usage-refactoring)
 3. [Installation](#installation)
     1. [Installation with Vim package management](#standard-installation)
     2. [Installation with Pathogen](#installation-with-pathogen)
@@ -253,6 +254,18 @@ similar to a given query string.
 
 See `:help ale-symbol-search` for more information.
 
+<a name="usage-refactoring"></a>
+
+### 2.viii Refactoring: Rename, Actions
+
+ALE supports renaming symbols in symbols in code such as variables or class
+names with the `ALERename` command.
+
+`ALECodeAction` will execute actions on the cursor or applied to a visual
+range selection, such as automatically fixing errors.
+
+See `:help ale-refactor` for more information.
+
 <a name="installation"></a>
 
 ## 3. Installation
@@ -328,11 +341,13 @@ git clone https://github.com/dense-analysis/ale.git
 ### 3.iii. Installation with Vundle
 
 You can install this plugin using [Vundle](https://github.com/VundleVim/Vundle.vim)
-by using the path on GitHub for this repository.
+by adding the GitHub path for this repository to your `~/.vimrc`:
 
 ```vim
 Plugin 'dense-analysis/ale'
 ```
+
+Then run the command `:PluginInstall` in Vim.
 
 See the Vundle documentation for more information.
 
@@ -341,12 +356,15 @@ See the Vundle documentation for more information.
 ### 3.iiii. Installation with Vim-Plug
 
 You can install this plugin using [Vim-Plug](https://github.com/junegunn/vim-plug)
-by adding the GitHub path for this repository to your `~/.vimrc`
-and running `:PlugInstall`.
+by adding the GitHub path for this repository to your `~/.vimrc`:
 
 ```vim
 Plug 'dense-analysis/ale'
 ```
+
+Then run the command `:PlugInstall` in Vim.
+
+See the Vim-Plug documentation for more information.
 
 <a name="contributing"></a>
 

@@ -34,7 +34,11 @@ endfunction
 function! s:HandleLSPDiagnostics(conn_id, response) abort
     let l:linter_name = s:lsp_linter_map[a:conn_id]
     let l:filename = ale#path#FromURI(a:response.params.uri)
-    let l:buffer = bufnr('^' . l:filename . '$')
+    let l:escaped_name = escape(
+    \   fnameescape(l:filename),
+    \   has('win32') ? '^' : '^,}]'
+    \)
+    let l:buffer = bufnr('^' . l:escaped_name . '$')
     let l:info = get(g:ale_buffer_info, l:buffer, {})
 
     if empty(l:info)
@@ -52,7 +56,11 @@ endfunction
 
 function! s:HandleTSServerDiagnostics(response, error_type) abort
     let l:linter_name = 'tsserver'
-    let l:buffer = bufnr('^' . a:response.body.file . '$')
+    let l:escaped_name = escape(
+    \   fnameescape(a:response.body.file),
+    \   has('win32') ? '^' : '^,}]'
+    \)
+    let l:buffer = bufnr('^' . l:escaped_name . '$')
     let l:info = get(g:ale_buffer_info, l:buffer, {})
 
     if empty(l:info)
@@ -77,12 +85,18 @@ function! s:HandleTSServerDiagnostics(response, error_type) abort
         endif
 
         let l:info.syntax_loclist = l:thislist
-    else
+    elseif a:error_type is# 'semantic'
         if len(l:thislist) is 0 && len(get(l:info, 'semantic_loclist', [])) is 0
             let l:no_changes = 1
         endif
 
         let l:info.semantic_loclist = l:thislist
+    else
+        if len(l:thislist) is 0 && len(get(l:info, 'suggestion_loclist', [])) is 0
+            let l:no_changes = 1
+        endif
+
+        let l:info.suggestion_loclist = l:thislist
     endif
 
     if l:no_changes
@@ -90,6 +104,7 @@ function! s:HandleTSServerDiagnostics(response, error_type) abort
     endif
 
     let l:loclist = get(l:info, 'semantic_loclist', [])
+    \   + get(l:info, 'suggestion_loclist', [])
     \   + get(l:info, 'syntax_loclist', [])
 
     call ale#engine#HandleLoclist(l:linter_name, l:buffer, l:loclist, 0)
@@ -142,6 +157,10 @@ function! ale#lsp_linter#HandleLSPResponse(conn_id, response) abort
     elseif get(a:response, 'type', '') is# 'event'
     \&& get(a:response, 'event', '') is# 'syntaxDiag'
         call s:HandleTSServerDiagnostics(a:response, 'syntax')
+    elseif get(a:response, 'type', '') is# 'event'
+    \&& get(a:response, 'event', '') is# 'suggestionDiag'
+    \&& get(g:, 'ale_lsp_suggestions', '1') == 1
+        call s:HandleTSServerDiagnostics(a:response, 'suggestion')
     endif
 endfunction
 
