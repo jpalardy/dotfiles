@@ -1,0 +1,22 @@
+#!/bin/bash
+
+COUNTDOWN=0
+
+while getopts "c:" opt; do
+  case "$opt" in
+    c) COUNTDOWN=$OPTARG
+       ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+if [ "$COUNTDOWN" != 0 ]; then
+  # early quit
+  if ! utimer -c "$COUNTDOWN"; then
+    exit
+  fi
+fi
+
+say "${@:-done}"
+
