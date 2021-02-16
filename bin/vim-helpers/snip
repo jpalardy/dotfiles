@@ -97,6 +97,7 @@ BEGIN {
   # elixir
   #-------------------------------------------------
   snip("elixir:defm", "defmodule")
+  snip("elixir:gs",   "GenServer")
   # loop {
   snip("eelixir:_", "<%=▒ %>")
   snip("eelixir:<%=", "<%#")
