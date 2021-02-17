@@ -68,9 +68,8 @@ vnoremap #  :call NERDComment(1, "toggle")<CR>
 nnoremap # V:call NERDComment(1, "toggle")<CR>
 
 let g:NERDCustomDelimiters = {}
-let g:NERDCustomDelimiters['rmd'] = {'left': '# '}
-let g:NERDCustomDelimiters['ruby'] = {'left': '# '}
-let g:NERDCustomDelimiters['go'] = {'left': '// '}
+let g:NERDCustomDelimiters['rmd'] = {'left': '#'}
+let g:NERDSpaceDelims = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " bag
