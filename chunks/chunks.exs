@@ -24,3 +24,13 @@ end
 
 #-------------------------------------------------
 
+defmodule SomeApp do
+  use Application
+
+  # https://hexdocs.pm/elixir/Application.html#c:start/2
+  def start(_type, _args) do
+    children = []
+    Supervisor.start_link(children, strategy: :one_for_one) # :rest_for_one, :one_for_all
+  end
+end
+
