@@ -17,9 +17,6 @@
   rl        = remote -v
   fp        = fetch --prune
   who       = config --get user.email
-  mp        = merge --no-commit --no-ff
-  ma        = merge --abort
-  gone      = !git branch -vv | grep ': gone'
   gd        = !git branch -vv | awk '/: gone/ {print $1}' | xargs --no-run-if-empty -n1 git branch -D
   untracked = ls-files --others --exclude-standard
 [diff]
