@@ -28,3 +28,5 @@
   excludesfile = ~/.gitignore
 [init]
   defaultBranch = main
+[rebase]
+  autosquash = true
