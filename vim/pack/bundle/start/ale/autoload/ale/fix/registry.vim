@@ -32,6 +32,11 @@ let s:default_registry = {
 \       'suggested_filetypes': ['python'],
 \       'description': 'Fix PEP8 issues with black.',
 \   },
+\   'buildifier': {
+\       'function': 'ale#fixers#buildifier#Fix',
+\       'suggested_filetypes': ['bzl'],
+\       'description': 'Format BUILD and .bzl files with buildifier.',
+\   },
 \   'deno': {
 \       'function': 'ale#fixers#deno#Fix',
 \       'suggested_filetypes': ['typescript'],
@@ -107,7 +112,7 @@ let s:default_registry = {
 \   },
 \   'prettier': {
 \       'function': 'ale#fixers#prettier#Fix',
-\       'suggested_filetypes': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'json5', 'graphql', 'markdown', 'vue', 'html', 'yaml', 'openapi'],
+\       'suggested_filetypes': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'json5', 'graphql', 'markdown', 'vue', 'html', 'yaml', 'openapi', 'ruby'],
 \       'description': 'Apply prettier to a file.',
 \   },
 \   'prettier_eslint': {

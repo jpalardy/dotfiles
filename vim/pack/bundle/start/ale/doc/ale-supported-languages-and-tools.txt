@@ -43,6 +43,8 @@ Notes:
   * `shfmt`
 * Bats
   * `shellcheck`
+* Bazel
+  * `buildifier`
 * BibTeX
   * `bibclean`
 * Bourne Shell
@@ -148,8 +150,10 @@ Notes:
   * `ruumba`
 * Erlang
   * `SyntaxErl`
+  * `dialyzer`
   * `elvis`!!
   * `erlc`
+  * `erlfmt`
 * Fish
   * `fish` (-n flag)
   * `fish_indent`
@@ -329,6 +333,7 @@ Notes:
 * OCaml
   * `merlin` (see |ale-ocaml-merlin|)
   * `ocamlformat`
+  * `ocamllsp`
   * `ocp-indent`
   * `ols`
 * OpenApi
@@ -431,6 +436,7 @@ Notes:
 * Ruby
   * `brakeman`
   * `debride`
+  * `prettier`
   * `rails_best_practices`!!
   * `reek`
   * `rubocop`

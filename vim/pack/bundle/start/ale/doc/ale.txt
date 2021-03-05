@@ -342,6 +342,12 @@ the buffers being checked.
 When a |Dictionary| is returned for an |ALEFix| callback, the following keys
 are supported for running the commands.
 
+  `cwd`                 An optional |String| for setting the working directory
+                      for the command.
+
+                      If not set, or `v:null`, the `cwd` of the last command
+                      that spawn this one will be used.
+
   `command`             A |String| for the command to run. This key is required.
 
                       When `%t` is included in a command string, a temporary
@@ -647,7 +653,8 @@ Hover information can be displayed in the preview window instead by setting
 |g:ale_hover_to_preview| to `1`.
 
 When using Neovim, if |g:ale_hover_to_floating_preview| or |g:ale_floating_preview|
-is set to 1, the hover information will show in a floating window.
+is set to 1, the hover information will show in a floating window. And
+|g:ale_floating_window_border| for the border setting.
 
 For Vim 8.1+ terminals, mouse hovering is disabled by default. Enabling
 |balloonexpr| commands in terminals can cause scrolling issues in terminals,
@@ -957,8 +964,8 @@ g:ale_default_navigation                             *g:ale_default_navigation*
   buffer, such as for |ALEFindReferences|, or |ALEGoToDefinition|.
 
 
-g:ale_detail_to_floating_preview                            *g:ale_detail_to_floating_preview*
-                                                            *b:ale_detail_to_floating_preview*
+g:ale_detail_to_floating_preview             *g:ale_detail_to_floating_preview*
+                                             *b:ale_detail_to_floating_preview*
   Type: |Number|
   Default: `0`
 
@@ -1189,7 +1196,7 @@ g:ale_fix_on_save_ignore                             *g:ale_fix_on_save_ignore*
   let g:ale_fix_on_save_ignore = [g:AddBar]
 <
 
-g:ale_floating_preview                                       *g:ale_floating_preview*
+g:ale_floating_preview                                 *g:ale_floating_preview*
 
   Type: |Number|
   Default: `0`
@@ -1197,6 +1204,19 @@ g:ale_floating_preview                                       *g:ale_floating_pre
   When set to `1`, Neovim will use a floating window for ale's preview window.
   This is equivalent to setting |g:ale_hover_to_floating_preview| and
   |g:ale_detail_to_floating_preview| to `1`.
+
+
+g:ale_floating_window_border                       *g:ale_floating_window_border*
+
+  Type: |List|
+  Default: `['|', '-', '+', '+', '+', '+']`
+
+  When set to `[]`, window borders are disabled. The elements in the list set
+  the horizontal, top, top-left, top-right, bottom-right and bottom-left
+  border characters, respectively.
+
+  If the terminal supports Unicode, you might try setting the value to
+  ` ['│', '─', '╭', '╮', '╯', '╰']`, to make it look nicer.
 
 
 g:ale_history_enabled                                   *g:ale_history_enabled*
@@ -1257,8 +1277,8 @@ g:ale_hover_to_preview                                 *g:ale_hover_to_preview*
   instead of in balloons or the message line.
 
 
-g:ale_hover_to_floating_preview                       *g:ale_hover_to_floating_preview*
-                                                      *b:ale_hover_to_floating_preview*
+g:ale_hover_to_floating_preview               *g:ale_hover_to_floating_preview*
+                                              *b:ale_hover_to_floating_preview*
   Type: |Number|
   Default: `0`
 
@@ -1718,24 +1738,6 @@ g:ale_lsp_suggestions                                   *g:ale_lsp_suggestions*
   addition to warnings and errors.
 
 
-g:ale_lsp_root                                                 *g:ale_lsp_root*
-                                                               *b:ale_lsp_root*
-
-  Type: |Dictionary| or |String|
-  Default: {}
-
-  This option is used to determine the project root for the LSP linter. If the
-  value is a |Dictionary|, it maps a linter to either a string containing the
-  project root or a |Funcref| to call to look up the root. The funcref is
-  provided the buffer number as its argument.
-
-  The buffer-specific variable may additionally be a string containing the
-  project root itself.
-
-  If neither variable yields a result, a linter-specific function is invoked to
-  detect a project root. If this, too, yields no result, the linter is disabled.
-
-
 g:ale_max_buffer_history_size                   *g:ale_max_buffer_history_size*
 
   Type: |Number|
@@ -1878,6 +1880,25 @@ g:ale_rename_tsserver_find_in_strings   *g:ale_rename_tsserver_find_in_strings*
   If enabled, this option will tell tsserver to find and replace text in
   strings when calling |ALERename|. It can be enabled by settings the value to
   `1`.
+
+
+g:ale_root                                                         *g:ale_root*
+                                                                   *b:ale_root*
+
+  Type: |Dictionary| or |String|
+  Default: {}
+
+  This option is used to determine the project root for a linter. If the value
+  is a |Dictionary|, it maps a linter to either a |String| containing the
+  project root or a |Funcref| to call to look up the root. The |Funcref| is
+  provided the buffer number as its argument.
+
+  The buffer-specific variable may additionally be a string containing the
+  project root itself.
+
+  If neither variable yields a result, a linter-specific function is invoked to
+  detect a project root. If this, too, yields no result, and the linter is an
+  LSP linter, it will not run.
 
 
 g:ale_set_balloons                                         *g:ale_set_balloons*
@@ -2614,6 +2635,8 @@ documented in additional help files.
     gawk..................................|ale-awk-gawk|
   bats....................................|ale-bats-options|
     shellcheck............................|ale-bats-shellcheck|
+  bazel...................................|ale-bazel-options|
+    buildifier............................|ale-bazel-buildifier|
   bib.....................................|ale-bib-options|
     bibclean..............................|ale-bib-bibclean|
   c.......................................|ale-c-options|
@@ -2695,6 +2718,7 @@ documented in additional help files.
     dialyzer..............................|ale-erlang-dialyzer|
     elvis.................................|ale-erlang-elvis|
     erlc..................................|ale-erlang-erlc|
+    erlfmt................................|ale-erlang-erlfmt|
     syntaxerl.............................|ale-erlang-syntaxerl|
   eruby...................................|ale-eruby-options|
     ruumba................................|ale-eruby-ruumba|
@@ -2843,6 +2867,7 @@ documented in additional help files.
     uncrustify............................|ale-objcpp-uncrustify|
   ocaml...................................|ale-ocaml-options|
     merlin................................|ale-ocaml-merlin|
+    ocamllsp..............................|ale-ocaml-ocamllsp|
     ols...................................|ale-ocaml-ols|
     ocamlformat...........................|ale-ocaml-ocamlformat|
     ocp-indent............................|ale-ocaml-ocp-indent|
@@ -2931,6 +2956,7 @@ documented in additional help files.
   ruby....................................|ale-ruby-options|
     brakeman..............................|ale-ruby-brakeman|
     debride...............................|ale-ruby-debride|
+    prettier..............................|ale-ruby-prettier|
     rails_best_practices..................|ale-ruby-rails_best_practices|
     reek..................................|ale-ruby-reek|
     rubocop...............................|ale-ruby-rubocop|
@@ -3573,6 +3599,12 @@ ale#command#Run(buffer, command, callback, [options])       *ale#command#Run()*
 <
   The following `options` can be provided.
 
+    `cwd`               - An optional |String| for setting the working directory
+                        for the command, just as per |ale#linter#Define|.
+
+                        If not set, or `v:null`, the `cwd` of the last command
+                        that spawned this one will be used.
+
     `output_stream`     - Either `'stdout'`, `'stderr'`, `'both'`, or
                         `'none`' for selecting which output streams to read
                         lines from.
@@ -3798,9 +3830,32 @@ ale#linter#Define(filetype, linter)                       *ale#linter#Define()*
 
                          The result can be computed with |ale#command#Run()|.
 
+                         The command string can be formatted with format
+                         markers. See |ale-command-format-strings|.
+
                          This command will be fed the lines from the buffer to
                          check, and will produce the lines of output given to
                          the `callback`.
+
+  `cwd`                    An optional |String| for setting the working
+                         directory for the command, or a |Funcref| for a
+                         function to call for computing the command, accepting
+                         a buffer number. The working directory can be
+                         specified as a format string for determining the path
+                         dynamically. See |ale-command-format-strings|.
+
+                         To set the working directory to the directory
+                         containing the file you're checking, you should
+                         probably use `'%s:h'` as the option value.
+
+                         If this option is absent or the string is empty, the
+                         `command` will be run with no determined working
+                         directory in particular.
+
+                         The directory specified with this option will be used
+                         as the default working directory for all commands run
+                         in a chain with |ale#command#Run()|, unless otherwise
+                         specified.
 
   `output_stream`          A |String| for the output stream the lines of output
                          should be read from for the command which is run. The

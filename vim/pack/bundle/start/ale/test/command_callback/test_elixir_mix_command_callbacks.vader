@@ -1,9 +1,7 @@
 Before:
   call ale#assert#SetUpLinterTest('elixir', 'mix')
-
-  let g:env_prefix = has('win32')
-  \ ? 'set MIX_BUILD_PATH=' . ale#Escape('TEMP_DIR') . ' && '
-  \ : 'MIX_BUILD_PATH=' . ale#Escape('TEMP_DIR') . ' '
+  call ale#test#SetFilename('elixir_paths/mix_project/lib/app.ex')
+  let g:env_prefix = ale#Env('MIX_BUILD_PATH', 'TEMP_DIR')
 
 After:
   unlet! g:env_prefix
@@ -11,23 +9,11 @@ After:
   call ale#assert#TearDownLinterTest()
 
 Execute(The default mix command should be correct):
-  call ale#test#SetFilename('elixir_paths/mix_project/lib/app.ex')
+  AssertLinterCwd ale#path#Simplify(g:dir . '/elixir_paths/mix_project')
+  AssertLinter 'mix', g:env_prefix . 'mix compile %s'
 
-  AssertLinter 'mix',
-  \ ale#path#CdString(ale#path#Simplify(g:dir . '/elixir_paths/mix_project'))
-  \ . g:env_prefix
-  \ . 'mix compile %s'
+Execute(Build mix commands with an umbrella root):
+  call ale#test#SetFilename('elixir_paths/umbrella_project/apps/mix_project/lib/app.ex')
 
-Execute(FindMixProjectRoot should detect the project root directory via mix.exs):
-  silent execute 'file ' . fnameescape(g:dir . '/elixir_paths/mix_project/lib/app.ex')
-
-  AssertEqual
-  \ ale#path#Simplify(g:dir . '/elixir_paths/mix_project'),
-  \ ale#handlers#elixir#FindMixProjectRoot(bufnr(''))
-
-Execute(FindMixUmbrellaRoot should detect the umbrella root directory via mix.exs):
-  silent execute 'file ' . fnameescape(g:dir . '/elixir_paths/umbrella_project/apps/app1/lib/app.ex')
-
-  AssertEqual
-  \ ale#path#Simplify(g:dir . '/elixir_paths/umbrella_project'),
-  \ ale#handlers#elixir#FindMixUmbrellaRoot(bufnr(''))
+  AssertLinterCwd ale#path#Simplify(g:dir . '/elixir_paths/umbrella_project')
+  AssertLinter 'mix', g:env_prefix . 'mix compile %s'

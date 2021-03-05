@@ -52,6 +52,8 @@ formatting.
   * [shfmt](https://github.com/mvdan/sh)
 * Bats
   * [shellcheck](https://www.shellcheck.net/)
+* Bazel
+  * [buildifier](https://github.com/bazelbuild/buildtools)
 * BibTeX
   * [bibclean](http://ftp.math.utah.edu/pub/bibclean/)
 * Bourne Shell
@@ -144,7 +146,7 @@ formatting.
   * [credo](https://github.com/rrrene/credo)
   * [dialyxir](https://github.com/jeremyjh/dialyxir) :floppy_disk:
   * [dogma](https://github.com/lpil/dogma) :floppy_disk:
-  * [elixir-ls](https://github.com/JakeBecker/elixir-ls) :warning:
+  * [elixir-ls](https://github.com/elixir-lsp/elixir-ls) :warning:
   * [mix](https://hexdocs.pm/mix/Mix.html) :warning: :floppy_disk:
 * Elm
   * [elm-format](https://github.com/avh4/elm-format)
@@ -157,8 +159,10 @@ formatting.
   * [ruumba](https://github.com/ericqweinstein/ruumba)
 * Erlang
   * [SyntaxErl](https://github.com/ten0s/syntaxerl)
+  * [dialyzer](http://erlang.org/doc/man/dialyzer.html)
   * [elvis](https://github.com/inaka/elvis) :floppy_disk:
   * [erlc](http://erlang.org/doc/man/erlc.html)
+  * [erlfmt](https://github.com/WhatsApp/erlfmt)
 * Fish
   * fish [-n flag](https://linux.die.net/man/1/fish)
   * [fish_indent](https://fishshell.com/docs/current/cmds/fish_indent.html)
@@ -338,6 +342,7 @@ formatting.
 * OCaml
   * [merlin](https://github.com/the-lambda-church/merlin) see `:help ale-ocaml-merlin` for configuration instructions
   * [ocamlformat](https://github.com/ocaml-ppx/ocamlformat)
+  * [ocamllsp](https://github.com/ocaml/ocaml-lsp)
   * [ocp-indent](https://github.com/OCamlPro/ocp-indent)
   * [ols](https://github.com/freebroccolo/ocaml-language-server)
 * OpenApi
@@ -440,6 +445,7 @@ formatting.
 * Ruby
   * [brakeman](http://brakemanscanner.org/) :floppy_disk:
   * [debride](https://github.com/seattlerb/debride) :floppy_disk:
+  * [prettier](https://github.com/prettier/plugin-ruby)
   * [rails_best_practices](https://github.com/flyerhzm/rails_best_practices) :floppy_disk:
   * [reek](https://github.com/troessner/reek)
   * [rubocop](https://github.com/bbatsov/rubocop)
