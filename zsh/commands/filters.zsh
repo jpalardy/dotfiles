@@ -1,11 +1,10 @@
 
-__thousands() {
-  awk '{$1=sprintf("%'\''19.lf", $1); print $0}' "$@"
-}
+alias __thousands="awk '{\$1=sprintf(\"%'\\''19.lf\", \$1); print \$0}'"
+alias __cut='cut -c "1-${COLUMNS}"'
 
-__sum() {
-  awk '{sum+=$1} END {print sum}' "$@"
-}
+alias __sum="awk '{sum+=\$1} END {print sum}'"
+alias __dupes="awk '++seen[\$0] == 2'"
+alias __uniq="awk '!seen[\$0]++'"
 
 __count() {
   local min_count=1
@@ -24,19 +23,7 @@ __count() {
     }' "$@" | sort -n
 }
 
-__dupes() {
-  awk '++seen[$0] == 2'
-}
-
-__uniq() {
-  awk '!seen[$0]++'
-}
-
 __count-ext() {
   ff "$@" | awk -F/ '$NF ~ /\./ {sub(".*[.]", ""); print}' | __count
-}
-
-__cut() {
-  cut -c "1-${COLUMNS}" "$@"
 }
 
