@@ -20,8 +20,8 @@ library(scales)
 theme_set(
   theme_bw() +
   theme(
-    panel.grid.minor=element_blank(),
-    axis.title.x=element_blank()
+    # axis.title.x=element_blank(),
+    panel.grid.minor=element_blank()
   )
 )
 
