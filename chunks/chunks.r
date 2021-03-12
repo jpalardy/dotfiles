@@ -7,6 +7,24 @@ colors = c("val1"="red", "val2"="darkgreen")
 scale_color_manual(values=colors)
 
 #-------------------------------------------------
+# color brewer
+#-------------------------------------------------
+
+# https://colorbrewer2.org/
+library(RColorBrewer)
+
+# base plot...
+col=brewer.pal(8, "Set3")
+
+# show bunch of palettes
+display.brewer.all()
+# show specific palette
+display.brewer.pal(5, "Greens")
+
+# ggplot2
++ scale_color_brewer(palette="Greens")
+
+#-------------------------------------------------
 # hide legend for aes
 #-------------------------------------------------
 
