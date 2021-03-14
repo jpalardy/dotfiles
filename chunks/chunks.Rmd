@@ -29,10 +29,8 @@ theme_set(
 
 ```{r loading-data, message=FALSE}
 
-#d <- read_tsv("...")
 d <- read_csv("...")
 
-#d <- read_tsv("...", col_names=c("...", "..."),
 d <- read_csv("...", col_names=c("...", "..."),
        col_types=cols(
          "..." = col_datetime(),
