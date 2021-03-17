@@ -48,6 +48,8 @@ export LC_ALL="en_US.UTF-8"
 
 export RLWRAP_HOME="$HOME/.rlwrap"
 export FZF_DEFAULT_OPTS='--reverse --info=hidden --height=20 --cycle --border --multi'
+# used by `tree`, possibly others
+export CLICOLOR=1
 
 if [ -n "$TMUX" ]; then
   export TERM="screen-256color"
