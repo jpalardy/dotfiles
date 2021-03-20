@@ -48,7 +48,11 @@ let g:ale_linters = {}
 let g:ale_linters['typescript'] = ['tslint', 'tsserver']
 let g:ale_linters['go']         = ['gofmt', 'govet']
 let g:ale_linters['python']     = ['flake8', 'pylint']
+let g:ale_linters['elixir']     = ['elixir-ls']
 "let g:ale_linters['rust'] = ['rustc', 'rustfmt']
+
+let g:ale_elixir_elixir_ls_release=expand("~/local/bin")
+let g:ale_completion_enabled = 1
 
 nnoremap ,f :ALEFix<CR>
 
