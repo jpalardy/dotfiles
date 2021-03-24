@@ -1,11 +1,5 @@
 
 setlocal equalprg=pp-elixir
 
-function CloseComments()
-  setlocal foldmethod=syntax
-  execute "normal zR"
-  execute "g/^ *@\\(module\\)\\?doc/foldclose"
-endfunction
-
-nmap ,z :call CloseComments()<cr>
+let b:ale_fix_on_save = 1
 
