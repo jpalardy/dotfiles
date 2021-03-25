@@ -4,7 +4,7 @@ function! SnipReplace()
   execute "normal! v0\"xy"
 
   " convert w/ snip command-line
-  silent let @x = system("FT=" . shellescape(&ft) . " snip", @x)
+  silent let @x = system("snip -v filetype=" . shellescape(&ft) . " -v path=" . shellescape(expand("%")), @x)
   let @x = substitute(@x, "\\n$", "", "") " strip trailing CR
 
   " overwrite-paste

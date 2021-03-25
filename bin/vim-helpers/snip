@@ -14,7 +14,7 @@ function snip(key, value) {
 
 BEGIN {
   # prefixes
-  split(ENVIRON["FT"], pre, ".")
+  split(filetype, pre, ".")
   pre[length(pre)+1] = "*"
 
   #-------------------------------------------------
