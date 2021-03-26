@@ -2,9 +2,8 @@
 alias git_vimdiff="git difftool"
 
 gcp() {
-  # check for 'ok' file
-  if [ ! -f .gcp_ok ]; then
-    echo >&2 "no .gcp_ok"
+  if [ "$(git config alias.gcp.enabled 2>/dev/null)" != "true" ]; then
+    echo >&2 "gcp is disabled for this repository -- fix: git config alias.gcp.enabled true"
     return
   fi
   git commit -av -m '-' && git push
