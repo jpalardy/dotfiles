@@ -20,6 +20,6 @@ change_color_expected() {
   ' "$@"
 }
 
-brew-graph.rb --installed --highlight-leaves | remove_casks | change_color_expected ~/.brew-ignore - | neato -Tpng -o brew-deps.png
-open brew-deps.png
+brew-graph.rb --installed --highlight-leaves | remove_casks | change_color_expected ~/.brew-ignore - | neato -Tsvg -o brew-deps.svg
+open -a "Google Chrome" brew-deps.svg
 
