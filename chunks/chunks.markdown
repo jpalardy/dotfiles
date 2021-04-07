@@ -13,7 +13,7 @@ category: posts
      IMAGE
 ------------------------------------------------- -->
 
-![alt]({{site.url}}/assets/dir/filename.ext)
+![alt](/assets/dir/filename.ext)
 
 <!-- -------------------------------------------------
      SYNTAX HIGHLIGHT BLOCK
