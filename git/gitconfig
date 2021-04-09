@@ -19,6 +19,7 @@
   who       = config --get user.email
   gd        = !git branch -vv | awk '/: gone/ {print $1}' | xargs --no-run-if-empty -n1 git branch -D
   untracked = ls-files --others --exclude-standard
+  rewind    = reset HEAD^
 [diff]
   noprefix = true
   tool = vimdiff
