@@ -1,14 +1,14 @@
-#-------------------------------------------------
+# -------------------------------------------------
 # .iex.exs
-#-------------------------------------------------
+# -------------------------------------------------
 
 require Ecto.Query
 
 alias Bookpiles.Repo
 
-#-------------------------------------------------
+# -------------------------------------------------
 # GenServer
-#-------------------------------------------------
+# -------------------------------------------------
 
 defmodule Some.Server do
   use GenServer
@@ -22,15 +22,30 @@ defmodule Some.Server do
   end
 end
 
-#-------------------------------------------------
+# -------------------------------------------------
 
-defmodule SomeApp do
+defmodule SomeApp.Application do
   use Application
 
   # https://hexdocs.pm/elixir/Application.html#c:start/2
   def start(_type, _args) do
     children = []
-    Supervisor.start_link(children, strategy: :one_for_one) # :rest_for_one, :one_for_all
+
+    # https://hexdocs.pm/elixir/Supervisor.html#module-start_link-2-init-2-and-strategies
+    opts = [strategy: :one_for_one, name: SomeApp.Supervisor]
+
+    Supervisor.start_link(children, opts)
   end
 end
 
+# -------------------------------------------------
+
+defmodule SomeApp.Application do
+  use Application
+
+  def start(_type, _args) do
+    opts = [strategy: :one_for_one name: SomeApp.Supervisor]
+
+    DynamicSupervisor.start_link(options)
+  end
+end
