@@ -1,0 +1,25 @@
+#!/bin/bash
+
+awk '
+
+function report_warning(msg) {
+  warnings++
+  printf "%s:%d:0: %s\n", (FILENAME == "-" ? "<stdin>" : FILENAME), FNR, msg
+}
+
+#-------------------------------------------------
+
+/^ *(def|if)/ && !/ do\>/ {
+  report_warning("missing do")
+}
+
+#-------------------------------------------------
+
+END {
+  if (warnings > 0) {
+    exit 1
+  }
+}
+
+' "$@"
+
