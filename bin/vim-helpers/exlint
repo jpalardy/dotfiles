@@ -9,7 +9,7 @@ function report_warning(msg) {
 
 #-------------------------------------------------
 
-/^ *(def|if)/ && !/ do\>/ {
+/^ *(def|defmodule|if|case|cond|receive|try)\>/ && !/ do\>/ {
   report_warning("missing do")
 }
 
