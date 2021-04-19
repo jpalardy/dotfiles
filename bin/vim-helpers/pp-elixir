@@ -1,9 +1,27 @@
 #!/bin/bash
 
 awk '
-{
-  gsub(" [|][>] ", " |>\n  ", $0)
-  print
+
+#
+# lines like:
+#   tap x y z
+# are expanded to:
+#   [x: x, y: y, z:z] |> IO.inspect()
+#
+$1 == "tap" && NF > 1 {
+  match($0, "^\\s*")
+  leading_spaces = substr($0, 1, RLENGTH)
+  printf("%s[", leading_spaces)
+  printf("%s: %s", $2, $2)
+  for (i=3; i<=NF; i++) {
+    printf(", %s: %s", $i, $i)
+  }
+  printf("] |> IO.inspect()\n")
+  next
 }
+
+# passthrough
+{ print }
+
 ' "$@"
 
