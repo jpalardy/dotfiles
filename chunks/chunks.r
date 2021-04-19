@@ -34,6 +34,7 @@ geom_point(.., show.legend=FALSE)
 # types of lines
 #-------------------------------------------------
 
+# http://www.cookbook-r.com/Graphs/Shapes_and_line_types/
 linetype="dashed"
 
 #-------------------------------------------------
