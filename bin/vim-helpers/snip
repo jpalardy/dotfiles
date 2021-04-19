@@ -101,6 +101,7 @@ BEGIN {
   snip("elixir:defm",  "defmodule")
   snip("elixir:do",    "do\n   ▒\nend")
   snip("elixir:tap",   "IO.inspect()")
+  snip("elixir:tapl",  "IO.inspect(label: \"▒\")")
   snip("elixir::clal", "charlists: :as_lists")
   # loop {
   snip("eelixir:_", "<%=▒ %>")
