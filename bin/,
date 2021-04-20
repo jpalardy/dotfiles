@@ -1,0 +1,34 @@
+#!/bin/bash
+
+list_commands() {
+  # git -related
+  if git rev-parse --git-dir 2>/dev/null 1>&2; then
+    echo "git status --short --branch"
+    echo "git log --graph --oneline"
+  fi
+  # node.js -related
+  if [ -e "package.json" ]; then
+    echo "npm outdated"
+    echo "ncu -u"
+  fi
+  # go -related
+  if [ -e "go.mod" ]; then
+    echo "go get -u"
+    echo "go mod tidy"
+  fi
+}
+
+commands=$(list_commands)
+
+if [ -z "$commands" ]; then
+  exit
+fi
+
+pick=$(echo "$commands" | fzf)
+
+if [ -z "$pick" ]; then
+  exit
+fi
+
+eval "$pick"
+
