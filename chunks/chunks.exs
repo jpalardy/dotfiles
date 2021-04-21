@@ -30,6 +30,7 @@ defmodule SomeApp.Application do
   # https://hexdocs.pm/elixir/Application.html#c:start/2
   def start(_type, _args) do
     children = []
+    # 3 alternatives -- https://hexdocs.pm/elixir/Supervisor.html#module-child_spec-1
 
     # https://hexdocs.pm/elixir/Supervisor.html#module-start_link-2-init-2-and-strategies
     opts = [strategy: :one_for_one, name: SomeApp.Supervisor]
