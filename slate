@@ -1,9 +1,12 @@
 
 alias center screenOriginX+screenSizeX/2-windowSizeX/2;screenOriginY+screenSizeY/2-windowSizeY/2 windowSizeX;windowSizeY
 alias BROWSER_WIDTH 1250
+alias WIDE_BROWSER_WIDTH 1400
 
 # b -- mnemo: browser
 bind b:ctrl;alt move screenOriginX+screenSizeX-${BROWSER_WIDTH};screenOriginY ${BROWSER_WIDTH};screenSizeY
+# w -- mnemo: wide-browser?
+bind w:ctrl;alt move screenOriginX+screenSizeX-${WIDE_BROWSER_WIDTH};screenOriginY ${WIDE_BROWSER_WIDTH};screenSizeY
 
 # l -- mnemo: large, maximize horizontally
 bind l:ctrl;alt move screenOriginX;windowTopLeftY screenSizeX;windowSizeY
