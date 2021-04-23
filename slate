@@ -2,9 +2,9 @@
 alias center screenOriginX+screenSizeX/2-windowSizeX/2;screenOriginY+screenSizeY/2-windowSizeY/2 windowSizeX;windowSizeY
 
 # b -- mnemo: browser
-bind b:ctrl;alt move windowTopLeftX;windowTopLeftY 1250;windowSizeY
+bind b:ctrl;alt move min({windowTopLeftX,screenSizeX-1250});windowTopLeftY 1250;windowSizeY
 # w -- mnemo: wide-browser?
-bind w:ctrl;alt move windowTopLeftX;windowTopLeftY 1400;windowSizeY
+bind w:ctrl;alt move min({windowTopLeftX,screenSizeX-1400});windowTopLeftY 1400;windowSizeY
 
 # l -- mnemo: large, maximize horizontally
 bind l:ctrl;alt move screenOriginX;windowTopLeftY screenSizeX;windowSizeY
