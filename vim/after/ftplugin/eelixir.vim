@@ -1,3 +1,0 @@
-
-set ft=eelixir.html
-
