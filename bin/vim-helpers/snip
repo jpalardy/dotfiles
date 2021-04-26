@@ -57,13 +57,10 @@ BEGIN {
   #-------------------------------------------------
   # javascript
   #-------------------------------------------------
-  snip("javascript:fn",       "function ▒() {\n}")
-  snip("javascript:fori",     "for (let i = 0; i < ▒; i += 1) {")
-  snip("javascript:fe",       "forEach(▒)")
-  snip("javascript:fn-",      "(▒) => {}")
-  snip("javascript:iife",     "(() => {\n▒\n})();")
-  snip("javascript:eslint",   "/* eslint-disable no-console */")
-  snip("javascript:eslint-",  "// eslint-disable-next-line no-console")
+  snip("javascript:fn",   "function ▒() {\n}")
+  snip("javascript:fori", "for (let i = 0; i < ▒; i += 1) {")
+  snip("javascript:fe",   "forEach(▒)")
+  snip("javascript:iife", "(() => {\n▒\n})();")
 
   #-------------------------------------------------
   # r and rmd
@@ -99,7 +96,6 @@ BEGIN {
   # elixir
   #-------------------------------------------------
   snip("elixir:defm",  "defmodule")
-  snip("elixir:do",    "do\n   ▒\nend")
   snip("elixir:tap",   "IO.inspect()")
   snip("elixir:tapl",  "IO.inspect(label: \"▒\")")
   snip("elixir::clal", "charlists: :as_lists")
