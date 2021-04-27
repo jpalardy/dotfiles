@@ -61,6 +61,9 @@ set noshowmode
 set showcmd
 set laststatus=2
 
+" completion
+set completeopt=menuone,popup
+
 " tabs
 set tabpagemax=100
 
