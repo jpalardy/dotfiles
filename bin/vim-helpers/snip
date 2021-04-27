@@ -12,6 +12,15 @@ function snip(key, value) {
   snippets[key] = value
 }
 
+function cycle(key, values) {
+  split(values, parts, " :: ")
+  len = length(parts)
+  parts[len+1] = parts[1]
+  for (i = 1; i <= len; i++) {
+    snip(key ":" parts[i], parts[i+1])
+  }
+}
+
 BEGIN {
   # prefixes
   split(filetype, pre, ".")
@@ -34,8 +43,7 @@ BEGIN {
   snip("*:=>",   "⇨")
   snip("*:<->",  "⇆")
   snip("*:+-",   "±")
-  snip("*:*",    "×")
-  snip("*:×",    "⋅")
+  cycle("*",     "* :: × :: ⋅")
   snip("*:/",    "÷")
   snip("*:>=",   "≥")
   snip("*:<=",   "≤")
@@ -81,16 +89,12 @@ BEGIN {
   #-------------------------------------------------
   # go
   #-------------------------------------------------
-  snip("go:fn",          "func ▒() {\n}")
-  snip("go:fori",        "for i := 0; i < ▒; i++ {}")
-  snip("go:forr",        "for i, _ := range ▒ {}")
-  snip("go:iferr",       "if err != nil { return err }")
-  snip("go:handler",     "func(res http.ResponseWriter, req *http.Request)")
-  # loop {
-  snip("go:fmt.",        "fmt.Println")
-  snip("go:fmt.Println", "fmt.Printf")
-  snip("go:fmt.Printf",  "fmt.")
-  # }
+  snip("go:fn",      "func ▒() {\n}")
+  snip("go:fori",    "for i := 0; i < ▒; i++ {}")
+  snip("go:forr",    "for i, _ := range ▒ {}")
+  snip("go:iferr",   "if err != nil { return err }")
+  snip("go:handler", "func(res http.ResponseWriter, req *http.Request)")
+  cycle("go",        "fmt. :: fmt.Println :: fmt.Printf")
 
   #-------------------------------------------------
   # elixir
@@ -99,12 +103,11 @@ BEGIN {
   snip("elixir:tap",   "IO.inspect()")
   snip("elixir:tapl",  "IO.inspect(label: \"▒\")")
   snip("elixir::clal", "charlists: :as_lists")
-  # loop {
+  #-------------------------------------------------
+  # eex
+  #-------------------------------------------------
   snip("eelixir:_", "<%=▒ %>")
-  snip("eelixir:<%=", "<%#")
-  snip("eelixir:<%#", "<%")
-  snip("eelixir:<%", "<%=")
-  # }
+  cycle("eelixir",  "<%= :: <%# :: <%")
 }
 
 #-------------------------------------------------
