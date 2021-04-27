@@ -16,6 +16,9 @@ nnoremap <F7>   :set wrap!<CR>
 inoremap <F7>   <C-o>:set wrap!<CR>
 set pastetoggle=<F8>
 
+" vscode-like...
+nnoremap <F12>  :ALEGoToDefinition<CR>
+
 nnoremap <ESC>l :set list!<CR>
 nnoremap <ESC>n :set number!<CR>
 nnoremap <ESC><SPACE> :nohl<CR>
