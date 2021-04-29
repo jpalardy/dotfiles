@@ -40,6 +40,7 @@ relink .prettierrc   "$DOTFILES/lang/js/prettierrc"
 relink .Rprofile     "$DOTFILES/lang/r/Rprofile"
 
 # misc
+relink .digrc        "$DOTFILES/digrc"
 relink .sqliterc     "$DOTFILES/sqliterc"
 relink .slate        "$DOTFILES/slate"
 
