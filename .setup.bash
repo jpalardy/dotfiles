@@ -10,7 +10,7 @@ relink() {
     echo "set -e"
     first=0
   fi
-  if [ -e "$HOME/$1" ]; then
+  if [[ -e "$HOME/$1" || -L "$HOME/$1" ]]; then
     echo "rm -f $HOME/$1"
   fi
   echo "ln -s -v $2 $HOME/$1"
