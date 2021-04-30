@@ -9,6 +9,8 @@ alias -g _L='|& less -r'
 
 alias reload!="source ~/.zshrc"
 
+alias vr=vimrepl
+
 h() {
   local COUNT=${COUNT:-25}
   if [ $# -eq 0 ]; then
