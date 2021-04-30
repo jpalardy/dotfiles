@@ -1,0 +1,63 @@
+#!/bin/bash
+
+die() {
+  echo >&2 "$1"
+  exit 1
+}
+
+if [ -z "$TMUX" ]; then
+  die "need to run inside tmux"
+fi
+
+if [ "$(tmux list-panes -F'#{window_panes}' | head -n1)" -gt 1 ]; then
+  die "window is already split"
+fi
+
+#-------------------------------------------------
+
+context="$1"
+cmd="$SHELL"
+ext=""
+
+if [ -z "$context" ]; then
+  die "missing context"
+fi
+
+case "$context" in
+  iex)
+    cmd="iex"
+    ext="exs"
+    ;;
+  mix)
+    cmd="iex -S mix"
+    ext="exs"
+    ;;
+  r|R)
+    cmd="R --quiet --no-save --no-restore"
+    ext="R"
+    ;;
+  *)
+    # unknown context, use extension
+    ext="$context"
+    ;;
+esac
+
+if [ -z "$ext" ]; then
+  die "config error: missing file extension"
+fi
+
+#-------------------------------------------------
+
+# run "cmd", or shell in split pane
+# launch shell if exit != 0
+tmux split-window -h "$cmd || $SHELL"
+
+# go back to initiating (last) pane
+tmux select-pane -l
+
+# vim...
+vim "_vimrepl.$ext"
+
+# kill other pane(s)
+tmux kill-pane -a
+
