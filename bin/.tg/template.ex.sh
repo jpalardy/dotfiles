@@ -7,7 +7,7 @@
 # - replace / with .
 
 module_name() {
-  echo "$1" | sed -E -e 's#(^lib/|\.ex$)##g' -e 's#((^|[_/]).)#\U\1#g' -e 's#_##g' -e 's#/#.#g'
+  echo "$1" | sed -E -e 's#(^lib/|\.exs?$)##g' -e 's#((^|[_/]).)#\U\1#g' -e 's#_##g' -e 's#/#.#g'
 }
 
 cat <<EOF
