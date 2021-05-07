@@ -13,3 +13,4 @@ toml           https://github.com/cespare/vim-toml.git
 vim-nix        https://github.com/LnL7/vim-nix.git
 elm-vim        https://github.com/ElmCast/elm-vim.git
 emmet          https://github.com/mattn/emmet-vim.git
+fish           https://github.com/dag/vim-fish.git
