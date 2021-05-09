@@ -18,6 +18,7 @@ if status --is-interactive
 
   bind \e` 'commandline -i "($history[1])"'
   bind \ew 'warp'
+  bind \eg '__fish_grep'
 
   function h
     if test (count $argv) = 0
