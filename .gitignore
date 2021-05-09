@@ -1,5 +1,6 @@
 bash/local
 zsh/local.zsh
+config/fish/local.fish
 vim/spell/
 vim/.netrwhist
 vim/swap/
