@@ -47,8 +47,8 @@ end
 # PROMPT
 #-------------------------------------------------
 
-set -U color_host normal
-set -U color_cwd 626262
+set -g color_host normal
+set -g color_cwd 626262
 set fish_greeting
 
 set -g fish_escape_delay_ms 1000
