@@ -1,4 +1,4 @@
-function __fish_paginate --description 'Paginate the current command using the users default pager'
+function __fish_paginate
   set -l cmd "vim -R -"
 
   if test -z (commandline -j | string join '')
