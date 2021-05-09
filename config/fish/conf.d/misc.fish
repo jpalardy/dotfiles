@@ -1,4 +1,3 @@
-
 if status --is-interactive
   abbr --add --global im "iex -S mix"
   abbr --add --global go-lintall "golangci-lint run --enable-all -v --color=always"
@@ -17,10 +16,6 @@ if status --is-interactive
       or python -m SimpleHTTPServer $port
   end
 
-  function we
-    $EDITOR (command -s $argv)
-  end
-
   bind \e` 'commandline -i "($history[1])"'
   bind \ew 'warp'
 
@@ -32,4 +27,3 @@ if status --is-interactive
     history | rg $argv
   end
 end
-
