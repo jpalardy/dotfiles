@@ -33,18 +33,20 @@ set -x CLICOLOR 1    # used by `tree`, possibly others
 # PATHs
 #-------------------------------------------------
 
-set -x PATH
-set -x MANPATH
+if status --is-login
+  set -x PATH
+  set -x MANPATH
 
-for dir in $DOTFILES "$HOME/local" "/usr/local" "/usr" "" "/usr/X11"
-  fish_add_path -a -g $dir/{sbin,bin}
-  if test -d "$dir/share/man"
-    set MANPATH $MANPATH "$dir/share/man"
+  for dir in $DOTFILES "$HOME/local" "/usr/local" "/usr" "" "/usr/X11"
+    fish_add_path -a -g $dir/{sbin,bin}
+    if test -d "$dir/share/man"
+      set MANPATH $MANPATH "$dir/share/man"
+    end
   end
-end
 
-# asdf
-fish_add_path -g "$HOME/.asdf/shims"
+  # asdf
+  fish_add_path -g "$HOME/.asdf/shims"
+end
 
 #-------------------------------------------------
 # PROMPT
