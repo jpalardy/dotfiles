@@ -43,6 +43,9 @@ for dir in $DOTFILES "$HOME/local" "/usr/local" "/usr" "" "/usr/X11"
   end
 end
 
+# asdf
+fish_add_path -g "$HOME/.asdf/shims"
+
 #-------------------------------------------------
 # PROMPT
 #-------------------------------------------------
