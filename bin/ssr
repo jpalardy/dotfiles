@@ -61,7 +61,7 @@ check_bin yamllint
 check_bin pg_format pgformatter
 
 # node
-if [ -n "$SSR_CHECK_NODE" ]; then
+if command -v node >/dev/null; then
   echo
   check_bin nodemon
   check_bin prettier
@@ -69,7 +69,7 @@ if [ -n "$SSR_CHECK_NODE" ]; then
 fi
 
 # go
-if [ -n "$SSR_CHECK_GO" ]; then
+if command -v go >/dev/null; then
   echo
   check_bin gofumpt
   check_bin goimports
