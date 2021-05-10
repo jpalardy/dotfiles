@@ -17,7 +17,7 @@ if status --is-interactive
   end
 
   bind \e` 'commandline -i "($history[1])"'
-  bind \ew 'warp'
+  bind \ew 'commandline -r warp; commandline -f execute'
   bind \eg '__fish_grep'
 
   function h

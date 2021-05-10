@@ -1,6 +1,6 @@
 #!/bin/bash
 
-warp() {
+_warp() {
   # if a first argument is supplied, then use it as the warp file location
   # otherwise, use the default "$HOME/.warp" location
   local SOURCE="${1:-$HOME/.warp}"
@@ -74,17 +74,8 @@ warp() {
       ' "$TARGET")"
   fi
 
-  # add the command to the bash history as if we had typed it, will only work if sourced
-  # Determine which history command to use based on shell
-  if [ -n "$BASH_VERSION" ]; then
-    eval "history -s $COMMAND"
-  elif [ -n "$ZSH_VERSION" ]; then
-    eval "print -s $COMMAND"
-  fi
-
   # run the command
   eval "$COMMAND"
 }
 
-warp "$@"
-
+_warp "$@"
