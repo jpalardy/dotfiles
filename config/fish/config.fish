@@ -29,6 +29,8 @@ set -x RLWRAP_HOME "$HOME/.rlwrap"
 set -x FZF_DEFAULT_OPTS "--reverse --info=hidden --height=20 --cycle --border --multi"
 set -x CLICOLOR 1    # used by `tree`, possibly others
 
+set -x MANPAGER "col -b | vim -c 'set ft=man ts=8 nomod noma' -"
+
 #-------------------------------------------------
 # PATHs
 #-------------------------------------------------
