@@ -1,0 +1,23 @@
+#!/bin/bash
+
+SRC="$HOME/.HOME"
+
+force=0
+
+if [ "$1" = "-f" ]; then
+  force=1
+  shift
+fi
+
+if [[ "$force" = 1 || ! -e "$SRC" ]]; then
+  if [ $# = 0 ]; then
+    find ~ 2>/dev/null > "$SRC"
+    exit
+  fi
+
+  find ~ 2>/dev/null | tee "$SRC" | rg "$@"
+  exit
+fi
+
+rg "${@:-"."}" "$SRC" --no-line-number
+

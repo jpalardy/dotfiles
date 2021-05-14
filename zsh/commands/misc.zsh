@@ -77,25 +77,6 @@ compdef _command_names we
 
 #-------------------------------------------------
 
-HOME() {
-  local force=0
-  if [ "$1" = "-f" ]; then
-    force=1
-    shift
-  fi
-  if [[ "$force" = 1 || ! -e ~/.HOME ]]; then
-    if [ $# = 0 ]; then
-      find ~ 2>/dev/null > ~/.HOME
-      return 0
-    fi
-    find ~ 2>/dev/null | tee ~/.HOME | rg "$@"
-    return 0
-  fi
-  rg "${@:-"."}" ~/.HOME --no-line-number
-}
-
-#-------------------------------------------------
-
 for f in /usr/local/opt/fzf/shell/key-bindings.zsh \
          /usr/share/doc/fzf/examples/key-bindings.zsh; do
   [ -f "$f" ] && source "$f"
