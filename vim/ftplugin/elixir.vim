@@ -1,5 +1,5 @@
 
-setlocal equalprg=pp-elixir
+setlocal equalprg=eq-elixir
 
 let b:ale_fix_on_save = 1
 
