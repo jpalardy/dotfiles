@@ -1,7 +1,7 @@
 function g
   set -l config "$HOME/.lists/g"
 
-  argparse --name g add edit -- $argv
+  argparse -x add,edit add edit -- $argv
   or return
 
   # --add
