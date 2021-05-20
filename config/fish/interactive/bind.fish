@@ -1,4 +1,3 @@
-
 # esc-h
 bind \eh 'commandline -r vim-; commandline -f execute'
 
@@ -10,4 +9,3 @@ bind \ew 'commandline -r warp; commandline -f execute'
 
 # alt-g
 bind \eg '__fish_grep'
-
