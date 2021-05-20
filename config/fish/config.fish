@@ -1,70 +1,27 @@
-
 #-------------------------------------------------
-# SETTINGS
-#-------------------------------------------------
-
-umask 22
-ulimit -c 0
-
-#-------------------------------------------------
-# VARIABLES
-#-------------------------------------------------
-
-set -x DOTFILES "$HOME/dotfiles"
-
-set -x EDITOR "vim"
-set -x PAGER "less"
-set -x BLOCKSIZE "K"
-
-set -x LANG "en_US.UTF-8"
-set -x LC_ALL "en_US.UTF-8"
-
-if set -q TMUX
-  set -x TERM "screen-256color"
-else
-  set -x TERM "xterm-256color"
-end
-
-set -x RLWRAP_HOME "$HOME/.rlwrap"
-set -x FZF_DEFAULT_OPTS "--reverse --info=hidden --height=20 --cycle --border --multi"
-set -x CLICOLOR 1    # used by `tree`, possibly others
-
-set -x MANPAGER "col -b | vim -c 'set ft=man ts=8 nomod noma' -"
-
-#-------------------------------------------------
-# PATHs
+# LOGIN
 #-------------------------------------------------
 
 if status --is-login
-  set -x PATH
-  set -x MANPATH
-
-  for dir in $DOTFILES "$HOME/local" "/usr/local" "/usr" "" "/usr/X11"
-    fish_add_path -a -g $dir/{sbin,bin}
-    if test -d "$dir/share/man"
-      set MANPATH $MANPATH "$dir/share/man"
-    end
+  for file in (status dirname)/login/*.fish
+    source $file
   end
-
-  # asdf
-  fish_add_path -g "$HOME/.asdf/shims"
 end
 
 #-------------------------------------------------
-# PROMPT
+# INTERACTIVE
 #-------------------------------------------------
 
-set -g color_host normal
-set -g color_cwd 626262
-set fish_greeting
-
-set -g fish_escape_delay_ms 1000
+if status --is-interactive
+  for file in (status dirname)/interactive/*.fish
+    source $file
+  end
+end
 
 #-------------------------------------------------
 # LOCAL
 #-------------------------------------------------
 
-if test -e "$DOTFILES/config/fish/local.fish"
-  source "$DOTFILES/config/fish/local.fish"
+for file in (status dirname)/local/*.fish
+  source $file
 end
-

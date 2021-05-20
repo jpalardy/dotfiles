@@ -1,4 +1,3 @@
-
 abbr --add --global git_vimdiff "git difftool"
 
 function git_diff

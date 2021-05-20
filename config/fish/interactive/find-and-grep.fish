@@ -1,4 +1,3 @@
-
 alias rg "rg -i --sort-files"
 alias rg_ "rg --no-heading --no-filename --no-line-number"
 
@@ -23,4 +22,3 @@ end
 function fne
   ff "\\.$argv[1]\$"
 end
-

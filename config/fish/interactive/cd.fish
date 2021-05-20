@@ -1,6 +1,7 @@
-
 # save default "cd" as "__cd", for override (next)
-functions -c cd __cd
+if ! functions -q __cd
+  functions -c cd __cd
+end
 
 function cd
   set -l dst $argv[1]
@@ -37,4 +38,3 @@ function cdl
     cd $result
   end
 end
-
