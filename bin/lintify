@@ -1,0 +1,23 @@
+#!/bin/bash
+
+lang="$1"
+
+if [ -z "$lang" ]; then
+  echo >&2 "usage: $(basename "$0") ext"
+  exit 1
+fi
+
+case "$lang" in
+  go)
+    cp -v "$DOTFILES/lang/go/golangci.yml" .golangci.yml
+    ;;
+  js)
+    cp -v "$DOTFILES/lang/js/eslintrc" .eslintrc
+    npm install --save-dev eslint eslint-config-airbnb-base eslint-plugin-import
+    ;;
+  *)
+    echo >&2 "unknown ext: $lang"
+    exit 1
+    ;;
+esac
+
