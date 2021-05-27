@@ -13,15 +13,5 @@ $endif
 # the dreaded backspace
 "\C-?": backward-delete-char
 
-"\e`": "$(!!)"
-
-"\C-f": unix-filename-rubout
-
 "\e,": menu-complete
-
-# same as Vim shortcut
-"\et": "vim-"
-"\eh": "vim-"
-
-"\ew": "warp "
 

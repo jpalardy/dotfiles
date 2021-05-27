@@ -9,50 +9,7 @@ export DOTFILES="$HOME/dotfiles"
 umask 22
 ulimit -c 0
 
-# helper: removed later
-append_colon() {
-  if [ -z "$2" ]; then
-    echo "$1"
-  else
-    echo "$2:$1"
-  fi
-}
-
-# helper: removed later
-append_path() {
-  test -d "$1/sbin"      && PATH=$(append_colon "$1/sbin" "$PATH")
-  test -d "$1/bin"       && PATH=$(append_colon "$1/bin" "$PATH")
-  test -d "$1/share/man" && MANPATH=$(append_colon "$1/share/man" "$MANPATH")
-}
-
-# helper: removed later
-prepend_colon() {
-  if [ -z "$2" ]; then
-    echo "$1"
-  else
-    echo "$1:$2"
-  fi
-}
-
-# helper: removed later
-prepend_path() {
-  test -d "$1/sbin"      && PATH=$(prepend_colon "$1/sbin" "$PATH")
-  test -d "$1/bin"       && PATH=$(prepend_colon "$1/bin" "$PATH")
-  test -d "$1/share/man" && MANPATH=$(prepend_colon "$1/share/man" "$MANPATH")
-}
-
-PATH=""
-MANPATH=""
-
-append_path "$DOTFILES"
-append_path "$HOME/local"
-append_path "/usr/local"
-append_path "/usr"
-append_path ""
-append_path "/usr/X11"
-
-export PATH
-export MANPATH
+export PATH="$DOTFILES/bin:$PATH"
 
 export EDITOR="vim"
 export PAGER="less"
@@ -60,8 +17,6 @@ export BLOCKSIZE="K"
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
-
-export RLWRAP_HOME="$HOME/.rlwrap"
 
 if [ -n "$TMUX" ]; then
   export TERM="screen-256color"
@@ -102,32 +57,11 @@ load_bash_completion
 unset load_bash_completion
 
 #-------------------------------------------------
-# PROMPT
-#-------------------------------------------------
-
-COLOR_RED=$(tput setaf 1)
-ATTR_RESET=$(tput sgr0)
-
-export PROMPT_COMMAND=show_exit_code
-show_exit_code() {
-  local exit=$?
-  if [ "$exit" -ne 0 ]; then
-    echo -e "${COLOR_RED}exit: ${exit}${ATTR_RESET}"
-  fi
-}
-
-# can be overriden
-PS1_HOSTNAME="${HOSTNAME%%.*}"
-
-PS1='\[${PS1_COLOR}\]${PS1_HOSTNAME}\[${ATTR_RESET}\] '
-
-#-------------------------------------------------
 # COMMANDS
 #-------------------------------------------------
 
 alias ls='ls --color=auto'
 alias ll='ls -l'
-alias l='ls -l'
 
 alias grep='grep --color=auto'
 
@@ -137,11 +71,3 @@ alias grep='grep --color=auto'
 
 [ -e "$DOTFILES"/bash/local.bash ] && source "$DOTFILES"/bash/local.bash
 
-#-------------------------------------------------
-# CLEANUP
-#-------------------------------------------------
-
-unset -f append_path
-unset -f append_colon
-unset -f prepend_path
-unset -f prepend_colon
