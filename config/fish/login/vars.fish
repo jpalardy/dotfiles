@@ -42,6 +42,3 @@ for dir in "/usr/X11" "" "/usr" "/usr/local" "$HOME/local" $DOTFILES
     set MANPATH "$dir/share/man" $MANPATH
   end
 end
-
-# asdf
-fish_add_path -g "$HOME/.asdf/shims"
