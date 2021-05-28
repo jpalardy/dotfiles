@@ -34,13 +34,12 @@ set -x MANPAGER "col -b | vim -c 'set ft=man ts=8 nomod noma' -"
 # PATHs
 #-------------------------------------------------
 
-set -x PATH
-set -x MANPATH
+set -gx MANPATH
 
-for dir in $DOTFILES "$HOME/local" "/usr/local" "/usr" "" "/usr/X11"
-  fish_add_path -a -g $dir/{sbin,bin}
+for dir in "/usr/X11" "" "/usr" "/usr/local" "$HOME/local" $DOTFILES
+  fish_add_path -g $dir/{sbin,bin}
   if test -d "$dir/share/man"
-    set MANPATH $MANPATH "$dir/share/man"
+    set MANPATH "$dir/share/man" $MANPATH
   end
 end
 
