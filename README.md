@@ -3,13 +3,13 @@
 
 My config files for:
 
-- [bash](/bash)
+- [fish](/config/fish)
 - [zsh](/zsh)
+- [bash](/bash)
 - [vim](/vim)
 
-Also, some [scripts](/bin) and a bunch of other tool/language
-configs.
+Also, some [scripts](/bin), and a bunch of other tool/language configs.
 
-I don't fully recommend using blindly (too customized to myself),
-but take anything that's useful to you.
+⚠️  Don't use blindly -- it's very customized for me. But feel free take anything
+that's useful to you.
 
