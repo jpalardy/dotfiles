@@ -1,14 +1,6 @@
 #!/bin/bash
 
 list_commands() {
-  if [ "$HOME" == "$PWD" ]; then
-    echo "fish"
-  fi
-  # git -related
-  if git rev-parse --git-dir 2>/dev/null 1>&2; then
-    echo "git status --short --branch"
-    echo "git log --graph --oneline"
-  fi
   # node.js -related
   if [ -e "package.json" ]; then
     echo "npm outdated"
