@@ -2,6 +2,11 @@
 
 lang="$1"
 
+if [ "$lang" == "--langs" ]; then
+  awk '/[^*])$/' "$(which lintify)" | sed -e 's/[ )]//g'
+  exit
+fi
+
 if [ -z "$lang" ]; then
   echo >&2 "usage: $(basename "$0") ext"
   exit 1
