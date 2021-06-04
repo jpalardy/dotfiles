@@ -6,6 +6,7 @@ function __fish_paginate
   end
 
   if commandline -j | not string match -q -r "$cmd *\$"
-    commandline -aj " &| $cmd;"
+    commandline -a " &| $cmd"
+    commandline -f end-of-line
   end
 end
