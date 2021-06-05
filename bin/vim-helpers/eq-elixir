@@ -6,7 +6,7 @@ awk '
 # lines like:
 #   tap x y z
 # are expanded to:
-#   [x: x, y: y, z:z] |> IO.inspect()
+#   [x: x, y: y, z: z] |> IO.inspect()
 #
 $1 == "tap" && NF > 1 {
   match($0, "^\\s*")
