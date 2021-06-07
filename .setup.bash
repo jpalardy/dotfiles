@@ -34,7 +34,9 @@ relink .gitignore    "$DOTFILES/git/gitignore"
 relink .screenrc     "$DOTFILES/screenrc"
 relink .tmux.conf    "$DOTFILES/tmux.conf"
 
-relink .Xmodmap      "$DOTFILES/x/Xmodmap"
+if [ "$(uname)" == "Linux" ]; then
+  relink .Xmodmap "$DOTFILES/x/Xmodmap"
+fi
 
 # lang
 relink .irbrc        "$DOTFILES/lang/ruby/irbrc"
