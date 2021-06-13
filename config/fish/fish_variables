@@ -19,7 +19,7 @@ SETUVAR fish_color_operator:FFCC66
 SETUVAR fish_color_param:CBCCC6
 SETUVAR fish_color_quote:BAE67E
 SETUVAR fish_color_redirection:D4BFFF
-SETUVAR fish_color_search_match:FFCC66
+SETUVAR fish_color_search_match:FFCC66\x1e\x2d\x2dbackground\x3d333
 SETUVAR fish_color_selection:FFCC66
 SETUVAR fish_color_status:red
 SETUVAR fish_color_user:brgreen
