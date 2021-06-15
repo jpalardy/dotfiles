@@ -20,6 +20,7 @@ check_bin() {
 #-------------------------------------------------
 
 # cli
+check_bin tmux
 check_bin rg          ripgrep
 check_bin jq
 check_bin gcal
