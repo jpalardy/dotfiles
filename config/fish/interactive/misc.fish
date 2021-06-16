@@ -7,6 +7,8 @@ alias R "R --quiet --no-save --no-restore"
 
 abbr --add --global reload! "source ~/.config/fish/config.fish"
 
+alias tls "tmux list-sessions"
+
 #-------------------------------------------------
 
 function serve
