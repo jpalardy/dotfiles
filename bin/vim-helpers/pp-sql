@@ -11,5 +11,5 @@ END {
   print ";"
 }
 
-' "$@" | pg_format --spaces 2
+' "$@" | pg_format --wrap-after 10 --no-extra-line
 
