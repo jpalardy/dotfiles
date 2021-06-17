@@ -5,7 +5,8 @@ awk -e '
 BEGIN {
   print "digraph {"
   print "  rankdir=LR;"
-  print "  node [style=rounded, shape=box, fontname=Courier, fontsize=16];"
+  print "  node [style=\"filled,rounded\", shape=box, fontname=Arial, fontsize=14];"
+  print "  graph [overlap=false; splines=true];"
 }
 
 NF == 1 {
