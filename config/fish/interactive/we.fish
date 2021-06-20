@@ -6,8 +6,9 @@ function we
   set -l name $argv[1]
 
   set -l src
+  set -l line 1
   if functions -q $name
-    functions $name | awk '/Defined in/ {print $4}' | read src
+    functions $name | awk '/Defined in/ {print $4, $7}' | read src line
   else
     command -s $name | read src
   end
@@ -17,7 +18,7 @@ function we
     return 1
   end
 
-  $EDITOR $src
+  vim $src +$line
 end
 
 complete -c we -a "(__fish_complete_command)"
