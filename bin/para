@@ -1,0 +1,29 @@
+#!/bin/bash
+
+awk '
+
+BEGIN {
+  within = 0
+  count = 0
+}
+
+# skip blanks, also: transition --> out
+NF == 0 {
+  within = 0
+  next
+}
+
+# transition --> in
+within == 0 {
+  within = 1
+  count++
+}
+
+# inside a paragraph
+within == 1 {
+  dest = sprintf("para_%02d", count)
+  print $0 > dest
+}
+
+' "$@"
+
