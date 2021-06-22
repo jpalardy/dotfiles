@@ -13,10 +13,21 @@ alias Bookpiles.Repo
 defmodule Some.Server do
   use GenServer
 
-  def init(initial_number) do
-    {:ok, initial_number}
+  def start_link(options) do
+    state = %{
+      delay: Keyword.get(options, :delay, 2_000),
+      count: Keyword.get(options, :count, 0)
+    }
+
+    GenServer.start_link(__MODULE__, state)
   end
 
+  @impl true
+  def init(state) do
+    {:ok, state}
+  end
+
+  @impl true
   def handle_call(:next_number, _from, current_number) do
     {:reply, current_number, current_number + 1}
   end
