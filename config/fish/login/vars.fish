@@ -28,11 +28,6 @@ set -x MANPAGER "manpager"
 # PATHs
 #-------------------------------------------------
 
-set -gx MANPATH
+fish_add_path --path -g "$HOME/local/bin"
+fish_add_path --path -g "$DOTFILES/bin"
 
-for dir in "/usr/X11" "" "/usr" "/usr/local" "$HOME/local" $DOTFILES
-  fish_add_path -g $dir/{sbin,bin}
-  if test -d "$dir/share/man"
-    set MANPATH "$dir/share/man" $MANPATH
-  end
-end
