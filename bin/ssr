@@ -70,8 +70,6 @@ fi
 # go
 if command -v go >/dev/null; then
   echo
-  check_bin gofumpt
-  check_bin goimports
   check_bin golangci-lint
 fi
 
