@@ -1,6 +1,4 @@
-#!/bin/bash
-
-awk '
+#!/usr/bin/env awk-f
 
 function report_warning(msg) {
   warnings++
@@ -48,6 +46,4 @@ END {
     exit 1
   }
 }
-
-' "$@"
 

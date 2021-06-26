@@ -1,11 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env awk-f
 
-awk '
 {
   gsub(" [|] ", " %>% ", $0)
   gsub(" %>% ", " %>%\n  ", $0)
   gsub(" [+] ", " +\n  ", $0)
   print
 }
-' "$@"
 

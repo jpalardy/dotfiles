@@ -1,6 +1,4 @@
-#!/bin/bash
-
-awk '
+#!/usr/bin/env awk-f
 
 BEGIN {
   within = 0
@@ -24,6 +22,4 @@ within == 1 {
   dest = sprintf("para_%02d", count)
   print $0 > dest
 }
-
-' "$@"
 

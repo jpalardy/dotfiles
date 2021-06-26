@@ -1,6 +1,4 @@
-#!/bin/bash
-
-awk '
+#!/usr/bin/env awk-f
 
 #
 # lines like:
@@ -22,6 +20,4 @@ $1 == "tap" && NF > 1 {
 
 # passthrough
 { print }
-
-' "$@"
 
