@@ -34,6 +34,8 @@ defmodule Some.Server do
 end
 
 # -------------------------------------------------
+# Supervisor
+# -------------------------------------------------
 
 defmodule SomeApp.Application do
   use Application
@@ -51,6 +53,8 @@ defmodule SomeApp.Application do
 end
 
 # -------------------------------------------------
+# Dynamic Supervisor
+# -------------------------------------------------
 
 defmodule SomeApp.Application do
   use Application
@@ -59,5 +63,16 @@ defmodule SomeApp.Application do
     opts = [strategy: :one_for_one name: SomeApp.Supervisor]
 
     DynamicSupervisor.start_link(options)
+  end
+end
+
+# -------------------------------------------------
+#  Mix Task
+# -------------------------------------------------
+
+defmodule Mix.Tasks.GetToken do
+  use Mix.Task
+
+  def run(_) do
   end
 end
