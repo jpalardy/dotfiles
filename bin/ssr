@@ -6,6 +6,9 @@ COLOR_GREEN=$(tput setaf 2)
 
 #-------------------------------------------------
 
+i=0
+n=2
+
 check_bin() {
   local bin_name=$1
   local pkg_name=${2:-$1}
@@ -14,7 +17,21 @@ check_bin() {
   else
     echo -n "[$COLOR_RED FAIL $COLOR_RESET]"
   fi
-  echo " $pkg_name"
+  printf " %-21s" "$pkg_name"
+
+  i=$((i + 1))
+  if [ "$i" -ge "$n" ]; then
+    i=0
+    echo
+  fi
+}
+
+flush() {
+  if [ "$i" != 0 ]; then
+    i=0
+    echo
+  fi
+  echo
 }
 
 #-------------------------------------------------
@@ -29,12 +46,12 @@ check_bin curl
 check_bin wget
 check_bin qrencode
 check_bin pwgen
-echo
+flush
 
 # network
 check_bin ip
 check_bin mtr
-echo
+flush
 
 # experimental
 check_bin bat
@@ -45,7 +62,7 @@ check_bin tree
 check_bin pstree
 check_bin entr
 check_bin cloc
-echo
+flush
 
 # linters in npm
 check_bin node
@@ -53,23 +70,24 @@ check_bin jsonlint
 check_bin fixjson
 check_bin csslint
 check_bin shellcheck
-echo
+flush
 
 # linters, pretty-printers in brew
 check_bin yamllint
 check_bin pg_format pgformatter
+flush
 
 # node
 if command -v node >/dev/null; then
-  echo
   check_bin nodemon
   check_bin prettier
   check_bin ncu         npm-check-updates
+  flush
 fi
 
 # go
 if command -v go >/dev/null; then
-  echo
   check_bin golangci-lint
+  flush
 fi
 
