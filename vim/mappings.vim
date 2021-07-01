@@ -107,19 +107,6 @@ nnoremap <silent> [l :lprevious<CR>
 nnoremap <silent> ]l :lnext<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" COLORSCHEME ROTATION
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function! RotateColorscheme()
-  let l:schemes = ["256_xoria", "256_railscasts", "256_jellybeans", "256_wombat"]
-  let l:i = (index(l:schemes, g:colors_name) + 1) % len(l:schemes)
-  execute "colorscheme " . l:schemes[l:i]
-  redraw | echo l:schemes[l:i]
-endfunction
-
-nnoremap ,c :call RotateColorscheme()<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " QUICK COMMAND
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
