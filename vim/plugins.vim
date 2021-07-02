@@ -76,10 +76,10 @@ let g:NERDCustomDelimiters['rmd'] = {'left': '#'}
 let g:NERDSpaceDelims = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" bag
+" clipboard
 
-nmap ,b :r !bag<CR>
-vmap ,b :w !bag<CR>
+nmap ,b "+p
+vmap ,b "+y
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tabularize
