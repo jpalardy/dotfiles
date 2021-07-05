@@ -1,4 +1,3 @@
-abbr --add --global im "iex -S mix"
 abbr --add --global go-lintall "golangci-lint run --enable-all -v --color=always"
 abbr --add --global vr vimrepl
 abbr --add --global rsy "rsync -av --progress"
