@@ -10,10 +10,12 @@ category: posts
 ---
 
 <!-- -------------------------------------------------
-     IMAGE
+     IMAGE / LINKED IMAGE
 ------------------------------------------------- -->
 
 ![alt](/assets/dir/filename.ext)
+
+[![alt](/assets/dir/filename.ext)](/assets/dir/filename.ext)
 
 <!-- -------------------------------------------------
      SYNTAX HIGHLIGHT BLOCK
