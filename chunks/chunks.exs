@@ -71,8 +71,12 @@ end
 # -------------------------------------------------
 
 defmodule Mix.Tasks.GetToken do
+  @moduledoc "Get JWT token from test server"
+  @shortdoc @moduledoc
+
   use Mix.Task
 
+  @impl true
   def run(_) do
   end
 end
