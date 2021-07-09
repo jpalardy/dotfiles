@@ -30,10 +30,6 @@ function __uniq
   awk '!seen[$0]++' $argv
 end
 
-function __dupes
-  awk '++seen[$0] == 2'
-end
-
 #-------------------------------------------------
 
 function __cut
