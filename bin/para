@@ -15,11 +15,12 @@ NF == 0 {
 within == 0 {
   within = 1
   count++
+  dest = sprintf("para-%02d", count)
+  print dest
 }
 
 # inside a paragraph
 within == 1 {
-  dest = sprintf("para_%02d", count)
   print $0 > dest
 }
 
