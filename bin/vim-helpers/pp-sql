@@ -2,6 +2,21 @@
 
 awk '
 
+# head $table
+NF == 2 && $1 == "head" {
+  $0 = sprintf("SELECT * FROM %s LIMIT 15", $2)
+}
+
+# count $table
+NF == 2 && $1 == "count" {
+  $0 = sprintf("SELECT count(*) FROM %s", $2)
+}
+
+# count $column $table
+NF == 3 && $1 == "count" {
+  $0 = sprintf("SELECT %s, count(*) FROM %s GROUP BY %s ORDER BY %s DESC", $2, $3, $2, $2)
+}
+
 {
   sub(";$", "")
   print
