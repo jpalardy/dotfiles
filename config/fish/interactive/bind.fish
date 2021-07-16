@@ -6,6 +6,3 @@ bind \e` 'commandline -i "($history[1])"'
 
 # esc-w
 bind \ew 'commandline -r warp; commandline -f execute'
-
-# alt-g
-bind \eg '__fish_grep'
