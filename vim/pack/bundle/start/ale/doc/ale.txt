@@ -561,7 +561,6 @@ vimrc, and your issues should go away. >
 
   set completeopt=menu,menuone,preview,noselect,noinsert
 <
-
 Or alternatively, if you want to show documentation in popups: >
 
   set completeopt=menu,menuone,popup,noselect,noinsert
@@ -1438,6 +1437,7 @@ g:ale_linter_aliases                                     *g:ale_linter_aliases*
   \   'ps1': 'powershell',
   \   'rmarkdown': 'r',
   \   'rmd': 'r',
+  \   'svelte': ['svelte', 'javascript'],
   \   'systemverilog': 'verilog',
   \   'typescriptreact': ['typescript', 'tsx'],
   \   'verilog_systemverilog': ['verilog_systemverilog', 'verilog'],
@@ -1579,7 +1579,7 @@ g:ale_linters                                                   *g:ale_linters*
   \   'apkbuild': ['apkbuild_lint', 'secfixes_check'],
   \   'csh': ['shell'],
   \   'elixir': ['credo', 'dialyxir', 'dogma'],
-  \   'go': ['gofmt', 'golint', 'go vet'],
+  \   'go': ['gofmt', 'golint', 'gopls', 'govet'],
   \   'hack': ['hack'],
   \   'help': [],
   \   'inko': ['inko'],
@@ -1588,9 +1588,11 @@ g:ale_linters                                                   *g:ale_linters*
   \   'python': ['flake8', 'mypy', 'pylint', 'pyright'],
   \   'rust': ['cargo', 'rls'],
   \   'spec': [],
+  \   'svelte': ['eslint', 'svelteserver'],
   \   'text': [],
   \   'vue': ['eslint', 'vls'],
   \   'zsh': ['shell'],
+  \   'v': ['v'],
   \}
 <
   This option can be used to enable only a particular set of linters for a
@@ -2686,6 +2688,7 @@ documented in additional help files.
     stylelint.............................|ale-css-stylelint|
   cuda....................................|ale-cuda-options|
     nvcc..................................|ale-cuda-nvcc|
+    clangd................................|ale-cuda-clangd|
     clang-format..........................|ale-cuda-clangformat|
   d.......................................|ale-d-options|
     dfmt..................................|ale-d-dfmt|
@@ -2696,7 +2699,10 @@ documented in additional help files.
   dart....................................|ale-dart-options|
     analysis_server.......................|ale-dart-analysis_server|
     dartanalyzer..........................|ale-dart-dartanalyzer|
+    dart-format...........................|ale-dart-format|
     dartfmt...............................|ale-dart-dartfmt|
+  desktop.................................|ale-desktop-options|
+    desktop-file-validate.................|ale-desktop-desktop-file-validate|
   dhall...................................|ale-dhall-options|
     dhall-format..........................|ale-dhall-format|
     dhall-freeze..........................|ale-dhall-freeze|
@@ -2777,12 +2783,13 @@ documented in additional help files.
   hcl.....................................|ale-hcl-options|
     terraform-fmt.........................|ale-hcl-terraform-fmt|
   html....................................|ale-html-options|
+    angular...............................|ale-html-angular|
     fecs..................................|ale-html-fecs|
     html-beautify.........................|ale-html-beautify|
     htmlhint..............................|ale-html-htmlhint|
-    tidy..................................|ale-html-tidy|
     prettier..............................|ale-html-prettier|
     stylelint.............................|ale-html-stylelint|
+    tidy..................................|ale-html-tidy|
     write-good............................|ale-html-write-good|
   idris...................................|ale-idris-options|
     idris.................................|ale-idris-idris|
@@ -2834,12 +2841,15 @@ documented in additional help files.
   llvm....................................|ale-llvm-options|
     llc...................................|ale-llvm-llc|
   lua.....................................|ale-lua-options|
+    lua-format............................|ale-lua-lua-format|
     luac..................................|ale-lua-luac|
     luacheck..............................|ale-lua-luacheck|
     luafmt................................|ale-lua-luafmt|
+    stylua................................|ale-lua-stylua|
   markdown................................|ale-markdown-options|
     markdownlint..........................|ale-markdown-markdownlint|
     mdl...................................|ale-markdown-mdl|
+    pandoc................................|ale-markdown-pandoc|
     prettier..............................|ale-markdown-prettier|
     remark-lint...........................|ale-markdown-remark-lint|
     textlint..............................|ale-markdown-textlint|
@@ -2853,6 +2863,7 @@ documented in additional help files.
     nimlsp................................|ale-nim-nimlsp|
     nimpretty.............................|ale-nim-nimpretty|
   nix.....................................|ale-nix-options|
+    nixfmt................................|ale-nix-nixfmt|
     nixpkgs-fmt...........................|ale-nix-nixpkgs-fmt|
   nroff...................................|ale-nroff-options|
     write-good............................|ale-nroff-write-good|
@@ -2875,6 +2886,8 @@ documented in additional help files.
     ibm_validator.........................|ale-openapi-ibm-validator|
     prettier..............................|ale-openapi-prettier|
     yamllint..............................|ale-openapi-yamllint|
+  pascal..................................|ale-pascal-options|
+    ptop..................................|ale-pascal-ptop|
   pawn....................................|ale-pawn-options|
     uncrustify............................|ale-pawn-uncrustify|
   perl....................................|ale-perl-options|
@@ -2908,6 +2921,7 @@ documented in additional help files.
     swipl.................................|ale-prolog-swipl|
   proto...................................|ale-proto-options|
     protoc-gen-lint.......................|ale-proto-protoc-gen-lint|
+    protolint.............................|ale-proto-protolint|
   pug.....................................|ale-pug-options|
     puglint...............................|ale-pug-puglint|
   puppet..................................|ale-puppet-options|
@@ -2920,6 +2934,7 @@ documented in additional help files.
   pyrex (cython)..........................|ale-pyrex-options|
     cython................................|ale-pyrex-cython|
   python..................................|ale-python-options|
+    autoflake.............................|ale-python-autoflake|
     autoimport............................|ale-python-autoimport|
     autopep8..............................|ale-python-autopep8|
     bandit................................|ale-python-bandit|
@@ -2933,7 +2948,7 @@ documented in additional help files.
     pyflakes..............................|ale-python-pyflakes|
     pylama................................|ale-python-pylama|
     pylint................................|ale-python-pylint|
-    pyls..................................|ale-python-pyls|
+    pylsp.................................|ale-python-pylsp|
     pyre..................................|ale-python-pyre|
     pyright...............................|ale-python-pyright|
     reorder-python-imports................|ale-python-reorder_python_imports|
@@ -3007,8 +3022,14 @@ documented in additional help files.
     stylelint.............................|ale-stylus-stylelint|
   sugarss.................................|ale-sugarss-options|
     stylelint.............................|ale-sugarss-stylelint|
+  svelte..................................|ale-svelte-options|
+    prettier..............................|ale-svelte-prettier|
+    svelteserver..........................|ale-svelte-svelteserver|
   swift...................................|ale-swift-options|
+    apple-swift-format....................|ale-swift-apple-swift-format|
     sourcekitlsp..........................|ale-swift-sourcekitlsp|
+  systemd.................................|ale-systemd-options|
+    systemd-analyze.......................|ale-systemd-analyze|
   tcl.....................................|ale-tcl-options|
     nagelfar..............................|ale-tcl-nagelfar|
   terraform...............................|ale-terraform-options|
@@ -3037,6 +3058,9 @@ documented in additional help files.
     tslint................................|ale-typescript-tslint|
     tsserver..............................|ale-typescript-tsserver|
     xo....................................|ale-typescript-xo|
+  v.......................................|ale-v-options|
+    v.....................................|ale-v-v|
+    vfmt..................................|ale-v-vfmt|
   vala....................................|ale-vala-options|
     uncrustify............................|ale-vala-uncrustify|
   verilog/systemverilog...................|ale-verilog-options|
@@ -3045,6 +3069,7 @@ documented in additional help files.
     verilator.............................|ale-verilog-verilator|
     vlog..................................|ale-verilog-vlog|
     xvlog.................................|ale-verilog-xvlog|
+    yosys.................................|ale-verilog-yosys|
   vhdl....................................|ale-vhdl-options|
     ghdl..................................|ale-vhdl-ghdl|
     hdl-checker...........................|ale-vhdl-hdl-checker|
@@ -3063,6 +3088,7 @@ documented in additional help files.
   xml.....................................|ale-xml-options|
     xmllint...............................|ale-xml-xmllint|
   yaml....................................|ale-yaml-options|
+    circleci..............................|ale-yaml-circleci|
     prettier..............................|ale-yaml-prettier|
     spectral..............................|ale-yaml-spectral|
     swaglint..............................|ale-yaml-swaglint|
@@ -3714,6 +3740,21 @@ ale#fix#registry#Add(name, func, filetypes, desc, [aliases])
   ALE will search for fixers in the registry first by `name`, then by their
   `aliases`.
 
+  For example to register a custom fixer for `luafmt`: >
+
+  function! FormatLua(buffer) abort
+    return {
+    \   'command': 'luafmt --stdin'
+    \}
+  endfunction
+
+  execute ale#fix#registry#Add('luafmt', 'FormatLua', ['lua'], 'luafmt for lua')
+
+  " You can now use it in g:ale_fixers
+  let g:ale_fixers = {
+    \ 'lua': ['luafmt']
+  }
+<
 
 ale#linter#Define(filetype, linter)                       *ale#linter#Define()*
 

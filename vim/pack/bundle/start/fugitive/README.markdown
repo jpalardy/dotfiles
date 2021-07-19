@@ -36,11 +36,11 @@ Additional commands are provided for higher level operations:
 * View any blob, tree, commit, or tag in the repository with `:Gedit` (and
   `:Gsplit`, etc.).  For example, `:Gedit HEAD~3:%` loads the current file as
   it existed 3 commits ago.
-* `:Gdiffsplit` brings up the staged version of the file side by side with the
-  working tree version.  Use Vim's diff handling capabilities to apply changes
-  to the staged version, and write that buffer to stage the changes.  You can
-  also give an arbitrary `:Gedit` argument to diff against older versions of
-  the file.
+* `:Gdiffsplit` (or `:Gvdiffsplit`) brings up the staged version of the file
+  side by side with the working tree version.  Use Vim's diff handling
+  capabilities to apply changes to the staged version, and write that buffer
+  to stage the changes.  You can also give an arbitrary `:Gedit` argument to
+  diff against older versions of the file.
 * `:Gread` is a variant of `git checkout -- filename` that operates on the
   buffer rather than the file itself.  This means you can use `u` to undo it
   and you never get any warnings about the file changing outside Vim.
@@ -108,7 +108,12 @@ following to your vimrc:
     command! -bang -bar -nargs=* Gfetch execute 'Dispatch<bang> -dir=' .
           \ fnameescape(FugitiveGitDir()) 'git fetch' <q-args>
 
-[credentials caching]: https://help.github.com/en/articles/caching-your-github-password-in-git
+> So I have a symlink and...
+
+Stop.  Just stop.  If Git won't deal with your symlink, then Fugitive won't
+either.  Consider using a [plugin that resolves
+symlinks](https://github.com/aymericbeaumet/symlink.vim), or even better,
+using fewer symlinks.
 
 ## Self-Promotion
 

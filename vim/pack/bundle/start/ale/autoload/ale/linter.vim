@@ -41,7 +41,7 @@ let s:default_ale_linters = {
 \   'apkbuild': ['apkbuild_lint', 'secfixes_check'],
 \   'csh': ['shell'],
 \   'elixir': ['credo', 'dialyxir', 'dogma'],
-\   'go': ['gofmt', 'golint', 'go vet'],
+\   'go': ['gofmt', 'golint', 'gopls', 'govet'],
 \   'hack': ['hack'],
 \   'help': [],
 \   'inko': ['inko'],
@@ -53,6 +53,7 @@ let s:default_ale_linters = {
 \   'text': [],
 \   'vue': ['eslint', 'vls'],
 \   'zsh': ['shell'],
+\   'v': ['v'],
 \}
 
 " Testing/debugging helper to unload all linters.

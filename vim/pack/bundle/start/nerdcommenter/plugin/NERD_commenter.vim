@@ -91,6 +91,7 @@ let s:delimiterMap = {
     \ 'bc': { 'left': '#' },
     \ 'bib': { 'left': '//' },
     \ 'bindzone': { 'left': ';' },
+    \ 'bind-named': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'blade': { 'left': '{{--', 'right': '--}}' },
     \ 'bst': { 'left': '%' },
     \ 'btm': { 'left': '::' },
@@ -156,6 +157,7 @@ let s:delimiterMap = {
     \ 'erlang': { 'left': '%', 'leftAlt': '%%' },
     \ 'eruby': { 'left': '<%#', 'right': '%>', 'leftAlt': '<!--', 'rightAlt': '-->' },
     \ 'esmtprc': { 'left': '#' },
+    \ 'exim': { 'left': '#' },
     \ 'expect': { 'left': '#' },
     \ 'exports': { 'left': '#' },
     \ 'factor': { 'left': '! ', 'leftAlt': '!# ' },
@@ -204,6 +206,7 @@ let s:delimiterMap = {
     \ 'hbs': { 'left': '{{!-- ', 'right': ' --}}' },
     \ 'hercules': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'hive': { 'left': '-- ' },
+    \ 'hocon': { 'left': '//', 'leftAlt': '#' },
     \ 'hog': { 'left': '#' },
     \ 'hostsaccess': { 'left': '#' },
     \ 'htmlcheetah': { 'left': '##' },
@@ -747,7 +750,9 @@ function s:CommentBlock(top, bottom, lSide, rSide, forceNested )
 
                     if s:Multipart()
                         "stick the right delimiter down
-                        let theLine = strpart(theLine, 0, rSide+strlen(leftSpaced)) . rightSpaced . strpart(theLine, rSide+strlen(leftSpaced))
+                        "byte idx of the char next to the last char = (byte idx of last char + 1) + (last char byte len) - 1
+                        let rIndex = (rSide+strlen(leftSpaced)) + strlen(strcharpart(strpart(theLine, rSide+strlen(leftSpaced)-1), 0, 1)) - 1
+                        let theLine = strpart(theLine, 0, rIndex) . rightSpaced . strpart(theLine, rIndex)
 
                         let firstLeftDelim = s:FindDelimiterIndex(s:Left(), theLine)
                         let lastRightDelim = s:LastIndexOfDelim(s:Right(), theLine)

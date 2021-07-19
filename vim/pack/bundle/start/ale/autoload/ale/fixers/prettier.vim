@@ -7,7 +7,7 @@ call ale#Set('javascript_prettier_use_global', get(g:, 'ale_use_global_executabl
 call ale#Set('javascript_prettier_options', '')
 
 function! ale#fixers#prettier#GetExecutable(buffer) abort
-    return ale#node#FindExecutable(a:buffer, 'javascript_prettier', [
+    return ale#path#FindExecutable(a:buffer, 'javascript_prettier', [
     \   'node_modules/.bin/prettier_d',
     \   'node_modules/prettier-cli/index.js',
     \   'node_modules/.bin/prettier',
@@ -74,6 +74,7 @@ function! ale#fixers#prettier#ApplyFixForVersion(buffer, version) abort
         \    'graphql': 'graphql',
         \    'markdown': 'markdown',
         \    'vue': 'vue',
+        \    'svelte': 'svelte',
         \    'yaml': 'yaml',
         \    'openapi': 'yaml',
         \    'html': 'html',
