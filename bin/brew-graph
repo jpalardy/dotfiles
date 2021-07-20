@@ -1,12 +1,12 @@
 #!/bin/bash
 
 remove_casks() {
-  awk -F'"' 'NR == FNR {lut[$0] = 1; next} !($2 in lut) {print}' <(brew list --cask) -
+  awk -F'"' 'ARGIND == 1 {lut[$0]; next} !($2 in lut) {print}' <(brew list --cask) -
 }
 
 change_color_expected() {
   awk '
-    NR == FNR {
+    ARGIND == 1 {
       key = "\"" $1 "\""
       ignore[key] = 1
       next
