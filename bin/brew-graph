@@ -20,6 +20,18 @@ change_color_expected() {
   ' "$@"
 }
 
-brew-graph.rb --installed --highlight-leaves | remove_casks | change_color_expected ~/.brew-ignore - | neato -Tsvg -o brew-deps.svg
-open -a "Google Chrome" brew-deps.svg
+format="png"
+
+while getopts "T:" opt; do
+  case "$opt" in
+    T)
+      format=$OPTARG
+      ;;
+    *)
+      echo >&2 "Usage: brew-graph [-T format]"
+      exit 1
+  esac
+done
+
+brew-graph.rb --installed --highlight-leaves | remove_casks | change_color_expected ~/.brew-ignore - | neato -T"$format" -o "brew-deps.$format"
 
