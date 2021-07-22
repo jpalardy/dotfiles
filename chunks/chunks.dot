@@ -6,7 +6,7 @@ digraph G {
   main [shape=box];
   main -> parse [weight=8];
   parse -> execute;
-  main -> init [style=dotted];
+  main -> init [style=dotted]; // or dashed
   main -> cleanup;
   execute -> { make_string; printf}
   init -> make_string;
@@ -16,3 +16,18 @@ digraph G {
   node [shape=box,style=filled,color=".7 .3 1.0"];
   execute -> compare;
 }
+
+// ** USUAL HEADER
+
+// rankdir=BT;
+// node [style="filled,rounded", shape=box, fontname=Arial, fontsize=14];
+// graph [overlap=false; splines=true];
+
+// -------------------------------------------------
+
+// ** FORCING RANKS
+
+// { rank = same; B; C; D }
+// D -> E [style=invis]
+// or, in subgraph ... edge [style=invis]
+
