@@ -31,3 +31,5 @@
   defaultBranch = main
 [rebase]
   autosquash = true
+[status]
+  submoduleSummary = true
