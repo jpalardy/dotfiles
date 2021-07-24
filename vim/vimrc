@@ -71,6 +71,9 @@ if match($TERM, '256color$') != -1
   colorscheme 256_xoria
 endif
 
+" bottom of file is black
+highlight EndOfBuffer ctermfg=black ctermbg=black
+
 " This is useful for debugging
 " set verbose=9
 
