@@ -73,6 +73,8 @@ endif
 
 " bottom of file is black
 highlight EndOfBuffer ctermfg=black ctermbg=black
+" remove other fill chars (purpose accomplished by colors)
+let &fillchars = "eob: "
 
 " This is useful for debugging
 " set verbose=9
