@@ -19,10 +19,3 @@ function serve
     or python -m SimpleHTTPServer $port
 end
 
-function h
-  if test (count $argv) = 0
-    history
-    return
-  end
-  history | rg $argv
-end
