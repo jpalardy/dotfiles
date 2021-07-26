@@ -72,7 +72,7 @@ if match($TERM, '256color$') != -1
 endif
 
 " bottom of file is black
-highlight EndOfBuffer ctermfg=black ctermbg=black
+highlight EndOfBuffer ctermfg=235 ctermbg=235
 " remove other fill chars (purpose accomplished by colors)
 let &fillchars = "eob: "
 
