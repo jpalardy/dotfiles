@@ -85,6 +85,12 @@ if command -v node >/dev/null; then
   flush
 fi
 
+# elm
+if command -v elm >/dev/null; then
+  check_bin elm-format
+  flush
+fi
+
 # go
 if command -v go >/dev/null; then
   check_bin golangci-lint
