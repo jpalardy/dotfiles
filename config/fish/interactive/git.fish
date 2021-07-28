@@ -4,7 +4,7 @@ function git_diff
   git diff $argv &| vim -R -
 end
 
-abbr --add --global glg "git log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(auto)%d%Creset %C(dim white)%an%Creset' --all"
+abbr --add --global glg "git log --graph --pretty=colorful --all"
 
 function gcp
   git config alias.gcp.enabled 2>/dev/null | read -l gcp_config
