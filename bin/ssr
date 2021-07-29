@@ -48,11 +48,6 @@ check_bin qrencode
 check_bin pwgen
 flush
 
-# network
-check_bin ip
-check_bin mtr
-flush
-
 # experimental
 check_bin bat
 check_bin dust
