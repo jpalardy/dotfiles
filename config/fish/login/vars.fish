@@ -28,6 +28,7 @@ set -x MANPAGER "manpager"
 # PATHs
 #-------------------------------------------------
 
+fish_add_path -g "/usr/local/sbin"
 fish_add_path -g "$HOME/local/bin"
 fish_add_path -g "$DOTFILES/bin"
 
