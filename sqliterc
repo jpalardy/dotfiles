@@ -2,4 +2,4 @@
 .mode column
 .nullvalue NULL
 .prompt "> "
-.timer on
+.timer off
