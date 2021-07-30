@@ -1,0 +1,32 @@
+#!/bin/bash
+
+confirm() {
+  local msg=$1
+  while true; do
+    read -p "$msg (Y/n) " -r
+    case $REPLY in
+      Y | y | "")
+        return 0
+        ;;
+      N | n)
+        return 1
+        ;;
+    esac
+  done
+}
+
+git log --graph --pretty=colorful "$@"
+
+if ! confirm "review?"; then
+  exit 0
+fi
+
+# for commit in $(git log --reverse --pretty=format:"%h" "$@"); do
+for commit in $(git rev-list --reverse "$@"); do
+  git show --stat "$commit" --color=always | less -r --quit-if-one-screen --quit-at-eof
+  echo
+  if confirm "review?"; then
+    git show "$commit" | vim -R -
+  fi
+done
+
