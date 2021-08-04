@@ -60,10 +60,9 @@ check_bin cloc
 flush
 
 # linters in npm
-check_bin node
-check_bin jsonlint
-check_bin fixjson
-check_bin csslint
+check_bin jsonlint "jsonlint @ npm"
+check_bin fixjson "fixjson @ npm"
+check_bin csslint "csslint @ npm"
 check_bin shellcheck
 flush
 
@@ -74,9 +73,9 @@ flush
 
 # node
 if command -v node >/dev/null; then
-  check_bin nodemon
-  check_bin prettier
-  check_bin ncu         npm-check-updates
+  check_bin nodemon  "nodemon @ npm"
+  check_bin prettier "prettier @ npm"
+  check_bin ncu      "npm-check-updates"
   flush
 fi
 
