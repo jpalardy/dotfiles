@@ -1,7 +1,7 @@
 function fish_prompt
   set -l laststatus $status
 
-  if test $CMD_DURATION -ge 1000
+  if test $CMD_DURATION -ge 1000 -a $CMD_DURATION -lt 300000
     printf "🕒 %dms\n" $CMD_DURATION
   end
 
