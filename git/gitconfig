@@ -5,7 +5,6 @@
   ui = auto
 [alias]
   st        = status --short --branch
-  b         = branch
   co        = checkout
   outgoing  = log --oneline @{upstream}..
   incoming  = log --oneline ..@{upstream}
@@ -13,7 +12,6 @@
   di        = diff ..@{upstream}
   ignored   = !git clean -ndX | sed -e 's/^Would remove //'
   ffm       = merge --ff-only
-  cp        = cherry-pick
   rl        = remote -v
   fp        = fetch --prune
   who       = config --get user.email
