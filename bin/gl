@@ -9,7 +9,7 @@ cleanup() {
 }
 trap cleanup INT TERM EXIT
 
-find "$path" -maxdepth 1 -type f -printf "%T@ %p\n" | sort -nr | awk 'BEGIN {print ""} {sub("[^ ]+ ", ""); print}' > "$tmpfile"
+ls -t "$path" | awk 'BEGIN {print ""} {sub("[^ ]+ ", ""); print}' > "$tmpfile"
 ${VISUAL:-${EDITOR:-vi}} "$tmpfile"
 
 awk '
