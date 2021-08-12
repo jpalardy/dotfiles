@@ -15,6 +15,7 @@ confirm() {
   done
 }
 
+clear
 git log --graph --pretty=colorful "$@"
 
 if ! confirm "review?"; then
@@ -23,7 +24,8 @@ fi
 
 # for commit in $(git log --reverse --pretty=format:"%h" "$@"); do
 for commit in $(git rev-list --reverse "$@"); do
-  git show --stat "$commit" --color=always | less -r --quit-if-one-screen --quit-at-eof
+  clear
+  git show --stat "$commit"
   echo
   if confirm "review?"; then
     git show "$commit" | vim -R -
