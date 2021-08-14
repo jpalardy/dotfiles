@@ -29,5 +29,6 @@
   "extensions.ignoreRecommendations": false,
   "files.exclude": {
     ".vscode/": true
-  }
+  },
+  "elixirLS.suggestSpecs": false
 }
