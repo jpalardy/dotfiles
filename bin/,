@@ -4,7 +4,7 @@ list_commands() {
   # node.js -related
   if [ -e "package.json" ]; then
     echo "npm outdated"
-    echo "ncu -u"
+    echo "ncu -u; npm install; git add package*; npm audit fix"
   fi
   # go -related
   if [ -e "go.mod" ]; then
