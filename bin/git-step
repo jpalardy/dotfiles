@@ -23,7 +23,7 @@ if ! confirm "review?"; then
 fi
 
 # for commit in $(git log --reverse --pretty=format:"%h" "$@"); do
-for commit in $(git rev-list --reverse "$@"); do
+for commit in $(git rev-list --no-merges --reverse "$@"); do
   clear
   git show --stat "$commit"
   echo
