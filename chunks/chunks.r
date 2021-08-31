@@ -25,10 +25,10 @@ display.brewer.pal(5, "Greens")
 + scale_color_brewer(palette="Greens")
 
 #-------------------------------------------------
-# hide legend for aes
+# typical geom_point values
 #-------------------------------------------------
 
-geom_point(.., show.legend=FALSE)
+geom_point(.., show.legend=FALSE, alpha=0.4, size=2.5, stroke=0) +
 
 #-------------------------------------------------
 # types of lines
