@@ -15,9 +15,35 @@ fi
 
 #-------------------------------------------------
 
-context="$1"
-cmd="$SHELL"
-ext=""
+filename=""
+
+while getopts "f:" opt; do
+  case "$opt" in
+    f)
+      filename=$OPTARG
+      ;;
+    *)
+      die "unrecognized flag: $opt"
+      ;;
+  esac
+done
+
+shift $((OPTIND - 1))
+
+if test -n "$filename"; then
+  context=${filename##*.}
+else
+  context="$1"
+  filename="_vimrepl.$1"
+fi
+
+# bit of a workaround: contexts don't have periods `.`
+if [[ "$context" == *.* ]]; then
+  filename="$context"
+  context=${filename##*.}
+fi
+
+#-------------------------------------------------
 
 if [ -z "$context" ]; then
   die "missing context"
@@ -26,25 +52,19 @@ fi
 case "$context" in
   iex)
     cmd="iex"
-    ext="exs"
+    filename="${filename:-_vimrepl.exs}"
     ;;
   mix)
     cmd="iex -S mix"
-    ext="exs"
+    filename="${filename:-_vimrepl.exs}"
     ;;
-  r|R)
+  r|R|Rmd)
     cmd="R --quiet --no-save --no-restore"
-    ext="R"
     ;;
   *)
-    # unknown context, use extension
-    ext="$context"
+    cmd="$SHELL"
     ;;
 esac
-
-if [ -z "$ext" ]; then
-  die "config error: missing file extension"
-fi
 
 #-------------------------------------------------
 
@@ -56,7 +76,7 @@ tmux split-window -h "$cmd || $SHELL"
 tmux select-pane -l
 
 # vim...
-vim "_vimrepl.$ext"
+vim "$filename"
 
 # kill other pane(s)
 tmux kill-pane -a
