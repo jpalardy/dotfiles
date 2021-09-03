@@ -44,7 +44,7 @@ nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR>
 vnoremap _$ :call Preserve( "s/\\s\\+$//e")<CR>
 
 " DEDUP ADJACENT EMPTY LINES
-nnoremap _B :call Preserve("g/^\\_$\\n\\_^$/d")<CR>
+nnoremap _B :call Preserve("g/\\_^\\n\\{2,}/d")<CR>
 
 " COMMATIZE
 vnoremap ,, :! paste -s -d, -<CR>
