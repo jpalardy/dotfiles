@@ -12,7 +12,7 @@ cleanup() {
 }
 trap cleanup INT TERM EXIT
 
-ls -t "$path" | awk 'BEGIN {print ""} {sub("[^ ]+ ", ""); print}' > "$tmpfile"
+(echo; ls -t "$path") > "$tmpfile"
 ${VISUAL:-${EDITOR:-vi}} "$tmpfile"
 
 awk -v path="$path" '
