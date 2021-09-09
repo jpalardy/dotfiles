@@ -15,58 +15,80 @@ fi
 
 #-------------------------------------------------
 
+cmd=""
 filename=""
+template=""
+dryrun=0
 
-while getopts "f:" opt; do
+while getopts "c:f:nt:" opt; do
   case "$opt" in
+    c)
+      cmd=$OPTARG
+      ;;
     f)
       filename=$OPTARG
       ;;
+    n)
+      dryrun=1
+      ;;
+    t)
+      template=$OPTARG
+      ;;
     *)
-      die "unrecognized flag: $opt"
+      die "unrecognized flag"
       ;;
   esac
 done
 
 shift $((OPTIND - 1))
 
-if test -n "$filename"; then
-  context=${filename##*.}
-else
-  context="$1"
+# no filename, assume extension
+if test "$#" -gt 0 -a -z "$filename"; then
   filename="_vimrepl.$1"
+  shift
 fi
 
-# bit of a workaround: contexts don't have periods `.`
-if [[ "$context" == *.* ]]; then
-  filename="$context"
-  context=${filename##*.}
+if test "$#" -gt 0; then
+  die "extra arguments: $*"
 fi
 
 #-------------------------------------------------
 
-if [ -z "$context" ]; then
-  die "missing context"
+if test -n "$template"; then
+  case "$template" in
+    iex)
+      cmd="${cmd:-"iex"}"
+      filename="${filename:-"_vimrepl.exs"}"
+      ;;
+    mix)
+      cmd="${cmd:-"iex -S mix"}"
+      filename="${filename:-"_vimrepl.exs"}"
+      ;;
+    r|R|Rmd)
+      cmd="${cmd:-"R --quiet --no-save --no-restore"}"
+      filename="${filename:-"_vimrepl.$template"}"
+      ;;
+    *)
+      die "unrecognized template: $template"
+      ;;
+  esac
 fi
 
-case "$context" in
-  iex)
-    cmd="iex"
-    filename="${filename:-_vimrepl.exs}"
-    ;;
-  mix)
-    cmd="iex -S mix"
-    filename="${filename:-_vimrepl.exs}"
-    ;;
-  r|R|Rmd)
-    cmd="R --quiet --no-save --no-restore"
-    ;;
-  *)
-    cmd="$SHELL"
-    ;;
-esac
+if test -z "$cmd"; then
+  cmd="$SHELL"
+fi
+
+if test -z "$filename"; then
+  die "missing filename"
+fi
 
 #-------------------------------------------------
+
+if test "$dryrun" == 1; then
+  echo "cmd: $cmd"
+  echo "filename: $filename"
+  exit
+fi
 
 # run "cmd", or shell in split pane
 # launch shell if exit != 0
