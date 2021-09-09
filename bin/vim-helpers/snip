@@ -105,7 +105,7 @@ BEGIN {
   snip("elixir:tap",   "IO.inspect()")
   snip("elixir:tapl",  "IO.inspect(label: \"▒\")")
   snip("elixir::clal", "charlists: :as_lists")
-  snip("elixir:q",     "quote do")
+  snip("elixir:pry",   "require IEx; IEx.pry()")
   #-------------------------------------------------
   # eex
   #-------------------------------------------------
