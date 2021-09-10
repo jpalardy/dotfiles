@@ -1,0 +1,4 @@
+#!/usr/local/bin/fish
+
+vim -d $__fish_data_dir/functions/ll.fish interactive/ll.fish
+
