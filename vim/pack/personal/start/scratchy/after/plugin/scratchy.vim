@@ -19,9 +19,6 @@ command -nargs=* FPScratchy :call FPScratchy(<args>)
 " replace current buffer
 nmap <ESC>h :FPScratchy "rg --files --no-ignore-parent --sort-files"<CR>
 
-" replace current buffer with git status
-nmap <ESC>g :FPScratchy "git status --short \| cut -c4- \| sort"<CR>
-
 " textmate-like command-t
 nmap <ESC>t :botright  new<CR><ESC>h
 nmap <ESC>T :botright vnew<CR><ESC>h
