@@ -1,3 +1,6 @@
 prefix = ~/local
 save-exact = true
 loglevel = error
+
+; other options -- https://docs.npmjs.com/cli/v7/using-npm/config
+; strict-ssl, cafile...
