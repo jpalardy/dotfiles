@@ -68,6 +68,10 @@ if test -n "$template"; then
       cmd="${cmd:-"R --quiet --no-save --no-restore"}"
       filename="${filename:-"_vimrepl.$template"}"
       ;;
+    elm)
+      cmd="${cmd:-"elm repl"}"
+      filename="${filename:-"_vimrepl.$template"}"
+      ;;
     *)
       die "unrecognized template: $template"
       ;;
