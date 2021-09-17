@@ -2,8 +2,8 @@
 function tad
   set -l start_cd $PWD
   set -l dst "$HOME/.throw-away/"(date +%s)
-  mkdir $dst
-  cd $dst
+  mkdir -p $dst
+  cd $dst; or return
   if test -n "$argv[1]"
     git clone $argv[1]
     cd (basename $argv[1] .git)
