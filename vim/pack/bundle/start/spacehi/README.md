@@ -25,10 +25,30 @@ I also changed the colors to, if I remember correctly, how spacehi used to look 
 Installation
 ------------
 
-I recommend installing [pathogen.vim](https://github.com/tpope/vim-pathogen), and then simply copy and paste:
+Use your favorite package manager, or use Vim's built-in package support (since Vim 7.4.1528):
 
-    cd ~/.vim/bundle
-    git clone git://github.com/jpalardy/spacehi.vim.git
+    mkdir -p ~/.vim/pack/plugins/start
+    cd ~/.vim/pack/plugins/start
+    git clone https://github.com/jpalardy/spacehi.vim.git
 
-If you like it the hard way, copy `plugin/spacehi.vim` from this repo into `~/.vim/plugin`.
+Disabling for specific filetypes
+--------------------------------
+
+When spacehi is enabled, it will highlight "weird spaces" in all files. That's not always useful...
+
+For examples, [help files](https://github.com/jpalardy/spacehi.vim/issues/1) turn into Christmas trees, in the most unhelpful way.
+
+To disable spacehi, only for some types of files, here's a snippet to adapt to your needs:
+
+```vim
+augroup mostly_spacehi
+  autocmd!
+  autocmd Syntax * SpaceHi
+  autocmd FileType help     NoSpaceHi
+  autocmd FileType diff     NoSpaceHi
+  autocmd FileType man      NoSpaceHi
+  autocmd FileType go       NoSpaceHi
+  autocmd FileType make     NoSpaceHi
+augroup END
+```
 
