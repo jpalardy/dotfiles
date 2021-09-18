@@ -68,9 +68,10 @@ let g:lightline = {
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " nerd commenter
 
-vnoremap #  :call NERDComment(1, "toggle")<CR>
-nnoremap # V:call NERDComment(1, "toggle")<CR>
+vnoremap # :call nerdcommenter#Comment('x', 'toggle')<CR>
+nnoremap # :call nerdcommenter#Comment('n', 'toggle')<CR>
 
+let g:NERDCreateDefaultMappings = 0
 let g:NERDCustomDelimiters = {}
 let g:NERDCustomDelimiters['rmd'] = {'left': '#'}
 let g:NERDSpaceDelims = 1
