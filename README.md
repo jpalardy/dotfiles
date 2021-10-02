@@ -4,7 +4,6 @@
 My config files for:
 
 - [fish](/config/fish)
-- [zsh](/zsh)
 - [bash](/bash)
 - [vim](/vim)
 

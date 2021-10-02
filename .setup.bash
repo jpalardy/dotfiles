@@ -23,9 +23,6 @@ relink .bash_profile "$DOTFILES/bash/bash_profile"
 relink .bash_logout  "$DOTFILES/bash/bash_logout"
 relink .inputrc      "$DOTFILES/bash/inputrc"
 
-relink .zshrc        "$DOTFILES/zsh/zshrc"
-relink .zlogout      "$DOTFILES/zsh/zlogout"
-
 relink .vim          "$DOTFILES/vim"
 
 relink .gitconfig    "$DOTFILES/git/gitconfig"
