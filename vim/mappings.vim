@@ -85,6 +85,8 @@ nnoremap < <<
 nnoremap tt :tabedit<CR>
 " grep in new tab
 nnoremap tg :tabedit<CR>:silent! grep -i 
+nnoremap tf :tabedit<CR>:silent! grep -i /<CR>:redraw!<CR>
+nnoremap t* :tabedit<CR>:silent! grep -i -w /<CR>:redraw!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPLIT MAPPINGS
