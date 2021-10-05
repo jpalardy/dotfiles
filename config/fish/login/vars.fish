@@ -13,7 +13,6 @@ set -x DOTFILES "$HOME/dotfiles"
 
 set -x EDITOR "vim"
 set -x PAGER "less"
-set -x LESS "-i -R"
 set -x BLOCKSIZE "K"
 
 set -x LANG "en_US.UTF-8"
