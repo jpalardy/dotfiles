@@ -81,12 +81,24 @@ vnoremap // y/<C-R>"<CR>
 nnoremap > >>
 nnoremap < <<
 
-" new tab
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NEW TAB
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 nnoremap tt :tabedit<CR>
-" grep in new tab
+
 nnoremap tg :tabedit<CR>:silent! grep -i 
-nnoremap tf :tabedit<CR>:silent! grep -i /<CR>:redraw!<CR>
-nnoremap t* :tabedit<CR>:silent! grep -i -w /<CR>:redraw!<CR>
+
+function! GrepForCurrentSearch()
+  let _s=@/
+  let _s=substitute(_s, '^[\\]<', '\\b', '')
+  let _s=substitute(_s, '[\\]>', '\\b', '')
+  tabedit
+  silent! execute "grep -i " . shellescape(_s)
+  redraw!
+endfunction
+
+nnoremap tf :call GrepForCurrentSearch()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPLIT MAPPINGS
