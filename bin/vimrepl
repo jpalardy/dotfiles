@@ -64,6 +64,10 @@ if test -n "$template"; then
       cmd="${cmd:-"iex -S mix"}"
       filename="${filename:-"_vimrepl.exs"}"
       ;;
+    phx)
+      cmd="${cmd:-"iex -S mix phx.server"}"
+      filename="${filename:-"_vimrepl.exs"}"
+      ;;
     r|R|Rmd)
       cmd="${cmd:-"R --quiet --no-save --no-restore"}"
       filename="${filename:-"_vimrepl.$template"}"
