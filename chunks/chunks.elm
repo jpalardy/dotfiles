@@ -6,6 +6,19 @@ module Whatever exposing (..)
 -------------------------------------------------
 --}
 
-add : Int -> Int -> Int
-add x y = x + y
 
+add : Int -> Int -> Int
+add x y =
+    x + y
+
+
+
+{--
+-------------------------------------------------
+    elm review
+
+cd ~/.github; git clone git@github.com:jfmengels/elm-review-unused.git
+elm-review --config ~/.github/elm-review-unused/example/
+
+-------------------------------------------------
+--}
