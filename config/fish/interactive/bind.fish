@@ -1,5 +1,5 @@
 # esc-h
-bind \eh 'commandline -r vim-; commandline -f execute'
+bind \eh 'commandline -r "vim -c \"normal h\""; commandline -f execute'
 
 # esc-`
 bind \e` 'commandline -i "($history[1])"'
