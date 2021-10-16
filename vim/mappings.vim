@@ -87,8 +87,6 @@ nnoremap < <<
 
 nnoremap tt :tabedit<CR>
 
-nnoremap tg :tabedit<CR>:silent! grep -i 
-
 function! GrepForCurrentSearch()
   let _s=@/
   let _s=substitute(_s, '^[\\]<', '\\b', '')
@@ -98,7 +96,7 @@ function! GrepForCurrentSearch()
   redraw!
 endfunction
 
-nnoremap tf :call GrepForCurrentSearch()<CR>
+nnoremap tg :call GrepForCurrentSearch()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPLIT MAPPINGS
