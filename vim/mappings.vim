@@ -7,7 +7,23 @@ nnoremap <F2>   :ALENextWrap<CR>
 inoremap <F2>   <C-o>:ALENextWrap<CR>
 nnoremap <F3>   :ALEToggle<CR>
 inoremap <F3>   <C-o>:ALEToggle<CR>
-nnoremap <F4>   :copen<CR>
+nnoremap <F4>   :call CycleWindows()<CR>
+
+let g:cw_state = "none"
+
+function! CycleWindows()
+  if g:cw_state == "none"
+    copen
+    let g:cw_state = "errors"
+  elseif g:cw_state == "errors"
+    cclose
+    lopen
+    let g:cw_state = "locations"
+  elseif g:cw_state == "locations"
+    lclose
+    let g:cw_state = "none"
+  endif
+endfunction
 
 nnoremap <F5>   :ToggleSpaceHi<CR>
 inoremap <F5>   <C-o>:ToggleSpaceHi<CR>
