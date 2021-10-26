@@ -80,3 +80,17 @@ defmodule Mix.Tasks.GetToken do
   def run(_) do
   end
 end
+
+# -------------------------------------------------
+#  Comments
+# -------------------------------------------------
+
+defmodule CommentExamples do
+  @doc """
+  Explains, shortly, what the function does.
+
+  Adds more details as needed.
+  """
+  def some_name() do
+  end
+end
