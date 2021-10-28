@@ -115,9 +115,9 @@ BEGIN {
   #-------------------------------------------------
   # elm
   #-------------------------------------------------
-  snip("elm:letin", "let _ = 42 in")
-  snip("elm:if",    "if 4 < 5 then 42 else 21")
+  snip("elm:letin", "let _ = ▒ in")
   snip("elm:log",   "Debug.log \"label\"")
+  snip("elm:if",    "if ▒ then True else False")
 
   #-------------------------------------------------
   # sql
