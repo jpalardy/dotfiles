@@ -27,5 +27,11 @@ sub x y =
 cd ~/.github; git clone git@github.com:jfmengels/elm-review-unused.git
 elm-review --config ~/.github/elm-review-unused/example/
 
+-- or --
+
+elm-review init
+cd review && elm install jfmengels/elm-review-unused
+cp ~/.github/elm-review-unused/example/src/ReviewConfig.elm src/ReviewConfig.elm
+
 -------------------------------------------------
 --}
