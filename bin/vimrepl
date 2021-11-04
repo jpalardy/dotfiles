@@ -13,26 +13,23 @@ if [ "$(tmux list-panes -F'#{window_panes}' | head -n1)" -gt 1 ]; then
   die "window is already split"
 fi
 
+if test "$#" -eq 0; then
+  die "usage: vimrepl ext [-c command] [-f filename.ext]"
+fi
+
 #-------------------------------------------------
 
-cmd=""
-filename=""
-template=""
-dryrun=0
+cmd="$SHELL"
+filename="_vimrepl.$1"
+shift
 
-while getopts "c:f:nt:" opt; do
+while getopts "c:f:" opt; do
   case "$opt" in
     c)
       cmd=$OPTARG
       ;;
     f)
       filename=$OPTARG
-      ;;
-    n)
-      dryrun=1
-      ;;
-    t)
-      template=$OPTARG
       ;;
     *)
       die "unrecognized flag"
@@ -42,61 +39,11 @@ done
 
 shift $((OPTIND - 1))
 
-# no filename, assume extension
-if test "$#" -gt 0 -a -z "$filename"; then
-  filename="_vimrepl.$1"
-  shift
-fi
-
 if test "$#" -gt 0; then
   die "extra arguments: $*"
 fi
 
 #-------------------------------------------------
-
-if test -n "$template"; then
-  case "$template" in
-    iex)
-      cmd="${cmd:-"iex"}"
-      filename="${filename:-"_vimrepl.exs"}"
-      ;;
-    mix)
-      cmd="${cmd:-"iex -S mix"}"
-      filename="${filename:-"_vimrepl.exs"}"
-      ;;
-    phx)
-      cmd="${cmd:-"iex -S mix phx.server"}"
-      filename="${filename:-"_vimrepl.exs"}"
-      ;;
-    r|R|Rmd)
-      cmd="${cmd:-"R --quiet --no-save --no-restore"}"
-      filename="${filename:-"_vimrepl.$template"}"
-      ;;
-    elm)
-      cmd="${cmd:-"elm repl"}"
-      filename="${filename:-"_vimrepl.$template"}"
-      ;;
-    *)
-      die "unrecognized template: $template"
-      ;;
-  esac
-fi
-
-if test -z "$cmd"; then
-  cmd="$SHELL"
-fi
-
-if test -z "$filename"; then
-  die "missing filename"
-fi
-
-#-------------------------------------------------
-
-if test "$dryrun" == 1; then
-  echo "cmd: $cmd"
-  echo "filename: $filename"
-  exit
-fi
 
 # run "cmd", or shell in split pane
 # launch shell if exit != 0
