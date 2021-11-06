@@ -45,6 +45,7 @@ let g:ale_fixers['html']       = ['prettier']
 let g:ale_fixers['python']     = ['yapf']
 
 let g:ale_linters = {}
+let g:ale_linters['json']       = ['jq', 'jsonlint']
 let g:ale_linters['typescript'] = ['tslint', 'tsserver']
 let g:ale_linters['go']         = ['gofmt', 'govet']
 let g:ale_linters['python']     = ['flake8', 'pylint']
