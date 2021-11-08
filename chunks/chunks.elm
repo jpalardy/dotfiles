@@ -18,6 +18,15 @@ sub x y =
 
 {--
 -------------------------------------------------
+    HTTP placeholder
+-------------------------------------------------
+--}
+
+Process.sleep 2000
+    |> Task.perform (\_ -> Message (Ok value))
+
+{--
+-------------------------------------------------
     elm review
 
 cd ~/.github; git clone git@github.com:jfmengels/elm-review-unused.git
