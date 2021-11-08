@@ -5,3 +5,5 @@ match($0, /^mix ([^ ]+) +# +(.*)/, arr) { print arr[1] "\t" arr[2] }
 #
 # sub(regexp, replacement [, target])
 
+print "something" > "/dev/stderr"
+
