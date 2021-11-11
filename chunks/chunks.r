@@ -7,6 +7,14 @@ colors = c("val1"="red", "val2"="darkgreen")
 scale_color_manual(values=colors)
 
 #-------------------------------------------------
+# labels
+#-------------------------------------------------
+
+# https://ggplot2.tidyverse.org/reference/geom_text.html
+# centered above, y in y-units
+geom_label(aes(label=value), vjust=0, nudge_y=2000) +
+
+#-------------------------------------------------
 # color brewer
 #-------------------------------------------------
 
