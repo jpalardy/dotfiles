@@ -55,6 +55,11 @@ let g:ale_linters['elixir']     = ['elixir-ls']
 let g:ale_elixir_elixir_ls_release=expand("~/local/bin")
 let g:ale_completion_enabled = 1
 let g:ale_completion_autoimport = 1
+let g:ale_floating_preview = 1
+let g:ale_cursor_detail = 1
+let g:ale_floating_window_border = []
+let g:ale_lsp_suggestions = 1
+let g:ale_default_navigation = "split"
 
 nnoremap ,f :ALEFix<CR>
 
