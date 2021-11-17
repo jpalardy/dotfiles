@@ -29,28 +29,6 @@ nmap <c-c><cr>  <c-c><c-c>}j
 nmap <c-c>d <Plug>SlimeSendCell
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" prettier
-
-let g:ale_fixers = {}
-let g:ale_fixers['javascript'] = ['prettier']
-let g:ale_fixers['typescript'] = ['prettier']
-let g:ale_fixers['css']        = ['prettier']
-let g:ale_fixers['less']       = ['prettier']
-let g:ale_fixers['json']       = ['fixjson', 'jq']
-let g:ale_fixers['elixir']     = ['mix_format']
-let g:ale_fixers['rust']       = ['rustfmt']
-let g:ale_fixers['go']         = ['gofmt', 'goimports']
-let g:ale_fixers['elm']        = ['elm-format']
-let g:ale_fixers['html']       = ['prettier']
-let g:ale_fixers['python']     = ['yapf']
-
-let g:ale_linters = {}
-let g:ale_linters['json']       = ['jq', 'jsonlint']
-let g:ale_linters['typescript'] = ['tslint', 'tsserver']
-let g:ale_linters['go']         = ['gofmt', 'govet']
-let g:ale_linters['python']     = ['flake8', 'pylint']
-let g:ale_linters['elixir']     = ['elixir-ls']
-"let g:ale_linters['rust'] = ['rustc', 'rustfmt']
 
 let g:ale_elixir_elixir_ls_release=expand("~/local/bin")
 let g:ale_completion_enabled = 1
