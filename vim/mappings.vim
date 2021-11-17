@@ -40,7 +40,7 @@ nnoremap <ESC>l :set list!<CR>
 nnoremap <ESC>n :set number!<CR>
 nnoremap <ESC><SPACE> :nohl<CR>
 
-nnoremap <Enter> :ALEHover<CR>
+nnoremap ¡ :ALEHover<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COMMA MAPPINGS
