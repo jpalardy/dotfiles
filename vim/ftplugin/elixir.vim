@@ -2,6 +2,8 @@
 setlocal equalprg=eq-elixir
 
 let b:ale_fix_on_save = 1
+let b:ale_linters = ['elixir-ls']
+let b:ale_fixers = ['mix_format']
 
 nnoremap <buffer> ,n :!tg %<CR>
 nnoremap <buffer> <c-c><c-l> :SlimeSend1 clear()<CR>
