@@ -29,6 +29,7 @@ nmap <c-c><cr>  <c-c><c-c>}j
 nmap <c-c>d <Plug>SlimeSendCell
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ALE
 
 let g:ale_elixir_elixir_ls_release=expand("~/local/bin")
 let g:ale_completion_enabled = 1

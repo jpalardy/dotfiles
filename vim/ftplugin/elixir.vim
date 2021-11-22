@@ -5,6 +5,8 @@ let b:ale_fix_on_save = 1
 let b:ale_linters = ['elixir-ls']
 let b:ale_fixers = ['mix_format']
 
+" -------------------------------------------------
+
 nnoremap <buffer> ,n :!tg %<CR>
 nnoremap <buffer> <c-c><c-l> :SlimeSend1 clear()<CR>
 
@@ -13,6 +15,8 @@ nnoremap <buffer> <c-c>1 :SlimeSend1 recompile<CR>
 nnoremap <buffer> <c-c>2 :SlimeSend1 #iex:break<CR>
 
 nnoremap <buffer> <c-c>9 :SlimeSend1 :observer.start<CR>
+
+" -------------------------------------------------
 
 function! Fold_ex_doc()
   let start_pos = getpos(".")
