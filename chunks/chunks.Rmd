@@ -29,9 +29,16 @@ theme_set(
 
 ```{r loading-data, message=FALSE}
 
-d <- read_csv("...")
+# filename = commandArgs(TRUE) # a vector
+# filename = list.files(pattern="*.tsv") |> max()
+filename = "..."
 
-d <- read_csv("...", col_names=c("...", "..."),
+d <- read_tsv(filename, col_names=c("...", "...")  # => cols(...)
+
+d |> spec()
+d |> spec() |> cols_condense()
+
+d <- read_tsv(filename, col_names=c("...", "..."),
        col_types=cols(
          "..." = col_datetime(),
          "..." = col_character(),
