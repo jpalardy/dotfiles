@@ -14,10 +14,7 @@ if [[ "$force" = 1 || ! -e "$SRC" ]]; then
     find ~ 2>/dev/null > "$SRC"
     exit
   fi
-
-  find ~ 2>/dev/null | tee "$SRC" | rg "$@"
-  exit
 fi
 
-rg "${@:-"."}" "$SRC" --no-line-number
+rg -i "${@:-"."}" "$SRC" --no-line-number
 
