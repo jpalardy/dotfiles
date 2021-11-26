@@ -9,19 +9,16 @@ if [ $# -ne 2 ]; then
   die "usage: $0 dir1 dir2"
 fi
 
-diff -rq "$@" | awk -v dir1="$1" -v dir2="$2" '
-
-BEGIN {
-  sub("/$", "", dir1)
-  sub("/$", "", dir2)
-}
+diff -rq "$@" | awk '
 
 /^Files / {
   print "vimdiff", $2, $4
 }
 
 /^Only in/ {
-  print "vimdiff", dir1 "/" $NF, dir2 "/" $NF
+  path = $3
+  sub(/:$/, "", path)
+  print "vimdiff _", path "/" $4
 }
 
 '
