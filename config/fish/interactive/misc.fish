@@ -8,8 +8,6 @@ abbr --add --global reload! "source ~/.config/fish/config.fish"
 
 alias tls "tmux list-sessions"
 
-abbr --add --global _fs "fzf | source"
-
 #-------------------------------------------------
 
 function serve
