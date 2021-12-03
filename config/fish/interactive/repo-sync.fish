@@ -11,7 +11,7 @@ function repo-sync
   end
 
   for repo in $REPOS
-    set cmds $cmds "$cmd 'cd $repo; git fp; git st; git incoming; exec $SHELL'"
+    set cmds $cmds "$cmd 'cd $repo; git fp; git st; git log --graph --pretty=color ..@{upstream}; exec $SHELL'"
     set cmd "split-window"
   end
   set cmds $cmds "select-layout even-vertical"
