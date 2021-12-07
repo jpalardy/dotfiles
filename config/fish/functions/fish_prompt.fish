@@ -1,10 +1,6 @@
 function fish_prompt
   set -l laststatus $status
 
-  if test $CMD_DURATION -ge 1000 -a $CMD_DURATION -lt 300000
-    printf "🕒 %dms\n" $CMD_DURATION
-  end
-
   if test $laststatus -ne 0
       echo -s (set_color red) "exit: $laststatus"
   end
