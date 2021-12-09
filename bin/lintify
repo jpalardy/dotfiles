@@ -13,6 +13,10 @@ if [ -z "$lang" ]; then
 fi
 
 case "$lang" in
+  css)
+    cp -v "$DOTFILES/lang/css/stylelintrc.json" .stylelintrc.json
+    npm install --save-dev stylelint stylelint-config-standard
+    ;;
   js)
     cp -v "$DOTFILES/lang/js/eslintrc" .eslintrc
     npm install --save-dev eslint eslint-config-airbnb-base eslint-plugin-import
