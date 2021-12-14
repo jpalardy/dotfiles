@@ -19,6 +19,7 @@
   gone      = !git branch -vv | awk '/: gone/ {print \"git branch -D\", $1}'
   untracked = ls-files --others --exclude-standard
   rewind    = reset HEAD^
+  vimdiff   = difftool
 [diff]
   noprefix = true
   tool = vimdiff

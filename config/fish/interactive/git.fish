@@ -1,6 +1,5 @@
-abbr --add --global git_vimdiff "git difftool"
 
-function git_diff
+function git-diff
   git diff $argv &| vim -R -
 end
 
