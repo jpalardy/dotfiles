@@ -4,7 +4,7 @@ awk '
 
 # head $table
 NF == 2 && $1 == "head" {
-  $0 = sprintf("SELECT * FROM %s LIMIT 15", $2)
+  $0 = sprintf("SELECT * FROM %s LIMIT 35", $2)
 }
 
 # count $table
@@ -20,6 +20,11 @@ NF == 3 && $1 == "count" {
 # count all tables -- postgres
 NF == 1 && $1 == "pg_count" {
   $0 = "SELECT schemaname, relname, n_live_tup FROM pg_stat_user_tables ORDER BY schemaname, relname"
+}
+
+# sample a table
+NF == 2 && $1 == "sample" {
+  $0 = sprintf("SELECT * FROM %s ORDER BY random() LIMIT 35", $2)
 }
 
 {
