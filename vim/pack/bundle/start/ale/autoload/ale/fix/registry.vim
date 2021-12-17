@@ -100,6 +100,11 @@ let s:default_registry = {
 \       'suggested_filetypes': ['nim'],
 \       'description': 'Apply nimpretty to a file.',
 \   },
+\   'erblint': {
+\       'function': 'ale#fixers#erblint#Fix',
+\       'suggested_filetypes': ['eruby'],
+\       'description': 'Apply erblint --autocorrect to a file.',
+\   },
 \   'eslint': {
 \       'function': 'ale#fixers#eslint#Fix',
 \       'suggested_filetypes': ['javascript', 'typescript'],
@@ -186,6 +191,11 @@ let s:default_registry = {
 \       'suggested_filetypes': ['ruby'],
 \       'description': 'Fix ruby files with standardrb --fix',
 \   },
+\   'statix': {
+\       'function': 'ale#fixers#statix#Fix',
+\       'suggested_filetypes': ['nix'],
+\       'description': 'Fix common Nix antipatterns with statix fix',
+\   },
 \   'stylelint': {
 \       'function': 'ale#fixers#stylelint#Fix',
 \       'suggested_filetypes': ['css', 'sass', 'scss', 'sugarss', 'stylus'],
@@ -240,6 +250,11 @@ let s:default_registry = {
 \       'function': 'ale#fixers#gofmt#Fix',
 \       'suggested_filetypes': ['go'],
 \       'description': 'Fix Go files with go fmt.',
+\   },
+\   'gofumpt': {
+\       'function': 'ale#fixers#gofumpt#Fix',
+\       'suggested_filetypes': ['go'],
+\       'description': 'Fix Go files with gofumpt, a stricter go fmt.',
 \   },
 \   'goimports': {
 \       'function': 'ale#fixers#goimports#Fix',
@@ -485,6 +500,11 @@ let s:default_registry = {
 \       'function': 'ale#fixers#ormolu#Fix',
 \       'suggested_filetypes': ['haskell'],
 \       'description': 'A formatter for Haskell source code.',
+\   },
+\   'jsonnetfmt': {
+\       'function': 'ale#fixers#jsonnetfmt#Fix',
+\       'suggested_filetypes': ['jsonnet'],
+\       'description': 'Fix jsonnet files with jsonnetfmt',
 \   },
 \   'ptop': {
 \       'function': 'ale#fixers#ptop#Fix',

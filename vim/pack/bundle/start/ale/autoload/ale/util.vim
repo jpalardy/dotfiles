@@ -491,8 +491,12 @@ function! ale#util#FindItemAtCursor(buffer) abort
     return [l:info, l:loc]
 endfunction
 
-function! ale#util#Input(message, value) abort
-    return input(a:message, a:value)
+function! ale#util#Input(message, value, ...) abort
+    if a:0 > 0
+        return input(a:message, a:value, a:1)
+    else
+        return input(a:message, a:value)
+    endif
 endfunction
 
 function! ale#util#HasBuflineApi() abort
@@ -534,4 +538,8 @@ function! ale#util#SetBufferContents(buffer, lines) abort
     endif
 
     return l:new_lines
+endfunction
+
+function! ale#util#GetBufferContents(buffer) abort
+    return join(getbufline(a:buffer, 1, '$'), '\n') . '\n'
 endfunction

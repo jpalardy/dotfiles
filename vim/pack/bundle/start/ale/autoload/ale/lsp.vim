@@ -38,6 +38,7 @@ function! ale#lsp#Register(executable_or_address, project, init_options) abort
         \   'capabilities': {
         \       'hover': 0,
         \       'rename': 0,
+        \       'filerename': 0,
         \       'references': 0,
         \       'completion': 0,
         \       'completion_trigger_characters': [],
@@ -45,6 +46,8 @@ function! ale#lsp#Register(executable_or_address, project, init_options) abort
         \       'typeDefinition': 0,
         \       'symbol_search': 0,
         \       'code_actions': 0,
+        \       'did_save': 0,
+        \       'includeText': 0,
         \   },
         \}
     endif
@@ -263,6 +266,24 @@ function! s:UpdateCapabilities(conn, capabilities) abort
     if type(get(a:capabilities, 'workspaceSymbolProvider')) is v:t_dict
         let a:conn.capabilities.symbol_search = 1
     endif
+
+    if type(get(a:capabilities, 'textDocumentSync')) is v:t_dict
+        let l:syncOptions = get(a:capabilities, 'textDocumentSync')
+
+        if get(l:syncOptions, 'save') is v:true
+            let a:conn.capabilities.did_save = 1
+        endif
+
+        if type(get(l:syncOptions, 'save')) is v:t_dict
+            let a:conn.capabilities.did_save = 1
+
+            let l:saveOptions = get(l:syncOptions, 'save')
+
+            if get(l:saveOptions, 'includeText') is v:true
+                let a:conn.capabilities.includeText = 1
+            endif
+        endif
+    endif
 endfunction
 
 " Update a connection's configuration dictionary and notify LSP servers
@@ -360,6 +381,7 @@ function! ale#lsp#MarkConnectionAsTsserver(conn_id) abort
     let l:conn.capabilities.typeDefinition = 1
     let l:conn.capabilities.symbol_search = 1
     let l:conn.capabilities.rename = 1
+    let l:conn.capabilities.filerename = 1
     let l:conn.capabilities.code_actions = 1
 endfunction
 

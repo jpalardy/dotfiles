@@ -24,6 +24,18 @@ To this: >
 <
 
 ===============================================================================
+cspell                                                  *ale-javascript-cspell*
+
+See |ale-cspell-options|
+
+
+===============================================================================
+deno                                                      *ale-javascript-deno*
+
+Check the docs over at |ale-typescript-deno|.
+
+
+===============================================================================
 eslint                                                  *ale-javascript-eslint*
 
 g:ale_javascript_eslint_executable         *g:ale_javascript_eslint_executable*
