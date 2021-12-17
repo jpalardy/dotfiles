@@ -11,7 +11,7 @@ all: $(bundle_tasks)
 	  print "bundle." $$1 ":"; \
 		print "	@rm -rf", $$1; \
 	  print "	git clone --quiet --depth=1", $$2, $$1; \
-	  print "	rm -rf", $$1 "/.git", $$1 "/.gitignore", $$1 "/.github", $$1 "/.gitattributes", $$1 "/.gitmodules"; \
+	  print "	rm -rf", $$1 "/.git", $$1 "/.gitignore", $$1 "/.github", $$1 "/.gitattributes", $$1 "/.gitmodules", $$1 "/test"; \
 	  print ""; \
 	}' $< > $@
 
