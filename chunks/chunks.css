@@ -3,5 +3,13 @@ selector {
   font-family: "Times New Roman", Times, serif;
   font-family: Arial, Helvetica, sans-serif;
   font-family: "Lucida Console", "Courier New", monospace;
+  /* japanese sans */
+  /* https://stackoverflow.com/questions/14563064/japanese-standard-web-fonts */
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  /* ubuntu fonts... */
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", "ＭＳ ゴシック" , "MS Gothic", "Noto Sans CJK JP", TakaoPGothic, sans-serif;
+  /* japanese serif */
+  /* http://hayataki-masaharu.jp/web-typography-in-japanese/ */
+  font-family: 'ヒラギノ明朝 ProN', 'Hiragino Mincho ProN', '游明朝', '游明朝体', YuMincho, 'Yu Mincho', 'ＭＳ 明朝', 'MS Mincho', HiraMinProN-W3, 'TakaoEx明朝', TakaoExMincho, 'MotoyaLCedar', 'Droid Sans Japanese', serif;
 }
 
