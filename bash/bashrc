@@ -41,20 +41,22 @@ HISTSIZE=1000                    # history lines in memory
 HISTFILESIZE=1000                # history lines in the file
 HISTCONTROL=ignoreboth           # don't save lines starting with a space, or duplicate lines
 
-# completion
-load_bash_completion() {
-  for dir in /usr/local/etc /etc; do
-    if [ -e ${dir}/bash_completion ]; then
-      source ${dir}/bash_completion
-      complete -r vim 2>/dev/null
-      complete -r sqlite3 2>/dev/null
-      return
-    fi
-  done
-  echo "no bash-completion"
-}
-load_bash_completion
-unset load_bash_completion
+if [ -t 0 ] ; then
+  # completion
+  load_bash_completion() {
+    for dir in /usr/local/etc /etc; do
+      if [ -e ${dir}/bash_completion ]; then
+        source ${dir}/bash_completion
+        complete -r vim 2>/dev/null
+        complete -r sqlite3 2>/dev/null
+        return
+      fi
+    done
+    echo "no bash-completion"
+  }
+  load_bash_completion
+  unset load_bash_completion
+fi
 
 #-------------------------------------------------
 # COMMANDS
