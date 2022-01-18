@@ -7,7 +7,6 @@ let b:ale_fixers = ['mix_format']
 
 " -------------------------------------------------
 
-nnoremap <buffer> ,n :!tg %<CR>
 nnoremap <buffer> <c-c><c-l> :SlimeSend1 clear()<CR>
 
 " hotkeys
