@@ -8,5 +8,12 @@ if [ -z "$dir" ]; then
   exit
 fi
 
-rsync -av "$HOME/.github/templates/$dir/" . "$@"
+src="$HOME/.github/templates/$dir"
+
+# do parent first, recursively
+if [ -f "$src/.parent" ]; then
+  templates "$(cat "$src/.parent")" "$@"
+fi
+
+rsync -av --exclude .parent "$src/" . "$@"
 
