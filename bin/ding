@@ -1,14 +1,21 @@
 #!/bin/bash
 
 lastexit=${1:-0}
-if ! command -v afplay &>/dev/null; then
-  exit 1
-fi
 
-if [ "$lastexit" -ne 0 ]; then
+play_sound() {
+  if ! command -v afplay &>/dev/null; then
+    echo >&2 "ding: cannot play sound!"
+    return
+  fi
+
+  if [ "$lastexit" -eq 0 ]; then
+    afplay "/System/Library/Sounds/Purr.aiff"
+    return
+  fi
+
   afplay "/System/Library/Sounds/Basso.aiff"
-  exit 1
-fi
+}
 
-afplay "/System/Library/Sounds/Purr.aiff"
+play_sound
+exit $lastexit
 
