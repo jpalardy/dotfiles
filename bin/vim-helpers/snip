@@ -12,8 +12,13 @@ function snip(key, value) {
   snippets[key] = value
 }
 
-function cycle(key, values) {
-  split(values, parts, " :: ")
+# current max: 4
+function cycle(key, v1, v2, v3, v4) {
+  delete parts
+  if (v1 != "") parts[1] = v1
+  if (v2 != "") parts[2] = v2
+  if (v3 != "") parts[3] = v3
+  if (v4 != "") parts[4] = v4
   len = length(parts)
   parts[len+1] = parts[1]
   for (i = 1; i <= len; i++) {
@@ -36,7 +41,7 @@ BEGIN {
   snip("*:ts",   strftime("%s"))
   snip("*:?",    "❓")
   snip("*:O",    "🔆")
-  cycle("*",     "_ :: 📦 :: ✅")
+  cycle("*",     "_", "📦", "✅")
   snip("*:x",    "❌")
   snip("*:!",    "⚠️")
   snip("*:<3",   "❤️")
@@ -45,7 +50,7 @@ BEGIN {
   snip("*:=>",   "⇨")
   snip("*:<->",  "⇆")
   snip("*:+-",   "±")
-  cycle("*",     "* :: × :: ⋅")
+  cycle("*",     "*", "×", "⋅")
   snip("*:/",    "÷")
   snip("*:>=",   "≥")
   snip("*:<=",   "≤")
@@ -96,7 +101,7 @@ BEGIN {
   snip("go:forr",    "for i, _ := range ▒ {}")
   snip("go:iferr",   "if err != nil { return err }")
   snip("go:handler", "func(res http.ResponseWriter, req *http.Request)")
-  cycle("go",        "fmt. :: fmt.Println :: fmt.Printf")
+  cycle("go",        "fmt.", "fmt.Println", "fmt.Printf")
 
   #-------------------------------------------------
   # elixir
@@ -109,8 +114,8 @@ BEGIN {
   #-------------------------------------------------
   # eex
   #-------------------------------------------------
-  snip("eelixir:_", "<%=▒ %>")
-  cycle("eelixir",  "<%= :: <%# :: <%")
+  snip("eelixir:_", "<%= ▒ %>")
+  cycle("eelixir",  "<%= ", "<%# ", "<% ")
 
   #-------------------------------------------------
   # elm
