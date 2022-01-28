@@ -46,8 +46,8 @@ fi
 #-------------------------------------------------
 
 # run "cmd", or shell in split pane
-# launch shell if exit != 0
-tmux split-window -h "$cmd || $SHELL"
+# launch shell on exit
+tmux split-window -h "$cmd; $SHELL"
 
 # go back to initiating (last) pane
 tmux select-pane -l
