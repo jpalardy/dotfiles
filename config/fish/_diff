@@ -1,4 +1,5 @@
 #!/usr/local/bin/fish
 
 vim -d $__fish_data_dir/functions/ll.fish interactive/ll.fish
+vim -d /usr/local/Cellar/fzf/__$VERSION__/shell/key-bindings.fish functions/fzf_key_bindings.fish
 
