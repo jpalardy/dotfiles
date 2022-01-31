@@ -1,5 +1,8 @@
 function fzf-warp
-  cat $HOME/.warp | eval (__fzfcmd) | read -l result
+  set -l config "$HOME/.lists/warp"
+
+  fzf < $config | read -l result
   and commandline -- "ssh $result"
+
   commandline -f repaint
 end
