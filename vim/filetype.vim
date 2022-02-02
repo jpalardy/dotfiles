@@ -11,6 +11,7 @@ augroup other_filetypedetect
   autocmd BufNewFile,BufRead *.moe       setf moe
   autocmd BufNewFile,BufRead *.mxm       setf maxima
   autocmd BufNewFile,BufRead *.csv       setf csv
+  autocmd BufNewFile,BufRead *.har       setf json
 augroup END
 
 augroup cursor_position
