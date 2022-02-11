@@ -12,3 +12,4 @@ elixir         https://github.com/elixir-editors/vim-elixir.git
 toml           https://github.com/cespare/vim-toml.git
 emmet          https://github.com/mattn/emmet-vim.git
 fish           https://github.com/dag/vim-fish.git
+minizinc       https://github.com/vale1410/vim-minizinc.git
