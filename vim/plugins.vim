@@ -60,6 +60,7 @@ nnoremap # :call nerdcommenter#Comment('n', 'toggle')<CR>
 let g:NERDCreateDefaultMappings = 0
 let g:NERDCustomDelimiters = {}
 let g:NERDCustomDelimiters['rmd'] = {'left': '#'}
+let g:NERDCustomDelimiters['zinc'] = {'left': '%'}
 let g:NERDSpaceDelims = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
