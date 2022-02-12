@@ -56,3 +56,24 @@ done
 
 shift $((OPTIND - 1))
 
+# -------------------------------------------------
+
+confirm() {
+  local msg=$1
+  while true; do
+    read -p "$msg (Y/n) " -r
+    case $REPLY in
+      Y | y | "")
+        return 0
+        ;;
+      N | n)
+        return 1
+        ;;
+    esac
+  done
+}
+
+if ! confirm "reboot?"; then
+  exit 0
+fi
+
