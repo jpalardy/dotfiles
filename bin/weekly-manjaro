@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+confirm() {
+  local msg=$1
+  while true; do
+    read -p "$msg (Y/n) " -r
+    case $REPLY in
+      Y | y | "")
+        return 0
+        ;;
+      N | n)
+        return 1
+        ;;
+    esac
+  done
+}
+
+# -------------------------------------------------
+
+pacman -Syu
+
+echo "-------------------------------------------------"
+echo "dangling packages"
+echo "-------------------------------------------------"
+
+pacman -Rns $(pacman -Qdt | awk '{print $1}')
+
+# -------------------------------------------------
+
+if confirm "reboot?"; then
+  reboot
+fi
+
+
