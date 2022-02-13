@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-apt update
-
-apt upgrade
-
-apt dist-upgrade
-
 confirm() {
   local msg=$1
   while true; do
@@ -21,8 +15,17 @@ confirm() {
   done
 }
 
+# -------------------------------------------------
+
+apt update
+
+apt upgrade
+
+apt dist-upgrade
+
+# -------------------------------------------------
+
 if confirm "reboot?"; then
   reboot
 fi
-
 

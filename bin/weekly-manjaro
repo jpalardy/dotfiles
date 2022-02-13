@@ -19,16 +19,12 @@ confirm() {
 
 pacman -Syu
 
-echo "-------------------------------------------------"
-echo "dangling packages"
-echo "-------------------------------------------------"
-
-pacman -Rns $(pacman -Qdt | awk '{print $1}')
+# dangling packages
+pacman -Qdt | awk '{print $1}' | xargs --no-run-if-empty pacman -Rns
 
 # -------------------------------------------------
 
 if confirm "reboot?"; then
   reboot
 fi
-
 
