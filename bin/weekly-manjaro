@@ -19,8 +19,10 @@ confirm() {
 
 pacman -Syu
 
-# dangling packages
-pacman -Qdt | awk '{print $1}' | xargs --no-run-if-empty pacman -Rns
+dangling_packages=$(pacman -Qdt | awk '{print $1}')
+if [ -n "$dangling_packages" ]; then
+  pacman -Rns $dangling_packages
+fi
 
 # -------------------------------------------------
 
