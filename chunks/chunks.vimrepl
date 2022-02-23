@@ -1,6 +1,0 @@
-vimrepl exs -c "iex"
-vimrepl exs -c "iex -S mix"
-vimrepl exs -c "iex -S mix phx.server"
-vimrepl R   -c "R --quiet --no-save --no-restore"
-vimrepl elm -c "elm repl"
-vimrepl sql -c "psql"
