@@ -1,6 +1,6 @@
 
 function! SnipReplace()
-  " extract last word, put in register x
+  " extract text in front of cursor, put in register x
   execute "normal! v0\"xy"
 
   " convert w/ snip command-line
