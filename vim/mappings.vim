@@ -122,12 +122,6 @@ nnoremap tg :call GrepForCurrentSearch()<CR>
 " SPLIT MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" window
-nnoremap \|<left>  :topleft  vnew<CR>
-nnoremap \|<right> :botright vnew<CR>
-nnoremap \|<up>    :topleft  new<CR>
-nnoremap \|<down>  :botright new<CR>
-
 " buffer
 nnoremap \<left>  :leftabove  vnew<CR>
 nnoremap \<right> :rightbelow vnew<CR>
@@ -143,12 +137,6 @@ nnoremap <silent> [q :cprevious<CR>
 nnoremap <silent> ]q :cnext<CR>
 nnoremap <silent> [l :lprevious<CR>
 nnoremap <silent> ]l :lnext<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" QUICK COMMAND
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-command Gzz windo normal Gzz
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " GIT
