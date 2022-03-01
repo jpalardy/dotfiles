@@ -4,7 +4,7 @@ dir=$1
 shift
 
 if [ -z "$dir" ]; then
-  ls "$HOME/.github/templates/"
+  ls -1 "$HOME/.github/templates/"
   exit
 fi
 
