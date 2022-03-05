@@ -39,12 +39,6 @@ BEGIN {
   snip("*:dn",   strftime("%A"))
   snip("*:td",   strftime("%F -- %A"))
   snip("*:ts",   strftime("%s"))
-  snip("*:?",    "❓")
-  snip("*:O",    "🔆")
-  cycle("*",     "_", "📦", "✅")
-  snip("*:x",    "❌")
-  snip("*:!",    "⚠️")
-  snip("*:<3",   "❤️")
   snip("*:cr",   "⏎")
   snip("*:->",   "→")
   snip("*:=>",   "⇨")
@@ -57,6 +51,16 @@ BEGIN {
   snip("*:cmd",  "⌘")
   snip("*:alt",  "⌥")
 
+  # emojis
+  cycle("*",        "_", "📦", "✅")
+  snip("*::think",  "🤔")
+  snip("*::clock",  "⏰")
+  snip("*:?",       "❓")
+  snip("*:O",       "🔆")
+  snip("*:x",       "❌")
+  snip("*:!",       "⚠️")
+  snip("*:<3",      "❤️")
+
   # spanish accents
   snip("*:a'", "á")
   snip("*:i'", "í")
@@ -65,10 +69,6 @@ BEGIN {
   snip("*:e'", "é")
   snip("*:o'", "ó")
   snip("*:n~", "ñ")
-
-  # emojis
-  snip("*::think",  "🤔")
-  snip("*::clock",  "⏰")
 
   #-------------------------------------------------
   # javascript
