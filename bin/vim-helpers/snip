@@ -73,24 +73,24 @@ BEGIN {
   #-------------------------------------------------
   # javascript
   #-------------------------------------------------
-  snip("javascript:fn",   "function ▒() {\n}")
-  snip("javascript:fori", "for (let i = 0; i < ▒; i += 1) {")
-  snip("javascript:fe",   "forEach(▒)")
-  snip("javascript:iife", "(() => {\n▒\n})();")
+  n = split("javascript typescript", arr)
+  for (i = 1; i <= n; i++) {
+    snip(arr[i] ":fn",   "function ▒() {\n}")
+    snip(arr[i] ":fori", "for (let i = 0; i < ▒; i += 1) {")
+    snip(arr[i] ":fe",   "forEach(▒)")
+    snip(arr[i] ":iife", "(() => {\n▒\n})();")
+  }
 
   #-------------------------------------------------
   # r and rmd
   #-------------------------------------------------
-  snip("r:fn", "function")
-  snip("r:|",  "%>%")
-  snip("r:>",  "%>%")
-  snip("r:_",  ".Last.value");
-  snip("r:#h", "#-------------------------------------------------\n# ▒name\n#-------------------------------------------------");
-  for (k in snippets) {
-    if (k !~ /^r:/) { continue }
-    v = snippets[k]
-    sub("r:", "rmd:", k)
-    snippets[k] = v
+  n = split("r rmd", arr)
+  for (i = 1; i <= n; i++) {
+    snip(arr[i] ":fn", "function")
+    snip(arr[i] ":|",  "%>%")
+    snip(arr[i] ":>",  "%>%")
+    snip(arr[i] ":_",  ".Last.value");
+    snip(arr[i] ":#h", "#-------------------------------------------------\n# ▒name\n#-------------------------------------------------");
   }
   snip("rmd:```",  "```{r}\n\n▒\n\n```");
 
