@@ -39,6 +39,8 @@ BEGIN {
   snip("*:dn",   strftime("%A"))
   snip("*:td",   strftime("%F -- %A"))
   snip("*:ts",   strftime("%s"))
+
+  # unicode
   snip("*:cr",   "⏎")
   snip("*:->",   "→")
   snip("*:=>",   "⇨")
