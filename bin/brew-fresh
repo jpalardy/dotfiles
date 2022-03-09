@@ -1,9 +1,0 @@
-#!/bin/bash
-
-brew update
-echo
-brew outdated
-read -p "press any key..."
-brew upgrade
-brew cleanup -s
-
