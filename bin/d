@@ -4,7 +4,7 @@ GREEN=$(tput setaf 28)
 current=$(date +%Z)
 
 # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-for tz in America/Los_Angeles America/New_York Etc/UTC Asia/Tokyo; do
+for tz in America/Vancouver America/Toronto Etc/UTC Asia/Tokyo; do
   if [ "$(TZ=$tz date +%Z)" == "$current" ]; then
     echo -n "$GREEN"
   fi
