@@ -24,6 +24,8 @@ if [ -n "$dangling_packages" ]; then
   pacman -Rns $dangling_packages
 fi
 
+pacman -Sc
+
 # -------------------------------------------------
 
 if confirm "reboot?"; then
