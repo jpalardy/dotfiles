@@ -23,9 +23,10 @@ apt upgrade
 
 apt dist-upgrade
 
-# -------------------------------------------------
+apt autoremove
 
 if confirm "reboot?"; then
   reboot
 fi
+
 

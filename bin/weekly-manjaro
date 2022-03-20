@@ -26,8 +26,6 @@ fi
 
 pacman -Sc
 
-# -------------------------------------------------
-
 if confirm "reboot?"; then
   reboot
 fi
