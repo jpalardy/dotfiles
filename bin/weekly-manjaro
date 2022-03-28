@@ -24,7 +24,7 @@ if [ -n "$dangling_packages" ]; then
   pacman -Rns $dangling_packages
 fi
 
-pacman -Sc
+pacman -Sc --noconfirm
 
 if confirm "reboot?"; then
   reboot
