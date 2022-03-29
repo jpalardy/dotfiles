@@ -24,5 +24,5 @@ function fne
 end
 
 function f.
-  find . -name '.*' -type f
+  find . -name '.*' -type f | sed -e 's/^..//' | sort
 end
