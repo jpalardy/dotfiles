@@ -22,3 +22,7 @@ end
 function fne
   ff "\\.$argv[1]\$"
 end
+
+function f.
+  find . -name '.*' -type f
+end
