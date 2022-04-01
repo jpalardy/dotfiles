@@ -61,6 +61,7 @@ let g:NERDCreateDefaultMappings = 0
 let g:NERDCustomDelimiters = {}
 let g:NERDCustomDelimiters['rmd'] = {'left': '#'}
 let g:NERDCustomDelimiters['zinc'] = {'left': '%'}
+let g:NERDCustomDelimiters['moe'] = {'left': '#', 'right': '#'}
 let g:NERDSpaceDelims = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
