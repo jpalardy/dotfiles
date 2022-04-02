@@ -27,6 +27,18 @@ BEGINFILE {
   prev_line = FNR
 }
 
+# look for bad dates -- bad number of days in month, bad number of months in year...
+match($0, /\<([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9])\>/, arr) {
+  date = mktime(gensub("-", " ", "g", arr[1]) " 0 0 0")
+  if (date == -1) {
+    report_warning("invalid date: " arr[1])
+    next
+  }
+  if (strftime("%F", date) != arr[1]) {
+    report_warning("invalid date: " arr[1])
+  }
+}
+
 # look for 2+ empty lines
 {
   if (NF == 0) {
