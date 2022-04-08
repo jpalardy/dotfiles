@@ -1,11 +1,23 @@
 alias rg "rg -i --sort-files"
 alias rg_ "rg --no-heading --no-filename --no-line-number"
 
-alias ff "rg --files --follow"
 alias ftf "find . -type f"
 
+function ff
+  set -l restricted ""
+  if string match -q -r '^-u' -- $argv[1]
+    set restricted $argv[1]
+    set --erase argv[1]
+  end
+  set -l filter ""
+  if test -n "$argv"
+    set filter "| rg" $argv
+  end
+  eval "rg --files --follow" $restricted $filter
+end
+
 function fne
-  ff | rg "\\.$argv[1]\$"
+  ff '\\.'$argv[1]'\$'
 end
 
 function f.
