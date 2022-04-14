@@ -1,5 +1,6 @@
 bash/local
 config/fish/local
+config/fish/fish_variables
 vim/spell/
 vim/.netrwhist
 vim/swap/
