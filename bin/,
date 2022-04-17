@@ -1,12 +1,6 @@
 #!/bin/bash
 
 list_commands() {
-  # throw-away
-  if [ "$(basename $(dirname $PWD))" == ".throw-away" ]; then
-    echo 'vimrepl R -c "R --quiet"'
-    echo 'vimrepl exs -c iex'
-    echo 'vimrepl js -c node'
-  fi
   # node.js -related
   if [ -e "package.json" ]; then
     echo "npm outdated"
