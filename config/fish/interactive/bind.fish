@@ -10,6 +10,6 @@ bind \ew fzf-warp
 # ctrl-_ -- open rg results in vim
 bind \c_ 'commandline -r "vim -q ($history[1] --vimgrep | psub)"; commandline -f execute'
 
-# esc-.
-bind \e. fzf-vimrepl
+# esc-,
+bind \e, fzf-vimrepl
 
