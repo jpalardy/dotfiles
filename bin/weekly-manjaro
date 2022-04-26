@@ -17,6 +17,8 @@ confirm() {
 
 # -------------------------------------------------
 
+pacman-mirrors --continent --method rank
+
 pacman -Syu
 
 dangling_packages=$(pacman -Qdt | awk '{print $1}')
