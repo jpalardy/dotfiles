@@ -46,3 +46,12 @@ function __letters
   grep -o . $argv
 end
 
+#-------------------------------------------------
+
+function __ext
+  # delete to slash
+  # contains dot after first character
+  # delete to first dot
+  sed -E -e 's_.*/__' | rg '^..*\.' | sed -E -e 's/[^.]+//'
+end
+
