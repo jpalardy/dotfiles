@@ -12,12 +12,20 @@ cleanup() {
 }
 trap cleanup INT TERM EXIT
 
-(echo; ls -t "$path") > "$tmpfile"
+(ls -t "$path" | awk 'BEGIN { print "" } { print "m", $0 }') > "$tmpfile"
 ${VISUAL:-${EDITOR:-vi}} "$tmpfile"
 
 awk -v path="$path" '
-# done on empty line
-NF == 0 { exit }
-{ printf "mv -v \"%s/%s\" .\n", path, $0, "." }
+{ cmd = "" }
+$1 == "m" { cmd = "mv" }
+$1 == "c" { cmd = "cp" }
+
+# done on empty line, or invalid line
+cmd == "" { exit }
+
+{
+  filename=gensub("^. ", "", 1, $0)
+  printf "%s -v \"%s/%s\" .\n", cmd, path, filename, "."
+}
 ' "$tmpfile" | bash
 
