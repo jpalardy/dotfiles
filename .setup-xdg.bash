@@ -21,4 +21,5 @@ relink() {
 DOTFILES=$(pwd)
 
 relink fish "$DOTFILES/config/fish"
+relink yamllint "$DOTFILES/config/yamllint"
 
