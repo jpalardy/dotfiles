@@ -5,12 +5,20 @@ function report_warning(msg) {
   printf "%s:%d:0: %s\n", (FILENAME == "-" ? "<stdin>" : FILENAME), FNR, msg
 }
 
+function abs(num) {
+  if (num < 0) {
+    return -num
+  }
+  return num
+}
+
 #-------------------------------------------------
 
 BEGINFILE {
   prev_date = ""
   prev_line = 0
   empty_lines = 0
+  prev_indent = 0
 }
 
 #-------------------------------------------------
@@ -45,6 +53,16 @@ match($0, /\<([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9])\>/, arr) {
   if (empty_lines == 2) {
     report_warning("too many empty lines")
   }
+}
+
+{
+  indent = length($0) - length(gensub(/^ +/, "", 1, $0))
+  diff_indent = indent - prev_indent
+  good_indent = indent == 0 || diff_indent == 0 || abs(diff_indent) == 2
+  if (!good_indent) {
+    report_warning("invalid indent: " sprintf("%+d", diff_indent))
+  }
+  prev_indent = indent
 }
 
 #-------------------------------------------------
