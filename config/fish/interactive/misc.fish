@@ -3,6 +3,8 @@ abbr --add --global rsy "rsync -av --progress"
 alias pwgen "pwgen -cny 30"
 alias R "R --quiet --no-save --no-restore"
 
+alias h history
+
 abbr --add --global reload! "source ~/.config/fish/config.fish"
 
 alias tls "tmux list-sessions"
