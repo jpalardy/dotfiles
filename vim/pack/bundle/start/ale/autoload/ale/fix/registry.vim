@@ -37,6 +37,11 @@ let s:default_registry = {
 \       'suggested_filetypes': ['python'],
 \       'description': 'Fix PEP8 issues with black.',
 \   },
+\   'buf-format': {
+\       'function': 'ale#fixers#buf_format#Fix',
+\       'suggested_filetypes': ['proto'],
+\       'description': 'Fix .proto files with buf format.',
+\   },
 \   'buildifier': {
 \       'function': 'ale#fixers#buildifier#Fix',
 \       'suggested_filetypes': ['bzl'],
@@ -431,6 +436,11 @@ let s:default_registry = {
 \       'suggested_filetypes': ['hcl', 'terraform'],
 \       'description': 'Fix tf and hcl files with terraform fmt.',
 \   },
+\   'crystal': {
+\       'function': 'ale#fixers#crystal#Fix',
+\       'suggested_filetypes': ['cr'],
+\       'description': 'Fix cr (crystal).',
+\   },
 \   'ktlint': {
 \       'function': 'ale#fixers#ktlint#Fix',
 \       'suggested_filetypes': ['kt', 'kotlin'],
@@ -490,6 +500,11 @@ let s:default_registry = {
 \       'function': 'ale#fixers#luafmt#Fix',
 \       'suggested_filetypes': ['lua'],
 \       'description': 'Fix Lua files with luafmt.',
+\   },
+\   'dprint': {
+\       'function': 'ale#fixers#dprint#Fix',
+\       'suggested_filetypes': ['javascript', 'typescript', 'json', 'markdown'],
+\       'description': 'Pluggable and configurable code formatting platform',
 \   },
 \   'stylua': {
 \       'function': 'ale#fixers#stylua#Fix',

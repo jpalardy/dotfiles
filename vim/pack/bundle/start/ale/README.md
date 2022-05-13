@@ -198,14 +198,15 @@ completion manually with `<C-x><C-o>`.
 set omnifunc=ale#completion#OmniFunc
 ```
 
-ALE supports automatic imports from external modules. This behavior is disabled
-by default and can be enabled by setting:
+ALE supports automatic imports from external modules. This behavior is enabled
+by default and can be disabled by setting:
 
 ```vim
-let g:ale_completion_autoimport = 1
+let g:ale_completion_autoimport = 0
 ```
 
-See `:help ale-completion` for more information.
+Note that disabling auto import can result in missing completion items from some
+LSP servers (e.g. eclipselsp). See `:help ale-completion` for more information.
 
 <a name="usage-go-to-definition"></a>
 
@@ -386,7 +387,7 @@ If you are interested in the general direction of the project, check out the
 a Roadmap for the future, and more.
 
 If you'd liked to discuss the project more directly, check out the `#vim-ale` channel
-on Freenode. Web chat is available [here](https://webchat.freenode.net/?channels=vim-ale).
+on Libera Chat. Web chat is available [here](https://web.libera.chat/#vim-ale).
 
 <a name="faq"></a>
 

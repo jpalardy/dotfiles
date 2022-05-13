@@ -52,6 +52,8 @@ Notes:
   * `buildifier`
 * BibTeX
   * `bibclean`
+* BitBake
+  * `oelint-adv`
 * Bourne Shell
   * `shell` (-n flag)
   * `shellcheck`
@@ -103,6 +105,7 @@ Notes:
   * `cfn-python-lint`
 * CMake
   * `cmake-format`
+  * `cmake-lint`
   * `cmakelint`
 * CoffeeScript
   * `coffee`
@@ -111,6 +114,7 @@ Notes:
   * `ameba`!!
   * `crystal`!!
 * CSS
+  * `VSCode CSS language server`
   * `cspell`
   * `csslint`
   * `fecs`
@@ -136,7 +140,6 @@ Notes:
   * `analysis_server`
   * `dart-analyze`!!
   * `dart-format`!!
-  * `dartanalyzer`!!
   * `dartfmt`!!
   * `language_server`
 * desktop
@@ -147,6 +150,7 @@ Notes:
   * `dhall-lint`
 * Dockerfile
   * `dockerfile_lint`
+  * `dprint`
   * `hadolint`
 * Elixir
   * `credo`
@@ -237,6 +241,7 @@ Notes:
 * HCL
   * `terraform-fmt`
 * HTML
+  * `VSCode HTML language server`
   * `alex`
   * `angular`
   * `cspell`
@@ -267,6 +272,7 @@ Notes:
 * JavaScript
   * `cspell`
   * `deno`
+  * `dprint`
   * `eslint`
   * `fecs`
   * `flow`
@@ -279,7 +285,9 @@ Notes:
   * `tsserver`
   * `xo`
 * JSON
+  * `VSCode JSON language server`
   * `cspell`
+  * `dprint`
   * `eslint`
   * `fixjson`
   * `jq`
@@ -322,6 +330,7 @@ Notes:
   * `luac`
   * `luacheck`
   * `luafmt`
+  * `selene`
   * `stylua`
 * Mail
   * `alex`
@@ -425,6 +434,8 @@ Notes:
 * Prolog
   * `swipl`
 * proto
+  * `buf-format`!!
+  * `buf-lint`!!
   * `protoc-gen-lint`!!
   * `protolint`!!
 * Pug
@@ -458,6 +469,7 @@ Notes:
   * `pyre`
   * `pyright`
   * `reorder-python-imports`
+  * `unimport`
   * `vulture`!!
   * `yapf`
 * QML
@@ -537,6 +549,7 @@ Notes:
   * `solhint`
   * `solium`
 * SQL
+  * `dprint`
   * `pgformatter`
   * `sql-lint`
   * `sqlfmt`
@@ -583,9 +596,12 @@ Notes:
 * Thrift
   * `thrift`
   * `thriftcheck`
+* TOML
+  * `dprint`
 * TypeScript
   * `cspell`
   * `deno`
+  * `dprint`
   * `eslint`
   * `fecs`
   * `prettier`
@@ -622,6 +638,8 @@ Notes:
   * `prettier`
   * `vls`
   * `volar`
+* WGSL
+  * `naga`
 * XHTML
   * `alex`
   * `cspell`
@@ -630,10 +648,12 @@ Notes:
 * XML
   * `xmllint`
 * YAML
+  * `actionlint`
   * `circleci`!!
   * `prettier`
   * `spectral`
   * `swaglint`
+  * `yaml-language-server`
   * `yamlfix`
   * `yamllint`
 * YANG
