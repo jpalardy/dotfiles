@@ -1,4 +1,3 @@
-abbr --add --global go-lintall "golangci-lint run --enable-all -v --color=always"
 abbr --add --global rsy "rsync -av --progress"
 alias pwgen "pwgen -cny 30"
 alias R "R --quiet --no-save --no-restore"
