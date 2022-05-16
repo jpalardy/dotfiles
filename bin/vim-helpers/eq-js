@@ -1,0 +1,28 @@
+#!/usr/bin/env awk-f
+
+{
+  match($0, "^\\s*")
+  leading_spaces = substr($0, 1, RLENGTH)
+}
+
+#
+# lines like:
+#   tap x y z
+# are expanded to:
+#   console.log({x, y, z});
+#
+$1 == "tap" && NF > 1 {
+  printf("%sconsole.log({", leading_spaces)
+  printf("%s", $2)
+  for (i=3; i<=NF; i++) {
+    printf(", %s", $i)
+  }
+  print "});"
+  next
+}
+
+# passthrough
+{
+  print
+}
+
