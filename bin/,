@@ -5,6 +5,7 @@ list_commands() {
   if [ -e "package.json" ]; then
     echo "npm outdated"
     echo "ncu -u; npm install; git add package*; npm audit fix"
+    echo "rm package-lock.json; npm install"
   fi
   # go -related
   if [ -e "go.mod" ]; then
