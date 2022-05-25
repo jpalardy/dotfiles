@@ -1,3 +1,1 @@
-
-let b:ale_fixers = ['prettier']
-
+javascript.vim
