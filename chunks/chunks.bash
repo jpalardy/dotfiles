@@ -27,7 +27,7 @@ Usage: $(basename "$0") [OPTION]...
               line four
   -h          display help
 EOM
-  exit 1
+  exit ${1:-0}
 }
 
 # init switch flags
