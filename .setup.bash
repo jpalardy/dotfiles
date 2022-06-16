@@ -39,7 +39,6 @@ fi
 relink .irbrc        "$DOTFILES/lang/ruby/irbrc"
 relink .gemrc        "$DOTFILES/lang/ruby/gemrc"
 relink .npmrc        "$DOTFILES/lang/js/npmrc"
-relink .prettierrc   "$DOTFILES/lang/js/prettierrc"
 relink .Rprofile     "$DOTFILES/lang/r/Rprofile"
 
 # misc
