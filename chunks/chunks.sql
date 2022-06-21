@@ -19,6 +19,7 @@ ORDER BY schemaname, relname;
 -- export to CSV
 
 \copy (SELECT * FROM whatever) to 'whatever.csv' with csv
+\copy (SELECT * FROM whatever) to 'whatever.csv' with csv header
 
 -- .pgpass @ 600
 -- hostname:port:database:username:password
