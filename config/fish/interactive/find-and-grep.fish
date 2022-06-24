@@ -1,8 +1,6 @@
 alias rg "rg -i --sort-files"
 alias rg_ "rg --no-heading --no-filename --no-line-number"
 
-alias ftf "find . -type f"
-
 function ff
   set -l restricted ""
   if string match -q -r '^-u' -- $argv[1]
