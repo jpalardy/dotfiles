@@ -17,5 +17,11 @@ while getopts "T:" opt; do
   esac
 done
 
-brew-graph.rb --installed --highlight-leaves | remove_casks | neato -T"$format" -o "brew-deps.$format"
+cmd="brew-graph.rb --installed --highlight-leaves | remove_casks"
+
+if command -v neato >/dev/null; then
+  cmd="$cmd | neato -T $format -o brew-deps.$format"
+fi
+
+eval "$cmd"
 
