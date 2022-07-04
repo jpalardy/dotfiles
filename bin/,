@@ -14,13 +14,7 @@ list_commands() {
   fi
 }
 
-commands=$(list_commands)
-
-if [ -z "$commands" ]; then
-  exit
-fi
-
-pick=$(echo "$commands" | fzf)
+pick=$(list_commands | fzf --exit-0)
 
 if [ -z "$pick" ]; then
   exit
