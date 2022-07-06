@@ -1,11 +1,4 @@
 {
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  },
-  "rust-client.updateOnStartup": true,
   "editor.formatOnSave": true,
   "editor.rulers": [
     80,
@@ -16,9 +9,6 @@
   "editor.minimap.enabled": false,
   "search.showLineNumbers": true,
   "window.zoomLevel": 0,
-  "go.formatTool": "goimports",
-  "go.useLanguageServer": true,
-  "go.lintTool": "golangci-lint",
   "gitlens.hovers.currentLine.over": "line",
   "gitlens.currentLine.enabled": false,
   "gitlens.codeLens.enabled": false,
@@ -29,6 +19,5 @@
   "extensions.ignoreRecommendations": false,
   "files.exclude": {
     ".vscode/": true
-  },
-  "elixirLS.suggestSpecs": false
+  }
 }
