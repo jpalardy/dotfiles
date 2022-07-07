@@ -1,7 +1,7 @@
 // https://www.graphviz.org/pdf/dotguide.pdf
 
 digraph G {
-  rankdir=LR;
+  rankdir=LR; // graphviz.org/docs/attrs/rankdir/
   // size ="4,4";
   main [shape=box];
   main -> parse [weight=8];
@@ -19,13 +19,13 @@ digraph G {
 
 // ** USUAL HEADER
 
-// rankdir=BT;
+// rankdir=LR;
 // node [style="filled,rounded", shape=box, fontname=Arial, fontsize=14];
 // graph [overlap=false; splines=true];
 
 // -------------------------------------------------
 
-// ** FORCING RANKS
+// ** FORCING RANKS, 3 ways
 
 // { rank = same; B; C; D }
 // D -> E [style=invis]
