@@ -4,7 +4,7 @@ awk '
 
 # head $table
 NF == 2 && $1 == "head" {
-  $0 = sprintf("SELECT * FROM %s LIMIT 35", $2)
+  $0 = sprintf("SELECT * FROM %s LIMIT 25", $2)
 }
 
 # count $table
@@ -24,7 +24,7 @@ NF == 1 && $1 == "pg_count" {
 
 # sample a table
 NF == 2 && $1 == "sample" {
-  $0 = sprintf("SELECT * FROM %s ORDER BY random() LIMIT 35", $2)
+  $0 = sprintf("SELECT * FROM %s ORDER BY random() LIMIT 25", $2)
 }
 
 {
