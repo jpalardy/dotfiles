@@ -23,9 +23,7 @@ set cursorlineopt=number
 " don't load modelines...
 set nomodeline
 
-" with git, ever needed?
 set directory^=~/.vim/swap  " where swap files go
-"set noswapfile -- back to swp, for now
 set nowritebackup
 set nobackup
 
@@ -69,10 +67,10 @@ set tabpagemax=100
 
 if match($TERM, '256color$') != -1
   colorscheme 256_xoria
+  " bottom of file is black
+  highlight EndOfBuffer ctermfg=235 ctermbg=235
 endif
 
-" bottom of file is black
-highlight EndOfBuffer ctermfg=235 ctermbg=235
 " remove other fill chars (purpose accomplished by colors)
 let &fillchars = "eob: "
 
