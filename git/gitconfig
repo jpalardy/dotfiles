@@ -25,6 +25,7 @@
   tool = vimdiff
 [push]
   default = current
+  autoSetupRemote = true
 [core]
   excludesfile = ~/.gitignore
 [init]
