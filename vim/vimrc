@@ -17,8 +17,11 @@ set backspace=indent,eol,start
 set nowrap
 set linebreak
 set listchars=eol:$,nbsp:%
+
+" line numbers and highlight
+set number
 set cursorline
-set cursorlineopt=number
+set cursorlineopt=both
 
 " don't load modelines...
 set nomodeline
