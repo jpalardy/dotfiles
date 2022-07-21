@@ -38,6 +38,7 @@ nnoremap <F12>  :ALEGoToDefinition<CR>
 
 nnoremap <ESC>l :set list!<CR>
 nnoremap <ESC>n :set number!<CR>
+nnoremap <ESC>N :windo set number!<CR>
 nnoremap <ESC><SPACE> :nohl<CR>
 
 nnoremap ;h :ALEHover<CR>
