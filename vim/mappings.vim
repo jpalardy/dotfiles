@@ -10,7 +10,6 @@ inoremap <F3>   <C-o>:ALEToggle<CR>
 nnoremap <F4>   :call CycleWindows()<CR>
 
 let g:cw_state = "none"
-
 function! CycleWindows()
   if g:cw_state == "none"
     copen
@@ -36,9 +35,23 @@ set pastetoggle=<F8>
 " vscode-like...
 nnoremap <F12>  :ALEGoToDefinition<CR>
 
+let g:context_state = "off"
+function! CycleContext()
+  if g:context_state == "off"
+    windo set number
+    windo set cursorline
+    windo set cursorlineopt=both
+    let g:context_state = "on"
+  elseif g:context_state == "on"
+    windo set nonumber
+    windo set nocursorline
+    let g:context_state = "off"
+  endif
+endfunction
+
 nnoremap <ESC>l :set list!<CR>
 nnoremap <ESC>n :set number!<CR>
-nnoremap <ESC>N :windo set number!<CR>
+nnoremap <ESC>N :call CycleContext()<CR>
 nnoremap <ESC><SPACE> :nohl<CR>
 
 nnoremap ;h :ALEHover<CR>
