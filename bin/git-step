@@ -16,13 +16,17 @@ confirm() {
 }
 
 clear
+if [ "$(git rev-list --count "$@")" -eq 0 ]; then
+  echo >&2 "no commits found for:" "$@"
+  exit
+fi
+
 git log --graph --pretty=colorful "$@"
 
 if ! confirm "review?"; then
-  exit 0
+  exit
 fi
 
-# for commit in $(git log --reverse --pretty=format:"%h" "$@"); do
 for commit in $(git rev-list --no-merges --reverse "$@"); do
   clear
   git show --stat "$commit"
