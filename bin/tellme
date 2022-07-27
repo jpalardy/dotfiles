@@ -6,6 +6,8 @@ while getopts "c:" opt; do
   case "$opt" in
     c) COUNTDOWN=$OPTARG
        ;;
+    *)
+      exit 1
   esac
 done
 
