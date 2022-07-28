@@ -1,2 +1,2 @@
-complete -c templates -f
+complete -c templates --no-files
 complete -c templates -a "(templates)"

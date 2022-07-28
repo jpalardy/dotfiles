@@ -6,6 +6,6 @@ function __mix_complete
   echo $MIX_COMPLETIONS
 end
 
-complete -c mix -f
+complete -c mix --no-files
 complete -c mix -a "(__mix_complete)"
 
