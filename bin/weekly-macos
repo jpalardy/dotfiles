@@ -18,7 +18,6 @@ confirm() {
 # -------------------------------------------------
 
 brew update
-
 brew outdated
 
 if confirm "upgrade?"; then
