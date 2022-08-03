@@ -17,5 +17,5 @@ play_sound() {
 }
 
 play_sound
-exit $lastexit
+exit "$lastexit"
 
