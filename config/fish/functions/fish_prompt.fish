@@ -6,6 +6,5 @@ function fish_prompt
   end
 
   set -l normal (set_color normal)
-  echo "🐟"
-  echo -n -s $normal (set_color $color_host) (prompt_hostname) $normal ' '
+  echo -n -s "🐟 " $normal (set_color $color_host) (prompt_hostname) $normal ' '
 end
