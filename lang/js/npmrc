@@ -1,4 +1,4 @@
-prefix = ~/local
+; prefix = ~/local
 loglevel = error
 
 ; other options -- https://docs.npmjs.com/cli/v7/using-npm/config
