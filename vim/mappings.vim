@@ -113,6 +113,7 @@ vnoremap // y/<C-R>"<CR>
 nnoremap > >>
 nnoremap < <<
 
+" open non-existing file; inspired by gf
 nnoremap gF :e <cfile><CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
