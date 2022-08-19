@@ -19,13 +19,7 @@ relink() {
 
 BASE_DIR="$HOME"
 
-if [ -n "$NEED_BASH" ]; then
-  relink .bashrc       "$DOTFILES/bash/bashrc"
-  relink .bash_profile "$DOTFILES/bash/bash_profile"
-  relink .bash_logout  "$DOTFILES/bash/bash_logout"
-fi
-
-relink .inputrc      "$DOTFILES/bash/inputrc"
+relink .inputrc      "$DOTFILES/inputrc"
 
 relink .vim          "$DOTFILES/vim"
 
