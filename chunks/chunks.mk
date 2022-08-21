@@ -71,3 +71,16 @@ ifndef VAR
 $(error VAR is not set)
 endif
 
+#-------------------------------------------------
+# other tips:
+# Your Makefiles are wrong · Jacob Davis-Hansson
+#   https://tech.davis-hansson.com/p/make/
+#-------------------------------------------------
+
+SHELL := bash
+.SHELLFLAGS := -eu -o pipefail -c
+.ONESHELL:
+.DELETE_ON_ERROR:
+MAKEFLAGS += --warn-undefined-variables
+MAKEFLAGS += --no-builtin-rules  # maybe ...
+
