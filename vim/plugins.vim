@@ -41,7 +41,15 @@ let g:ale_floating_window_border = []
 let g:ale_lsp_suggestions = 1
 let g:ale_default_navigation = "split"
 
+" show me anything from the language server...
+let g:ale_lsp_show_message_severity = "log"
+
+nnoremap K :ALEHover<CR>
 nnoremap ,f :ALEFix<CR>
+
+" vscode-like...
+nnoremap <F12>  :ALEGoToDefinition<CR>
+nnoremap ,<F12> :ALEFindReferences<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " lightline
