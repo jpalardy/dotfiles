@@ -12,6 +12,16 @@ list_commands() {
     echo "go get -u"
     echo "go mod tidy"
   fi
+  # elixir
+  if [ -e "mix.exs" ]; then
+    echo "mix deps.get"
+    echo "mix deps.compile"
+    echo "mix compile"
+    echo ""
+    test -d _build && echo "rm -rf _build"
+    test -d deps && echo "rm -rf deps"
+    test -d .elixir_ls && echo "rm -rf .elixir_ls"
+  fi
 }
 
 pick=$(list_commands | fzf --exit-0)
