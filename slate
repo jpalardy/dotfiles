@@ -1,20 +1,19 @@
 
 alias center screenOriginX+screenSizeX/2-windowSizeX/2;screenOriginY+screenSizeY/2-windowSizeY/2 windowSizeX;windowSizeY
 
-# b -- mnemo: browser
+# b -- mnemo: browser -- #cleanup
 bind b:ctrl;alt move min({windowTopLeftX,screenSizeX-1250});windowTopLeftY 1250;windowSizeY
 # w -- mnemo: wide-browser?
 bind w:ctrl;alt move min({windowTopLeftX,screenSizeX-1400});windowTopLeftY 1400;windowSizeY
+# r -- mnemo: restricted
+bind r:ctrl;alt move screenOriginX+300;screenOriginY 780;screenSizeY
 
 # l -- mnemo: large, maximize horizontally
 bind l:ctrl;alt move screenOriginX;windowTopLeftY screenSizeX;windowSizeY
 # t -- mnemo: tall, maximize vertically
 bind t:ctrl;alt move windowTopLeftX;screenOriginY windowSizeX;screenSizeY
 
-# r
-bind r:ctrl;alt move screenOriginX+300;screenOriginY 780;screenSizeY
-
-# Push Bindings
+# push bindings
 bind right:ctrl;alt push right
 bind  left:ctrl;alt push left
 bind    up:ctrl;alt push up
