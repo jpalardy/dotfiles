@@ -14,6 +14,13 @@ SELECT schemaname, relname, n_live_tup
 FROM pg_stat_user_tables
 ORDER BY schemaname, relname;
 
+-- show triggers
+
+SELECT event_object_table AS table_name, trigger_name, array_agg(event_manipulation) AS events
+FROM information_schema.triggers
+GROUP BY 1, 2
+ORDER BY 1, 2;
+
 -- -------------------------------------------------
 
 -- export to CSV
