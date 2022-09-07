@@ -16,7 +16,7 @@
   fp        = fetch --prune
   fpa       = fetch --prune --all
   who       = config --get user.email
-  gone      = !git branch -vv | awk '/: gone/ {print \"git branch -D\", $1}'
+  gone      = !git branch -vv | sed -e 's/^..//' | awk '/: gone/ {print \"git branch -D\", $1}'
   untracked = ls-files --others --exclude-standard
   rewind    = reset HEAD^
   vimdiff   = difftool
