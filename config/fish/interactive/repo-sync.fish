@@ -4,6 +4,8 @@ function repo-sync
     return 1
   end
 
+  argparse s/status -- $argv
+
   set -l cmds
   set -l cmd "new-session"
   if set -q TMUX
@@ -11,7 +13,11 @@ function repo-sync
   end
 
   for repo in $REPOS
-    set cmds $cmds "$cmd 'cd $repo; git fp; git st; git log --graph --pretty=color ..@{upstream}; exec $SHELL'"
+    if set -q _flag_status
+      set cmds $cmds "$cmd 'cd $repo; git st; exec $SHELL'"
+    else
+      set cmds $cmds "$cmd 'cd $repo; git fp; git st; git log --graph --pretty=color ..@{upstream}; exec $SHELL'"
+    end
     set cmd "split-window"
   end
   set cmds $cmds "select-layout even-vertical"
