@@ -17,12 +17,12 @@ NF == 3 && $1 == "count" {
   $0 = sprintf("SELECT %s, count(*) FROM %s GROUP BY 1 ORDER BY 1", $2, $3)
 }
 
-# count all tables -- postgres
+# pg_count    -- count all tables, postgres
 NF == 1 && $1 == "pg_count" {
   $0 = "SELECT schemaname, relname, n_live_tup FROM pg_stat_user_tables ORDER BY schemaname, relname"
 }
 
-# sample a table
+# sample $table
 NF == 2 && $1 == "sample" {
   $0 = sprintf("SELECT * FROM %s ORDER BY random() LIMIT 25", $2)
 }
