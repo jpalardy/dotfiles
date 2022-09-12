@@ -59,35 +59,18 @@ check_bin entr
 check_bin cloc
 flush
 
-# linters in npm
+# linters
 check_bin jsonlint "jsonlint @ npm"
 check_bin fixjson "fixjson @ npm"
-check_bin csslint "csslint @ npm"
 check_bin shellcheck
-flush
-
-# linters, pretty-printers in brew
 check_bin yamllint
 check_bin pg_format pgformatter
 flush
 
 # node
 if command -v node >/dev/null; then
-  check_bin nodemon  "nodemon @ npm"
   check_bin prettier "prettier @ npm"
   check_bin ncu      "npm-check-updates"
-  flush
-fi
-
-# elm
-if command -v elm >/dev/null; then
-  check_bin elm-format
-  flush
-fi
-
-# go
-if command -v go >/dev/null; then
-  check_bin golangci-lint
   flush
 fi
 
