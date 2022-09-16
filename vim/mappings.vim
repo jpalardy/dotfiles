@@ -88,6 +88,8 @@ vnoremap ,a :! awk '{print }'<LEFT><LEFT>
 nnoremap ,v :v/<C-R>//d<CR>gg
 nnoremap ,d :g/<C-R>//d<CR>gg
 
+nnoremap ,l :! cloc --quiet --by-file %<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
