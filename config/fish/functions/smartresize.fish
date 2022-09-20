@@ -2,6 +2,8 @@
 function smartresize
   # --size
   argparse -i size= -- $argv
+  or return 1
+
   set -l size "50%"
   if set -q _flag_size
     set size $_flag_size

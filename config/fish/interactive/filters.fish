@@ -1,5 +1,6 @@
 function __count
   argparse min= -- $argv
+  or return 1
 
   # --min
   set -l min 1

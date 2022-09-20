@@ -5,6 +5,7 @@ function repo-sync
   end
 
   argparse s/status -- $argv
+  or return 1
 
   set -l cmds
   set -l cmd "new-session"

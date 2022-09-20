@@ -2,7 +2,7 @@ function g
   set -l config "$HOME/.lists/g"
 
   argparse -x add,edit add edit -- $argv
-  or return
+  or return 1
 
   # --add
   if set -q _flag_add

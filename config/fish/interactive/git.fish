@@ -7,7 +7,7 @@ abbr --add --global glg "git log --graph --pretty=colorful --all"
 
 function gcp
   argparse enable -- $argv
-  or return
+  or return 1
 
   # --enable
   if set -q _flag_enable
