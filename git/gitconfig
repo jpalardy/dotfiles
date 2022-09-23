@@ -20,6 +20,7 @@
   rewind    = reset HEAD^
   vimdiff   = difftool
   qb        = !git checkout -b qb-`date '+%F-%H%M'`
+  cab       = !git log | rg -i 'co-authored-by:' | sort | uniq -c | sort -n
 [diff]
   noprefix = true
   tool = vimdiff
