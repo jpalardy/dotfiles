@@ -83,6 +83,8 @@ vnoremap ,' :! jq -R . \| sed -e "s/\"/'/g"<CR>
 vnoremap ," :! jq -R .<CR>
 " AWK
 vnoremap ,a :! awk '{print }'<LEFT><LEFT>
+" SPLIT WORD
+vnoremap ,w :! fmt -w 1<CR>
 
 " ONLY KEEP LINES WHICH CONTAIN SEARCH
 nnoremap ,v :v/<C-R>//d<CR>gg
