@@ -36,7 +36,6 @@ BEGIN {
   #-------------------------------------------------
   snip("*:--",   "-------------------------------------------------")
   snip("*:isod", strftime("%F"))
-  snip("*:dn",   strftime("%A"))
   snip("*:td",   strftime("%F -- %A"))
   snip("*:ts",   strftime("%s"))
 
@@ -57,11 +56,9 @@ BEGIN {
   cycle("*",        "_", "📦", "✅")
   snip("*::think",  "🤔")
   snip("*::clock",  "⏰")
-  snip("*:?",       "❓")
   snip("*:O",       "🔆")
-  snip("*:x",       "❌")
+  snip("*:X",       "❌")
   snip("*:!",       "⚠️")
-  snip("*:<3",      "❤️")
 
   # spanish accents
   snip("*:a'", "á")
@@ -92,19 +89,8 @@ BEGIN {
     snip(arr[i] ":|",  "%>%")
     snip(arr[i] ":>",  "%>%")
     snip(arr[i] ":_",  ".Last.value");
-    snip(arr[i] ":#h", "#-------------------------------------------------\n# ▒name\n#-------------------------------------------------");
   }
   snip("rmd:```",  "```{r}\n\n▒\n\n```");
-
-  #-------------------------------------------------
-  # go
-  #-------------------------------------------------
-  snip("go:fn",      "func ▒() {\n}")
-  snip("go:fori",    "for i := 0; i < ▒; i++ {}")
-  snip("go:forr",    "for i, _ := range ▒ {}")
-  snip("go:iferr",   "if err != nil { return err }")
-  snip("go:handler", "func(res http.ResponseWriter, req *http.Request)")
-  cycle("go",        "fmt.", "fmt.Println", "fmt.Printf")
 
   #-------------------------------------------------
   # elixir
