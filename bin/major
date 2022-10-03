@@ -1,0 +1,34 @@
+#!/bin/bash
+
+function regexp() {
+  echo "$@" | awk '
+    BEGIN {
+      lut[0] = "[sz]"
+      lut[1] = "[td]"
+      lut[2] = "n"
+      lut[3] = "m"
+      lut[4] = "r"
+      lut[5] = "l"
+      lut[6] = "[sc]h"
+      lut[7] = "[ck]"
+      lut[8] = "[fv]"
+      lut[9] = "[pb]"
+      vowels = "[aiueoy]*"
+    }
+
+    {
+      printf "'\''^"
+      for (i=1; i<=length; i++) {
+        printf "%s%s", vowels, lut[substr($0, i, 1)]
+      }
+      printf "%s$'\''\n", vowels
+    }
+  '
+}
+
+for word in "$@"; do
+  eval "look . | rg $(regexp "$word")" | sort | ncol
+  echo
+done
+
+
