@@ -21,3 +21,21 @@ grid {
   gap: 5px;
 }
 
+/* ------------------------------------------------- */
+
+/* 58 bytes of CSS to look great nearly everywhere */
+/* https://gist.github.com/JoeyBurzynski/617fb6201335779f8424ad9528b72c41 */
+main {
+  max-width: 38rem;
+  padding: 2rem; /* 1.5rem */
+  margin: auto;
+}
+
+html {
+  max-width: 70ch;
+  padding: 3em 1em;
+  margin: auto;
+  line-height: 1.75;
+  font-size: 1.25em;
+}
+
