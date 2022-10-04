@@ -4,14 +4,14 @@ function regexp() {
   echo "$@" | awk '
     BEGIN {
       lut[0] = "[sz]"
-      lut[1] = "[td]"
+      lut[1] = "(t|th|d)"
       lut[2] = "n"
       lut[3] = "m"
       lut[4] = "r"
       lut[5] = "l"
-      lut[6] = "[sc]h"
-      lut[7] = "[ck]"
-      lut[8] = "[fv]"
+      lut[6] = "(sh|ch|j)"
+      lut[7] = "(c|k|qu)"
+      lut[8] = "(f|ph|v)"
       lut[9] = "[pb]"
       vowels = "[aiueoy]*"
     }
