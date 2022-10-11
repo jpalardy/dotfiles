@@ -17,8 +17,8 @@ command -nargs=* FPScratchy :call FPScratchy(<args>)
 " SCRATCHY MAPPINGS
 
 " replace current buffer
-nmap <ESC>h :FPScratchy "rg --files --sort path"<CR>:call search("^" . fnamemodify(@#, ":~:.") . "$", 'cW')<CR>zz
-nmap <ESC>H :FPScratchy "find . -type f \| cut -c 3-"<CR>:call search("^" . fnamemodify(@#, ":~:.") . "$", 'cW')<CR>zz
+nmap <ESC>h :FPScratchy "rg --files --sort path"<CR>:call search("^" . fnamemodify(@#, ":.") . "$", 'cW')<CR>zz
+nmap <ESC>H :FPScratchy "find . -type f \| cut -c 3-"<CR>:call search("^" . fnamemodify(@#, ":.") . "$", 'cW')<CR>zz
 
 " textmate-like command-t
 nmap <ESC>t :botright  new<CR><ESC>h
