@@ -2,18 +2,12 @@
 
 (
 echo "original $(wc -c < "$@")"
-echo ""
-echo "gzip  -1 $(gzip  -1 -c - < "$@" | wc -c)"
-echo "bzip2 -1 $(bzip2 -1 -c - < "$@" | wc -c)"
-echo "xz    -1 $(xz    -1 -c - < "$@" | wc -c)"
-echo ""
-echo "gzip  -5 $(gzip  -5 -c - < "$@" | wc -c)"
-echo "bzip2 -5 $(bzip2 -5 -c - < "$@" | wc -c)"
-echo "xz    -5 $(xz    -5 -c - < "$@" | wc -c)"
-echo ""
-echo "gzip  -9 $(gzip  -9 -c - < "$@" | wc -c)"
-echo "bzip2 -9 $(bzip2 -9 -c - < "$@" | wc -c)"
-echo "xz    -9 $(xz    -9 -c - < "$@" | wc -c)"
+for level in 1 5 9; do
+  echo ""
+  echo "gzip  -$level $(gzip  -$level -c - < "$@" | wc -c)"
+  echo "bzip2 -$level $(bzip2 -$level -c - < "$@" | wc -c)"
+  echo "xz    -$level $(xz    -$level -c - < "$@" | wc -c)"
+done
 ) | awk '
 NR == 1 {original=$2}
 NF == 0 { print ""; next }
