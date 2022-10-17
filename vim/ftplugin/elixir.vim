@@ -34,7 +34,7 @@ nnoremap <buffer> ,F :call Fold_ex_doc()<CR>
 
 " wrap pipes in ( ... ); for vim-slime
 function! _EscapeText_elixir(text)
-  if match(a:text, "\n\s*\|>") > -1
+  if len(split(a:text, "\n")) > 1
     return ["(\n", a:text, ")\n"]
   endif
   return a:text
