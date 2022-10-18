@@ -91,6 +91,7 @@ nnoremap ,v :v/<C-R>//d<CR>gg
 nnoremap ,d :g/<C-R>//d<CR>gg
 
 nnoremap ,l :! cloc --quiet --by-file %<CR>
+nnoremap ,a :exe "! summary-" . &ft . " " . expand("%")<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER MAPPINGS
