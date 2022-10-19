@@ -48,7 +48,7 @@ nnoremap K :ALEHover<CR>
 nnoremap ,f :ALEFix<CR>
 
 " vscode-like...
-nnoremap <F12>  :ALEGoToDefinition<CR>
+nnoremap <F12>  :ALEGoToDefinition -vsplit<CR>
 nnoremap ,<F12> :ALEFindReferences<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
