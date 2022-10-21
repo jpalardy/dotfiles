@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 library(tidyverse)
 library(lubridate)
-library(scales)
+# library(scales)    --- often, but not always
 
 theme_set(
   theme_bw() +
@@ -33,10 +33,12 @@ theme_set(
 # filename = list.files(pattern="*.tsv") |> max()
 filename = "..."
 
+# -------------------------------------------------
+# temporary: upgrade to next block
 d <- read_tsv(filename, col_names=c("...", "...")  # => cols(...)
-
 d |> spec()
 d |> spec() |> cols_condense()
+# -------------------------------------------------
 
 d <- read_tsv(filename, col_names=c("...", "..."),
        col_types=cols(
