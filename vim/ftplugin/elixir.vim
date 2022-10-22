@@ -5,6 +5,9 @@ let b:ale_fix_on_save = 1
 let b:ale_linters = ['elixir-ls']
 let b:ale_fixers = ['mix_format']
 
+" mix formatter default: https://hexdocs.pm/elixir/main/Code.html#format_string!/2-options
+setlocal colorcolumn=98
+
 " -------------------------------------------------
 
 nnoremap <buffer> <c-c><c-l> :SlimeSend1 clear()<CR>
