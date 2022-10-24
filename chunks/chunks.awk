@@ -17,3 +17,10 @@ filename=gensub(" ", "-", 1, $0)
   print "something" > "/dev/stderr"
 }
 
+# -------------------------------------------------
+# user function
+function abs(num) {
+  return num < 0 ? -num : num
+}
+# -------------------------------------------------
+
