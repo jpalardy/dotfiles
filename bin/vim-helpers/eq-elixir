@@ -1,5 +1,14 @@
 #!/usr/bin/env awk-f
 
+function columns_as_keyword_list() {
+  printf("%s[", leading_spaces)
+  printf("%s: %s", $2, $2)
+  for (i=3; i<=NF; i++) {
+    printf(", %s: %s", $i, $i)
+  }
+  printf("]")
+}
+
 {
   match($0, "^\\s*")
   leading_spaces = substr($0, 1, RLENGTH)
@@ -12,12 +21,13 @@
 #   [x: x, y: y, z: z] |> IO.inspect()
 #
 $1 == "tap" && NF > 1 {
-  printf("%s[", leading_spaces)
-  printf("%s: %s", $2, $2)
-  for (i=3; i<=NF; i++) {
-    printf(", %s: %s", $i, $i)
-  }
-  printf("] |> IO.inspect()\n")
+  columns_as_keyword_list()
+  print(" |> IO.inspect()")
+  next
+}
+$1 == "tapl" && NF > 1 {
+  columns_as_keyword_list()
+  print(" |> IO.inspect(label: \"*****\")")
   next
 }
 
