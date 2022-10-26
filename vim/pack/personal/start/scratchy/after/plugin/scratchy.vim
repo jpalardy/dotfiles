@@ -21,9 +21,9 @@ nmap <ESC>h :FPScratchy "rg --files --sort path"<CR>:call search("^" . fnamemodi
 nmap <ESC>H :FPScratchy "find . -type f \| cut -c 3-"<CR>:call search("^" . fnamemodify(@#, ":.") . "$", 'cW')<CR>zz
 
 " textmate-like command-t
-nmap <ESC>t :botright  new<CR><ESC>h
-nmap <ESC>T :botright vnew<CR><ESC>h
+nmap <ESC>t :new<CR><ESC>h
+nmap <ESC>T :vnew<CR><ESC>h
 
 " chunks in split
-nmap <ESC>c :botright vnew<CR>:FPScratchy "rg --files --no-ignore-parent --sort path $DOTFILES/chunks"<CR>
+nmap <ESC>c :vnew<CR>:FPScratchy "rg --files --no-ignore-parent --sort path $DOTFILES/chunks"<CR>
 

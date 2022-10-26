@@ -157,5 +157,5 @@ nnoremap <silent> ]l :lnext<CR>
 " GIT
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap ,s :vert botright Git<cr>
+nnoremap ,s :vert Git<cr>
 
