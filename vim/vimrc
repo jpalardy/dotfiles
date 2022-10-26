@@ -17,7 +17,10 @@ set backspace=indent,eol,start
 set nowrap
 set linebreak
 set listchars=eol:$,nbsp:%
+
+" split preferences
 set splitright
+set splitbelow
 
 " don't load modelines...
 set nomodeline
