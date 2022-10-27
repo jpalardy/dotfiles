@@ -39,10 +39,6 @@ end
 
 #-------------------------------------------------
 
-function __words
-  awk '{for (i=1; i<=NF; i++) { print $i} }' $argv
-end
-
 function __letters
   grep -o . $argv
 end
