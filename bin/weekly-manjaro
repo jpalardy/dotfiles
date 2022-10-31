@@ -17,7 +17,10 @@ confirm() {
 
 # -------------------------------------------------
 
-pacman-mirrors --continent --method rank
+if confirm "update mirrors?"; then
+  pacman-mirrors --continent --method rank
+fi
+
 pacman -Syu
 
 dangling_packages=$(pacman -Qdt | awk '{print $1}')
