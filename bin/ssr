@@ -46,6 +46,7 @@ check_bin curl
 check_bin wget
 check_bin qrencode
 check_bin pwgen
+check_bin xsv
 flush
 
 # experimental
