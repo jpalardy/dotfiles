@@ -3,7 +3,7 @@ function! s:ToggleBox()
   let l:cline = getline(".")
   if match(l:cline, "^ \*\\[ \\]") != -1
     normal! ^lrx
-    " try to replace '___' with line cmompletion from above
+    " try to replace '___' with line completion from above
     if match(l:cline, " ___$") != -1
       execute "normal $hhc$"
     end
