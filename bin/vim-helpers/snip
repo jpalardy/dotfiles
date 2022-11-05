@@ -59,6 +59,7 @@ BEGIN {
   snip("*:O",       "🔆")
   snip("*:X",       "❌")
   snip("*:!",       "⚠️")
+  snip("*::tada",   "🎉")
 
   # spanish accents
   snip("*:a'", "á")
