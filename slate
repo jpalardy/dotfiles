@@ -8,6 +8,9 @@ bind w:ctrl;alt move min({windowTopLeftX,screenSizeX-1400});windowTopLeftY 1400;
 # r -- mnemo: restricted
 bind r:ctrl;alt move screenOriginX+300;screenOriginY 780;screenSizeY
 
+# e -- mnemo: elixir
+bind e:ctrl;alt move min({windowTopLeftX,screenSizeX-1570});windowTopLeftY 1570;windowSizeY
+
 # l -- mnemo: large, maximize horizontally
 bind l:ctrl;alt move screenOriginX;windowTopLeftY screenSizeX;windowSizeY
 # t -- mnemo: tall, maximize vertically
