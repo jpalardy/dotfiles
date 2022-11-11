@@ -10,6 +10,10 @@ $1 == "test" {
   print "test"
 }
 
+$1 == "@callback"  { sub("^ +", "*** "); print }
+$1 == "@behaviour" { sub("^ +", "*** "); print }
+$1 == "@impl"      { sub("^ +", "*** "); print }
+
 ' "$@" | uniq -c | awk '
 
 $1 == 1 {
