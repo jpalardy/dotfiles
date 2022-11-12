@@ -1,0 +1,11 @@
+#!/bin/bash
+
+rg --files --max-depth 1 | awk '
+NR == 1 {
+  dump_dir = "dump-" strftime("%F")
+  print "mkdir " dump_dir
+}
+
+{ printf "mv \"%s\" %s/\n", $0, dump_dir }
+'
+
