@@ -1,0 +1,59 @@
+#!/bin/bash
+
+awk '
+function add_days(dt, i) {
+  return strftime("%F", dt + (24 * 60 * 60) * i)
+}
+
+function add_weeks(dt, i) {
+  return strftime("%F", dt + 7 * (24 * 60 * 60) * i)
+}
+
+function dim_if(cond, str) {
+  if (cond) {
+    return sprintf("%s%s%s", "\x1b[2m", str, "\x1b[22m")
+  }
+  return str
+}
+
+function add_months(dt, i) {
+  yyyy = strftime("%Y", dt)
+  mm = strftime("%m", dt)
+  dd = strftime("%d", dt)
+
+  # skip over 12-month chunks
+  yyyy += int(i / 12)
+  i = i % 12
+
+  if (mm + i > 12) {
+    yyyy += 1
+    i = i - 12
+  }
+  mm += i
+
+  date = mktime(sprintf("%s %s %s 0 0 0", yyyy, mm, dd))
+  date_isostr = sprintf("%s-%02d-%02d", yyyy, mm, dd)
+
+  if (strftime("%F", date) != date_isostr) {
+    return ""
+  }
+
+  return date_isostr
+}
+
+BEGIN {
+  now = systime()
+
+  print "    " strftime("%F", now)
+  print ""
+  print "          days       weeks      months"
+
+  for (i=1; i<=30; i++) {
+    printf "%2d  ", i
+    printf "%s  ", dim_if(i % 7 == 0, add_days(now, i))
+    printf "%s  ", add_weeks(now, i)
+    printf "%s\n", dim_if(i % 12 == 0, add_months(now, i))
+  }
+}
+
+'
