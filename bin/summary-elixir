@@ -6,8 +6,12 @@ $1 == "def" || $1 == "defp" {
   print $1, $2
 }
 
+$1 == "describe" {
+  print
+}
+
 $1 == "test" {
-  print "test"
+  print
 }
 
 $1 == "@callback"  { sub("^ +", "*** "); print }
