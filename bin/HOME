@@ -2,18 +2,14 @@
 
 SRC="$HOME/.HOME"
 
-force=0
-
 if [ "$1" = "-f" ]; then
-  force=1
-  shift
+  echo >&2 "generating $SRC..."
+  find ~ 2>/dev/null > "$SRC"
+  exit
 fi
 
-if [[ "$force" = 1 || ! -e "$SRC" ]]; then
-  if [ $# = 0 ]; then
-    find ~ 2>/dev/null > "$SRC"
-    exit
-  fi
+if [ ! -e "$SRC" ]; then
+  HOME -f
 fi
 
 rg -i "${@:-"."}" "$SRC" --no-line-number
