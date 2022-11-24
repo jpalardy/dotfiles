@@ -39,12 +39,6 @@ end
 
 #-------------------------------------------------
 
-function __letters
-  grep -o . $argv
-end
-
-#-------------------------------------------------
-
 function __ext
   # delete to slash
   # contains dot after first character
