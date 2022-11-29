@@ -1,24 +1,10 @@
 #!/bin/bash
 
-n=$#
+awk '
+BEGIN {
+  n_sets = length(ARGV) - 1
+}
 
-while getopts "n:" opt; do
-  case "$opt" in
-    n)
-      n=$OPTARG
-      ;;
-    *)
-      exit 1
-      ;;
-  esac
-done
-
-shift $((OPTIND - 1))
-
-if [ "$n" -eq 0 ]; then
-  echo >&2 "use -n to specify number of sets"
-  exit 1
-fi
-
-awk -v "num_of_sets=$n" '++seen[$0] == num_of_sets' "$@"
+++seen[$0] == n_sets
+' "$@"
 
