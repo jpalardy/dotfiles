@@ -1,10 +1,4 @@
 #!/bin/bash
 
-awk '
-BEGIN {
-  n_sets = length(ARGV) - 1
-}
-
-++seen[$0] == n_sets
-' "$@"
+awk -v n_sets=$# '++seen[$0] == n_sets' "$@"
 
