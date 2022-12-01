@@ -27,6 +27,11 @@ NF == 2 && $1 == "sample" {
   $0 = sprintf("SELECT * FROM %s ORDER BY random() LIMIT 25", $2)
 }
 
+# CTE
+NF == 1 && $1 == "cte" {
+$0 = sprintf("WITH name1 AS (query), name2 AS (query) SELECT * FROM name")
+}
+
 {
   sub(";$", "")
   print
