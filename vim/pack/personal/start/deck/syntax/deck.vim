@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language: Deck file -- PAR format
 " Maintainer: Jonathan Palardy
-" Latest Revision: March 8, 2012
+" Latest Revision: December 5, 2022
 
 if exists("b:current_syntax")
   finish
@@ -9,7 +9,7 @@ endif
 
 "-------------------------------------------------
 
-syntax match deckDate /\d\d\d\d-\d\d-\d\d/ nextgroup=deckFailGrade,deckPassGrade skipwhite
+syntax match deckDate /\<\d\d\d\d-\d\d-\d\d\>/ nextgroup=deckFailGrade,deckPassGrade skipwhite
 syntax match deckUnknownDate /????-??-??/  nextgroup=deckFailGrade,deckPassGrade skipwhite
 
 syntax match deckFailGrade /0/ contained
