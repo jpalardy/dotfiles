@@ -27,9 +27,20 @@ function cd
 end
 
 function b
-  cd (for i in (seq 1 $argv[1])
-    echo ".."
-  end | string join "/")
+  if test "$argv[1]" != "_"
+    cd ..
+    return
+  end
+
+  set -l cwd $PWD
+  while test $cwd != "/"
+    echo $cwd
+    set cwd (path dirname $cwd)
+  end | fzf | read -l result
+
+  if test -n "$result"
+    cd $result
+  end
 end
 
 function cdl
