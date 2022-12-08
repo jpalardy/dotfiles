@@ -55,6 +55,7 @@ BEGIN {
   # emojis
   cycle("*",        "_", "📦", "✅")
   snip("*::think",  "🤔")
+  snip("*::grim",   "😬")
   snip("*::clock",  "⏰")
   snip("*:O",       "🔆")
   snip("*:X",       "❌")
