@@ -119,7 +119,8 @@ BEGIN {
   #-------------------------------------------------
   # sql
   #-------------------------------------------------
-  snip("sql:ea", "EXPLAIN ANALYZE")
+  snip("sql:ea",  "EXPLAIN ANALYZE")
+  snip("sql:cte", "WITH name1 AS (SELECT _some_), name2 AS (SELECT _some_) SELECT * FROM name")
 
   #-------------------------------------------------
   # gitcommit
