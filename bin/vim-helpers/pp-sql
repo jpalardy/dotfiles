@@ -2,35 +2,37 @@
 
 awk '
 
+# -------------------------------------------------
+
 # head $table
-NF == 2 && $1 == "head" {
-  $0 = sprintf("SELECT * FROM %s LIMIT 25", $2)
+$1 == "head" {
+  table = $2
+  if (!table) { table = "_table_" }
+
+  $0 = sprintf("SELECT * FROM %s LIMIT 25", table)
 }
 
-# count $table
-NF == 2 && $1 == "count" {
-  $0 = sprintf("SELECT count(*) FROM %s", $2)
-}
-
-# count $column $table
-NF == 3 && $1 == "count" {
-  $0 = sprintf("SELECT %s, count(*) FROM %s GROUP BY 1 ORDER BY 1", $2, $3)
-}
-
-# pg_count    -- count all tables, postgres
-NF == 1 && $1 == "pg_count" {
-  $0 = "SELECT schemaname, relname, n_live_tup FROM pg_stat_user_tables ORDER BY schemaname, relname"
-}
+# -------------------------------------------------
 
 # sample $table
-NF == 2 && $1 == "sample" {
-  $0 = sprintf("SELECT * FROM %s ORDER BY random() LIMIT 25", $2)
+$1 == "sample" {
+  table = $2
+  if (!table) { table = "_table_" }
+
+  $0 = sprintf("SELECT * FROM %s ORDER BY random() LIMIT 25", table)
 }
 
-# CTE
-NF == 1 && $1 == "cte" {
-$0 = sprintf("WITH name1 AS (query), name2 AS (query) SELECT * FROM name")
+# -------------------------------------------------
+
+# count $table
+$1 == "count" {
+  table = $2
+  if (!table) { table = "_table_" }
+
+  $0 = sprintf("SELECT _column_, count(*) FROM %s GROUP BY 1 ORDER BY 1", table)
 }
+
+# -------------------------------------------------
 
 {
   sub(";$", "")
