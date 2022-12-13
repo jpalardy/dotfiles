@@ -105,6 +105,7 @@ noremap <down> gj
 
 " search next/previous -- center in page
 nnoremap * *N
+nnoremap g* g*N
 
 " search selected text
 vnoremap // y/<C-R>"<CR>
