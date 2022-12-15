@@ -103,7 +103,7 @@ BEGIN {
   snip("elixir:tapl",  "IO.inspect(label: \"▒\")")
   snip("elixir::clal", "charlists: :as_lists")
   snip("elixir:pry",   "require IEx; IEx.pry()")
-  snip("elixir:here",  "IO.inspect(\"***** #{Path.relative_to_cwd(__ENV__.file)}:#{__ENV__.line}\")")
+  snip("elixir:here",  "IO.inspect(label: \"***** #{Path.relative_to_cwd(__ENV__.file)}:#{__ENV__.line}\")")
   #-------------------------------------------------
   # eex
   #-------------------------------------------------
