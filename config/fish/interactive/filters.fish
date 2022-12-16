@@ -1,25 +1,14 @@
+
 function __count
-  argparse min= -- $argv
-  or return 1
-
-  # --min
-  set -l min 1
-  if set -q _flag_min
-    set min $_flag_min
-  end
-
-  awk -v "min=$min" '
+  awk '
     { counts[$0]++ }
     END {
       for(c in counts) {
-        if (counts[c] >= min) {
-          printf "%6d %s\n", counts[c], c
-        }
+        printf "%6d %s\n", counts[c], c
       }
-    }' $argv | sort -n
+    }
+  ' $argv | sort -n
 end
-
-complete -c __count -l min -d "minimum value"
 
 #-------------------------------------------------
 
