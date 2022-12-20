@@ -93,6 +93,9 @@ nnoremap ,a :exe "! summary-" . &ft . " " . expand("%")<CR>
 
 nnoremap ,wd :windo normal 
 
+" FIT WIDTH TO LONGEST LINE
+nnoremap ,- :execute "vertical resize" . max(map(getline(1,'$'),'len(v:val)'))<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
