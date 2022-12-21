@@ -28,6 +28,9 @@ endfunction
 
 nnoremap <buffer> ,F :call Fold_ex()<CR>
 
+" format selection
+vnoremap <buffer> ,f :!mix format -<CR>
+
 " -------------------------------------------------
 
 " wrap pipes in ( ... ); for vim-slime
