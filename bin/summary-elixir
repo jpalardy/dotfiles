@@ -1,9 +1,38 @@
 #!/bin/bash
 
 awk '
-$1 == "def" || $1 == "defp" || $1 == "defimpl" {
+
+$1 == "@impl" {
+  impl = 1
+}
+
+$1 == "def" {
   sub("\\(.*", "")
-  print $1, $2
+  if (impl) {
+    # bold
+    printf "\033[1m"
+  }
+  # green
+  print "\033[32m" $1, $2 "\033[0m"
+  impl = 0
+}
+
+$1 == "defp" {
+  sub("\\(.*", "")
+  # (dim) gray
+  print "\033[2m" $1, $2 "\033[0m"
+}
+
+$1 == "defmacro" {
+  sub("\\(.*", "")
+  # red
+  print "\033[31m" $1, $2 "\033[0m"
+}
+
+$1 == "defimpl" || $1 == "@callback" || $1 == "@behaviour" {
+  sub("^ +", "")
+  # yellow
+  print "\033[33m" $0 "\033[0m"
 }
 
 $1 == "describe" {
@@ -13,10 +42,6 @@ $1 == "describe" {
 $1 == "test" {
   print
 }
-
-$1 == "@callback"  { sub("^ +", "*** "); print }
-$1 == "@behaviour" { sub("^ +", "*** "); print }
-$1 == "@impl"      { sub("^ +", "*** "); print }
 
 ' "$@" | uniq -c | awk '
 
