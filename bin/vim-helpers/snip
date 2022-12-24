@@ -56,6 +56,7 @@ BEGIN {
   cycle("*",        "_", "📦", "✅")
   snip("*::think",  "🤔")
   snip("*::grim",   "😬")
+  snip("*::grin",   "😄")
   snip("*::clock",  "⏰")
   snip("*:O",       "🔆")
   snip("*:X",       "❌")
