@@ -41,7 +41,6 @@ Many targets are supported:
 - [Vim :terminal](#vim-terminal)
 - [NeoVim :terminal](#neovim-terminal)
 
-
 Installation
 ------------
 
@@ -51,6 +50,7 @@ Use your favorite package manager, or use Vim's built-in package support (since 
     cd ~/.vim/pack/plugins/start
     git clone https://github.com/jpalardy/vim-slime.git
 
+Alternatively, you can [try vim-slime in Docker](https://blog.jpalardy.com/posts/trying-vim-slime-in-docker/), before committing to anything else.
 
 Usage
 -------------
@@ -307,6 +307,14 @@ To manually check the right value of `job-id` to use, try:
     echo &channel
 
 from the buffer running your terminal.
+
+You can also specify a function to query the jobid as
+
+```lua
+vim.g.slime_get_jobid = function()
+  -- some way to select and return jobid
+end
+```
 
 Advanced Configuration
 ----------------------

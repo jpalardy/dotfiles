@@ -123,8 +123,8 @@ g:ale_haskell_hlint_executable                 *g:ale_haskell_hlint_executable*
 
 g:ale_haskell_hlint_options                       g:ale_haskell_hlint_options
                                                   b:ale_haskell_hlint_options
-  Type: String
-  Default: ''
+  Type: |String|
+  Default: `''`
 
   This variable can be used to pass extra options to the underlying hlint
   executable.
@@ -134,7 +134,7 @@ g:ale_haskell_hlint_options                       g:ale_haskell_hlint_options
 hls                                                           *ale-haskell-hls*
 
 g:ale_haskell_hls_executable                     *g:ale_haskell_hls_executable*
-                                                 *b:ale_haskell_his_executable*
+                                                 *b:ale_haskell_hls_executable*
   Type: |String|
   Default: `'haskell-language-server-wrapper'`
 
@@ -217,8 +217,8 @@ g:ale_haskell_ormolu_executable               *g:ale_haskell_ormolu_executable*
 
 g:ale_haskell_ormolu_options                     *g:ale_haskell_ormolu_options*
                                                  *b:ale_haskell_ormolu_options*
-  Type: String
-  Default: ''
+  Type: |String|
+  Default: `''`
 
   This variable can be used to pass extra options to the underlying ormolu
   executable.

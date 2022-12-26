@@ -1,9 +1,9 @@
-FROM testbed/vim:20
+FROM testbed/vim:24
 
 RUN install_vim -tag v8.0.0027 -build \
-                -tag v8.2.4693 -build \
+                -tag v9.0.0133 -build \
                 -tag neovim:v0.2.0 -build \
-                -tag neovim:v0.6.1 -build
+                -tag neovim:v0.8.0 -build
 
 ENV PACKAGES="\
     bash \

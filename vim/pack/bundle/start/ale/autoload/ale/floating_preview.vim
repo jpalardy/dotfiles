@@ -1,6 +1,7 @@
 " Author: Jan-Grimo Sobez <jan-grimo.sobez@phys.chem.ethz.ch>
 " Author: Kevin Clark <kevin.clark@gmail.com>
 " Author: D. Ben Knoble <ben.knoble+github@gmail.com>
+" Author: Shaun Duncan <shaun.duncan@gmail.com>
 " Description: Floating preview window for showing whatever information in.
 
 " Precondition: exists('*nvim_open_win') || has('popupwin')
@@ -106,18 +107,20 @@ function! s:NvimPrepareWindowContent(lines) abort
     let l:width += 2
     let l:height += 2
 
-    let l:hor          = g:ale_floating_window_border[0]
-    let l:top          = g:ale_floating_window_border[1]
-    let l:top_left     = g:ale_floating_window_border[2]
-    let l:top_right    = g:ale_floating_window_border[3]
-    let l:bottom_right = g:ale_floating_window_border[4]
-    let l:bottom_left  = g:ale_floating_window_border[5]
+    let l:left         = get(g:ale_floating_window_border, 0, '|')
+    let l:top          = get(g:ale_floating_window_border, 1, '-')
+    let l:top_left     = get(g:ale_floating_window_border, 2, '+')
+    let l:top_right    = get(g:ale_floating_window_border, 3, '+')
+    let l:bottom_right = get(g:ale_floating_window_border, 4, '+')
+    let l:bottom_left  = get(g:ale_floating_window_border, 5, '+')
+    let l:right        = get(g:ale_floating_window_border, 6, l:left)
+    let l:bottom       = get(g:ale_floating_window_border, 7, l:top)
 
     let l:lines = [l:top_left . repeat(l:top, l:width - 2) . l:top_right]
 
     for l:line in a:lines
         let l:line_width = strchars(l:line)
-        let l:lines = add(l:lines, l:hor . l:line . repeat(' ', l:width - l:line_width - 2). l:hor)
+        let l:lines = add(l:lines, l:left . l:line . repeat(' ', l:width - l:line_width - 2). l:right)
     endfor
 
     " Truncate the lines
@@ -125,21 +128,24 @@ function! s:NvimPrepareWindowContent(lines) abort
         let l:lines = l:lines[0:l:max_height]
     endif
 
-    let l:lines = add(l:lines, l:bottom_left . repeat(l:top, l:width - 2) . l:bottom_right)
+    let l:lines = add(l:lines, l:bottom_left . repeat(l:bottom, l:width - 2) . l:bottom_right)
 
     return [l:lines, l:width, l:height]
 endfunction
 
 function! s:NvimCreate(options) abort
+    let l:popup_opts = extend({
+    \    'relative': 'cursor',
+    \    'row': 1,
+    \    'col': 0,
+    \    'width': 42,
+    \    'height': 4,
+    \    'style': 'minimal'
+    \ }, s:GetPopupOpts())
+
     let l:buffer = nvim_create_buf(v:false, v:false)
-    let l:winid = nvim_open_win(l:buffer, v:false, {
-    \ 'relative': 'cursor',
-    \ 'row': 1,
-    \ 'col': 0,
-    \ 'width': 42,
-    \ 'height': 4,
-    \ 'style': 'minimal'
-    \ })
+    let l:winid = nvim_open_win(l:buffer, v:false, l:popup_opts)
+
     call nvim_buf_set_option(l:buffer, 'buftype', 'acwrite')
     call nvim_buf_set_option(l:buffer, 'bufhidden', 'delete')
     call nvim_buf_set_option(l:buffer, 'swapfile', v:false)
@@ -149,7 +155,8 @@ function! s:NvimCreate(options) abort
 endfunction
 
 function! s:VimCreate(options) abort
-    let l:popup_id = popup_create([], {
+    " default options
+    let l:popup_opts = extend({
     \    'line': 'cursor+1',
     \    'col': 'cursor',
     \    'drag': v:true,
@@ -158,17 +165,19 @@ function! s:VimCreate(options) abort
     \    'padding': [0, 1, 0, 1],
     \    'border': [],
     \    'borderchars': empty(g:ale_floating_window_border) ? [' '] : [
-    \        g:ale_floating_window_border[1],
-    \        g:ale_floating_window_border[0],
-    \        g:ale_floating_window_border[1],
-    \        g:ale_floating_window_border[0],
-    \        g:ale_floating_window_border[2],
-    \        g:ale_floating_window_border[3],
-    \        g:ale_floating_window_border[4],
-    \        g:ale_floating_window_border[5],
+    \        get(g:ale_floating_window_border, 1, '-'),
+    \        get(g:ale_floating_window_border, 6, '|'),
+    \        get(g:ale_floating_window_border, 7, '-'),
+    \        get(g:ale_floating_window_border, 0, '|'),
+    \        get(g:ale_floating_window_border, 2, '+'),
+    \        get(g:ale_floating_window_border, 3, '+'),
+    \        get(g:ale_floating_window_border, 4, '+'),
+    \        get(g:ale_floating_window_border, 5, '+'),
     \    ],
     \    'moved': 'any',
-    \    })
+    \ }, s:GetPopupOpts())
+
+    let l:popup_id = popup_create([], l:popup_opts)
     call setbufvar(winbufnr(l:popup_id), '&filetype', get(a:options, 'filetype', 'ale-preview'))
     let w:preview = {'id': l:popup_id}
 endfunction
@@ -201,4 +210,22 @@ function! s:VimClose() abort
 
     call popup_close(w:preview['id'])
     unlet w:preview
+endfunction
+
+" get either the results of a function callback or dictionary for popup overrides
+function! s:GetPopupOpts() abort
+    if exists('g:ale_floating_preview_popup_opts')
+        let l:ref = g:ale_floating_preview_popup_opts
+
+        if type(l:ref) is# v:t_dict
+            return l:ref
+        elseif type(l:ref) is# v:t_string
+            try
+                return function(l:ref)()
+            catch /E700/
+            endtry
+        endif
+    endif
+
+    return {}
 endfunction

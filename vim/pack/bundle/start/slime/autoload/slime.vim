@@ -144,7 +144,11 @@ function! s:NeovimConfig() abort
   if !exists("b:slime_config")
     let b:slime_config = {"jobid": get(g:, "slime_last_channel", "")}
   end
-  let b:slime_config["jobid"] = input("jobid: ", b:slime_config["jobid"])
+  if exists("g:slime_get_jobid")
+    let b:slime_config["jobid"] = g:slime_get_jobid()
+  else
+    let b:slime_config["jobid"] = input("jobid: ", b:slime_config["jobid"])
+  end
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -231,13 +235,15 @@ function! s:VimterminalConfig() abort
         \ : 1
   if choice > 0
     if choice>len(terms)
-      if !exists("g:slime_vimterminal_cmd")
-          let cmd = input("Enter a command to run [".&shell."]:")
-          if len(cmd)==0
-            let cmd = &shell
-          endif
+      if exists("b:slime_vimterminal_cmd")
+        let cmd = b:slime_vimterminal_cmd
+      elseif exists("g:slime_vimterminal_cmd")
+        let cmd = g:slime_vimterminal_cmd
       else
-          let cmd = g:slime_vimterminal_cmd
+        let cmd = input("Enter a command to run [".&shell."]:")
+        if len(cmd)==0
+          let cmd = &shell
+        endif
       endif
       let winid = win_getid()
       if exists("g:slime_vimterminal_config")
@@ -292,8 +298,14 @@ function! s:SID()
 endfun
 
 function! s:WritePasteFile(text)
-  " could check exists("*writefile")
-  call system("cat > " . g:slime_paste_file, a:text)
+  let paste_dir = fnamemodify(g:slime_paste_file, ":p:h")
+  if !isdirectory(paste_dir)
+    call mkdir(paste_dir, "p")
+  endif
+  let output = system("cat > " . g:slime_paste_file, a:text)
+  if v:shell_error
+    echoerr output
+  endif
 endfunction
 
 function! s:_EscapeText(text)

@@ -18,6 +18,7 @@ Notes:
   * `gcc`
   * `gnatpp`
 * Ansible
+  * `ansible-language-server`
   * `ansible-lint`!!
 * API Blueprint
   * `drafter`
@@ -52,6 +53,8 @@ Notes:
   * `buildifier`
 * BibTeX
   * `bibclean`
+* Bicep
+  * `bicep`
 * BitBake
   * `oelint-adv`
 * Bourne Shell
@@ -73,6 +76,7 @@ Notes:
   * `gcc` (`cc`)
   * `uncrustify`
 * C#
+  * `clang-format`
   * `csc`!!
   * `cspell`
   * `dotnet-format`
@@ -95,6 +99,8 @@ Notes:
   * `flawfinder`
   * `gcc` (`cc`)
   * `uncrustify`
+* Cairo
+  * `starknet`
 * Chef
   * `cookstyle`
   * `foodcritic`!!
@@ -116,6 +122,7 @@ Notes:
 * CSS
   * `VSCode CSS language server`
   * `cspell`
+  * `css-beautify`
   * `csslint`
   * `fecs`
   * `prettier`
@@ -123,6 +130,7 @@ Notes:
 * Cucumber
   * `cucumber`
 * CUDA
+  * `clang-format`
   * `clangd`
   * `nvcc`!!
 * Cypher
@@ -173,6 +181,7 @@ Notes:
   * `SyntaxErl`
   * `dialyzer`!!
   * `elvis`!!
+  * `erlang_ls`
   * `erlc`
   * `erlfmt`
 * Fish
@@ -239,6 +248,7 @@ Notes:
   * `stack-ghc`
   * `stylish-haskell`
 * HCL
+  * `packer-fmt`
   * `terraform-fmt`
 * HTML
   * `VSCode HTML language server`
@@ -263,6 +273,7 @@ Notes:
 * Java
   * `PMD`
   * `checkstyle`!!
+  * `clang-format`
   * `cspell`
   * `eclipselsp`
   * `google-java-format`
@@ -270,6 +281,7 @@ Notes:
   * `javalsp`
   * `uncrustify`
 * JavaScript
+  * `clang-format`
   * `cspell`
   * `deno`
   * `dprint`
@@ -286,6 +298,7 @@ Notes:
   * `xo`
 * JSON
   * `VSCode JSON language server`
+  * `clang-format`
   * `cspell`
   * `dprint`
   * `eslint`
@@ -376,6 +389,7 @@ Notes:
 * Objective-C
   * `ccls`
   * `clang`
+  * `clang-format`
   * `clangd`
   * `uncrustify`
 * Objective-C++
@@ -383,6 +397,7 @@ Notes:
   * `clangd`
   * `uncrustify`
 * OCaml
+  * `dune`
   * `merlin` (see |ale-ocaml-merlin|)
   * `ocamlformat`
   * `ocamllsp`
@@ -392,6 +407,10 @@ Notes:
   * `ibm_validator`
   * `prettier`
   * `yamllint`
+* OpenSCAD
+  * `SCA2D`
+* Packer
+  * `packer-fmt-fixer`
 * Pascal
   * `ptop`
 * Pawn
@@ -414,6 +433,7 @@ Notes:
   * `phpcs`
   * `phpmd`
   * `phpstan`
+  * `pint`
   * `psalm`!!
   * `tlint`
 * PO
@@ -436,6 +456,7 @@ Notes:
 * proto
   * `buf-format`!!
   * `buf-lint`!!
+  * `clang-format`
   * `protoc-gen-lint`!!
   * `protolint`!!
 * Pug
@@ -463,12 +484,15 @@ Notes:
   * `pycodestyle`
   * `pydocstyle`
   * `pyflakes`
+  * `pyflyby`
   * `pylama`!!
   * `pylint`!!
   * `pylsp`
   * `pyre`
   * `pyright`
+  * `refurb`
   * `reorder-python-imports`
+  * ruff
   * `unimport`
   * `vulture`!!
   * `yapf`
@@ -482,6 +506,7 @@ Notes:
 * Racket
   * `racket-langserver`
   * `raco`
+  * `raco_fmt`
 * Re:VIEW
   * `redpen`
 * ReasonML
@@ -489,6 +514,10 @@ Notes:
   * `ols`
   * `reason-language-server`
   * `refmt`
+* Rego
+  * `cspell`
+  * `opacheck`
+  * `opafmt`
 * reStructuredText
   * `alex`
   * `cspell`
@@ -515,6 +544,7 @@ Notes:
   * `solargraph`
   * `sorbet`
   * `standardrb`
+  * `syntax_tree`
 * Rust
   * `cargo`!!
   * `cspell`
@@ -552,6 +582,7 @@ Notes:
   * `dprint`
   * `pgformatter`
   * `sql-lint`
+  * `sqlfluff`
   * `sqlfmt`
   * `sqlformat`
   * `sqlint`
@@ -579,6 +610,7 @@ Notes:
   * `terraform-ls`
   * `terraform-lsp`
   * `tflint`
+  * `tfsec`
 * Texinfo
   * `alex`
   * `cspell`
@@ -650,6 +682,7 @@ Notes:
 * YAML
   * `actionlint`
   * `circleci`!!
+  * `gitlablint`
   * `prettier`
   * `spectral`
   * `swaglint`
@@ -661,6 +694,7 @@ Notes:
 * Zeek
   * `zeek`!!
 * Zig
+  * `zigfmt`
   * `zls`
 
 ===============================================================================
