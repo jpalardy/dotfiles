@@ -97,6 +97,9 @@ nnoremap ,wd :windo normal
 nnoremap ,- :execute "vertical resize" . max(map(getline(1,'$'),'len(v:val)'))<CR>
 vnoremap ,- <ESC>:execute "vertical resize" . max(map(getline("'<","'>"),'len(v:val)'))<CR>
 
+" OPEN xxd OF CURRENT BUFFER
+nnoremap ,x :execute ":vnew \| :Scratchy \"xxd " . expand("%") . "\""<CR>:set ft=xxd<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
