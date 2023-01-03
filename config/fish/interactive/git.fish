@@ -3,6 +3,7 @@ function git-diff
   git diff $argv &| vim -R -
 end
 
+abbr --add --global got git
 abbr --add --global glg "git log --graph --pretty=colorful --date-order --all"
 
 function gcp
