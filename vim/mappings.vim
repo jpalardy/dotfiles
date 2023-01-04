@@ -100,6 +100,9 @@ vnoremap ,- <ESC>:execute "vertical resize" . max(map(getline("'<","'>"),'len(v:
 " OPEN xxd OF CURRENT BUFFER
 nnoremap ,x :execute ":vnew \| :Scratchy \"xxd " . expand("%") . "\""<CR>:set ft=xxd<CR>
 
+" RELOAD TO RELATIVE PATH
+nnoremap ,r :execute ":bwipeout \| vsp +" . line('.') fnamemodify(@%, ":~:.")<CR>zz
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
