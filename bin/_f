@@ -1,0 +1,18 @@
+#!/bin/bash
+
+prepare() {
+  awk '
+    /^-/ { sub(/^-/, "-v ") }
+
+    {
+      printf "%s", sep
+      printf "rg %s", $0
+      sep = " | "
+    }
+
+    END { print "" }
+'
+}
+
+eval "$(for arg in "$@"; do echo "$arg"; done | prepare)"
+
