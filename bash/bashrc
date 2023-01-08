@@ -1,6 +1,4 @@
 
-export DOTFILES="$HOME/dotfiles"
-
 #-------------------------------------------------
 # VARIABLES
 #-------------------------------------------------
@@ -9,7 +7,7 @@ export DOTFILES="$HOME/dotfiles"
 umask 22
 ulimit -c 0
 
-export PATH="$DOTFILES/bin:$PATH"
+export PATH="$HOME/dotfiles/bin:$PATH"
 
 export EDITOR="vim"
 export PAGER="less"
@@ -41,35 +39,12 @@ HISTSIZE=1000                    # history lines in memory
 HISTFILESIZE=1000                # history lines in the file
 HISTCONTROL=ignoreboth           # don't save lines starting with a space, or duplicate lines
 
-if [ -t 0 ] ; then
-  # completion
-  load_bash_completion() {
-    for dir in /usr/local/etc /etc; do
-      if [ -e ${dir}/bash_completion ]; then
-        source ${dir}/bash_completion
-        complete -r vim 2>/dev/null
-        complete -r sqlite3 2>/dev/null
-        return
-      fi
-    done
-    echo "no bash-completion"
-  }
-  load_bash_completion
-  unset load_bash_completion
-fi
-
 #-------------------------------------------------
-# COMMANDS
+# ALIASES
 #-------------------------------------------------
 
 alias ls='ls --color=auto'
 alias ll='ls -l'
 
 alias grep='grep --color=auto'
-
-#-------------------------------------------------
-# LOCAL
-#-------------------------------------------------
-
-[ -e "$DOTFILES"/bash/local.bash ] && source "$DOTFILES"/bash/local.bash
 
