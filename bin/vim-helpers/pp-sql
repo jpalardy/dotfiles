@@ -9,7 +9,7 @@ $1 == "head" {
   table = $2
   if (!table) { table = "_table_" }
 
-  $0 = sprintf("SELECT * FROM %s LIMIT 25", table)
+  $0 = sprintf("SELECT * FROM %s LIMIT 5", table)
 }
 
 # -------------------------------------------------
@@ -19,7 +19,7 @@ $1 == "sample" {
   table = $2
   if (!table) { table = "_table_" }
 
-  $0 = sprintf("SELECT * FROM %s ORDER BY random() LIMIT 25", table)
+  $0 = sprintf("SELECT * FROM %s ORDER BY random() LIMIT 5", table)
 }
 
 # -------------------------------------------------
