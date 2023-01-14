@@ -6,7 +6,7 @@ prepare() {
 
     {
       printf "%s", sep
-      printf "rg %s", $0
+      printf "rg -i %s", $0
       sep = " | "
     }
 
