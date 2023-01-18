@@ -89,7 +89,7 @@ nnoremap ,v :v/<C-R>//d<CR>gg
 nnoremap ,d :g/<C-R>//d<CR>gg
 
 nnoremap ,l :! cloc --quiet --by-file %<CR>
-nnoremap ,a :exe "! summary-" . &ft . " " . expand("%")<CR>
+nnoremap ,a :exe "! CURRENT_LINE=" . line(".") . " summary-" . &ft . " " . expand("%")<CR>
 
 nnoremap ,wd :windo normal 
 

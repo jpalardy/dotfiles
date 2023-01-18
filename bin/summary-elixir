@@ -1,6 +1,10 @@
 #!/bin/bash
 
-awk '
+awk -v "current_line=$CURRENT_LINE" '
+
+NR == current_line {
+  print "-------------------------------------------------"
+}
 
 $1 == "@impl" {
   impl = 1
