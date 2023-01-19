@@ -1,3 +1,6 @@
+
+alias l ll
+
 abbr --add --global rsy "rsync -av --progress"
 alias pwgen "pwgen -cny 30"
 alias R "R --quiet --no-save --no-restore"
