@@ -1,18 +1,18 @@
 
 alias l ll
 
-abbr --add --global rsy "rsync -av --progress"
+abbr --add rsy "rsync -av --progress"
 alias pwgen "pwgen -cny 30"
 alias R "R --quiet --no-save --no-restore"
 
-abbr --add --global _a --set-cursor "awk '{print %}'"
-abbr --add --global _t 'echo $CMD_DURATION'
+abbr --add _a --set-cursor "awk '{print %}'"
+abbr --add _t 'echo $CMD_DURATION'
 
 alias h history
 
-abbr --add --global reload! "source ~/.config/fish/config.fish"
+abbr --add reload! "source ~/.config/fish/config.fish"
 
-abbr --add --global tm tmux
+abbr --add tm tmux
 
 #-------------------------------------------------
 

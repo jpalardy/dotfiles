@@ -3,9 +3,9 @@ function git-diff
   git diff $argv &| vim -R -
 end
 
-abbr --add --global got git
-abbr --add --global glg "git log --graph --pretty=colorful --date-order --all"
-abbr --add --global glb "git log --graph --pretty=colorful --date-order --branches"
+abbr --add got git
+abbr --add glg "git log --graph --pretty=colorful --date-order --all"
+abbr --add glb "git log --graph --pretty=colorful --date-order --branches"
 
 function gcp
   argparse enable -- $argv
