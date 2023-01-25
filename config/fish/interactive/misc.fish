@@ -5,7 +5,7 @@ abbr --add --global rsy "rsync -av --progress"
 alias pwgen "pwgen -cny 30"
 alias R "R --quiet --no-save --no-restore"
 
-abbr --add --global _a "awk '{}'"
+abbr --add --global _a --set-cursor "awk '{print %}'"
 abbr --add --global _t 'echo $CMD_DURATION'
 
 alias h history
