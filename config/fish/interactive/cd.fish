@@ -9,7 +9,7 @@ function cd
   if test "$dst" = "_"
     set dst $PWD
     while test "$dst" != "/"
-      if test -d "$dst/.git"
+      if test -e "$dst/.git"
         __cd $dst
         break
       end
