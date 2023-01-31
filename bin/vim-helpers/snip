@@ -68,10 +68,24 @@ BEGIN {
   snip("*:a'", "á")
   snip("*:i'", "í")
   snip("*:u'", "ú")
-  snip("*:u:", "ü")
   snip("*:e'", "é")
   snip("*:o'", "ó")
   snip("*:n~", "ñ")
+
+  # french accents: `
+  snip("*:a`", "à")
+  snip("*:u`", "ù")
+  snip("*:e`", "è")
+  # french accents: :
+  snip("*:i:", "ï")
+  snip("*:u:", "ü")
+  snip("*:e:", "ë")
+  # french accents: ^
+  snip("*:a^", "â")
+  snip("*:i^", "î")
+  snip("*:u^", "û")
+  snip("*:e^", "ê")
+  snip("*:o^", "ô")
 
   #-------------------------------------------------
   # javascript
