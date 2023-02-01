@@ -12,8 +12,6 @@ alias h history
 
 abbr --add reload! "source ~/.config/fish/config.fish"
 
-abbr --add tm tmux
-
 #-------------------------------------------------
 
 function serve
