@@ -21,5 +21,5 @@ diff -rq "$@" | awk '
   print "vimdiff _", path "/" $4
 }
 
-'
+' | sort
 
