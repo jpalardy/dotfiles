@@ -47,6 +47,7 @@ check_bin wget
 check_bin qrencode
 check_bin pwgen
 check_bin xsv
+check_bin utimer
 flush
 
 # experimental
