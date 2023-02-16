@@ -18,9 +18,9 @@ list_commands() {
     echo "mix deps.compile"
     echo "mix compile"
     echo ""
-    test -d _build && echo "rm -rf _build"
-    test -d deps && echo "rm -rf deps"
-    test -d .elixir_ls && echo "rm -rf .elixir_ls"
+    test -d _build     && echo "rm -rf -v _build"
+    test -d deps       && echo "rm -rf -v deps"
+    test -d .elixir_ls && echo "rm -rf -v .elixir_ls"
   fi
 }
 
