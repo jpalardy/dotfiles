@@ -115,7 +115,6 @@ function! GrepForCurrentSearch()
   let _s=@/
   let _s=substitute(_s, '^[\\]<', '\\b', '')
   let _s=substitute(_s, '[\\]>', '\\b', '')
-  tabedit
   silent! execute "grep -i " . shellescape(_s)
   redraw!
 endfunction
