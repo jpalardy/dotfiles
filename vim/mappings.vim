@@ -141,9 +141,3 @@ nnoremap <silent> ]q :cnext<CR>
 nnoremap <silent> [l :lprevious<CR>
 nnoremap <silent> ]l :lnext<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" GIT
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap ,s :vert Git<cr>
-
