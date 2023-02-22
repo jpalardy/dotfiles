@@ -48,6 +48,7 @@ check_bin qrencode
 check_bin pwgen
 check_bin xsv
 check_bin utimer
+check_bin parallel
 flush
 
 # experimental
