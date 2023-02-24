@@ -1,0 +1,25 @@
+#!/bin/bash
+
+awk '
+
+{
+  original_length = length($0)
+  sub(/^ */, "")
+  without_spaces = length($0)
+  sub(/^\t*/, "")
+  without_tabs = length($0)
+
+  spaces += original_length - without_spaces
+  tabs += without_spaces - without_tabs
+}
+
+ENDFILE {
+  indents = spaces / 2 + tabs
+  print FILENAME, indents, FNR, indents / FNR
+  # reset
+  spaces = 0
+  tabs = 0
+}
+
+' "$@"
+
