@@ -28,12 +28,19 @@ FROM pg_stat_activity
 WHERE query != '<IDLE>' AND query NOT ILIKE '%pg_stat_activity%'
 ORDER BY query_start desc;
 
+-- temporary table; for export
+DROP TABLE IF EXISTS results;
+CREATE TEMPORARY TABLE results AS (
+    SELECT * FROM whatever
+);
+SELECT * FROM results;
+
 -- -------------------------------------------------
 
 -- export to CSV
 
-\copy (SELECT * FROM whatever) to 'whatever.csv' with csv
-\copy (SELECT * FROM whatever) to 'whatever.csv' with csv header
+\copy (SELECT * FROM results) to 'results.csv' with csv
+\copy (SELECT * FROM results) to 'results.csv' with csv header
 
 -- .pgpass @ 600
 -- hostname:port:database:username:password
