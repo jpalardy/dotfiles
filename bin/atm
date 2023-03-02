@@ -1,13 +1,4 @@
-#!/bin/bash
-
-CONFIG=".atm.toml"
-
-if [ ! -e "$CONFIG" ]; then
-  echo >&2 "missing $CONFIG file"
-  exit 1
-fi
-
-awk '
+#!/usr/bin/env awk-f
 
 function flush() {
   if (name == "") {
@@ -34,6 +25,18 @@ function flush() {
   delete vars
 }
 
+# -------------------------------------------------
+
+BEGIN {
+  # - no filename given
+  # - interactive (not pipe) input
+  if (ARGV[1] == "" && !system("tty > /dev/null")) {
+    ARGV[1] = ".atm.toml"
+    ARGC = 2
+  }
+}
+
+# skip empty lines
 NF == 0 {
   next
 }
@@ -64,6 +67,4 @@ END {
   print ""
   print "tmux select-window -t 0"
 }
-
-' "$CONFIG"
 
