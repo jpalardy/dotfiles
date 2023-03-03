@@ -39,6 +39,7 @@ flush() {
 # cli
 check_bin tmux
 check_bin rg          ripgrep
+check_bin fzf
 check_bin jq
 check_bin gcal
 check_bin gpg
@@ -49,31 +50,24 @@ check_bin pwgen
 check_bin xsv
 check_bin utimer
 check_bin parallel
+check_bin entr
 flush
 
 # experimental
 check_bin bat
-check_bin dust
-check_bin fzf
 check_bin htop
+check_bin duf
+check_bin dust
 check_bin tree
 check_bin pstree
-check_bin entr
 check_bin cloc
 flush
 
 # linters
 check_bin jsonlint "jsonlint @ npm"
-check_bin fixjson "fixjson @ npm"
+check_bin fixjson  "fixjson @ npm"
 check_bin shellcheck
 check_bin yamllint
 check_bin pg_format pgformatter
 flush
-
-# node
-if command -v node >/dev/null; then
-  check_bin prettier "prettier @ npm"
-  check_bin ncu      "npm-check-updates"
-  flush
-fi
 
