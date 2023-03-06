@@ -42,6 +42,7 @@ let g:ale_cursor_detail = 1
 let g:ale_floating_window_border = []
 let g:ale_lsp_suggestions = 1
 let g:ale_default_navigation = "split"
+let g:ale_virtualtext_cursor = "disabled"
 
 " show me anything from the language server...
 let g:ale_lsp_show_message_severity = "log"
