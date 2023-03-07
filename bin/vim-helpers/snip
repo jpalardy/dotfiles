@@ -103,6 +103,7 @@ BEGIN {
   #-------------------------------------------------
   n = split("r rmd", arr)
   for (i = 1; i <= n; i++) {
+    snip(arr[i] ":in", "%in%")
     snip(arr[i] ":fn", "function")
     snip(arr[i] ":|",  "%>%")
     snip(arr[i] ":>",  "%>%")
