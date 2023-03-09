@@ -8,12 +8,21 @@ inoremap <F2>   <C-o>:ALENextWrap<CR>
 nnoremap <F3>   :ALEToggle<CR>
 inoremap <F3>   <C-o>:ALEToggle<CR>
 nnoremap <F4>   :call ToggleQuickfix()<CR>
+nnoremap ,<F4>  :call ToggleLoclist()<CR>
 
 function! ToggleQuickfix()
-  if empty(filter(getwininfo(), 'v:val.quickfix'))
+  if empty(filter(getwininfo(win_getid()), 'v:val.quickfix'))
     copen
   else
     cclose
+  endif
+endfunction
+
+function! ToggleLoclist()
+  if empty(filter(getwininfo(win_getid()), 'v:val.loclist'))
+    lopen
+  else
+    lclose
   endif
 endfunction
 
