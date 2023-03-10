@@ -28,6 +28,14 @@ if [ -n "$dangling_packages" ]; then
   pacman -Rns $dangling_packages
 fi
 
+mhwd-kernel -li
+echo '-------------------------------------------------'
+pacman -Ss 'kernel and modules'
+
+echo '-------------------------------------------------'
+echo 'mhwd-kernel -i xxx'
+echo '-------------------------------------------------'
+
 pacman -Sc --noconfirm
 
 if confirm "reboot?"; then
