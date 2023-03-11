@@ -143,6 +143,7 @@ BEGIN {
   #-------------------------------------------------
   # gitcommit
   #-------------------------------------------------
+  snip("gitcommit:ud", "Update dependencies")
   snip("gitcommit:cab", "Co-authored-by: ")
 }
 
