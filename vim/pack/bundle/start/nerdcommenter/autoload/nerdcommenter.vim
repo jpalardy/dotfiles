@@ -50,7 +50,7 @@ let s:delimiterMap = {
     \ 'btm': { 'left': '::' },
     \ 'c': { 'left': '/*', 'right': '*/', 'leftAlt': '//' },
     \ 'cabal': { 'left': '--' },
-    \ 'cairo': { 'left': '#' },
+    \ 'cairo': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'calibre': { 'left': '//' },
     \ 'caos': { 'left': '*' },
     \ 'catalog': { 'left': '--', 'right': '--' },
@@ -91,7 +91,7 @@ let s:delimiterMap = {
     \ 'dns': { 'left': ';' },
     \ 'docbk': { 'left': '<!--', 'right': '-->' },
     \ 'dockerfile': { 'left': '#' },
-    \ 'dosbatch': { 'left': 'REM ', 'leftAlt': '::' },
+    \ 'dosbatch': { 'left': 'REM ', 'nested': 1, 'leftAlt': 'REM ', 'nestedAlt': 1 },
     \ 'dosini': { 'left': ';' },
     \ 'dot': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'dracula': { 'left': ';' },
@@ -534,10 +534,10 @@ endfunction
 "    if this function changed the delimiters or not
 " function nerdcommenter#SwitchToAlternativeDelimiters(printMsgs)
 function! nerdcommenter#SwitchToAlternativeDelimiters(printMsgs) abort
-    call nerdcommenter#SetUp()
     if exists('*NERDCommenter_before')
         exe 'call NERDCommenter_before()'
     endif
+    call nerdcommenter#SetUp()
     "if both of the alternative delimiters are empty then there is no
     "alternative comment style so bail out
     if b:NERDCommenterDelims['leftAlt'] ==# '' && b:NERDCommenterDelims['rightAlt'] ==# ''
@@ -1175,10 +1175,10 @@ endfunction
 "    'Minimal', 'Toggle', 'AlignLeft', 'AlignBoth', 'Comment',
 "    'Nested', 'ToEOL', 'Append', 'Insert', 'Uncomment', 'Yank'
 function! nerdcommenter#Comment(mode, type) range abort
-    call nerdcommenter#SetUp()
     if exists('*NERDCommenter_before')
         exe 'call NERDCommenter_before()'
     endif
+    call nerdcommenter#SetUp()
 
     let isVisual = a:mode =~# '[vsx]'
 
@@ -2534,9 +2534,8 @@ function! s:IsDelimValid(delimiter, delIndx, line) abort
             return 0
         endif
 
-        "if the delimiter is on the very first char of the line or is the
-        "first non-tab/space char on the line then it is a valid comment delimiter
-        if a:delIndx ==# 0 || a:line =~# "^\s\\{" . a:delIndx . "\\}\".*$"
+        " if the delimiter is the first non-whitespace character, it is valid
+        if a:line =~# '^\s*"'
             return 1
         endif
 
