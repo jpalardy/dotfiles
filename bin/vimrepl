@@ -19,8 +19,9 @@ fi
 
 #-------------------------------------------------
 
-cmd="$SHELL"
-filename="_vimrepl.$1"
+cmd=""
+ext="$1"
+filename="_vimrepl.$ext"
 shift
 
 while getopts "c:f:" opt; do
@@ -45,9 +46,13 @@ fi
 
 #-------------------------------------------------
 
-# run "cmd", or shell in split pane
-# launch shell on exit
-tmux split-window -h "$cmd; $SHELL"
+tmux rename-window "vimrepl-$ext"
+
+# split pane runs shell, or cmd if given
+tmux split-window -h
+if [ -n "$cmd" ]; then
+  tmux send-keys "clear; $cmd" C-m
+fi
 
 # go back to initiating (last) pane
 tmux select-pane -l
@@ -55,6 +60,6 @@ tmux select-pane -l
 # vim...
 vim "$filename"
 
-# kill other pane(s)
+# after vim, kill other pane(s)
 tmux kill-pane -a
 
