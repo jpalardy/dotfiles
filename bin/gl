@@ -45,7 +45,7 @@ cleanup() {
 trap cleanup INT TERM EXIT
 
 (echo; ls -t "$path") > "$tmpfile"
-${VISUAL:-${EDITOR:-vi}} "$tmpfile"
+vim "$tmpfile"
 
 awk -v path="$path" -v cmd="$cmd" '
 # done on empty line
