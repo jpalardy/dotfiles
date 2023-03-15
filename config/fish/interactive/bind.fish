@@ -13,3 +13,6 @@ bind \c_ 'commandline -r "vim -q \$($history[1] --vimgrep | psub)"; commandline 
 # esc-,
 bind \e, fzf-vimrepl
 
+# esc-r
+bind \er fish-source
+
