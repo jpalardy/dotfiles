@@ -42,7 +42,6 @@ relink .Rprofile     "$DOTFILES/lang/r/Rprofile"
 # misc
 relink .psqlrc       "$DOTFILES/psqlrc"
 relink .sqliterc     "$DOTFILES/sqliterc"
-relink .slate        "$DOTFILES/slate"
 
 # -------------------------------------------------
 
