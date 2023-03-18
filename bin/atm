@@ -1,70 +1,21 @@
 #!/usr/bin/env awk-f
 
-function flush() {
-  if (name == "") {
-    return
-  }
-  i = i + 1
-
-  if (i > 1) {
-    print ""
-    print "tmux new-window"
-  }
-  printf "tmux rename-window \"%s\"\n", name
-
-  if (vars["path"]) {
-    printf "tmux send-keys \"cd %s\" C-m\n", vars["path"]
-  }
-
-  if (vars["cmd"]) {
-    printf "tmux send-keys \"%s\" C-m\n", vars["cmd"]
-  }
-
-  # reset
-  name = ""
-  delete vars
-}
-
-# -------------------------------------------------
-
 BEGIN {
   # - no filename given
   # - interactive (not pipe) input
   if (ARGV[1] == "" && !system("tty > /dev/null")) {
-    ARGV[1] = ".atm.toml"
+    ARGV[1] = ".atm"
     ARGC = 2
   }
 }
 
 # skip empty lines
 NF == 0 {
+  print
   next
 }
 
-# section
-match($0, /^\[(.*)]$/, arr) {
-  flush()
-  name = arr[1]
-  next
-}
-
-# key-value
-match($0, /^([^ ]+) *= *(.*)/, arr) {
-  k = arr[1]
-  v = arr[2]
-  vars[k] = v
-  next
-}
-
-# no match?
 {
-  print "*** invalid line:", $0 > "/dev/stderr"
-  exit
-}
-
-END {
-  flush()
-  print ""
-  print "tmux select-window -t 0"
+  print "tmux", $0
 }
 
