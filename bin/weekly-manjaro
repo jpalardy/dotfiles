@@ -33,7 +33,7 @@ echo '-------------------------------------------------'
 pacman -Ss 'kernel and modules'
 
 echo '-------------------------------------------------'
-echo 'mhwd-kernel -i xxx'
+echo 'sudo mhwd-kernel -i linux62'
 echo '-------------------------------------------------'
 
 pacman -Sc --noconfirm
