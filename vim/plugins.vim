@@ -111,3 +111,15 @@ let g:elm_format_autosave = 0
 
 let g:user_emmet_leader_key = '<C-e>'
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vindent
+
+let g:vindent_motion_OO_prev   = '[='
+let g:vindent_motion_OO_next   = ']='
+let g:vindent_motion_more_prev = '[+'
+let g:vindent_motion_more_next = ']+'
+let g:vindent_motion_less_prev = '[-'
+let g:vindent_motion_less_next = ']-'
+let g:vindent_motion_diff_prev = '[;'
+let g:vindent_motion_diff_next = '];'
+
