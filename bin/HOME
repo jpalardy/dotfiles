@@ -4,7 +4,8 @@ SRC="$HOME/.HOME"
 
 if [ "$1" = "-f" ]; then
   echo >&2 "generating $SRC..."
-  find ~ 2>/dev/null > "$SRC"
+  cd "$HOME" || return
+  rg --files -uu -g !Library 2>/dev/null > "$SRC"
   exit
 fi
 
