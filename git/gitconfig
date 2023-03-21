@@ -22,6 +22,7 @@
   qb        = !git checkout -b qb-`date '+%F-%H%M'`
   cab       = !git log | rg -i 'co-authored-by:' | sort | uniq -c | sort -n
   behind    = !git branch -v | rg behind
+  ds        = diff --stat
 [diff]
   noprefix = true
   tool = vimdiff
