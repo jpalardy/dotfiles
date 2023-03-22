@@ -14,8 +14,8 @@ end
 -- -------------------------------------------------
 
 bindMove({"ctrl", "alt"}, "=", function(win, screen)
-  win.x = screen.w / 2 - win.w / 2
-  win.y = screen.h / 2 - win.h / 2
+  win.x = screen.x + screen.w / 2 - win.w / 2
+  win.y = screen.y + screen.h / 2 - win.h / 2
 end)
 
 bindMove({"ctrl", "alt"}, "left", function(win, screen)
