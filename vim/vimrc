@@ -68,7 +68,8 @@ set completeopt=menuone,popup
 set tabpagemax=100
 
 if match($TERM, '256color$') != -1
-  colorscheme 256_xoria
+  colorscheme codedark
+  " colorscheme 256_xoria
   " bottom of file is black
   highlight EndOfBuffer ctermfg=235 ctermbg=235
 endif
