@@ -16,6 +16,12 @@ NF == 0 {
 }
 
 {
+  # remove comments
+  sub(/ *#.*/, "")
+  if ($0 == "") {
+    next
+  }
+
   print "tmux", $0
 }
 
