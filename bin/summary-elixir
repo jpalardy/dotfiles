@@ -40,6 +40,12 @@ $1 == "defp" {
   print DIM $1, $2 CLEAR_ATTRS
 }
 
+$1 == "defdelegate" {
+  sub("\\(.*", "")
+  printf BOLD
+  print COLOR_GREEN $1, $2 CLEAR_ATTRS
+}
+
 $1 == "defmacro" {
   sub("\\(.*", "")
   print COLOR_RED $1, $2 CLEAR_ATTRS
