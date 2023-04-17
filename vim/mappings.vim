@@ -90,6 +90,8 @@ nnoremap ,x :execute ":vnew \| :Scratchy \"xxd " . expand("%") . "\""<CR>:set ft
 " RELOAD TO RELATIVE PATH
 nnoremap ,r :execute ":bwipeout \| vsp +" . line('.') fnamemodify(@%, ":~:.")<CR>zz
 
+nnoremap ,cc :set colorcolumn=
+
 vnoremap ,d :<C-U>execute "'<,'> w diff-" . strftime("%s")<CR>
 
 nnoremap ,1 :colorscheme 256_xoria<CR>
