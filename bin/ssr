@@ -41,7 +41,6 @@ check_bin tmux
 check_bin rg          ripgrep
 check_bin fzf
 check_bin jq
-check_bin gcal
 check_bin gpg
 check_bin curl
 check_bin wget
