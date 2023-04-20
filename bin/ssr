@@ -50,6 +50,7 @@ check_bin xsv
 check_bin utimer
 check_bin parallel
 check_bin entr
+check_bin watch
 flush
 
 # experimental
