@@ -41,3 +41,32 @@ function! _EscapeText_elixir(text)
   return a:text
 endfunction
 
+" -------------------------------------------------
+
+if !exists('*ToggleCodeTest')
+  function! ToggleCodeTest()
+    let cur_pos = getpos('.')
+    silent! 1
+    let found_line = search('^defmodule')
+    call setpos('.', cur_pos)
+
+    if found_line == 0
+      return
+    endif
+
+    let module_name = split(getline(found_line))[1]
+    let other_module_name = module_name . "Test"
+    if match(module_name, "Test$") > 0
+      let other_module_name = substitute(module_name, "Test$", "", "")
+    endif
+
+    let other_file = system(printf("rg 'defmodule %s\\b' -l", other_module_name))
+    let other_file = substitute(other_file, "\n", "", "")
+    if other_file != ""
+      execute "vsplit " other_file
+    endif
+  endfunction
+endif
+
+nnoremap <buffer> ,] :call ToggleCodeTest()<CR>
+
