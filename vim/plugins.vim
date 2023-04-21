@@ -36,7 +36,6 @@ nmap <c-c>d <Plug>SlimeSendCell
 let g:ale_elixir_elixir_ls_release=expand("~/local/bin")
 
 let g:ale_completion_enabled = 1
-let g:ale_completion_autoimport = 1
 let g:ale_floating_preview = 1
 let g:ale_cursor_detail = 1
 let g:ale_floating_window_border = []
