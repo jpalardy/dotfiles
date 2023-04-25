@@ -7,6 +7,8 @@ abbr --add got git
 abbr --add glg "git log --graph --pretty=colorful --date-order --all"
 abbr --add glb "git log --graph --pretty=colorful --date-order --branches"
 
+abbr --add grf --set-cursor 'git log --name-only --pretty=format: --since=2w% | rg . | __count'
+
 function gcp
   argparse enable -- $argv
   or return 1
