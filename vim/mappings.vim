@@ -94,8 +94,13 @@ nnoremap ,cc :set colorcolumn=
 
 vnoremap ,d :<C-U>execute "'<,'> w diff-" . strftime("%s")<CR>
 
+" COLORSCHEMES
 nnoremap ,1 :colorscheme 256_xoria<CR>
 nnoremap ,2 :colorscheme codedark<CR>
+
+" SPLIT-MOVE
+nnoremap ,sa :sp<CR><c-w>k
+nnoremap ,sb :sp<CR><c-o>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER MAPPINGS
