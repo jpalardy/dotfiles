@@ -236,6 +236,7 @@ Notes:
   * `cabal-ghc`
   * `cspell`
   * `floskell`
+  * `fourmolu`
   * `ghc`
   * `ghc-mod`
   * `hdevtools`
@@ -262,6 +263,7 @@ Notes:
   * `htmlhint`
   * `prettier`
   * `proselint`
+  * `rustywind`
   * `tidy`
   * `write-good`
 * Idris

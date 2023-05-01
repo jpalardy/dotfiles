@@ -58,7 +58,7 @@ function! s:KittyConfig() abort
   end
   let b:slime_config["window_id"] = str2nr(system("kitty @ select-window --self"))
   if v:shell_error
-    let b:slime_config["window_id"] = input("kitty window_id: ","1") 
+    let b:slime_config["window_id"] = input("kitty window_id: ","1")
   end
   let b:slime_config["listen_on"] = input("kitty listen on: ", b:slime_config["listen_on"])
 endfunction
@@ -68,7 +68,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! s:ZellijSend(config, text)
-  let target_session = "" 
+  let target_session = ""
   if a:config["session_id"] != "current"
     let target_session = "-s " . shellescape(a:config["session_id"])
   end
@@ -102,18 +102,45 @@ function! s:ZellijConfig() abort
   endif
 endfunction
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Wezterm
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! s:WeztermSend(config, text)
-  call system("echo " . shellescape(a:text) . " | wezterm cli send-text --pane-id=" . shellescape(a:config["pane_id"]))
+  if exists("b:slime_bracketed_paste")
+    let bracketed_paste = b:slime_bracketed_paste
+  elseif exists("g:slime_bracketed_paste")
+    let bracketed_paste = g:slime_bracketed_paste
+  else
+    let bracketed_paste = 0
+  endif
+
+  let [text_to_paste, has_crlf] = [a:text, 0]
+  if bracketed_paste
+    if a:text[-2:] == "\r\n"
+      let [text_to_paste, has_crlf] = [a:text[:-3], 1]
+    elseif a:text[-1:] == "\r" || a:text[-1:] == "\n"
+      let [text_to_paste, has_crlf] = [a:text[:-2], 1]
+    endif
+  endif
+
+  if bracketed_paste
+    call system("wezterm cli send-text --pane-id=" . shellescape(a:config["pane_id"]), text_to_paste)
+  else
+    call system("wezterm cli send-text --no-paste --pane-id=" . shellescape(a:config["pane_id"]), text_to_paste)
+  endif
+
+  " trailing newline
+  if has_crlf
+    call system("wezterm cli send-text --no-paste --pane-id=" . shellescape(a:config["pane_id"]), "\n")
+  end
 endfunction
 
 function! s:WeztermConfig() abort
   if !exists("b:slime_config")
     let b:slime_config = {"pane_id": 1}
   end
-  let b:slime_config["pane_id"] = input("wezterm pane_id: ","1") 
+  let b:slime_config["pane_id"] = input("wezterm pane_id: ", b:slime_config["pane_id"])
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -262,13 +289,9 @@ function! s:VimterminalSend(config, text)
     echoerr "Invalid terminal. Use :SlimeConfig to select a terminal"
     return
   endif
-  " Ideally we ought to be able to use a single term_sendkeys call however as
-  " of vim 8.0.1203 doing so can cause terminal display issues for longer
-  " selections of text.
-  for l in split(a:text,'\n\zs')
-    call term_sendkeys(bufnr,substitute(l,'\n',"\r",''))
-    call term_wait(bufnr)
-  endfor
+  " send the text, translating newlines to enter keycode for Windows or any
+  " other platforms where they are not the same
+  call term_sendkeys(bufnr,substitute(a:text,'\n',"\r",'g'))
 endfunction
 
 function! s:VimterminalDescription(idx,info)

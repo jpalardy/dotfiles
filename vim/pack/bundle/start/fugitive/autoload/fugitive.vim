@@ -2806,10 +2806,10 @@ function! fugitive#BufReadStatus(...) abort
     let fetch_remote = config.Get('branch.' . branch . '.remote', 'origin')
     let push_remote = config.Get('branch.' . branch . '.pushRemote',
           \ config.Get('remote.pushDefault', fetch_remote))
-    if empty(config.Get('remote.' . fetch_remote . '.fetch'))
+    if fetch_remote !=# '.' && empty(config.Get('remote.' . fetch_remote . '.fetch'))
       let fetch_remote = ''
     endif
-    if empty(config.Get('remote.' . push_remote . '.push', config.Get('remote.' . push_remote . '.fetch')))
+    if push_remote !=# '.' && empty(config.Get('remote.' . push_remote . '.push', config.Get('remote.' . push_remote . '.fetch')))
       let push_remote = ''
     endif
 
@@ -3188,12 +3188,12 @@ function! fugitive#BufReadCmd(...) abort
         setlocal bufhidden=delete
       endif
       let &l:modifiable = modifiable
+      call fugitive#MapJumps()
       if b:fugitive_type !=# 'blob'
-        setlocal filetype=git
         call s:Map('n', 'a', ":<C-U>let b:fugitive_display_format += v:count1<Bar>exe fugitive#BufReadCmd(@%)<CR>", '<silent>')
         call s:Map('n', 'i', ":<C-U>let b:fugitive_display_format -= v:count1<Bar>exe fugitive#BufReadCmd(@%)<CR>", '<silent>')
+        setlocal filetype=git
       endif
-      call fugitive#MapJumps()
     endtry
 
     setlocal modifiable
@@ -4265,7 +4265,7 @@ function! s:ReloadStatusBuffer(...) abort
   endif
   let original_lnum = a:0 ? a:1 : line('.')
   let info = s:StageInfo(original_lnum)
-  call fugitive#BufReadStatus(0)
+  exe fugitive#BufReadStatus(0)
   call setpos('.', [0, s:StageSeek(info, original_lnum), 1, 0])
   return ''
 endfunction
@@ -6806,7 +6806,7 @@ endfunction
 
 function! s:BlameLeave() abort
   let state = s:TempState()
-  let bufwinnr = win_id2win(get(state, 'origin_winid'))
+  let bufwinnr = exists('*win_id2win') ? win_id2win(get(state, 'origin_winid')) : 0
   if bufwinnr == 0
     let bufwinnr = bufwinnr(get(state, 'origin_bufnr', -1))
   endif
@@ -7379,11 +7379,12 @@ function! fugitive#BrowseCommand(line1, count, range, bang, mods, arg, ...) abor
       endfor
       return 'echoerr ' . string('fugitive: no URL found in output of :Git')
     endif
-    exe s:DirCheck(dir)
-    let config = fugitive#Config(dir)
-    if empty(remote) && expanded =~# '^[^-./:^~][^:^~]*$' && !empty(FugitiveConfigGet('remote.' . expanded . '.url', config))
-      let remote = expanded
-      let expanded = ''
+    if empty(remote) && expanded =~# '^[^-./:^~][^:^~]*$' && !empty(dir)
+      let config = fugitive#Config(dir)
+      if !empty(FugitiveConfigGet('remote.' . expanded . '.url', config))
+        let remote = expanded
+        let expanded = ''
+      endif
     endif
     if empty(expanded)
       let bufname = &buftype =~# '^\%(nofile\|terminal\)$' ? '' : s:BufName('%')
@@ -7419,17 +7420,22 @@ function! fugitive#BrowseCommand(line1, count, range, bang, mods, arg, ...) abor
         endif
       endif
       let path = path[1:-1]
-    elseif empty(s:Tree(dir))
-      let path = '.git/' . full[strlen(dir)+1:-1]
-      let type = ''
-    else
-      let path = fugitive#Path(full, '/')[1:-1]
+    elseif !empty(s:Tree(dir))
+      let relevant_dir = FugitiveExtractGitDir(full)
+      if !empty(relevant_dir)
+        let dir = relevant_dir
+      endif
+      let path = fugitive#Path(full, '/', dir)[1:-1]
       if empty(path) || isdirectory(full)
         let type = 'tree'
       else
         let type = 'blob'
       endif
+    else
+      let path = '.git/' . full[strlen(dir)+1:-1]
+      let type = ''
     endif
+    exe s:DirCheck(dir)
     if path =~# '^\.git/'
       let ref = matchstr(path, '^.git/\zs\%(refs/[^/]\+/[^/].*\|\w*HEAD\)$')
       let type = empty(ref) ? 'root': 'ref'
@@ -7447,6 +7453,9 @@ function! fugitive#BrowseCommand(line1, count, range, bang, mods, arg, ...) abor
       endif
     endif
 
+    if !exists('l:config') || s:Dir(config) !=# dir
+      let config = fugitive#Config(dir)
+    endif
     let merge = ''
     if !empty(remote) && ref =~# '^refs/remotes/[^/]\+/[^/]\|^refs/heads/[^/]'
       let merge = matchstr(ref, '^refs/\%(heads/\|remotes/[^/]\+/\)\zs.\+')
@@ -7639,7 +7648,10 @@ function! s:NavigateUp(count) abort
 endfunction
 
 function! s:ParseDiffHeader(str) abort
-  let list = matchlist(a:str, '\Cdiff --git \("\=[^/].*\|/dev/null\) \("\=[^/].*\|/dev/null\)$')
+  let list = matchlist(a:str, '\Cdiff --git \("\=\w/.*\|/dev/null\) \("\=\w/.*\|/dev/null\)$')
+  if empty(list)
+    let list = matchlist(a:str, '\Cdiff --git \("\=[^/].*\|/dev/null\) \("\=[^/].*\|/dev/null\)$')
+  endif
   return [fugitive#Unquote(get(list, 1, '')), fugitive#Unquote(get(list, 2, ''))]
 endfunction
 

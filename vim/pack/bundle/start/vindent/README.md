@@ -200,17 +200,13 @@ indents) should be selected.  Assume that the keybindings in
 - If the cursor is on line 5, `v2ai` selects lines 1--10. (one indent level up, and then search for a previous line with less indentation)
 
 If you think pressing `2` for "one indent level up" is not very intuitive,
-you can put `let g:vindent_count = 0` in you `.vimrc`/`init.vim`.
+you can put `let g:vindent_count = 0` in your `.vimrc`/`init.vim`.
 This setting would change how `{count}`'s are handled as such:
 
 - If the cursor is on line 5, `v1ii` selects lines 3--10. (one indent level up)
 - If the cursor is on line 5, `v1ai` selects lines 1--10. (one indent level up, and then search for a previous line with less indentation)
 
 For more details please refer to the [`doc`](doc/vindent.txt), section `vindent_Text_Object`.
-
-## Change Log
-
-See [`doc`](doc/vindent.txt) section `6. Changelog` for details.
 
 ## Licence
 

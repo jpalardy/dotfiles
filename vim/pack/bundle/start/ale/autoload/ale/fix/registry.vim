@@ -561,6 +561,11 @@ let s:default_registry = {
 \       'suggested_filetypes': ['haskell'],
 \       'description': 'A formatter for Haskell source code.',
 \   },
+\   'fourmolu': {
+\       'function': 'ale#fixers#fourmolu#Fix',
+\       'suggested_filetypes': ['haskell'],
+\       'description': 'A formatter for Haskell source code.',
+\   },
 \   'jsonnetfmt': {
 \       'function': 'ale#fixers#jsonnetfmt#Fix',
 \       'suggested_filetypes': ['jsonnet'],
@@ -600,6 +605,11 @@ let s:default_registry = {
 \       'function': 'ale#fixers#pycln#Fix',
 \       'suggested_filetypes': ['python'],
 \       'description': 'remove unused python import statements',
+\   },
+\   'rustywind': {
+\       'function': 'ale#fixers#rustywind#Fix',
+\       'suggested_filetypes': ['html'],
+\       'description': 'Sort Tailwind CSS classes',
 \   }
 \}
 
