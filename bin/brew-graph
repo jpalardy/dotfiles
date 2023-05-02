@@ -4,10 +4,18 @@ remove_casks() {
   awk -F'"' 'ARGIND == 1 {lut[$0]; next} !($2 in lut) {print}' <(brew list --cask) -
 }
 
-format="png"
+remove_known() {
+  awk -F'"' 'ARGIND == 1 {lut[$0]; next} ($2 in lut) { sub(/ff5555/, "ffaaaa") } {print}' "$1" -
+}
 
-while getopts "T:" opt; do
+format="png"
+known=""
+
+while getopts "k:T:" opt; do
   case "$opt" in
+    k)
+      known=$OPTARG
+      ;;
     T)
       format=$OPTARG
       ;;
@@ -18,6 +26,10 @@ while getopts "T:" opt; do
 done
 
 cmd="brew-graph.rb --installed --highlight-leaves | remove_casks"
+
+if [ -n "$known" ]; then
+  cmd="$cmd | remove_known $known"
+fi
 
 if command -v neato >/dev/null; then
   cmd="$cmd | neato -T $format -o brew-deps.$format"
