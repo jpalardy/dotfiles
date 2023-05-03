@@ -11,7 +11,7 @@ bind \ew fzf-warp
 bind \c_ 'commandline -r "vim -q \$($history[1] --vimgrep | psub)"; commandline -f execute'
 
 # esc-,
-bind \e, fzf-vimrepl
+bind \e, fzf-contextual
 
 # esc-r
 bind \er fish-source
