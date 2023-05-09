@@ -28,7 +28,7 @@ function __fzf_contextual
 end
 
 function fzf-contextual
-  __fzf_contextual | fzf --multi | while read -l r; set result $result $r; end
+  __fzf_contextual | fzf --multi --exit-0 | while read -l r; set result $result $r; end
   and commandline -- $result
 
   commandline -f repaint
