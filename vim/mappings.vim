@@ -74,6 +74,8 @@ vnoremap ,a :! awk '{print }'<LEFT><LEFT>
 " ONLY KEEP LINES WHICH CONTAIN SEARCH
 nnoremap ,v :v/<C-R>//d<CR>gg
 nnoremap ,d :g/<C-R>//d<CR>gg
+vnoremap ,v :v/<C-R>//d<CR>gg
+vnoremap ,d :g/<C-R>//d<CR>gg
 
 nnoremap ,l :! cloc --quiet --by-file %<CR>
 nnoremap ,a :exe "! CURRENT_LINE=" . line(".") . " summary-" . &ft . " " . expand("%")<CR>
@@ -92,8 +94,6 @@ nnoremap ,r :execute ":bwipeout \| vsp +" . line('.') fnamemodify(@%, ":~:.")<CR
 
 nnoremap ,cc :set colorcolumn=
 
-vnoremap ,d :<C-U>execute "'<,'> w diff-" . strftime("%s")<CR>
-
 " COLORSCHEMES
 nnoremap ,1 :colorscheme 256_xoria<CR>
 nnoremap ,2 :colorscheme codedark<CR>
@@ -101,6 +101,18 @@ nnoremap ,2 :colorscheme codedark<CR>
 " SPLIT-MOVE
 nnoremap ,sa :sp<CR><c-w>k
 nnoremap ,sb :sp<CR><c-o>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" BACKSLACK MAPPINGS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+vnoremap \d :<C-U>execute "'<,'> w diff-" . strftime("%s")<CR>
+
+" buffer
+nnoremap \<left>  :leftabove  vnew<CR>
+nnoremap \<right> :rightbelow vnew<CR>
+nnoremap \<up>    :leftabove  new<CR>
+nnoremap \<down>  :rightbelow new<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER MAPPINGS
@@ -141,16 +153,6 @@ function! GrepForCurrentSearch()
 endfunction
 
 nnoremap tg :call GrepForCurrentSearch()<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SPLIT MAPPINGS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" buffer
-nnoremap \<left>  :leftabove  vnew<CR>
-nnoremap \<right> :rightbelow vnew<CR>
-nnoremap \<up>    :leftabove  new<CR>
-nnoremap \<down>  :rightbelow new<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " QUICKFIX
