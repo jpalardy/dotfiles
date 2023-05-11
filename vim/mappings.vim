@@ -92,8 +92,6 @@ nnoremap ,x :execute ":vnew \| :Scratchy \"xxd " . expand("%") . "\""<CR>:set ft
 " RELOAD TO RELATIVE PATH
 nnoremap ,r :execute ":bwipeout \| vsp +" . line('.') fnamemodify(@%, ":~:.")<CR>zz
 
-nnoremap ,cc :set colorcolumn=
-
 " COLORSCHEMES
 nnoremap ,1 :colorscheme 256_xoria<CR>
 nnoremap ,2 :colorscheme codedark<CR>
