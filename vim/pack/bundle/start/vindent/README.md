@@ -37,7 +37,7 @@ git clone https://github.com/jessekelighine/vindent.vim
 ## Usage and Quick Start
 
 `vindent.vim` comes with no default keybindings.
-Here is a recommended set of keybindings to put in your `.vimrc`/`init.vim`:
+Here is a recommended set of keybindings to put in your `.vimrc`/`init.vim` (before the plugin is loaded, e.g., before `packloadall`):
 
 ```vim
 let g:vindent_motion_OO_prev   = '[=' " jump to prev block of same indent.
