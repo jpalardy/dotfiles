@@ -158,6 +158,13 @@ BEGIN {
   snip("dot:sg", "subgraph cluster_ts")
 
   #-------------------------------------------------
+  # markdown
+  #-------------------------------------------------
+  snip("markdown:a",     "[alt](url)")
+  snip("markdown:img",   "![alt](url)")
+  snip("markdown:img-a", "[![alt](url)](url)")
+
+  #-------------------------------------------------
   # deck
   #-------------------------------------------------
   snip("deck:ja", "<span lang=\"ja\">")
