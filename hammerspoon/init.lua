@@ -68,14 +68,9 @@ bindMove({"ctrl", "alt"}, "r", function(win, screen)
   win.w = 780
 end)
 
--- -------------------------------------------------
--- mouse resize
--- -------------------------------------------------
-
--- mouse, resize to mouse
-bindMove({"ctrl", "alt"}, "m", function(win, screen)
-  mouse = hs.mouse.getRelativePosition()
-  win.w = mouse.x - win.x
-  win.h = mouse.y - win.y
+-- fit
+bindMove({"ctrl", "alt"}, "f", function(win, screen)
+  win.w = screen.x + screen.w - win.x
+  win.h = screen.y + screen.h - win.y
 end)
 
