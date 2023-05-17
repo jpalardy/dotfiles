@@ -163,6 +163,7 @@ BEGIN {
   snip("markdown:a",     "[alt](url)")
   snip("markdown:img",   "![alt](url)")
   snip("markdown:img-a", "[![alt](url)](url)")
+  snip("markdown:hl",     "%{ highlight ▒ %}\n%{ endhighlight %}")
 
   #-------------------------------------------------
   # deck
