@@ -98,7 +98,6 @@ nnoremap ,2 :colorscheme codedark<CR>
 
 " SPLIT-MOVE
 nnoremap ,sa :sp<CR><c-w>k
-nnoremap ,sb :sp<CR><c-o>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BACKSLACK MAPPINGS
