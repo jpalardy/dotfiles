@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# start tmux if not already inside tmux
+if [ -z "$TMUX" ]; then
+  tmux new-session -d
+  tmux send-keys "repo-sync" Enter
+  tmux attach-session
+  exit
+fi
+
+sync() {
+  git fetch --prune
+  git log --graph --pretty=color "..@{upstream}"
+  git status --short
+}
+
+generate_commands() {
+  local prev=""
+  echo "tmux set-hook pane-exited 'select-layout even-vertical'"
+  for repo in $REPOS; do
+    if [ -n "$prev" ]; then
+      echo
+      echo "tmux split-window -v"
+    fi
+    echo "tmux send-keys 'clear; cd \"$repo\"; and repo-sync .' C-m"
+    prev="$repo"
+  done
+
+  echo
+  echo "tmux select-layout even-vertical"
+}
+
+if [ "$1" == "." ]; then
+  sync
+else
+  generate_commands | bash
+fi
+
