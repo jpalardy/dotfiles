@@ -2,7 +2,7 @@
 alias l ll
 
 abbr --add rsy "rsync -av --progress"
-alias pwgen "pwgen -cny 30"
+abbr --add  pwgen "pwgen -cny 30"
 alias R "R --quiet --no-save --no-restore"
 
 abbr --add _a --set-cursor "awk '{print %}'"
