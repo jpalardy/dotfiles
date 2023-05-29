@@ -8,10 +8,6 @@ alias R "R --quiet --no-save --no-restore"
 abbr --add _a --set-cursor "awk '{print %}'"
 abbr --add _t 'echo $CMD_DURATION'
 
-alias h history
-
-abbr --add reload! "source ~/.config/fish/config.fish"
-
 #-------------------------------------------------
 
 function serve
