@@ -18,13 +18,17 @@ function g
     return
   end
 
+  set -l pick $argv[1]
+
   # empty...
-  if test -z "$argv"
-    cat $config
-    return
+  if test -z "$pick"
+    fzf < $config | awk '{ print $1 }' | read pick
+    if test -z "$pick"
+      return
+    end
   end
 
-  awk -v "key=$argv[1]" -F' += +' '
+  awk -v "key=$pick" -F' += +' '
     $1 == key {
       dst = $2
       if (dst !~ /^\//) {
