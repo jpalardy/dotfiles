@@ -1,19 +1,23 @@
 #!/bin/bash
 
+if [ "$1" == "--list" ]; then
+  ls -1 "$HOME/.github/templates/" | sort
+  exit
+fi
+
 dir=$1
-shift
 
 if [ -z "$dir" ]; then
-  ls -1 "$HOME/.github/templates/"
-  exit
+  dir=$(templates --list | fzf)
+  test -z "$dir" && exit
 fi
 
 src="$HOME/.github/templates/$dir"
 
 # do parent first, recursively
 if [ -f "$src/.parent" ]; then
-  templates "$(cat "$src/.parent")" "$@"
+  templates "$(cat "$src/.parent")"
 fi
 
-rsync -av --exclude .parent "$src/" . "$@"
+rsync -av --exclude .parent "$src/" .
 
