@@ -1,15 +1,11 @@
 #!/bin/bash
 
-if [ "$1" == "--list" ]; then
-  ls -1 "$HOME/.github/templates/" | sort
-  exit
-fi
-
 dir=$1
+shift
 
 if [ -z "$dir" ]; then
-  dir=$(templates --list | fzf)
-  test -z "$dir" && exit
+  ls -1 "$HOME/.github/templates/"
+  exit
 fi
 
 src="$HOME/.github/templates/$dir"

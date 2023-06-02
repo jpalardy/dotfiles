@@ -1,2 +1,2 @@
 complete -c templates --no-files
-complete -c templates -a "(templates --list)"
+complete -c templates -a "(templates | fzf)"
