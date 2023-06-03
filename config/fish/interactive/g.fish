@@ -21,9 +21,11 @@ function g
   set -l pick $argv[1]
 
   # empty...
-  if test -z "$argv"
-    cat $config
-    return
+  if test -z "$pick"
+    fzf < $config | awk '{ print $1 }' | read pick
+    if test -z "$pick"
+      return
+    end
   end
 
   awk -v "key=$pick" -F' += +' '
@@ -39,5 +41,9 @@ function g
   test -n "$dst"; and cd "$dst"
 end
 
+function __g_keys
+  awk -F' += +' '{ print $1 "\t" $2 }' "$HOME/.lists/g"
+end
+
 complete -c g -l edit -l add
-complete -c g --no-files -a "(g | fzf | awk '{ print \$1 }')"
+complete -c g --no-files -a "(__g_keys)"
