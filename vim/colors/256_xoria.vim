@@ -81,6 +81,10 @@ hi Special      ctermfg=174 guifg=#df8787
 hi Statement    ctermfg=110 guifg=#87afdf                           cterm=none gui=none
 hi Type         ctermfg=146 guifg=#afafdf                           cterm=none gui=none
 
+"" custom
+"" different color for bottom of file
+hi EndOfBuffer ctermfg=235 ctermbg=235
+
 "" Special {{{2
 """ .diff {{{3
 hi diffAdded    ctermfg=150 guifg=#afdf87
