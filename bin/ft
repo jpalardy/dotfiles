@@ -1,6 +1,13 @@
 #!/bin/bash
 
-awk '
+color=0
+if [[ -t 1 ]]; then
+  color=1
+fi
+
+# -------------------------------------------------
+
+awk -v color=$color '
 function add_days(dt, i) {
   return strftime("%F", dt + (24 * 60 * 60) * i)
 }
@@ -10,7 +17,7 @@ function add_weeks(dt, i) {
 }
 
 function dim_if(cond, str) {
-  if (cond) {
+  if (cond && color) {
     return sprintf("%s%s%s", "\x1b[2m", str, "\x1b[22m")
   }
   return str
