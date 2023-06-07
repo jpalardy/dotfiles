@@ -22,9 +22,3 @@ function dnd
   set -l name (date +%F)-(string join "-" $argv)
   mkdir $name; and cd $name
 end
-
-# comes up often enough
-function mkf
-  mkdir -p (dirname $argv[1])
-  and touch $argv[1]
-end
