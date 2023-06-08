@@ -65,5 +65,5 @@ if !exists('*ToggleCodeTest')
   endfunction
 endif
 
-nnoremap <buffer> ,] :call ToggleCodeTest()<CR>
+nnoremap <buffer> ,t :call ToggleCodeTest()<CR>
 
