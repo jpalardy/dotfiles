@@ -4,8 +4,9 @@ function git-diff
 end
 
 abbr --add got git
-abbr --add glg "git log --graph --pretty=colorful --date-order --all"
-abbr --add glb "git log --graph --pretty=colorful --date-order --branches"
+abbr --add glg  "git log --graph --pretty=colorful --date-order --all"
+abbr --add glgb "git log --graph --pretty=colorful --date-order --branches"
+abbr --add glgu "git log --graph --pretty=colorful --date-order HEAD @{upstream}"
 
 abbr --add grf --set-cursor 'git log --name-only --pretty=format: --since=2w% | rg . | __count'
 
