@@ -1,0 +1,20 @@
+#!/bin/bash
+
+run() {
+  local cmd="$1"
+  local msg="$2"
+
+  if [ -z "$msg" ]; then
+    msg="$cmd"
+  fi
+
+  if eval "$cmd" 2>&1; then
+    echo "✅ $msg"
+  else
+    echo "❌ $msg"
+  fi
+}
+export -f run
+
+parallel --colsep '\t' run '{1}' '{2}'
+
