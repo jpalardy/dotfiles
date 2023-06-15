@@ -26,6 +26,6 @@ function roll
 end
 
 function flip
-  shuf -n1 -e heads tails
+  shuf -n1 -e H T
 end
 
