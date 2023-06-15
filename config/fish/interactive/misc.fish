@@ -19,3 +19,13 @@ function serve
     or python -m SimpleHTTPServer $port
 end
 
+#-------------------------------------------------
+
+function roll
+  shuf -n1 -i 1-6
+end
+
+function flip
+  shuf -n1 -e heads tails
+end
+
