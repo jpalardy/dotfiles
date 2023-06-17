@@ -42,9 +42,9 @@ endfunction
 " Actually move the cursor according to inputs. (motion)
 function! <SID>do_motion(direct, mode, diff)
 	let l:move = a:diff . ( a:direct=="prev" ? "k" : "j" )
-	if     a:mode=="N" | exe a:diff==0 ? "norm! _"  : "norm! "  .( g:vindent_jumps ? "m'" : "" ).""  .l:move."_"
-	elseif a:mode=="X" | exe a:diff==0 ? "norm! gv" : "norm! \e".( g:vindent_jumps ? "m'" : "" )."gv".l:move."_"
-	elseif a:mode=="O" | exe a:diff==0 ? "norm! V"  : "norm! "  .( g:vindent_jumps ? "m'" : "" )."V" .l:move."_"
+	if     a:mode=="N" | exe { u -> a:diff==0 ? "norm! lh".u : "norm! "  .( g:vindent_jumps ? "m'" : "" ).""  .l:move.u }( g:vindent_begin ? "_" : "" )
+	elseif a:mode=="X" | exe { u -> a:diff==0 ? "norm! gv"   : "norm! \e".( g:vindent_jumps ? "m'" : "" )."gv".l:move.u }( g:vindent_begin ? "_" : "" )
+	elseif a:mode=="O" | exe { u -> a:diff==0 ? "norm! V"    : "norm! "  .( g:vindent_jumps ? "m'" : "" )."V" .l:move.u }( g:vindent_begin ? "_" : "" )
 	endif
 endfunction
 

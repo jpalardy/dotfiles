@@ -5,6 +5,14 @@ if exists("g:loaded_vindent") | finish | endif | let s:save_cpo=&cpo | set cpo&v
 " Setting: Default vindent count to start from 1.
 if !exists("g:vindent_count") | let g:vindent_count = 1 | endif
 
+" Command: Toggle vindent motion move to beginning of line behaviour
+if !exists("g:vindent_begin") | let g:vindent_begin = 1 | endif
+command -nargs=0 -bang VindentBegin :call <SID>VindentBegin(<bang>1)
+function! <SID>VindentBegin(change)
+	if a:change | let g:vindent_begin = !g:vindent_begin | endif
+	echom " Vindent motions now ".( g:vindent_begin ? "DOES" : "DOES NOT" )." move to the beginning of the line."
+endfunction
+
 " Command: Toggle vindent jumps behaviour.
 if !exists("g:vindent_jumps") | let g:vindent_jumps = 0 | endif
 command -nargs=0 -bang VindentJumps :call <SID>VindentJumps(<bang>1)

@@ -191,6 +191,7 @@ let s:delimiterMap = {
     \ 'jgraph': { 'left': '(*', 'right': '*)' },
     \ 'jinja': { 'left': '{#', 'right': '#}', 'leftAlt': '<!--', 'rightAlt': '-->' },
     \ 'jproperties': { 'left': '#' },
+    \ 'jq': { 'left': '#' },
     \ 'json5': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'jsonc': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'jsonnet': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
@@ -491,7 +492,7 @@ function! nerdcommenter#SetUp() abort
             endif
         endfor
         " if g:NERD_<filetype>_alt_style is defined, use the alternate style
-        let b:NERDCommenterFirstInit = getbufvar(bufnr(),'NERDCommenterFirstInit')
+        let b:NERDCommenterFirstInit = getbufvar(bufnr('%'),'NERDCommenterFirstInit')
         if exists('g:NERDAltDelims_'.filetype) && eval('g:NERDAltDelims_'.filetype) && !b:NERDCommenterFirstInit
             let b:NERDCommenterFirstInit = 1
             call nerdcommenter#SwitchToAlternativeDelimiters(0)

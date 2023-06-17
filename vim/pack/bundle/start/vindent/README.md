@@ -208,6 +208,22 @@ This setting would change how `{count}`'s are handled as such:
 
 For more details please refer to the [`doc`](doc/vindent.txt), section `vindent_Text_Object`.
 
+## Global Settings
+
+Here are some gobal settings:
+
+| Setting/Variable  | Value                     | Description                                                            | Command to Toggle Setting |
+|-------------------|---------------------------|------------------------------------------------------------------------|---------------------------|
+| `g:vindent_begin` | `0` or `1` (default: `1`) | whether to move cursor to the beginning of line after a vindent motion | `:VindentBegin`           |
+| `g:vindent_count` | `0` or `1` (default: `1`) | see the end of section [Vindent Text Objects](#vindent-text-object)    |                           |
+| `g:vindent_jumps` | `0` or `1` (default: `0`) | whether a vindent motion is added to the jumplist                      | `:VindentJumps`           |
+| `g:vindent_noisy` | `0` or `1` (default: `0`) | whether vindent motion throws an error if the cursor does not move     | `:VindentNoisy`           |
+
+Simply set the variables with the keybindings as shown in [Usage](#usage-and-quick-start).
+You can use the corresponding command listed above to toggle the settings on the fly.
+
+For more details please refer to the [`doc`](doc/vindent.txt), section `vindent_Miscellaneous`.
+
 ## Licence
 
 Distributed under the same terms as Vim itself. See `:help license`.

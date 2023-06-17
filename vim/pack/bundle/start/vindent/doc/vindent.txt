@@ -481,6 +481,16 @@ large file.  See |:VindentJumps| for more details.
 		and "spaces" are visible.  The command |:VindentHighlight!|
 		clears the highlighting.
 
+						*VindentBegin!*
+:VindentBegin[!]				*VindentBegin*
+g:vindent_begin					*g:vindent_begin*
+		Whether the cursor is put at the beginning of a line after a
+		|vindent_Motion|.  By default, |g:vindent_begin| is set to 1,
+		i.e., the cursor will be put at the beginning of a line by
+		the normal command |_|.  You can toggle |g:vindent_begin| with
+		command |:VindentBegin|.  The command |:VindentBegin!| shows
+		the state of |g:vindent_begin|.
+
 						*:VindentJumps!*
 :VindentJumps[!]				*:VindentJumps*
 g:vindent_jumps					*g:vindent_jumps*
