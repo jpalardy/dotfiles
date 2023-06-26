@@ -27,6 +27,7 @@ Usage: $(basename "$0") [OPTION]...
               line four
   -h          display help
 EOM
+  # shellcheck disable=SC2086
   exit ${1:-0}
 }
 
@@ -37,19 +38,23 @@ d=0
 while getopts "a:b:cdh" opt; do
   case "$opt" in
     a)
+      # shellcheck disable=SC2034
       a=$OPTARG
       ;;
     b)
+      # shellcheck disable=SC2034
       b=$OPTARG
       ;;
     c)
+      # shellcheck disable=SC2034
       c=1
       ;;
     d)
+      # shellcheck disable=SC2034
       d=1
       ;;
     h|*)
-      usage
+      usage 0
       ;;
   esac
 done
