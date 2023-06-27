@@ -7,13 +7,9 @@ function cd
   set -l dst $argv[1]
   # cd to base git directory
   if test "$dst" = "_"
-    set dst $PWD
-    while test "$dst" != "/"
-      if test -e "$dst/.git"
-        __cd $dst
-        break
-      end
-      set dst (dirname $dst)
+    set dst $(git rev-parse --show-toplevel 2>/dev/null)
+    if test -n "$dst"
+      __cd $dst
     end
     return
   end
