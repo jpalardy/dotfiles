@@ -4,6 +4,7 @@ setlocal equalprg=eq-elixir
 let b:ale_fix_on_save = 1
 let b:ale_linters = ['elixir-ls']
 let b:ale_fixers = ['mix_format']
+let b:ale_elixir_elixir_ls_release=expand("~/local/bin")
 
 " -------------------------------------------------
 
