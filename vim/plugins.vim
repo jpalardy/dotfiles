@@ -53,6 +53,7 @@ nnoremap ,<F12> :ALEFindReferences<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " lightline
 
+" default inactive is 'filename' only
 let g:lightline = {
   \  'inactive': {
   \    'left': [['filename', 'modified']]
