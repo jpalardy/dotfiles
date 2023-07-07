@@ -4,7 +4,6 @@ gnupg          https://github.com/jamessan/vim-gnupg.git
 nerdcommenter  https://github.com/preservim/nerdcommenter.git
 slime          https://github.com/jpalardy/vim-slime
 spacehi        https://github.com/jpalardy/spacehi.vim.git
-tabular        https://github.com/godlygeek/tabular.git
 lightline      https://github.com/itchyny/lightline.vim
 surround       https://github.com/tpope/vim-surround.git
 typescript     https://github.com/leafgarland/typescript-vim.git
