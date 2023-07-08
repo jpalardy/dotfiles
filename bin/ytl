@@ -1,4 +1,0 @@
-#!/bin/bash
-
-printf "%s\n" "$@" | awk '{ sub("/shorts/", "/watch?v="); print }'
-
