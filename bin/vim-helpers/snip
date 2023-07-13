@@ -150,7 +150,7 @@ BEGIN {
   snip("sql:ea",     "EXPLAIN ANALYZE")
   snip("sql:cte",    "WITH name1 AS (SELECT _some_), name2 AS (SELECT _some_) SELECT * FROM name")
   snip("sql:csv",    "\\copy (SELECT * FROM table) to 'table.csv' with csv header")
-  snip("sql:config", "\\pset pager off\n\\pset null NULL")
+  snip("sql:config", "\\pset pager off\n\\pset null NULL\n\\x auto")
 
   #-------------------------------------------------
   # gitcommit
