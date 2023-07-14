@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rg --no-heading --no-filename --no-line-number -o '\w+' "$@" | \
+  awk '{ line = tolower($0); if (!seen[line]++) { print line } }' | \
+  fzf --preview "rg -l -w {} $*"
+
