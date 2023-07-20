@@ -77,8 +77,8 @@ nnoremap ,d :g/<C-R>//d<CR>gg
 vnoremap ,v :v/<C-R>//d<CR>gg
 vnoremap ,d :g/<C-R>//d<CR>gg
 
-nnoremap ,l :! cloc --quiet --by-file %<CR>
-nnoremap ,a :exe "! CURRENT_LINE=" . line(".") . " summary-" . &ft . " " . expand("%")<CR>
+nnoremap ,l :!clear; cloc --quiet --by-file %<CR>
+nnoremap ,a :exe "!clear; CURRENT_LINE=" . line(".") . " summary-" . &ft . " " . expand("%")<CR>
 
 nnoremap ,wd :windo normal 
 
@@ -98,6 +98,8 @@ nnoremap ,2 :colorscheme codedark<CR>
 
 " SPLIT-MOVE
 nnoremap ,sa :sp<CR><c-w>k
+
+nnoremap ,g :!clear; rg -i <c-r>/ %<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BACKSLACK MAPPINGS
