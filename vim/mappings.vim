@@ -99,10 +99,11 @@ nnoremap ,2 :colorscheme codedark<CR>
 " SPLIT-MOVE
 nnoremap ,sa :sp<CR><c-w>k
 
+" SUMMARY OF SEARCH IN CURRENT FILE
 nnoremap ,g :!clear; rg -i <c-r>/ %<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" BACKSLACK MAPPINGS
+" BACKSLASH MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 vnoremap \d :<C-U>execute "'<,'> w diff-" . strftime("%s")<CR>
