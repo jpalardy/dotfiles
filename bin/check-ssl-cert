@@ -1,21 +1,28 @@
 #!/bin/bash
 
-COLOR_RESET=$(tput sgr0)
-COLOR_RED=$(tput setaf 1)
-COLOR_GREEN=$(tput setaf 2)
+check_cert() {
+  # shellcheck disable=SC2155
+  local COLOR_RESET=$(tput sgr0)
+  # shellcheck disable=SC2155
+  local COLOR_RED=$(tput setaf 1)
+  # shellcheck disable=SC2155
+  local COLOR_GREEN=$(tput setaf 2)
 
-#-------------------------------------------------
-# MAIN
-#-------------------------------------------------
+  local domain="$1"
 
-for domain in "$@"; do
   cert_end_date=$(curl --insecure -v "https://$domain" 2>&1 | awk -F"date: " '/expire date:/ {print $2}')
   days_valid=$(( ($(date -d "${cert_end_date}" +%s) - $(date +%s)) / 86400 ))
-  echo -n "$domain: "
+
+  local highlight_color="$COLOR_RED"
   if [ "$days_valid" -ge 30 ]; then
-    echo "${COLOR_GREEN}$days_valid days${COLOR_RESET}"
-  else
-    echo "${COLOR_RED}$days_valid days${COLOR_RESET}"
+    highlight_color="${COLOR_GREEN}"
   fi
-done
+
+  printf "%s %s%d days%s\n" "$domain" "$highlight_color" "$days_valid" "${COLOR_RESET}"
+}
+export -f check_cert
+
+# -------------------------------------------------
+
+parallel check_cert ::: "$@"
 
