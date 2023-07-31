@@ -34,3 +34,7 @@ function gcp
     return 1
   end
 end
+
+function gitm
+  git status --short | sed 's/^...//'
+end
