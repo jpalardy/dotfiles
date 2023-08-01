@@ -2,17 +2,15 @@
 
 prepare() {
   awk '
-    /^-/ { sub(/^-/, "-v ") }
-
     {
-      printf "%s", sep
-      printf "rg -i %s", $0
-      sep = " | "
+      sub(/^-/, "-v ")
+      printf "%s rg -i %s", sep, $0
+      sep = "|"
     }
 
     END { print "" }
 '
 }
 
-eval "$(for arg in "$@"; do echo "$arg"; done | prepare)"
+eval "$(printf "%s\n" "$@" | prepare)"
 
