@@ -74,3 +74,11 @@ bindMove({"ctrl", "alt"}, "f", function(win, screen)
   win.h = screen.y + screen.h - win.y
 end)
 
+-- both t and w
+bindMove({"ctrl", "alt"}, "o", function(win, screen)
+  win.w = 1400
+  win.x = math.min(win.x, screen.x + screen.w - win.w)
+  win.y = screen.y
+  win.h = screen.h
+end)
+
