@@ -97,7 +97,7 @@ nnoremap ,1 :colorscheme 256_xoria<CR>
 nnoremap ,2 :colorscheme codedark<CR>
 
 " SPLIT-MOVE
-nnoremap ,sa :sp<CR><c-w>k
+nnoremap ,sa :sp<CR><c-w>k?
 
 " SUMMARY OF SEARCH IN CURRENT FILE
 nnoremap ,g :!clear; rg -i <c-r>/ %<CR>
