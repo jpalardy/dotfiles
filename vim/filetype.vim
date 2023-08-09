@@ -20,7 +20,7 @@ augroup cursor_position
   " CURSOR ASSUMES PREVIOUS POSITION
   autocmd BufReadPost * if line("'\"") > 0             |
   \                       if line("'\"") <= line("$")  |
-  \                         exe("norm '\"")            |
+  \                         exe "norm '\""             |
   \                       else                         |
   \                         exe "norm $"               |
   \                       endif                        |
