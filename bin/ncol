@@ -4,5 +4,5 @@ cols="${1:-5}"
 
 dashes=$(printf "%${cols}s" | sed -e 's/ / -/g')
 
-eval "paste $dashes" | column -t -s "	"
+eval "paste $dashes" | column -t -s $'\t'
 
