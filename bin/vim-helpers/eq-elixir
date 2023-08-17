@@ -25,15 +25,9 @@ $1 == "tap" && NF > 1 {
   print(" |> IO.inspect()")
   next
 }
-$1 == "tapl" && NF > 1 {
-  columns_as_keyword_list()
-  print(" |> IO.inspect(label: \"*****\")")
-  next
-}
 
 # passthrough
 {
-  gsub("\\s+\\|>", "\n" leading_spaces "|>")
   print
 }
 
