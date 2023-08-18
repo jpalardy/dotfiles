@@ -61,6 +61,7 @@ BEGIN {
   snip("*::grim",   "😬")
   snip("*::grin",   "😄")
   snip("*::clock",  "⏰")
+  snip("*::time",   "⏳")
   snip("*:O",       "🔆")
   snip("*:X",       "❌")
   snip("*:!",       "⚠️")
