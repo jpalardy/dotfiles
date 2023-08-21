@@ -24,6 +24,7 @@
   behind    = !git branch -v | rg behind
   ds        = diff --stat
   rs        = restore
+  rss       = restore --staged
   wip       = "!f() { git commit -a -m \"wip $(date +%s)\"; }; f"
 [diff]
   noprefix = true
