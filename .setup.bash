@@ -33,8 +33,6 @@ if [ "$(uname)" == "Linux" ]; then
 fi
 
 # lang
-relink .irbrc        "$DOTFILES/lang/ruby/irbrc"
-relink .gemrc        "$DOTFILES/lang/ruby/gemrc"
 relink .npmrc        "$DOTFILES/lang/js/npmrc"
 relink .Rprofile     "$DOTFILES/lang/r/Rprofile"
 
