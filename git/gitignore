@@ -3,3 +3,4 @@
 .sw*
 .ignore
 _vimrepl.*
+.ws*
