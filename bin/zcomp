@@ -1,16 +1,15 @@
 #!/bin/bash
 
+report() {
+  printf "%s-%d %d\n" "$1" "$2" "$($1 -"$2" -c - < "$3" | wc -c)"
+}
+export -f report
+
 (
-echo "original $(wc -c < "$@")"
-for level in 1 5 9; do
-  echo ""
-  echo "gzip  -$level $(gzip  -$level -c - < "$@" | wc -c)"
-  echo "bzip2 -$level $(bzip2 -$level -c - < "$@" | wc -c)"
-  echo "xz    -$level $(xz    -$level -c - < "$@" | wc -c)"
-done
+  printf "original %d\n" "$(wc -c < "$@")"
+  parallel report ::: gzip bzip2 xz ::: 1 5 9 ::: "$@"
 ) | awk '
-NR == 1 {original=$2}
-NF == 0 { print ""; next }
-{printf "%s %5.1f%%\n", $0, $NF/original*100}
+  NR == 1 {original=$2}
+  {printf "%12d %5.1f%% %8s\n", $2, $NF/original*100, $1}
 '
 
