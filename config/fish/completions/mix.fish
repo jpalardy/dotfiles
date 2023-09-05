@@ -1,4 +1,26 @@
 
+function __mix_default_completions
+  echo "
+    compile
+    coveralls.html
+    credo
+    deps.compile
+    deps.get
+    dialyzer
+    ecto.migrate
+    ecto.reset
+    ecto.seed
+    format
+    help
+    hex.outdated
+    new
+    release
+    test
+  " | awk 'NF { print $1 }'
+end
+
+set -g MIX_COMPLETIONS "$(__mix_default_completions)"
+
 function __mix_complete
   if not set -q MIX_COMPLETIONS
     set -g MIX_COMPLETIONS (mix help | awk 'match($0, /^mix ([^ ]+) +# +(.*)/, arr) { print arr[1] "\t" arr[2] }' | string collect)
