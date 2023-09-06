@@ -4,14 +4,16 @@ function __mix_default_completions
     compile
     coveralls.html
     credo
+    deps.clean
     deps.compile
     deps.get
+    deps.unlock
+    deps.update
     dialyzer
     ecto.migrate
     ecto.reset
     ecto.seed
     format
-    help
     hex.outdated
     new
     release
