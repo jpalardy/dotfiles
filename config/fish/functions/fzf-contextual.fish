@@ -12,8 +12,8 @@ function __fzf_contextual
   end
   # elixir
   if [ -e "mix.exs" ]
-    echo "mix deps.get; and mix deps.compile"
     echo "mix deps.get"
+    echo "mix deps.get; and mix deps.compile"
     echo ""
     test -d .elixir_ls && echo "rm -rf -v .elixir_ls"
     test -d _build     && echo "rm -rf -v _build"
