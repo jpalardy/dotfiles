@@ -15,12 +15,12 @@ function __fzf_contextual
     echo "mix deps.get"
     echo "mix deps.get; and mix deps.compile"
     echo ""
-    test -d .elixir_ls && echo "rm -rf -v .elixir_ls"
-    test -d _build     && echo "rm -rf -v _build"
-    test -d deps       && echo "rm -rf -v deps"
+    test -d .elixir_ls; and echo "rm -rf -v .elixir_ls"
+    test -d _build;     and echo "rm -rf -v _build"
+    test -d deps;       and echo "rm -rf -v deps"
   end
   # vimrepl
-  test -e "report.Rmd" && echo "vimrepl Rmd -c R -f report.Rmd"
+  test -e "report.Rmd"; and echo "vimrepl Rmd -c R -f report.Rmd"
   for f in _vimrepl.*
     echo "vimrepl $(string replace '_vimrepl.' '' $f)"
   end
