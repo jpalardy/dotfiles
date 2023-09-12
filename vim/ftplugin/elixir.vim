@@ -11,10 +11,23 @@ let b:ale_elixir_elixir_ls_release=expand("~/local/bin")
 nnoremap <buffer> <c-c><c-l> :SlimeSend1 clear()<CR>
 
 " hotkeys
-nnoremap <buffer> <c-c>1 :SlimeSend1 recompile<CR>
-nnoremap <buffer> <c-c>2 :SlimeSend1 #iex:break<CR>
+function! ElixirSlimeHotKey()
+  let choices = ['recompile', '#iex:break', ':observer.start']
 
-nnoremap <buffer> <c-c>9 :SlimeSend1 :observer.start<CR>
+  let items = ['pick:']
+  let i = 0
+  for choice in choices
+    let i += 1
+    call add(items, i . ". " . choice)
+  endfor
+  let i = inputlist(items)
+  if i == 0 || i > len(choices)
+    return
+  endif
+
+  execute('SlimeSend1 ' . choices[i - 1])
+endfunction
+nnoremap <buffer> <c-c>, :call ElixirSlimeHotKey()<CR>
 
 " -------------------------------------------------
 
