@@ -14,12 +14,8 @@ nnoremap <buffer> <c-c><c-l> :SlimeSend1 clear()<CR>
 function! ElixirSlimeHotKey()
   let choices = ['recompile', '#iex:break', ':observer.start']
 
-  let items = ['pick:']
-  let i = 0
-  for choice in choices
-    let i += 1
-    call add(items, i . ". " . choice)
-  endfor
+  let items = ['send:']
+  call extend(items, map(copy(choices), 'printf("%d. %s", v:key+1, v:val)'))
   let i = inputlist(items)
   if i == 0 || i > len(choices)
     return
