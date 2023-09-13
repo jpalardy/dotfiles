@@ -9,21 +9,7 @@ let b:ale_elixir_elixir_ls_release=expand("~/local/bin")
 " -------------------------------------------------
 
 nnoremap <buffer> <c-c><c-l> :SlimeSend1 clear()<CR>
-
-" hotkeys
-function! ElixirSlimeHotKey()
-  let choices = ['recompile', '#iex:break', ':observer.start']
-
-  let items = ['send:']
-  call extend(items, map(copy(choices), 'printf("%d. %s", v:key+1, v:val)'))
-  let i = inputlist(items)
-  if i == 0 || i > len(choices)
-    return
-  endif
-
-  execute('SlimeSend1 ' . choices[i - 1])
-endfunction
-nnoremap <buffer> <c-c>, :call ElixirSlimeHotKey()<CR>
+nnoremap <buffer> <c-c>, :call SlimeHotKey(['recompile', '#iex:break', ':observer.start'])<CR>
 
 " -------------------------------------------------
 
