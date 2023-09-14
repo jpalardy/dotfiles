@@ -138,6 +138,9 @@ nnoremap < <<
 " open non-existing file; inspired by gf
 nnoremap gF :e <cfile><CR>
 
+" open current-file in a tab
+nnoremap tf :tabedit <cfile><CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NEW TAB
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
