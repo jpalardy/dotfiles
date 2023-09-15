@@ -9,7 +9,7 @@ for tz in America/Vancouver America/Toronto Etc/UTC Asia/Tokyo; do
     echo -n "$GREEN"
   fi
 
-  TZ=$tz date +"%H:%M %Z"
+  TZ=$tz date +"%F %H:%M %Z"
   echo -n "$(tput sgr0)"
 done
 
