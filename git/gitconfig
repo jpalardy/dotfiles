@@ -6,10 +6,6 @@
 [alias]
   st        = status --short --branch
   co        = checkout
-  outgoing  = log --oneline @{upstream}..
-  incoming  = log --oneline ..@{upstream}
-  do        = diff @{upstream}..
-  di        = diff ..@{upstream}
   ignored   = !git clean -ndX | sed -e 's/^Would remove //'
   ffm       = merge --ff-only
   rl        = remote -v
