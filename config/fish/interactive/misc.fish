@@ -8,6 +8,8 @@ alias R "R --quiet --no-save --no-restore"
 abbr --add _a --set-cursor "awk '{print %}'"
 abbr --add _t 'echo $CMD_DURATION'
 
+abbr --add --position anywhere @u @{upstream}
+
 #-------------------------------------------------
 
 function serve
