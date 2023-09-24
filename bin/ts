@@ -1,6 +1,12 @@
 #!/bin/bash
 
-rg --no-heading --no-filename --no-line-number -o '\w+' "$@" | \
+result=$(
+  rg --no-heading --no-filename --no-line-number -o '\w+' "$@" | \
   awk '{ line = tolower($0); if (!seen[line]++) { print line } }' | \
   fzf --preview "rg -l -w {} $*"
+)
+
+if [ -n "$result" ]; then
+  vim -q <(rg "$result" --vimgrep) -c "call ToggleQuickfix()"
+fi
 
