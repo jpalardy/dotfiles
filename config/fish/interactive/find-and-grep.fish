@@ -8,7 +8,7 @@ function ff
     set --erase argv[1]
   end
   if test (count $argv) -gt 0
-    rg --files --follow $restricted | _f $argv
+    rg --files --follow $restricted | rgm $argv
   else
     rg --files --follow $restricted
   end
