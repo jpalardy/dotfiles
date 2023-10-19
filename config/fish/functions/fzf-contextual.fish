@@ -1,15 +1,17 @@
 function __fzf_contextual
-  # nodejs -related
+  # nodejs
   if [ -e "package.json" ]
     echo "npm outdated"
     echo "ncu -u; npm install; git add package*; npm audit fix"
     echo "rm package-lock.json; npm install"
   end
-  # go -related
+
+  # go
   if [ -e "go.mod" ]
     echo "go get -u"
     echo "go mod tidy"
   end
+
   # elixir
   if [ -e "mix.exs" ]
     echo "mix deps.get"
@@ -20,6 +22,7 @@ function __fzf_contextual
     test -d _build;     and echo "rm -rf -v _build"
     test -d deps;       and echo "rm -rf -v deps"
   end
+
   # vimrepl
   test -e "report.Rmd"; and echo "vimrepl Rmd -c R -f report.Rmd"
   for f in _vimrepl.*
