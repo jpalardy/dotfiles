@@ -15,8 +15,9 @@ function __fzf_contextual
   # elixir
   if [ -e "mix.exs" ]
     echo "mix deps.get"
-    echo "mix deps.get; and mix deps.compile"
-    echo "mix deps.update --all; and mix deps.unlock --unused"
+    echo "mix deps.compile"
+    echo "mix deps.update --all"
+    echo "mix deps.unlock --unused"
     echo ""
     test -d .elixir_ls; and echo "rm -rf -v .elixir_ls"
     test -d _build;     and echo "rm -rf -v _build"
