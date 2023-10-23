@@ -49,16 +49,19 @@ fi
 
 tmux rename-window "vimrepl-$ext"
 
-if [ "$ALREADY_SPLIT" == 0 ]; then
-  # split pane runs shell, or cmd if given
-  tmux split-window -h
-  if [ -n "$cmd" ]; then
-    tmux send-keys "clear; $cmd" C-m
-  fi
-
-  # go back to initiating (last) pane
-  tmux select-pane -l
+if [ "$ALREADY_SPLIT" == 1 ]; then
+  vim "$filename"
+  exit
 fi
+
+# split pane runs shell, or cmd if given
+tmux split-window -h
+if [ -n "$cmd" ]; then
+  tmux send-keys "clear; $cmd" C-m
+fi
+
+# go back to initiating (last) pane
+tmux select-pane -l
 
 # vim...
 vim "$filename"
