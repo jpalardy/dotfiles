@@ -2,6 +2,10 @@
 
 extends: default
 
+# https://yamllint.readthedocs.io/en/stable/rules.html
+
 rules:
   line-length: disable
+  comments:
+    min-spaces-from-content: 1
 
