@@ -8,4 +8,6 @@ rules:
   line-length: disable
   comments:
     min-spaces-from-content: 1
+  empty-lines:
+    max-end: 1
 
