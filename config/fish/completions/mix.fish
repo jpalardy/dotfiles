@@ -7,6 +7,7 @@ function __mix_default_completions
     deps.clean
     deps.compile
     deps.get
+    deps.tree
     deps.unlock
     deps.update
     dialyzer
