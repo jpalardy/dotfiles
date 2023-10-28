@@ -60,7 +60,7 @@ match($0, /\<([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9])\>/, arr) {
   match($0, /^ +/)
   indent = max(0, RLENGTH)
   diff_indent = indent - prev_indent
-  good_indent = indent == 0 || diff_indent == 0 || abs(diff_indent) == 2
+  good_indent = indent == 0 || diff_indent <= 2 && abs(diff_indent) % 2 == 0
   if (!good_indent) {
     report_warning("invalid indent: " sprintf("%+d", diff_indent))
   }
