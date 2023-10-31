@@ -3,10 +3,7 @@ function git-diff
   git diff $argv &| vim -R -
 end
 
-abbr --add got git
-abbr --add glg  "git log --graph --pretty=colorful --date-order HEAD @{upstream}"
-abbr --add glga "git log --graph --pretty=colorful --topo-order --all"
-
+abbr --add glg  "git log --graph --pretty=colorful --date-order"
 abbr --add grf --set-cursor 'git log --name-only --pretty=format: --since=2w% | rg . | __count'
 
 function gcp
