@@ -18,6 +18,7 @@ function __fzf_contextual
     echo "mix deps.compile"
     echo "mix deps.update --all"
     echo "mix deps.unlock --unused"
+    echo "vim -O mix.*"
     echo ""
     test -d .elixir_ls; and echo "rm -rf -v .elixir_ls"
     test -d _build;     and echo "rm -rf -v _build"
