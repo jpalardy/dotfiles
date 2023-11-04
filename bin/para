@@ -1,26 +1,29 @@
-#!/usr/bin/env awk-f
+#!/bin/bash
 
-BEGIN {
-  within = 0
-  count = 0
+awk -e "
+
+BEGINFILE {
+  blank = 1
+  line = 0
+  para = 0
 }
 
-# skip blanks, also: transition --> out
+# finding a new paragraph
+NF && blank {
+  blank = 0
+  para += 1
+}
+
+# already inside a paragraph
+NF {
+  line += 1
+}
+
+# line is blank (between paragraphs)
 NF == 0 {
-  within = 0
-  next
+  blank = 1
+  line = 0
 }
 
-# transition --> in
-within == 0 {
-  within = 1
-  count++
-  dest = sprintf("para-%02d", count)
-  print dest
-}
-
-# inside a paragraph
-within == 1 {
-  print $0 > dest
-}
+" "$@"
 
