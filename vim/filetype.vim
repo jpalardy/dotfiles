@@ -26,3 +26,9 @@ augroup cursor_position
   \                     endif
 augroup END
 
+" temporarily ...
+augroup OmniFuncMessage
+  autocmd!
+  autocmd OptionSet * if &omnifunc != '' | echom "*** Omnifunc has been changed to " . &omnifunc | endif
+augroup END
+
