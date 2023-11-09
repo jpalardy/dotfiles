@@ -23,11 +23,6 @@ function f.
 end
 
 function fz
-  set pattern $argv .
-  rg $pattern[1] | fzf
+  rg_ $argv | fzf --exit-0
 end
 
-function fz_
-  set pattern $argv .
-  rg_ $pattern[1] | fzf
-end
