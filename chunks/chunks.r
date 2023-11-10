@@ -7,6 +7,18 @@ colors = c("val1"="red", "val2"="darkgreen")
 scale_color_manual(values=colors)
 
 #-------------------------------------------------
+# percentiles
+#-------------------------------------------------
+
+# specific percentile -> value
+percentiles = c(0.5, 0.9, 0.95, 0.99, 1)
+tibble(percentile=percentiles, duration=quantile(d$duration, percentiles))
+
+# specific value -> percentile
+durations = c(30, 60, 90)
+tibble(duration=durations, percentile=ecdf(d$duration)(durations))
+
+#-------------------------------------------------
 # labels
 #-------------------------------------------------
 
