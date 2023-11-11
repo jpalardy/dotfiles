@@ -1,18 +1,14 @@
 #!/bin/bash
 
-KEY="${1:?"missing key"}"
-shift
-
-awk -e "
+awk "$@" -e '
 
 {
-  curr = $KEY
   if (NR > 1 && prev != curr) {
-    print \"\"
+    print ""
   }
   print
   prev = curr
 }
 
-" "$@"
+'
 
