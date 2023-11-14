@@ -82,3 +82,9 @@ bindMove({"ctrl", "alt"}, "o", function(win, screen)
   win.h = screen.h
 end)
 
+-- width-shrink
+bindMove({"ctrl", "alt"}, "-", function(win, screen)
+  -- 0.8409 ^ 4 = 1/2
+  win.w = win.w * 0.8409
+end)
+
