@@ -26,4 +26,3 @@ if confirm "reboot?"; then
   reboot
 fi
 
-
