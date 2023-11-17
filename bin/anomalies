@@ -5,20 +5,25 @@ find_trailing() {
 }
 
 find_funny() {
-  rg '[^ -~]' -l
+  rg '[^\t -~]' -l
 }
 
 find_blank() {
   rg -U '\n\s*\n\s*\n' -l
 }
 
+find_tab() {
+  rg '\t' -l
+}
+
 # -------------------------------------------------
 
 if test -z "$1"; then
   (
-    printf "%5s trailing\n" $(find_trailing | wc -l)
-    printf "%5s funny\n" $(find_funny | wc -l)
-    printf "%5s blank\n" $(find_blank | wc -l)
+    printf "%5s tab\n" "$(find_tab | wc -l)"
+    printf "%5s trailing\n" "$(find_trailing | wc -l)"
+    printf "%5s blank\n" "$(find_blank | wc -l)"
+    printf "%5s funny\n" "$(find_funny | wc -l)"
   ) | awk '$1 != 0'
   exit
 fi
