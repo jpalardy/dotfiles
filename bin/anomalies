@@ -16,7 +16,19 @@ find_tab() {
   rg '\t' -l
 }
 
+list_finders() {
+  declare -f | awk '/^find_/ { print $1 }'
+}
+
 # -------------------------------------------------
+
+if test "$1" == "--list"; then
+  (
+    echo all
+    list_finders | sed -e 's/^find_//'
+  ) | sort
+  exit
+fi
 
 if test -z "$1"; then
   (
@@ -25,6 +37,13 @@ if test -z "$1"; then
     printf "%5s blank\n" "$(find_blank | wc -l)"
     printf "%5s funny\n" "$(find_funny | wc -l)"
   ) | awk '$1 != 0'
+  exit
+fi
+
+if test "$1" == "all"; then
+  for f in $(list_finders); do
+    eval "$f"
+  done | sort | uniq
   exit
 fi
 
