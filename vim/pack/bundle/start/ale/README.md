@@ -5,7 +5,7 @@
 ![ALE Logo by Mark Grealish - https://www.bhalash.com/](https://user-images.githubusercontent.com/3518142/59195920-2c339500-8b85-11e9-9c22-f6b7f69637b8.jpg)
 
 ALE (Asynchronous Lint Engine) is a plugin providing linting (syntax checking
-and semantic errors) in NeoVim 0.2.0+ and Vim 8.0+ while you edit your text files,
+and semantic errors) in NeoVim 0.6.0+ and Vim 8.0+ while you edit your text files,
 and acts as a Vim [Language Server Protocol](https://langserver.org/) client.
 
 <video autoplay="true" muted="true" loop="true" controls="false" src="https://user-images.githubusercontent.com/3518142/210141215-8f2ff760-6a87-4704-a11e-c109b8e9ec41.mp4" title="An example showing what ALE can do."></video>
@@ -233,7 +233,7 @@ See `:help ale-symbol-search` for more information.
 
 ### Refactoring: Rename, Actions
 
-ALE supports renaming symbols in symbols in code such as variables or class
+ALE supports renaming symbols in code such as variables or class
 names with the `ALERename` command.
 
 `ALEFileRename` will rename file and fix import paths (tsserver
@@ -603,9 +603,19 @@ including the option `g:ale_lint_on_enter`, and you can run ALE manually with
 ALE offers an API for letting any other plugin integrate with ALE. If you are
 interested in writing an integration, see `:help ale-lint-other-sources`.
 
-If you are running ALE in combination with another LSP client, you may wish
-to disable ALE's LSP functionality entirely. You can add a setting to your
-vimrc/init.vim to do so.
+If you're running ALE in Neovim with
+[nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) for configuring
+particular language servers. ALE will automatically disable its LSP
+functionality for any language servers configured with nvim-lspconfig by
+default. The following setting is applied by default:
+
+```vim
+let g:ale_disable_lsp = 'auto'
+```
+
+If you are running ALE in combination with another LSP client, you may wish to
+disable ALE's LSP functionality entirely. You can change the setting to `1` to
+always disable all LSP functionality.
 
 ```vim
 let g:ale_disable_lsp = 1

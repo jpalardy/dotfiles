@@ -179,7 +179,12 @@ let s:default_registry = {
 \   'yamlfix': {
 \       'function': 'ale#fixers#yamlfix#Fix',
 \       'suggested_filetypes': ['yaml'],
-\       'description': 'Fix yaml files with yamlfix.',
+\       'description': 'Fix YAML files with yamlfix.',
+\   },
+\   'yamlfmt': {
+\       'function': 'ale#fixers#yamlfmt#Fix',
+\       'suggested_filetypes': ['yaml'],
+\       'description': 'Format YAML files with yamlfmt.',
 \   },
 \   'yapf': {
 \       'function': 'ale#fixers#yapf#Fix',
@@ -280,6 +285,11 @@ let s:default_registry = {
 \       'function': 'ale#fixers#fish_indent#Fix',
 \       'suggested_filetypes': ['fish'],
 \       'description': 'Format fish scripts using fish_indent.',
+\   },
+\   'forge': {
+\       'function': 'ale#fixers#forge#Fix',
+\       'suggested_filetypes': ['solidity'],
+\       'description': 'Fix Solidity files with forge fmt.',
 \   },
 \   'gofmt': {
 \       'function': 'ale#fixers#gofmt#Fix',
@@ -601,6 +611,11 @@ let s:default_registry = {
 \       'suggested_filetypes': ['python'],
 \       'description': 'Fix python files with ruff.',
 \   },
+\   'ruff_format': {
+\       'function': 'ale#fixers#ruff_format#Fix',
+\       'suggested_filetypes': ['python'],
+\       'description': 'Fix python files with the ruff formatter.',
+\   },
 \   'pycln': {
 \       'function': 'ale#fixers#pycln#Fix',
 \       'suggested_filetypes': ['python'],
@@ -615,6 +630,11 @@ let s:default_registry = {
 \       'function': 'ale#fixers#npmgroovylint#Fix',
 \       'suggested_filetypes': ['groovy'],
 \       'description': 'Fix Groovy files with npm-groovy-fix.',
+\   },
+\   'erb-formatter': {
+\       'function': 'ale#fixers#erbformatter#Fix',
+\       'suggested_filetypes': ['eruby'],
+\       'description': 'Apply erb-formatter -w to eruby/erb files.',
 \   }
 \}
 

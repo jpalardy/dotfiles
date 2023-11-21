@@ -37,7 +37,7 @@ git clone https://github.com/jessekelighine/vindent.vim
 ## Usage and Quick Start
 
 `vindent.vim` comes with no default keybindings.
-Here is a recommended set of keybindings to put in your `.vimrc`/`init.vim` (before the plugin is loaded, e.g., before `packloadall`):
+Here is a recommended set of keybindings to put in your `.vimrc`/`init.vim`:
 
 ```vim
 let g:vindent_motion_OO_prev   = '[=' " jump to prev block of same indent.
@@ -56,6 +56,19 @@ let g:vindent_object_XX_aI     = 'aI' " select current block + two extra lines a
 let g:vindent_jumps            = 1    " make vindent motion count as a |jump-motion| (works with |jumplist|).
 ```
 
+**Note**: Be sure to put the key-bindings *BEFORE* the plugins are loaded, e.g., before
+- `packloadall` from Vim/NeoVim (`:h plugin`),
+- `call plug#begin()` from [vim-plug](https://github.com/junegunn/vim-plug),
+- `lua require("init")` from NeoVim
+  (if you load plugins with something like
+  [packer.nvim](https://github.com/wbthomason/packer.nvim) or
+  [lazy.nvim](https://github.com/folke/lazy.nvim) in `init.lua`)
+- If you use `init.lua` exclusively,
+  wrap the above in `vim.cmd` and put it before something like
+  `require("lazy").setup` from [lazy.nvim](https://github.com/folke/lazy.nvim)
+  or `require('packer').startup` from [packer.nvim](https://github.com/wbthomason/packer.nvim).
+  (See [this comment](https://github.com/jessekelighine/vindent.vim/issues/6#issuecomment-1627984551) for example)
+
 With these keybindings, you can now...
 
 1. **Vindent Motions**:
@@ -69,6 +82,7 @@ With these keybindings, you can now...
 
 Feel free to customize the keybindings. If you wish not to use a certain
 functionality, simply leave the corresponding variable undefined.
+
 
 ## Explanations and Examples
 

@@ -15,6 +15,7 @@ let s:delimiterMap = {
     \ 'ada': { 'left': '--', 'leftAlt': '--  ' },
     \ 'ahdl': { 'left': '--' },
     \ 'ahk': { 'left': ';', 'leftAlt': '/*', 'rightAlt': '*/' },
+    \ 'alloy': { 'left': '/*', 'right': '*/', 'leftAlt': '//' },
     \ 'amiga': { 'left': ';' },
     \ 'aml': { 'left': '/*' },
     \ 'ampl': { 'left': '#' },
@@ -81,6 +82,7 @@ let s:delimiterMap = {
     \ 'cython': { 'left': '# ', 'leftAlt': '#' },
     \ 'd': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'dakota': { 'left': '#' },
+    \ 'dart': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'dcl': { 'left': '$!' },
     \ 'debcontrol': { 'left': '#' },
     \ 'debsources': { 'left': '#' },
@@ -160,6 +162,7 @@ let s:delimiterMap = {
     \ 'haxe': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'hb': { 'left': '#' },
     \ 'hbs': { 'left': '{{!-- ', 'right': ' --}}' },
+    \ 'hcl': { 'left': '#', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'hercules': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' },
     \ 'hive': { 'left': '-- ' },
     \ 'hocon': { 'left': '//', 'leftAlt': '#' },
@@ -1316,6 +1319,7 @@ endfunction
 "   -col        the column number of the character
 " Return: Number, 1 if the character is inside a comment, 0 if is not
 function! nerdcommenter#IsCharCommented(line, col) abort
+    call nerdcommenter#SetUp()
   " Function: s:searchfor(str, line, col, direction, [maxline])
   " search str in the buffer, including the character at [line, col]
   " Args:

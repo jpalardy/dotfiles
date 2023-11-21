@@ -168,6 +168,7 @@ Notes:
   * `dialyxir`
   * `dogma`!!
   * `elixir-ls`
+  * `lexical`
   * `mix`!!
 * Elm
   * `elm-format`
@@ -175,6 +176,7 @@ Notes:
   * `elm-make`
 * Erb
   * `erb`
+  * `erb-formatter`
   * `erblint`
   * `erubi`
   * `erubis`
@@ -213,8 +215,6 @@ Notes:
   * `golangci-lint`!!
   * `golangserver`
   * `golines`
-  * `golint`
-  * `gometalinter`!!
   * `gopls`
   * `gosimple`!!
   * `gotype`!!
@@ -365,6 +365,7 @@ Notes:
   * `cspell`
   * `languagetool`!!
   * `markdownlint`!!
+  * `marksman`
   * `mdl`
   * `pandoc`
   * `prettier`
@@ -504,6 +505,7 @@ Notes:
   * `refurb`
   * `reorder-python-imports`
   * ruff
+  * ruff-format
   * `unimport`
   * `vulture`!!
   * `yapf`
@@ -546,6 +548,7 @@ Notes:
   * `brakeman`!!
   * `cspell`
   * `debride`
+  * `packwerk`!!
   * `prettier`
   * `rails_best_practices`!!
   * `reek`
@@ -586,6 +589,7 @@ Notes:
 * SML
   * `smlnj`
 * Solidity
+  * `forge`
   * `solc`
   * `solhint`
   * `solium`
@@ -699,6 +703,7 @@ Notes:
   * `swaglint`
   * `yaml-language-server`
   * `yamlfix`
+  * `yamlfmt`
   * `yamllint`
 * YANG
   * `yang-lsp`
