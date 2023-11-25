@@ -1,0 +1,7 @@
+
+--colors=match:bg:yellow
+--colors=match:fg:black
+--colors=match:style:nobold
+--colors=path:fg:green
+--colors=line:fg:yellow
+

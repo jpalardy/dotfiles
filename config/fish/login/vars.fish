@@ -22,6 +22,7 @@ set -x RLWRAP_HOME "$HOME/.rlwrap"
 set -x FZF_DEFAULT_OPTS "--reverse --info=hidden --height=20 --cycle --border --multi --exact"
 set -x FZF_CTRL_T_COMMAND "rg --files --no-ignore-parent --sort path"
 set -x CLICOLOR 1    # used by `tree`, possibly others
+set -x RIPGREP_CONFIG_PATH ~/dotfiles/ripgreprc
 
 set -x MANPAGER "manpager"
 
