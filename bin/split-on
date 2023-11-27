@@ -1,5 +1,18 @@
 #!/bin/bash
 
+if test $# == 0; then
+  cat >&2 <<EOM
+Usage: $(basename "$0") -e "..."
+
+variables:
+  - curr    current value to compare and split on
+  - prev    prev value
+EOM
+  exit 1
+fi
+
+# -------------------------------------------------
+
 awk "$@" -e '
 
 {
