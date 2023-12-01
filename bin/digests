@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -o nounset
+set -o errexit
+set -o pipefail
+
+tmp_file=$(mktemp)
+
+# shellcheck disable=SC2064
+trap "rm -f $tmp_file; exit" INT TERM EXIT
+
+cat "$@" > "$tmp_file"
+
+for dgst in $(openssl list -1 -digest-commands | sort); do
+  openssl "$dgst" "$tmp_file"
+done | sed -E -e 's/\([^)]+\)=//' | sort | column -t
+
