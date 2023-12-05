@@ -1,6 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "--list" ]; then
+  # shellcheck disable=SC2012
   ls -1 "$HOME/.github/templates/" | sort
   exit
 fi
