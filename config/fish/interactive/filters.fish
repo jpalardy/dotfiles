@@ -17,7 +17,7 @@ function __sum
 end
 
 function __diff
-  awk 'prev { printf "%3d\n", $1-prev } { prev=$1 }' $argv
+  awk 'NR > 1 { printf "%3d\n", $1-prev } { prev=$1 }' $argv
 end
 
 function __uniq
