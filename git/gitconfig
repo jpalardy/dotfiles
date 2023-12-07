@@ -6,19 +6,14 @@
 [alias]
   st        = status --short --branch
   co        = checkout
-  ignored   = !git clean -ndX | sed -e 's/^Would remove //'
   ffm       = merge --ff-only
   rl        = remote -v
   fp        = fetch --prune
-  who       = config --get user.email
   gone      = !git branch -vv | sed -e 's/^..//' | awk '/: gone/ {print \"git branch -D\", $1}'
-  untracked = ls-files --others --exclude-standard
   rewind    = reset HEAD^
   vimdiff   = difftool
-  qb        = !git checkout -b qb-`date '+%F-%H%M'`
   cab       = !git log | rg -i 'co-authored-by:' | sort | uniq -c | sort -n
   behind    = !git branch -v | rg behind
-  ds        = diff --stat
   rs        = restore
   rss       = restore --staged
   wip       = "!f() { git commit -a -m \"wip $(date +%s)\"; }; f"
