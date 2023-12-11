@@ -14,14 +14,6 @@ function ff
   end
 end
 
-function fne
-  ff '\\.'$argv[1]'\$'
-end
-
-function f.
-  find . -name '.*' -type f | sed -e 's/^..//' | sort
-end
-
 function fz
   rg_ $argv | fzf --exit-0
 end
