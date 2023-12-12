@@ -13,6 +13,7 @@ function __mix_default_completions
     dialyzer
     ecto.migrate
     ecto.reset
+    ecto.rollback
     ecto.seed
     format
     hex.outdated
