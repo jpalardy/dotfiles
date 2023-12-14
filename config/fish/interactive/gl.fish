@@ -7,3 +7,5 @@ function gl
     mv -v "$path/$r" .
   end
 end
+
+alias glss "gl $HOME/Desktop/screenshots"
