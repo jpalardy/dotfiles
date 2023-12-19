@@ -5,9 +5,13 @@ preview:
 diff:
 	@vimdiff ssh/config ~/.ssh/config
 
-dangling:
-	@find ~ -maxdepth 1 -xtype l
+# -------------------------------------------------
 
+.PHONY: TODO
 TODO:
-	rg --files | rg -v -e '^vim/pack/bundle' -e '^vim/colors' -e '^TODO' | shuf > $@
+	if [ ! -e TODO ]; then rg --files | rg -v -e '^vim/pack/bundle' -e '^vim/colors' -e '^TODO' | shuf > TODO; fi
+	vim $$(cat TODO) -c 'vsp TODO'
+
+clean:
+	rm -rf TODO
 
