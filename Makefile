@@ -1,6 +1,6 @@
 
 preview:
-	@bash .setup.bash
+	@bash .setup.bash $$FLAGS
 
 diff:
 	@vimdiff ssh/config ~/.ssh/config

@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# -------------------------------------------------
+
+link_bash=0
+
+while test $# -gt 0; do
+  if test "$1" == "bash"; then
+    link_bash=1
+  fi
+  shift
+done
+
+# -------------------------------------------------
+
 DOTFILES=$(pwd)
 first=1
 
@@ -47,4 +60,12 @@ BASE_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 relink fish     "$DOTFILES/config/fish"
 relink yamllint "$DOTFILES/config/yamllint"
+
+# -------------------------------------------------
+
+if test $link_bash == 1; then
+  relink .bashrc       "$DOTFILES/bash/bashrc"
+  relink .bash_profile "$DOTFILES/bash/bash_profile"
+  relink .bash_logout  "$DOTFILES/bash/bash_logout"
+fi
 
