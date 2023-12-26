@@ -14,3 +14,4 @@ fish           https://github.com/dag/vim-fish.git
 minizinc       https://github.com/vale1410/vim-minizinc.git
 graphql        https://github.com/jparise/vim-graphql.git
 vindent        https://github.com/jessekelighine/vindent.vim
+gleam          https://github.com/gleam-lang/gleam.vim.git
