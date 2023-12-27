@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# pg_format might not be installed
+format() {
+  if test "$(command -v pg_format)"; then
+    pg_format --wrap-after 10 --no-extra-line
+  else
+    cat
+  fi
+}
+
+# -------------------------------------------------
+
 awk '
 
 # -------------------------------------------------
@@ -35,5 +46,5 @@ END {
   print ";"
 }
 
-' "$@" | pg_format --wrap-after 10 --no-extra-line
+' "$@" | format
 
