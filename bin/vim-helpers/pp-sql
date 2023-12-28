@@ -14,14 +14,15 @@ format() {
 awk '
 
 # -------------------------------------------------
-# head $table
+# limit $table
 # -------------------------------------------------
 
-$1 == "head" {
+$1 == "limit" {
   table = $2
   if (!table) { table = "_table_" }
 
-  $0 = sprintf("SELECT * FROM %s LIMIT 5", table)
+  printf("SELECT * FROM %s LIMIT 5;\n", table)
+  next
 }
 
 # -------------------------------------------------
@@ -32,18 +33,22 @@ $1 == "count" {
   table = $2
   if (!table) { table = "_table_" }
 
-  $0 = sprintf("SELECT _column_, count(*) FROM %s GROUP BY 1 ORDER BY 1", table)
+  printf("SELECT _column_, count(*) FROM %s GROUP BY 1 ORDER BY 1;\n", table)
+  next
 }
 
 # -------------------------------------------------
 
 {
+  regular_lines++
   sub(";$", "")
   print
 }
 
 END {
-  print ";"
+  if (regular_lines > 0) {
+    print ";"
+  }
 }
 
 ' "$@" | format
