@@ -16,6 +16,10 @@ find_tab() {
   rg '\t' -l
 }
 
+find_dangling() {
+  find . -xtype l -printf '%P\n'
+}
+
 list_finders() {
   declare -f | awk '/^find_/ { print $1 }'
 }
@@ -36,6 +40,7 @@ if test -z "$1"; then
     printf "%5s trailing\n" "$(find_trailing | wc -l)"
     printf "%5s blank\n" "$(find_blank | wc -l)"
     printf "%5s funny\n" "$(find_funny | wc -l)"
+    printf "%5s dangling\n" "$(find_dangling | wc -l)"
   ) | awk '$1 != 0'
   exit
 fi
