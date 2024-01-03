@@ -102,6 +102,9 @@ nnoremap ,sa :sp<CR><c-w>k?
 " SUMMARY OF SEARCH IN CURRENT FILE
 nnoremap ,g :!clear; rg -i <c-r>/ %<CR>
 
+" APPEND FILENAME TO .ws FILE
+nnoremap ,, :r !echo % >> .ws<CR>:echom "added: <c-r>%"<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BACKSLASH MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
