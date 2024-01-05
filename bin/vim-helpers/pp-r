@@ -1,8 +1,0 @@
-#!/usr/bin/env awk-f
-
-{
-  gsub(" [|]> ", " |>\n  ", $0)
-  gsub(" [+] ", " +\n  ", $0)
-  print
-}
-
