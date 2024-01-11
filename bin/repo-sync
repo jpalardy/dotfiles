@@ -10,7 +10,6 @@ fi
 
 sync() {
   git fetch --prune
-  git log --graph --pretty=color "..@{upstream}"
   git status --short
 }
 
