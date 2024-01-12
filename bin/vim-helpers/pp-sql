@@ -14,14 +14,14 @@ format() {
 awk '
 
 # -------------------------------------------------
-# limit $table
+# head $table
 # -------------------------------------------------
 
-$1 == "limit" {
+$1 == "head" {
   table = $2
   if (!table) { table = "_table_" }
 
-  printf("SELECT * FROM %s LIMIT 5;\n", table)
+  printf("SELECT * FROM %s LIMIT 15;\n", table)
   next
 }
 
