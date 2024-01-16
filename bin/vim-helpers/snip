@@ -190,24 +190,16 @@ BEGIN {
 
 # try to match from the right
 # try ft-specific first, global next
-# try to find longest match
 {
-  _i = -1
-  _text = ""
   for (i = length($0); i > 0; i--) {
     ss = substr($0, i)
     for (j = 1; j <= length(pre); j++) {
-      text = snippets[pre[j] ":" ss]
-      if (text) {
-        _i = i
-        _text = text
-        break
+      key = pre[j] ":" ss
+      if (key in snippets) {
+        print substr($0, 1, i-1) snippets[key]
+        exit
       }
     }
-  }
-  if (_text) {
-      print substr($0, 1, _i-1) _text
-      next
   }
 }
 
