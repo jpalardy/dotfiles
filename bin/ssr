@@ -54,7 +54,6 @@ check_bin watch
 flush
 
 # experimental
-check_bin bat
 check_bin htop
 check_bin duf
 check_bin dust
