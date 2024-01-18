@@ -23,15 +23,19 @@ fi
 cmd=""
 ext="$1"
 filename="_vimrepl.$ext"
+split_flag="-h"
 shift
 
-while getopts "c:f:" opt; do
+while getopts "c:f:v" opt; do
   case "$opt" in
     c)
       cmd=$OPTARG
       ;;
     f)
       filename=$OPTARG
+      ;;
+    v)
+      split_flag="-v"
       ;;
     *)
       die "unrecognized flag"
@@ -55,7 +59,7 @@ if [ "$ALREADY_SPLIT" == 1 ]; then
 fi
 
 # split pane runs shell, or cmd if given
-tmux split-window -h
+tmux split-window $split_flag
 if [ -n "$cmd" ]; then
   tmux send-keys "clear; $cmd" C-m
 fi
