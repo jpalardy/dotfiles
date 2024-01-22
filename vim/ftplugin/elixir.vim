@@ -13,6 +13,16 @@ nnoremap <buffer> <c-c>, :call SlimeHotKey(['recompile', '#iex:break', ':observe
 
 " -------------------------------------------------
 
+function! s:searchLocal()
+  silent! grep -i '^ *(def\|describe\|setup\|test)' %
+  redraw!
+  copen
+endfunction
+
+nnoremap <buffer> ,. :call <SID>searchLocal()<CR>
+
+" -------------------------------------------------
+
 function! Fold_ex()
   setlocal foldmethod=syntax
   setlocal foldlevel=1
