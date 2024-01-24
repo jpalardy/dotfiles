@@ -67,6 +67,7 @@ BEGIN {
   snip("*:!",       "⚠️")
   snip("*::tada",   "🎉")
   snip("*::fire",   "🔥")
+  snip("*::boom",   "💥")
   snip("*::rot",    "🔄")
   snip("*::shrug",  "¯\\_(ツ)_/¯")
 
