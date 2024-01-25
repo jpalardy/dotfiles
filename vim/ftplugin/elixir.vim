@@ -23,13 +23,13 @@ nnoremap <buffer> ,. :call <SID>searchLocal()<CR>
 
 " -------------------------------------------------
 
-function! Fold_ex()
+function! s:foldSyntax()
   setlocal foldmethod=syntax
   setlocal foldlevel=1
   setlocal foldmethod=manual
 endfunction
 
-nnoremap <buffer> ,F :call Fold_ex()<CR>
+nnoremap <buffer> ,F :call <SID>foldSyntax()<CR>
 
 " format selection
 vnoremap <buffer> ,f :!mix format -<CR>
@@ -46,6 +46,7 @@ endfunction
 
 " -------------------------------------------------
 
+" this is needed for reload on opening test file
 if !exists('*ToggleCodeTest')
   function! ToggleCodeTest()
     let cur_pos = getpos('.')
