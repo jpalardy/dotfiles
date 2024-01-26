@@ -38,7 +38,7 @@ vnoremap <buffer> ,f :!mix format -<CR>
 
 " wrap pipes in ( ... ); for vim-slime
 function! _EscapeText_elixir(text)
-  if len(split(a:text, "\n")) > 1
+  if match(a:text, "\n") > -1
     return ["(\n", a:text, ")\n"]
   endif
   return a:text
@@ -50,7 +50,6 @@ endfunction
 if !exists('*ToggleCodeTest')
   function! ToggleCodeTest()
     let cur_pos = getpos('.')
-    silent! 1
     let found_line = search('^defmodule')
     call setpos('.', cur_pos)
 
@@ -65,10 +64,12 @@ if !exists('*ToggleCodeTest')
     endif
 
     let other_file = system(printf("rg 'defmodule %s\\b' -l", other_module_name))
-    let other_file = substitute(other_file, "\n", "", "")
-    if other_file != ""
-      execute "vsplit " other_file
+    let other_file = trim(other_file)
+    if other_file == ""
+      return
     endif
+
+    execute "vsplit " other_file
   endfunction
 endif
 
