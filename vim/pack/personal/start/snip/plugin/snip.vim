@@ -1,11 +1,12 @@
 
-function! SnipReplace()
+function! s:snipReplace()
   " extract text in front of cursor, put in register x
   execute "normal! v0\"xy"
 
   " convert w/ snip command-line
   silent let @x = system("snip -v filetype=" . shellescape(&ft) . " -v path=" . shellescape(expand("%")), @x)
-  let @x = substitute(@x, "\\n$", "", "") " strip trailing CR
+  " strip trailing CR
+  let @x = trim(@x, "\n", 2)
 
   " overwrite-paste
   execute "normal! gv\"xp"
@@ -22,5 +23,5 @@ function! SnipReplace()
 endfunction
 
 "-- mappings
-inoremap <TAB> <ESC>:call SnipReplace()<CR>@x
+inoremap <TAB> <ESC>:call <SID>snipReplace()<CR>@x
 
