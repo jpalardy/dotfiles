@@ -106,6 +106,18 @@ nnoremap ,g :!clear; rg -i <c-r>/ %<CR>
 nnoremap ,, :r !echo % >> .ws<CR>:echom "added: <c-r>%"<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! s:setDiffOpt()
+  let current_diffopt = &diffopt
+  if current_diffopt !~ 'iwhite'
+    let current_diffopt .= ',iwhite'
+  endif
+  let &diffopt = input("diffopt: ", current_diffopt)
+endfunction
+
+nnoremap ,do :call <SID>setDiffOpt()<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BACKSLASH MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
