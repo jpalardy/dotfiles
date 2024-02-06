@@ -67,6 +67,7 @@ Notes:
   * `ccls`
   * `clang` (`cc`)
   * `clang-format`
+  * `clangcheck`!!
   * `clangd`
   * `clangtidy`!!
   * `cppcheck`
@@ -101,6 +102,7 @@ Notes:
   * `gcc` (`cc`)
   * `uncrustify`
 * Cairo
+  * `scarb`!!
   * `starknet`
 * Chef
   * `cookstyle`
@@ -200,6 +202,9 @@ Notes:
   * `fusion-lint`
 * Git Commit Messages
   * `gitlint`
+* Gleam
+  * `gleam_format`
+  * `gleamlsp`
 * GLSL
   * `glslang`
   * `glslls`
@@ -288,6 +293,7 @@ Notes:
   * `javalsp`
   * `uncrustify`
 * JavaScript
+  * `biome`
   * `clang-format`
   * `cspell`
   * `deno`
@@ -381,6 +387,8 @@ Notes:
   * `mmc`!!
 * NASM
   * `nasm`!!
+* Nickel
+  * `nickel_format`
 * Nim
   * `nim check`!!
   * `nimlsp`
@@ -554,6 +562,7 @@ Notes:
   * `reek`
   * `rubocop`
   * `ruby`
+  * `rubyfmt`
   * `rufo`
   * `solargraph`
   * `sorbet`
@@ -646,6 +655,7 @@ Notes:
 * TOML
   * `dprint`
 * TypeScript
+  * `biome`
   * `cspell`
   * `deno`
   * `dprint`

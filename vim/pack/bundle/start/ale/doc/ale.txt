@@ -2918,6 +2918,7 @@ documented in additional help files.
     astyle................................|ale-c-astyle|
     cc....................................|ale-c-cc|
     ccls..................................|ale-c-ccls|
+    clangcheck............................|ale-c-clangcheck|
     clangd................................|ale-c-clangd|
     clang-format..........................|ale-c-clangformat|
     clangtidy.............................|ale-c-clangtidy|
@@ -2927,6 +2928,7 @@ documented in additional help files.
     flawfinder............................|ale-c-flawfinder|
     uncrustify............................|ale-c-uncrustify|
   cairo...................................|ale-cairo-options|
+    scarb.................................|ale-cairo-scarb|
     starknet..............................|ale-cairo-starknet|
   chef....................................|ale-chef-options|
     cookstyle.............................|ale-chef-cookstyle|
@@ -3029,6 +3031,9 @@ documented in additional help files.
     fusion-lint...........................|ale-fuse-fusionlint|
   git commit..............................|ale-gitcommit-options|
     gitlint...............................|ale-gitcommit-gitlint|
+  gleam...................................|ale-gleam-options|
+    gleam_format..........................|ale-gleam-gleam_format|
+    gleamlsp..............................|ale-gleam-gleamlsp|
   glsl....................................|ale-glsl-options|
     glslang...............................|ale-glsl-glslang|
     glslls................................|ale-glsl-glslls|
@@ -3112,6 +3117,7 @@ documented in additional help files.
     eclipselsp............................|ale-java-eclipselsp|
     uncrustify............................|ale-java-uncrustify|
   javascript..............................|ale-javascript-options|
+    biome.................................|ale-javascript-biome|
     clang-format..........................|ale-javascript-clangformat|
     cspell................................|ale-javascript-cspell|
     deno..................................|ale-javascript-deno|
@@ -3187,6 +3193,8 @@ documented in additional help files.
     mmc...................................|ale-mercury-mmc|
   nasm....................................|ale-nasm-options|
     nasm..................................|ale-nasm-nasm|
+  nickel..................................|ale-nickel-options|
+    nickel_format.........................|ale-nickel-nickel-format|
   nim.....................................|ale-nim-options|
     nimcheck..............................|ale-nim-nimcheck|
     nimlsp................................|ale-nim-nimlsp|
@@ -3346,6 +3354,7 @@ documented in additional help files.
     sorbet................................|ale-ruby-sorbet|
     standardrb............................|ale-ruby-standardrb|
     syntax_tree...........................|ale-ruby-syntax_tree|
+    rubyfmt...............................|ale-ruby-rubyfmt|
   rust....................................|ale-rust-options|
     analyzer..............................|ale-rust-analyzer|
     cargo.................................|ale-rust-cargo|
@@ -3432,6 +3441,7 @@ documented in additional help files.
   toml....................................|ale-toml-options|
     dprint................................|ale-toml-dprint|
   typescript..............................|ale-typescript-options|
+    biome.................................|ale-typescript-biome|
     cspell................................|ale-typescript-cspell|
     deno..................................|ale-typescript-deno|
     dprint................................|ale-typescript-dprint|

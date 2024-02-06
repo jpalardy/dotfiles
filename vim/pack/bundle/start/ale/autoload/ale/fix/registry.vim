@@ -291,6 +291,11 @@ let s:default_registry = {
 \       'suggested_filetypes': ['solidity'],
 \       'description': 'Fix Solidity files with forge fmt.',
 \   },
+\   'gleam_format': {
+\       'function': 'ale#fixers#gleam_format#Fix',
+\       'suggested_filetypes': ['gleam'],
+\       'description': 'Fix Gleam files with gleam format.',
+\   },
 \   'gofmt': {
 \       'function': 'ale#fixers#gofmt#Fix',
 \       'suggested_filetypes': ['go'],
@@ -635,7 +640,22 @@ let s:default_registry = {
 \       'function': 'ale#fixers#erbformatter#Fix',
 \       'suggested_filetypes': ['eruby'],
 \       'description': 'Apply erb-formatter -w to eruby/erb files.',
-\   }
+\   },
+\   'nickel_format': {
+\       'function': 'ale#fixers#nickel_format#Fix',
+\       'suggested_filetypes': ['nickel'],
+\       'description': 'Fix nickel files with nickel format',
+\   },
+\   'rubyfmt': {
+\       'function': 'ale#fixers#rubyfmt#Fix',
+\       'suggested_filetypes': ['ruby'],
+\       'description': 'A formatter for Ruby source code',
+\   },
+\   'biome': {
+\       'function': 'ale#fixers#biome#Fix',
+\       'suggested_filetypes': ['javascript', 'typescript'],
+\       'description': 'Apply biome (ex. rome) check to a file.',
+\   },
 \}
 
 " Reset the function registry to the default entries.

@@ -76,6 +76,7 @@ formatting.
   * [ccls](https://github.com/MaskRay/ccls)
   * [clang](http://clang.llvm.org/)
   * [clang-format](https://clang.llvm.org/docs/ClangFormat.html)
+  * [clangcheck](http://clang.llvm.org/docs/ClangCheck.html) :floppy_disk:
   * [clangd](https://clang.llvm.org/extra/clangd.html)
   * [clangtidy](http://clang.llvm.org/extra/clang-tidy/) :floppy_disk:
   * [cppcheck](http://cppcheck.sourceforge.net)
@@ -110,6 +111,7 @@ formatting.
   * [gcc](https://gcc.gnu.org/)
   * [uncrustify](https://github.com/uncrustify/uncrustify)
 * Cairo
+  * [scarb](https://docs.swmansion.com/scarb/) :floppy_disk:
   * [starknet](https://starknet.io/docs)
 * Chef
   * [cookstyle](https://docs.chef.io/cookstyle.html)
@@ -209,6 +211,9 @@ formatting.
   * [fusion-lint](https://github.com/RyanSquared/fusionscript)
 * Git Commit Messages
   * [gitlint](https://github.com/jorisroovers/gitlint)
+* Gleam
+  * [gleam_format](https://github.com/gleam-lang/gleam)
+  * [gleamlsp](https://github.com/gleam-lang/gleam)
 * GLSL
   * [glslang](https://github.com/KhronosGroup/glslang)
   * [glslls](https://github.com/svenstaro/glsl-language-server)
@@ -297,6 +302,7 @@ formatting.
   * [javalsp](https://github.com/georgewfraser/vscode-javac)
   * [uncrustify](https://github.com/uncrustify/uncrustify)
 * JavaScript
+  * [biome](http://biomejs.dev)
   * [clang-format](https://clang.llvm.org/docs/ClangFormat.html)
   * [cspell](https://github.com/streetsidesoftware/cspell/tree/main/packages/cspell)
   * [deno](https://deno.land/)
@@ -390,6 +396,8 @@ formatting.
   * [mmc](http://mercurylang.org) :floppy_disk:
 * NASM
   * [nasm](https://www.nasm.us/) :floppy_disk:
+* Nickel
+  * [nickel_format](https://github.com/tweag/nickel#formatting)
 * Nim
   * [nim check](https://nim-lang.org/docs/nimc.html) :floppy_disk:
   * [nimlsp](https://github.com/PMunch/nimlsp)
@@ -563,6 +571,7 @@ formatting.
   * [reek](https://github.com/troessner/reek)
   * [rubocop](https://github.com/bbatsov/rubocop)
   * [ruby](https://www.ruby-lang.org)
+  * [rubyfmt](https://github.com/fables-tales/rubyfmt)
   * [rufo](https://github.com/ruby-formatter/rufo)
   * [solargraph](https://solargraph.org)
   * [sorbet](https://github.com/sorbet/sorbet)
@@ -655,6 +664,7 @@ formatting.
 * TOML
   * [dprint](https://dprint.dev)
 * TypeScript
+  * [biome](http://biomejs.dev)
   * [cspell](https://github.com/streetsidesoftware/cspell/tree/main/packages/cspell)
   * [deno](https://deno.land/)
   * [dprint](https://dprint.dev/)
