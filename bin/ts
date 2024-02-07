@@ -3,10 +3,10 @@
 result=$(
   rg --no-heading --no-filename --no-line-number -o '\w+' "$@" | \
   awk '{ line = tolower($0); if (!seen[line]++) { print line } }' | \
-  fzf --preview "rg -l -w {} $*"
+  fzf --preview "rg -i -l -w {} $*"
 )
 
 if [ -n "$result" ]; then
-  vim -q <(rg "$result" --vimgrep) -c "call ToggleQuickfix()"
+  vim -q <(rg -i "$result" --vimgrep) -c "call ToggleQuickfix()"
 fi
 
