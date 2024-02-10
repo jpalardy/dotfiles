@@ -18,17 +18,20 @@ digraph G {
   execute -> compare;
 }
 
-// ** USUAL HEADER
-
-// rankdir=LR;
-// node [style="filled,rounded", shape=box, fontname=Arial, fontsize=14];
-// graph [overlap=false; splines=true];
-
+// -------------------------------------------------
+// USUAL HEADER
 // -------------------------------------------------
 
-// ** FORCING RANKS, 3 ways
+rankdir=LR;
+node [style="filled,rounded", shape=box, fontname=Arial, fontsize=14];
+graph [overlap=false; splines=true];
 
-// { rank = same; B; C; D }
-// D -> E [style=invis]
-// or, in subgraph ... edge [style=invis]
+// -------------------------------------------------
+// FORCING RANKS, 3 ways
+// -------------------------------------------------
+
+{ rank = same; B; C; D }
+D -> E [style=invis]
+// or, in subgraph ...
+  edge [style=invis];
 
