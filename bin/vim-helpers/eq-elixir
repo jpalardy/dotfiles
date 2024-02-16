@@ -17,10 +17,13 @@ function columns_as_keyword_list() {
 #
 # lines like:
 #   tap x y z
+#   tap x, y, z
 # are expanded to:
 #   [x: x, y: y, z: z] |> IO.inspect()
 #
 $1 == "tap" && NF > 1 {
+  # survive dangling `,`
+  gsub(",", "")
   columns_as_keyword_list()
   print(" |> IO.inspect()")
   next
