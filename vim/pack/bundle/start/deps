@@ -6,11 +6,8 @@ slime          https://github.com/jpalardy/vim-slime
 spacehi        https://github.com/jpalardy/spacehi.vim.git
 lightline      https://github.com/itchyny/lightline.vim
 surround       https://github.com/tpope/vim-surround.git
-typescript     https://github.com/leafgarland/typescript-vim.git
 elixir         https://github.com/elixir-editors/vim-elixir.git
-toml           https://github.com/cespare/vim-toml.git
 emmet          https://github.com/mattn/emmet-vim.git
-fish           https://github.com/dag/vim-fish.git
 minizinc       https://github.com/vale1410/vim-minizinc.git
 graphql        https://github.com/jparise/vim-graphql.git
 vindent        https://github.com/jessekelighine/vindent.vim
