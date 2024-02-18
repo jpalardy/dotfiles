@@ -20,6 +20,7 @@
 [diff]
   noprefix = true
   tool = vimdiff
+  algorith = histogram
 [push]
   default = current
   autoSetupRemote = true
@@ -33,3 +34,5 @@
   submoduleSummary = true
 [pretty]
   colorful = "%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(auto)%d%Creset %C(dim white)%an%Creset"
+[merge]
+	conflictstyle = zdiff3
