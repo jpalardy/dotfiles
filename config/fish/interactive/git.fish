@@ -31,6 +31,3 @@ function gcp
   end
 end
 
-function gitm
-  git status --short | sed 's/^...//'
-end
