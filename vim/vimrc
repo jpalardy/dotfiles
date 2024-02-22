@@ -68,7 +68,10 @@ set completeopt=menuone,popup
 set tabpagemax=100
 
 if match($TERM, '256color$') != -1
-  colorscheme 256_xoria
+  " colorscheme 256_xoria
+  let g:solarized_termcolors=256
+  " colorscheme solarized
+  colorscheme gruvbox
 endif
 
 " remove other fill chars (purpose accomplished by colors)
