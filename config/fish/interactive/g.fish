@@ -29,13 +29,23 @@ function g
   end
 
   awk -v "key=$pick" -F' += +' '
-    $1 == key {
-      dst = $2
-      if (dst !~ /^\//) {
-        dst = ENVIRON["HOME"] "/" dst
+    function fix(path) {
+      if (path ~ /^\//) {
+        return path
       }
-      print dst
+      return ENVIRON["HOME"] "/" path
+    }
+    $1 == key {
+      print fix($2)
       exit
+    }
+    match($1, key) {
+      partial = fix($2)
+    }
+    END {
+      if (partial) {
+        print partial
+      }
     }
   ' $config | read -l dst
   test -n "$dst"; and cd "$dst"
