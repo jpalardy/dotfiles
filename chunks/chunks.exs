@@ -80,3 +80,16 @@ defmodule Mix.Tasks.GetToken do
   def run(_) do
   end
 end
+
+# -------------------------------------------------
+#  :recon_trace
+# -------------------------------------------------
+
+
+[
+  {Module, :function, :return_trace}
+]
+|> :recon_trace.calls({100, 1000}, scope: :local)
+
+:recon_trace.clear
+
