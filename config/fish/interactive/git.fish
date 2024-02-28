@@ -21,13 +21,14 @@ function gcp
     echo >&2 "gcp is disabled for this repository: gcp --enable?"
     return 1
   end
-  git commit -av -m '-'; or return 1
+
   git remote | read -l remotes
-  if test -n "$remotes"
-    git push
-  else
+  if test -z "$remotes"
     echo >&2 "no remotes"
     return 1
   end
+
+  git commit -av -m '-'; or return 1
+  git push
 end
 
