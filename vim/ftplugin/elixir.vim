@@ -42,7 +42,7 @@ vnoremap <buffer> ,f :!mix format -<CR>
 " wrap pipes in ( ... ); for vim-slime
 function! _EscapeText_elixir(text)
   if match(a:text, "\n") > -1
-    return ["(\n", a:text, ")\n"]
+    return "(\n" . a:text . ")\n"
   endif
   return a:text
 endfunction
