@@ -104,8 +104,8 @@ nnoremap ,sa :sp<CR><c-w>k?
 " SUMMARY OF SEARCH IN CURRENT FILE
 nnoremap ,g :!clear; rg -i <c-r>/ %<CR>
 
-" APPEND FILENAME TO .ws FILE
-nnoremap ,, :r !echo % >> .ws<CR>:echom "added: <c-r>%"<CR>
+" APPEND quickfix format info TO .ws FILE
+nnoremap ,, :call writefile([printf("%s:%d:%d:%s\n", expand("%"), line("."), col("."), getline("."))], ".ws", "a")<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
