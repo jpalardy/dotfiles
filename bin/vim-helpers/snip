@@ -71,6 +71,12 @@ BEGIN {
   snip("*::rot",    "🔄")
   snip("*::shrug",  "¯\\_(ツ)_/¯")
 
+  # fruit
+  srand()
+  fruits = "🍇🍈🍉🍊🍋🍌🍍🥭🍎🍏🍐🍑🍒🍓🫐🥝"
+  fruit = substr(fruits, int(length(fruits) * rand()), 1)
+  snip("*:%", fruit)
+
   # spanish accents
   snip("*:a'", "á")
   snip("*:i'", "í")
