@@ -67,6 +67,7 @@ set completeopt=menuone,popup
 " tabs
 set tabpagemax=100
 
+set background=dark
 if match($TERM, '256color$') != -1
   " config: solarized
   let g:solarized_termcolors=256
