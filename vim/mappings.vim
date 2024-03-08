@@ -7,10 +7,10 @@ nnoremap <F2>   :ALENextWrap<CR>
 inoremap <F2>   <C-o>:ALENextWrap<CR>
 nnoremap <F3>   :ALEToggle<CR>
 inoremap <F3>   <C-o>:ALEToggle<CR>
-nnoremap <F4>   :call ToggleQuickfix()<CR>
-nnoremap ,<F4>  :call ToggleLoclist()<CR>
+nnoremap <F4>   :call <SID>toggleQuickfix()<CR>
+nnoremap ,<F4>  :call <SID>toggleLoclist()<CR>
 
-function! ToggleQuickfix()
+function! s:toggleQuickfix()
   if empty(filter(getwininfo(win_getid()), 'v:val.quickfix'))
     copen
   else
@@ -18,7 +18,7 @@ function! ToggleQuickfix()
   endif
 endfunction
 
-function! ToggleLoclist()
+function! s:toggleLoclist()
   if empty(filter(getwininfo(win_getid()), 'v:val.loclist'))
     lopen
   else
@@ -42,7 +42,7 @@ nnoremap <ESC><SPACE> :nohl<CR>
 " COMMA MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! Preserve(command)
+function! s:preserve(command)
   " preparation: save last search, and cursor position.
   let _s=@/
   let l = line(".")
@@ -55,11 +55,11 @@ function! Preserve(command)
 endfunction
 
 " STRIP -- EMPTY LINE ENDINGS
-nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR>
-vnoremap _$ :call Preserve( "s/\\s\\+$//e")<CR>
+nnoremap _$ :call <SID>preserve("%s/\\s\\+$//e")<CR>
+vnoremap _$ :call <SID>preserve( "s/\\s\\+$//e")<CR>
 
 " DEDUP ADJACENT EMPTY LINES
-nnoremap _B :call Preserve("g/\\_^\\n\\{2,}/d")<CR>
+nnoremap _B :call <SID>preserve("g/\\_^\\n\\{2,}/d")<CR>
 
 " COMMATIZE
 vnoremap ,, :! paste -s -d, -<CR>
@@ -164,7 +164,7 @@ nnoremap tf :tabedit <cfile><CR>
 
 nnoremap tt :tabedit<CR>
 
-function! GrepForCurrentSearch()
+function! s:grepForCurrentSearch()
   let _s=@/
   let _s=substitute(_s, '^[\\]<', '\\b', '')
   let _s=substitute(_s, '[\\]>', '\\b', '')
@@ -172,7 +172,7 @@ function! GrepForCurrentSearch()
   redraw!
 endfunction
 
-nnoremap tg :call GrepForCurrentSearch()<CR>
+nnoremap tg :call <SID>grepForCurrentSearch()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " QUICKFIX
