@@ -1,13 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env awk-f
 
-color=0
-if [[ -t 1 ]]; then
-  color=1
-fi
-
-# -------------------------------------------------
-
-awk -v color=$color '
 function add_days(dt, i) {
   return strftime("%F", dt + (24 * 60 * 60) * i)
 }
@@ -49,6 +41,7 @@ function add_months(dt, i) {
 }
 
 BEGIN {
+  color = system("test ! -t 1")
   now = systime()
 
   print "    " strftime("%F", now)
@@ -62,5 +55,3 @@ BEGIN {
     printf "%s\n", dim_if(i % 12 == 0, add_months(now, i))
   }
 }
-
-'
