@@ -1,14 +1,8 @@
 #!/bin/bash
 
-TYPE=${TYPE:-"C"} # C or T
-
 # by year/month
-find . -maxdepth 1 -type f ! -name '.*' "$@" -printf "\"%f\" %${TYPE}Y/%${TYPE}m/\\n" | awk '
-
-!seen[$NF]++ {
-  print "mkdir -p", $NF
-}
-
-{ print "mv", $0 }
-
+find . -maxdepth 1 -type f ! -name '.*' "$@" -printf 'mv "%f" %CY/%Cm/\n' | awk '
+  !seen[$NF]++ { print "mkdir -p", $NF }
+               { print }
 '
+
