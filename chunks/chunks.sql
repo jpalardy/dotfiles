@@ -36,6 +36,11 @@ WHERE query != '<IDLE>'
   AND query NOT ILIKE '%pg_stat_activity%'
 ORDER BY query_start DESC;
 
+-- kill running query
+select pg_cancel_backend(pid);
+-- harder
+select pg_terminate_backend(pid);
+
 -- db activity: avg time per query
 SELECT LEFT (query, 100), calls, (total_time / calls)::integer AS avg_time_ms
 FROM pg_stat_statements
