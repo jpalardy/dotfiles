@@ -23,11 +23,6 @@ function cd
 end
 
 function b
-  if test "$argv[1]" != "_"
-    cd ..
-    return
-  end
-
   set -l cwd $PWD
   while test $cwd != "/"
     echo $cwd
