@@ -1,6 +1,4 @@
-#!/bin/bash
-
-awk '
+#!/usr/bin/env awk-f
 
 {
   original_length = length($0)
@@ -20,6 +18,4 @@ ENDFILE {
   spaces = 0
   tabs = 0
 }
-
-' "$@"
 
