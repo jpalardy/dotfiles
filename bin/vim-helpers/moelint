@@ -20,9 +20,15 @@ BEGINFILE {
   prev_line = 0
   empty_lines = 0
   prev_indent = 0
+  warn_past = 0
+  today = strftime("%F", systime())
 }
 
 #-------------------------------------------------
+
+/^# warn: past #$/ {
+  warn_past = 1
+}
 
 # look for badly sorted date headers
 /^20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/ {
@@ -41,6 +47,9 @@ match($0, /\<([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9])\>/, arr) {
   date = mktime(gensub("-", " ", "g", arr[1]) " 0 0 0")
   if (strftime("%F", date) != arr[1]) {
     report_warning("invalid date: " arr[1])
+  }
+  if (warn_past && arr[1] <= today) {
+    report_warning("date in past: " arr[1])
   }
 }
 
