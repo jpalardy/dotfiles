@@ -104,8 +104,14 @@ nnoremap ,sa :sp<CR><c-w>k?
 " SUMMARY OF SEARCH IN CURRENT FILE
 nnoremap ,g :!clear; rg -i <c-r>/ %<CR>
 
+function! s:currentLineInGrepFormat()
+  let result = printf("%s:%d:%d:%s", expand("%"), line("."), col("."), getline("."))
+  echom result
+  return result
+endfunction
+
 " APPEND quickfix format info TO .ws FILE
-nnoremap ,, :call writefile([printf("%s:%d:%d:%s\n", expand("%"), line("."), col("."), getline("."))], ".ws", "a")<CR>
+nnoremap ,, :call writefile([<SID>currentLineInGrepFormat()], ".ws", "a")<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
