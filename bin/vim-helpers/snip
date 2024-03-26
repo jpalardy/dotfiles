@@ -166,7 +166,7 @@ BEGIN {
   snip("sql:ea",   "EXPLAIN ANALYZE")
   snip("sql:cte",  "WITH results AS (\n▒\n-- ), other_results AS (\n)\nSELECT * FROM results WHERE ...")
   snip("sql:csv",  "\\copy (SELECT * FROM table) to 'table.csv' with csv header")
-  snip("sql:psql", "\\pset pager off\n\\pset null NULL\n\\x auto")
+  snip("sql:psql", "\\pset pager off\n\\pset null NULL\n\\x auto\n--\\pset format wrapped")
 
   #-------------------------------------------------
   # gitcommit
