@@ -25,7 +25,9 @@ let g:slime_dont_ask_default = 1
 nmap <c-c><c-l> :SlimeSend0 "\x0c"<CR>
 nmap <c-c><c-u> :SlimeSend0 "\x15"<CR>
 nmap <c-c>q     :SlimeSend0 "q"<CR>
-nmap <c-c><cr>  <c-c><c-c>}j
+" FIXME decide by use
+nmap <c-c>j     <c-c><c-c>}j
+nmap <c-c>}     <c-c><c-c>}j
 
 nmap <c-c>d <Plug>SlimeSendCell
 
