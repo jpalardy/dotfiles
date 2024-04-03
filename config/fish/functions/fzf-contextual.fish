@@ -2,8 +2,7 @@ function __fzf_contextual
   # nodejs
   if [ -e "package.json" ]
     echo "npm outdated"
-    echo "ncu -u; npm install; git add package*; npm audit fix"
-    echo "rm -rf package-lock.json node_modules; npm install"
+    echo "ncu -u; and npm install; and git add package*; and npm audit fix; and rm -rf package-lock.json node_modules; and npm install"
   end
 
   # go
@@ -16,9 +15,7 @@ function __fzf_contextual
   if [ -e "mix.exs" ]
     echo "mix deps.get"
     echo "mix deps.compile"
-    echo "mix deps.update --all"
-    echo "mix deps.unlock --unused"
-    echo "vim -O mix.*"
+    echo "mix deps.update --all; and mix deps.unlock --unused"
     echo ""
     test -d .elixir_ls; and echo "rm -rf -v .elixir_ls"
     test -d _build;     and echo "rm -rf -v _build"
@@ -31,13 +28,6 @@ function __fzf_contextual
     echo "gleam test"
     echo "gleam format"
     echo "gleam clean"
-  end
-
-  # exercism: gleam
-  if [ -e "gleam.toml" -a -e ".exercism" ]
-    echo ""
-    echo 'vim $(ff "gleam\$") -O'
-    echo 'ff "gleam\$" | entr -c ding gleam test'
   end
 
   # vimrepl
