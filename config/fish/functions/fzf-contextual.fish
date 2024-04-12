@@ -2,7 +2,9 @@ function __fzf_contextual
   # nodejs
   if [ -e "package.json" ]
     echo "npm outdated"
-    echo "ncu -u; and npm install; and git add package*; and npm audit fix; and rm -rf package-lock.json node_modules; and npm install"
+    echo "ncu -u"
+    echo "npm install"
+    echo "git add package*; npm audit fix; rm -rf package-lock.json node_modules; npm install"
   end
 
   # go
