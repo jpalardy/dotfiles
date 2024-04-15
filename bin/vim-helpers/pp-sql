@@ -13,32 +13,6 @@ format() {
 
 awk '
 
-# -------------------------------------------------
-# head $table
-# -------------------------------------------------
-
-$1 == "head" {
-  table = $2
-  if (!table) { table = "_table_" }
-
-  printf("SELECT * FROM %s LIMIT 15;\n", table)
-  next
-}
-
-# -------------------------------------------------
-# count $table
-# -------------------------------------------------
-
-$1 == "count" {
-  table = $2
-  if (!table) { table = "_table_" }
-
-  printf("SELECT _column_, count(*) FROM %s GROUP BY 1 ORDER BY 1;\n", table)
-  next
-}
-
-# -------------------------------------------------
-
 {
   regular_lines++
   sub(";$", "")
