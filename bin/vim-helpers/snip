@@ -166,11 +166,12 @@ BEGIN {
   snip("sql:ea",   "EXPLAIN ANALYZE")
   snip("sql:cte",  "WITH results AS (\n▒\n-- ), other_results AS (\n)\nSELECT * FROM results WHERE ...")
   snip("sql:csv",  "\\copy (SELECT * FROM table) to 'table.csv' with csv header")
-  snip("sql:psql", "\\pset pager off\n\\pset null NULL\n\\x auto\n--\\pset format wrapped")
-  snip("sql:ssf",  "SELECT * FROM _table_")
-  snip("sql:ssfl", "SELECT * FROM _table_▒ LIMIT 15")
-  snip("sql:scf",  "SELECT count(*) FROM _table_")
-  snip("sql:sccf", "SELECT _column_, count(*) FROM _table_▒ GROUP BY 1 ORDER BY 1")
+  snip("sql:psql", "\\pset pager off\n\\pset null NULL\n\\x auto")
+  cycle("sql",     "format", "\\pset format wrapped", "\\pset format aligned")
+  snip("sql:ssf",  "SELECT * FROM ")
+  snip("sql:scf",  "SELECT count(*) FROM ")
+  snip("sql:sccf", "SELECT _column_, count(*) FROM ▒ GROUP BY 1 ORDER BY 1")
+  snip("sql:lim",  "LIMIT 15")
 
   #-------------------------------------------------
   # gitcommit
