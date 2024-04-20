@@ -35,4 +35,4 @@
 [pretty]
   colorful = "%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(auto)%d%Creset %C(dim white)%an%Creset"
 [merge]
-	conflictstyle = zdiff3
+  conflictstyle = zdiff3
