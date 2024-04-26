@@ -24,10 +24,8 @@ function! slime#common#write_paste_file(text)
   if !isdirectory(paste_dir)
     call mkdir(paste_dir, "p")
   endif
-  let output = slime#common#system("cat > %s", [slime#config#resolve("paste_file")], a:text)
-  if v:shell_error
-    echoerr output
-  endif
+  let lines = slime#common#lines(a:text)
+  call writefile(lines, slime#config#resolve("paste_file"))
 endfunction
 
 function! slime#common#capitalize(text)
@@ -35,7 +33,12 @@ function! slime#common#capitalize(text)
 endfunction
 
 function! slime#common#system(cmd_template, args, ...)
-  let escaped_args = map(copy(a:args), "shellescape(v:val)")
+  if &l:shell !=# "cmd.exe"
+      let escaped_args = map(copy(a:args), "shellescape(v:val)")
+  else
+      let escaped_args = a:args
+  endif
+
   let cmd = call('printf', [a:cmd_template] + escaped_args)
 
   if slime#config#resolve("debug")

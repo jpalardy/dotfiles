@@ -182,6 +182,7 @@ Notes:
   * `erblint`
   * `erubi`
   * `erubis`
+  * `htmlbeautifier`
   * `ruumba`
 * Erlang
   * `SyntaxErl`
@@ -274,6 +275,8 @@ Notes:
   * `rustywind`
   * `tidy`
   * `write-good`
+* Hurl
+  * `hurlfmt`
 * Idris
   * `idris`
 * Ink
@@ -421,6 +424,8 @@ Notes:
   * `ocamlformat`
   * `ocamllsp`
   * `ocp-indent`
+  * `ols`
+* Odin
   * `ols`
 * OpenApi
   * `ibm_validator`
@@ -675,6 +680,7 @@ Notes:
 * Verilog
   * `hdl-checker`
   * `iverilog`
+  * slang
   * `verilator`
   * `vlog`
   * `xvlog`

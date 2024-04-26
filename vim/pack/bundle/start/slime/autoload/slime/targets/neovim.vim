@@ -105,18 +105,25 @@ function! slime#targets#neovim#send(config, text) abort
     call chansend(str2nr(a:config["jobid"]), split(a:text, "\n", 1))
   elseif exists("b:slime_config") " using exists instead of resolve here because slime_config is explicitly called as b:slime_config in the base send function
       call s:sure_clear_buf_config()
-      unlet b:slime_config
+      let b:slime_config = {}
   endif
 endfunction
 
 function! slime#targets#neovim#SlimeAddChannel(buf_in) abort
   let buf_in = str2nr(a:buf_in)
-  " check if the buffer is a terminal and not hidden
-  if !buflisted(buf_in) || getbufvar(buf_in, "&buftype") != "terminal"
+
+  if slime#config#resolve("neovim_ignore_unlisted") && !buflisted(buf_in)
     return
   endif
 
+  " only interactive terminals havve the &channel option, it is one of their defining properties
+  " this is poorly documented
+  " getbufvar returns "" when the option/variable lit looks for isn't found
   let jobid = getbufvar(buf_in, "&channel")
+  if jobid == ""
+    return
+  endif
+
   let job_pid = jobpid(jobid)
 
   if !exists("g:slime_last_channel")
@@ -130,13 +137,19 @@ function! slime#targets#neovim#SlimeClearChannel(buf_in) abort
   if !exists("g:slime_last_channel")
     call s:clear_all_buffs()
     return
-  elseif len(g:slime_last_channel) <= 1
+  elseif len(g:slime_last_channel) == 0
     call s:clear_all_buffs()
     unlet g:slime_last_channel
   else
-    let jobid_to_clear = filter(copy(g:slime_last_channel), {_, val -> val['bufnr'] == a:buf_in})[0]['jobid']
-    call s:clear_related_bufs(jobid_to_clear)
-    call filter(g:slime_last_channel, {_, val -> val['bufnr'] != a:buf_in})
+    let last_channel_copy =  copy(g:slime_last_channel)
+    let filtered_last_channels = filter(last_channel_copy, {_, val -> val['bufnr'] == a:buf_in})
+
+    if len(filtered_last_channels) > 0
+      let jobid_to_clear = filtered_last_channels[0]['jobid']
+      call s:clear_related_bufs(jobid_to_clear)
+      call filter(g:slime_last_channel, {_, val -> val['bufnr'] != a:buf_in})
+    endif
+
   endif
 endfunction
 
