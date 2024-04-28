@@ -40,17 +40,17 @@ flush() {
 check_bin tmux
 check_bin rg          ripgrep
 check_bin fzf
-check_bin jq
-check_bin gpg
-check_bin curl
-check_bin wget
-check_bin qrencode
-check_bin pwgen
-check_bin xsv
-check_bin utimer
 check_bin parallel
-check_bin entr
-check_bin watch
+check_bin curl
+check_bin gpg
+check_bin pwgen
+check_bin qrencode
+check_bin utimer
+flush
+
+# data
+check_bin jq
+check_bin xsv
 flush
 
 # experimental
@@ -62,11 +62,14 @@ check_bin pstree
 check_bin cloc
 flush
 
-# linters
+# dev
 check_bin jsonlint "jsonlint @ npm"
 check_bin fixjson  "fixjson @ npm"
+check_bin prettier "prettier @ npm"
 check_bin shellcheck
 check_bin yamllint
 check_bin pg_format pgformatter
+check_bin entr
+check_bin watch
 flush
 
