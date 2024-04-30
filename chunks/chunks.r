@@ -51,6 +51,22 @@ display.brewer.pal(5, "Greens")
 geom_point(.., show.legend=FALSE, alpha=0.4, size=2.5, stroke=0) +
 
 #-------------------------------------------------
+# full read_
+#-------------------------------------------------
+
+d <- read_tsv(filename,
+       col_names=c("...", "..."),
+       col_types=cols(
+         "..." = col_datetime(),
+         "..." = col_character(),
+         "..." = col_factor(),
+         "..." = col_number(),
+     ))
+
+# d |> spec()
+# d |> spec() |> cols_condense()
+
+#-------------------------------------------------
 # types of lines
 #-------------------------------------------------
 
