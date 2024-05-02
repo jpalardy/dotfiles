@@ -7,6 +7,6 @@ result=$(
 )
 
 if [ -n "$result" ]; then
-  vim -q <(rg -i "$result" --vimgrep) -c "call ToggleQuickfix()"
+  vim -q <(rg -i "$result" --vimgrep)
 fi
 
