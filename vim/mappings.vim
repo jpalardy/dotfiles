@@ -112,6 +112,7 @@ endfunction
 
 " APPEND quickfix format info TO .ws FILE
 nnoremap ,, :call writefile([<SID>currentLineInGrepFormat()], ".ws", "a")<CR>
+nnoremap ,< :cfile .ws<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
