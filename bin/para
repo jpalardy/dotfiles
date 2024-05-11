@@ -4,6 +4,10 @@ if test $# == 0; then
   cat >&2 <<EOM
 Usage: $(basename "$0") -e "..."
 
+Examples
+  - para -e 'para < 4'    # first 3 paragraphs
+  - para -e 'line <= 2'   # first 2 lines, each paragraph
+
 variables:
   - blank   current line is blank
   - line    line count, inside paragraph (-1 otherwise)

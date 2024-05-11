@@ -4,6 +4,9 @@ if test $# == 0; then
   cat >&2 <<EOM
 Usage: $(basename "$0") -e "..."
 
+Examples
+  - split-on -e '{ curr = \$1 }'
+
 variables:
   - curr    current value to compare and split on
   - prev    prev value
