@@ -21,10 +21,5 @@ clean:
 reset: clean
 	rm -rf $(dirs)
 
-#-------------------------------------------------
-
-slime-switch:
-	if test -d slime; then rm -rf slime && ln -s ~/.github/vim-slime-ext-plugins .; else rm vim-slime-ext-plugins && git checkout slime; fi
-
 -include .deps.mk
 
