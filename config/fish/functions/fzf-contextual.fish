@@ -24,14 +24,6 @@ function __fzf_contextual
     test -d deps;       and echo "rm -rf -v deps"
   end
 
-  # gleam
-  if [ -e "gleam.toml" ]
-    echo "gleam build"
-    echo "gleam test"
-    echo "gleam format"
-    echo "gleam clean"
-  end
-
   # vimrepl
   test -e "report.Rmd"; and echo "vimrepl Rmd -c R -f report.Rmd"
   for f in _vimrepl.*
