@@ -22,6 +22,7 @@ confirm() {
 # -------------------------------------------------
 
 brew update
+brew autoremove
 brew outdated
 
 if confirm "upgrade?"; then
