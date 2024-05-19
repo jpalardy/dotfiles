@@ -22,3 +22,13 @@ function serve
     or python -m SimpleHTTPServer $port
 end
 
+#-------------------------------------------------
+
+function implode
+  echo $PWD | fzf | read -l target
+  if test -n "$target"
+    cd ..
+    rm -rf -v $target
+  end
+end
+
