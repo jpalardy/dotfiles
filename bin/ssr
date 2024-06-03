@@ -65,7 +65,6 @@ flush
 # dev
 check_bin jsonlint "jsonlint @ npm"
 check_bin fixjson  "fixjson @ npm"
-check_bin prettier "prettier @ npm"
 check_bin shellcheck
 check_bin yamllint
 check_bin pg_format pgformatter
