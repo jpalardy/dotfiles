@@ -1,0 +1,45 @@
+#!/usr/bin/env awk-f
+
+function abs(num) {
+  return num < 0 ? -num : num
+}
+
+function max(a, b) {
+  return a > b ? a : b
+}
+
+function guess_indent(prev, current) {
+  if (current > prev) {
+    return prev + 2
+  }
+  return 0
+}
+
+# -------------------------------------------------
+
+BEGINFILE {
+  prev_indent = 0
+}
+
+{
+  match($0, /^ +/)
+  indent = max(0, RLENGTH)
+  diff_indent = indent - prev_indent
+  good_indent = indent == 0 || diff_indent <= 2 && abs(diff_indent) % 2 == 0
+
+  if (!good_indent) {
+    new_indent = guess_indent(prev_indent, indent)
+    for (i=1; i <= new_indent; i++) {
+      printf(" ")
+    }
+    print substr($0, RLENGTH + 1)
+    prev_indent = new_indent
+    next
+  }
+
+  prev_indent = indent
+}
+
+# print pass-through
+{ print }
+
