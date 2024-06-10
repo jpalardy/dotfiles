@@ -54,6 +54,7 @@ check_bin xsv
 flush
 
 # experimental
+check_bin nvim "neovim"
 check_bin htop
 check_bin duf
 check_bin dust

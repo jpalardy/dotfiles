@@ -11,6 +11,8 @@ abbr --add _t 'echo $CMD_DURATION'
 abbr --add --position anywhere @u @{upstream}
 abbr --add --position anywhere ..@u ..@{upstream}
 
+alias nv nvim
+
 #-------------------------------------------------
 
 function serve
