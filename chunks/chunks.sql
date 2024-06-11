@@ -76,13 +76,3 @@ SELECT * FROM results;
 -- .pgpass @ 600
 -- hostname:port:database:username:password
 
---  -------------------------------------------------
---  mysql
---  -------------------------------------------------
-
-SHOW INDEX from tableName;
-
-SHOW CREATE VIEW viewName;
-
-SHOW TRIGGERS;
-
