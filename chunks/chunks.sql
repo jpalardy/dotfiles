@@ -57,7 +57,7 @@ FROM pg_stat_user_tables
 WHERE seq_scan > 0
 ORDER BY seq_tup_read DESC;
 
---  -------------------------------------------------
+-- -------------------------------------------------
 
 -- temporary table; for export
 DROP TABLE IF EXISTS results;
@@ -75,4 +75,10 @@ SELECT * FROM results;
 
 -- .pgpass @ 600
 -- hostname:port:database:username:password
+
+-- -------------------------------------------------
+
+-- dump schema-only
+
+pg_dump --schema-only databasename
 
