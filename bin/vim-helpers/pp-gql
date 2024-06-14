@@ -1,0 +1,4 @@
+#!/bin/bash
+
+prettier --parser graphql "$@"
+
