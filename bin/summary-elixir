@@ -6,75 +6,49 @@ BEGIN {
   CLEAR_ATTRS  = "\033[0m"
   BOLD         = "\033[1m"
   DIM          = "\033[2m"
-
   COLOR_RED    = "\033[31m"
   COLOR_GREEN  = "\033[32m"
   COLOR_YELLOW = "\033[33m"
   COLOR_BLUE   = "\033[34m"
-}
 
-NR == current_line {
-  print "-------------------------------------------------"
+  highlights["def"] = COLOR_GREEN
+  highlights["defp"] = DIM
+  highlights["defmodule"] = COLOR_BLUE
+  highlights["defdelegate"] = BOLD COLOR_GREEN
+  highlights["defmacro"] = COLOR_RED
+  highlights["defimpl"] = COLOR_YELLOW
+  highlights["@callback"] = COLOR_YELLOW
+  highlights["@behaviour"] = COLOR_YELLOW
+
+  highlights["describe"] = BOLD
+  highlights["setup"] = COLOR_YELLOW
+  highlights["test"] = ""
 }
 
 $1 == "@impl" {
   impl = 1
 }
 
-$1 == "defmodule" {
-  print COLOR_BLUE $0 CLEAR_ATTRS
+$1 in highlights {
+  # remove details
+  sub("^ *", "")
+  sub("\\(.*", "")
+  sub(", do:.*", "")
+  sub(" do$", "")
+
+  if (impl) { printf BOLD }
+  print highlights[$1] $0 CLEAR_ATTRS
+
   impl = 0
 }
 
-$1 == "def" {
-  sub("\\(.*", "")
-  if (impl) {
-    printf BOLD
-  }
-  print COLOR_GREEN $1, $2 CLEAR_ATTRS
-  impl = 0
-}
-
-$1 == "defp" {
-  sub("\\(.*", "")
-  print DIM $1, $2 CLEAR_ATTRS
-}
-
-$1 == "defdelegate" {
-  sub("\\(.*", "")
-  printf BOLD
-  print COLOR_GREEN $1, $2 CLEAR_ATTRS
-}
-
-$1 == "defmacro" {
-  sub("\\(.*", "")
-  print COLOR_RED $1, $2 CLEAR_ATTRS
-}
-
-$1 == "defimpl" || $1 == "@callback" || $1 == "@behaviour" {
-  sub("^ +", "")
-  print COLOR_YELLOW $0 CLEAR_ATTRS
-}
-
-$1 == "describe" {
-  print BOLD $0 CLEAR_ATTRS
-}
-
-$1 == "setup" {
-  print COLOR_YELLOW $0 CLEAR_ATTRS
-}
-
-$1 == "test" {
-  print
+NR == current_line {
+  print "[...]"
 }
 
 ' "$@" | uniq -c | awk '
 
-$1 == 1 {
-  sub("1", " ")
-}
-
+$1 == 1 { sub("1", " ") }
 { print }
 
 '
-
