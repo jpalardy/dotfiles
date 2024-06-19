@@ -1,7 +1,0 @@
-#!/bin/bash
-
-test_files=$(printf "%s\n" "$@" | rg '_test.exs$')
-
-# shellcheck disable=SC2086
-printf "%s\n" "$@" | entr ding mix test $test_files
-
