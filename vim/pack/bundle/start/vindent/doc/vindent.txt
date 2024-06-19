@@ -481,6 +481,26 @@ large file.  See |:VindentJumps| for more details.
 		and "spaces" are visible.  The command |:VindentHighlight!|
 		clears the highlighting.
 
+						*VindentInfer!*
+:VindentInfer[!]				*VindentInfer*
+g:vindent_infer					*g:vindent_infer*
+		Whether `vindent` tries to infer the indentation of the
+		indentation of the current line if it is empty. By default,
+		|g:vindent_infer| is set to 0, i.e., `vindent` will simply
+		view empty lines as empty. You can toggle |g:vindent_infer|
+		with command |:VindentInfer|.  The command |:VindentInfer!|
+		shows the state of |g:vindent_infer|.
+
+g:vindent_block_ending				*g:vindent_block_ending*
+		A list of symbols that `vindent` considers to mark the end
+		of a code block.  A reasonable setting would be >
+			let g:vindent_block_ending = [')', ']', '}', 'end']
+<		This variable would only be used when |g:vindent_infer| is
+		set to 1, i.e., only when `vindent` is guessing the indent
+		level of an empty line.  By default, this variable is
+		undefined.  `vindent` can still try to infer the indent level
+		of an empty line if |g:vindent_block_ending| is undefined.
+
 						*VindentBegin!*
 :VindentBegin[!]				*VindentBegin*
 g:vindent_begin					*g:vindent_begin*
@@ -501,7 +521,7 @@ g:vindent_jumps					*g:vindent_jumps*
 		shows the state of |g:vindent_jumps|.
 
 		Since it is unlikely that you would change this setting often,
-		it is advised that you simply set |g:vindent_jumps| in your 
+		it is advised that you simply set |g:vindent_jumps| in your
 		vimrc.
 
 						*:VindentNoisy!*

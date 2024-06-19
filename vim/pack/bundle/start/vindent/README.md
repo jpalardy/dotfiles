@@ -224,17 +224,27 @@ For more details please refer to the [`doc`](doc/vindent.txt), section `vindent_
 
 ## Global Settings
 
-Here are some gobal settings:
+Here are some gobal settings.
+Simply set the variables with the keybindings as shown in [Usage](#usage-and-quick-start).
+You can use the corresponding command listed above to toggle the settings on the fly.
 
 | Setting/Variable  | Value                     | Description                                                            | Command to Toggle Setting |
-|-------------------|---------------------------|------------------------------------------------------------------------|---------------------------|
+| ----------------- | ------------------------- | ---------------------------------------------------------------------- | ------------------------- |
 | `g:vindent_begin` | `0` or `1` (default: `1`) | whether to move cursor to the beginning of line after a vindent motion | `:VindentBegin`           |
 | `g:vindent_count` | `0` or `1` (default: `1`) | see the end of section [Vindent Text Objects](#vindent-text-object)    |                           |
 | `g:vindent_jumps` | `0` or `1` (default: `0`) | whether a vindent motion is added to the jumplist                      | `:VindentJumps`           |
 | `g:vindent_noisy` | `0` or `1` (default: `0`) | whether vindent motion throws an error if the cursor does not move     | `:VindentNoisy`           |
+| `g:vindent_infer` | `0` or `1` (default: `0`) | whether vindent tries to infer indentation of empty lines by context   | `:VindentInfer`           |
+| `g:vindent_block_ending`| a list of strings (default: undefined) | tells `vindent.vim` which patterns are considered to be end of code blocks when trying to infer indentation of empty lines (see below) | |
 
-Simply set the variables with the keybindings as shown in [Usage](#usage-and-quick-start).
-You can use the corresponding command listed above to toggle the settings on the fly.
+If `g:vindent_infer` is set to `1` and `g:vindent_block_ending` is left undefined,
+then vindent will guess the indentation of empty lines by using the max indentation of nearby lines;
+If `g:vindent_block_ending` is also defined,
+then vindent will try to infer indentation by checking whether the current empty line is at the edge of a code block.
+An example of `g:vindent_block_ending` would be:
+```vim
+let g:vindent_block_ending = [ ')', ']', '}', 'end', 'else', 'elif' ]
+```
 
 For more details please refer to the [`doc`](doc/vindent.txt), section `vindent_Miscellaneous`.
 
