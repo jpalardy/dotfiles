@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# -------------------------------------------------
+
+if test -e "$HOME/.github/ding/bin/ding"; then
+  "$HOME/.github/ding/bin/ding" "$@"
+  exit $?
+fi
+
+# -------------------------------------------------
+
 play_sound() {
   if ! command -v afplay &>/dev/null; then
     echo >&2 "ding: cannot play sound!"
