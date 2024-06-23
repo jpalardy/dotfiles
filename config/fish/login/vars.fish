@@ -43,4 +43,5 @@ set -g __fish_git_prompt_char_upstream_behind '-'
 
 fish_add_path -g "$HOME/local/bin"
 fish_add_path -g "$DOTFILES/bin"
+fish_add_path -g "$DOTFILES/bin/local"
 

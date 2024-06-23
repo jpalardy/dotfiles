@@ -1,4 +1,5 @@
 bash/local
+bin/local
 config/fish/local
 config/fish/fish_variables
 vim/spell/
