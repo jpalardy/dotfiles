@@ -5,9 +5,6 @@ abbr --add rsy "rsync -av --progress"
 abbr --add pwgen "pwgen -cny 30"
 alias R "R --quiet --no-save --no-restore"
 
-abbr --add _a --set-cursor "awk '{print %}'"
-abbr --add _t 'echo $CMD_DURATION'
-
 abbr --add --position anywhere @u @{upstream}
 abbr --add --position anywhere ..@u ..@{upstream}
 
