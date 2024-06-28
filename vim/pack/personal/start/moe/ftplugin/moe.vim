@@ -32,3 +32,5 @@ execute ale#fix#registry#Add('moefix', 'FormatMoe', ['moe'], 'Fix moe with moefi
 
 let b:ale_fixers = ['moefix']
 
+setlocal nonumber
+
