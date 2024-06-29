@@ -1,8 +1,0 @@
-#!/bin/bash
-
-# MANPAGER can be set to this ...
-# but different man versions respond poorly to pipe in that var ...
-# this is my quick workaround
-
-col -b | vim -c 'set ft=man ts=8 nomod noma' -
-

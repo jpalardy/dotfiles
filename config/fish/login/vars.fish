@@ -24,7 +24,7 @@ set -x FZF_CTRL_T_COMMAND "rg --files --no-ignore-parent --sort path"
 set -x CLICOLOR 1    # used by `tree`, possibly others
 set -x RIPGREP_CONFIG_PATH ~/dotfiles/ripgreprc
 
-set -x MANPAGER "manpager"
+set -x MANPAGER "vim +MANPAGER -"
 
 #-------------------------------------------------
 # PROMPT
