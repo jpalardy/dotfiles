@@ -82,9 +82,15 @@ nnoremap ,a :exe "!clear; CURRENT_LINE=" . line(".") . " summary-" . &ft . " " .
 
 nnoremap ,wd :windo normal 
 
+function! s:widthWithGutter(lines)
+  let max_width = max(map(a:lines,'len(v:val)'))
+  let gutter = (&number ? &numberwidth : 0)
+  return max_width + gutter
+endfunction
+
 " FIT WIDTH TO LONGEST LINE
-nnoremap ,- :execute "vertical resize" . max(map(getline(1,'$'),'len(v:val)'))<CR>
-vnoremap ,- <ESC>:execute "vertical resize" . max(map(getline("'<","'>"),'len(v:val)'))<CR>
+nnoremap ,- :execute "vertical resize" . <SID>widthWithGutter(getline(1,'$'))<CR>
+vnoremap ,- <ESC>:execute "vertical resize" . <SID>widthWithGutter(getline("'<","'>"))<CR>
 
 " OPEN xxd OF CURRENT BUFFER
 nnoremap ,x :execute ":vnew \| :Scratchy \"xxd " . expand("%") . "\""<CR>:set ft=xxd<CR>
