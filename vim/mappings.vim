@@ -85,7 +85,8 @@ nnoremap ,wd :windo normal
 function! s:widthWithGutter(lines)
   let max_width = max(map(a:lines,'len(v:val)'))
   let gutter = (&number ? &numberwidth : 0)
-  return max_width + gutter
+  let padding = 2
+  return max_width + gutter + padding
 endfunction
 
 " FIT WIDTH TO LONGEST LINE
