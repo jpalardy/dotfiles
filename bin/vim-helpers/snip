@@ -133,6 +133,7 @@ BEGIN {
   snip("elixir:pry",   "require IEx; IEx.pry()")
   snip("elixir:inf",   "infinity")
   snip("elixir:tc",    "{usec, result} = :timer.tc(fn -> ▒ end)")
+  snip("elixir:!",     "raise \"hell\"")
   cycle("elixir",      "@", "@tag :", "@tag :focus")
   cycle("elixir",      "IO.", "IO.inspect()", "IO.inspect(label: \"***** #{Path.relative_to_cwd(__ENV__.file)}:#{__ENV__.line}\")")
   #-------------------------------------------------
