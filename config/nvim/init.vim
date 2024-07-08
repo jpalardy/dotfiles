@@ -15,3 +15,11 @@ nmap <c-c>q     :SlimeSend0 "q"<CR>
 nmap <c-c>j     <c-c><c-c>}j
 nmap <c-c>}     <c-c><c-c>}j
 
+" -------------------------------------------------
+" TELESCOPE
+" -------------------------------------------------
+
+nnoremap ,ff <cmd>Telescope find_files<cr>
+nnoremap ,fg <cmd>Telescope live_grep<cr>
+nnoremap ,fb <cmd>Telescope buffers<cr>
+nnoremap ,fh <cmd>Telescope help_tags<cr>
