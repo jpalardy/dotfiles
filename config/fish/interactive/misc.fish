@@ -11,6 +11,7 @@ abbr --add --position anywhere ..@u ..@{upstream}
 alias nv nvim
 
 abbr --add nwst --set-cursor 'ls -t % | head -n1'
+abbr --add untilfail --set-cursor 'while %; end'
 
 #-------------------------------------------------
 
