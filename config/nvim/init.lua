@@ -26,3 +26,12 @@ vim.keymap.set('n', ',fg', ':Telescope live_grep<CR>')
 vim.keymap.set('n', ',fb', ':Telescope buffers<CR>')
 vim.keymap.set('n', ',fh', ':Telescope help_tags<CR>')
 
+-------------------------------------------------
+
+require('nvim-treesitter.configs').setup {
+  auto_install = true,
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}
