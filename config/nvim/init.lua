@@ -1,6 +1,26 @@
 
+-- general
+vim.opt.wrap = false
+vim.opt.number = true
+vim.opt.writebackup = false
+vim.opt.completeopt = {'menuone', 'popup'}
+vim.opt.mouse = 'i'
+
+-- search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
+-- split
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+-- indent
+vim.opt.expandtab = true
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.virtualedit = 'block'
+vim.opt.scrolloff = 1
 
 -------------------------------------------------
 -- SLIME
