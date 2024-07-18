@@ -6,6 +6,14 @@ vim.opt.writebackup = false
 vim.opt.completeopt = {'menuone', 'popup'}
 vim.opt.mouse = 'i'
 
+-- edit
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function()
+    vim.opt_local.formatoptions:remove("o")
+    vim.opt_local.formatoptions:remove("r")
+  end,
+})
+
 -- search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
