@@ -29,7 +29,12 @@ end)
 bindMove({"ctrl", "alt"}, "up", function(win, screen)
   -- vertical space for teams...
   if win.y == screen.y then
-    win.y = screen.y + 55
+    win.y = screen.y + 25
+    return
+  end
+  -- vertical space for teams...
+  if win.y == screen.y + 25 then
+    win.y = screen.y + 50
     return
   end
   win.y = screen.y
