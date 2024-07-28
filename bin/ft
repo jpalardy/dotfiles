@@ -1,13 +1,5 @@
 #!/usr/bin/env awk-f
 
-function add_days(dt, i) {
-  return strftime("%F", dt + (24 * 60 * 60) * i)
-}
-
-function add_weeks(dt, i) {
-  return strftime("%F", dt + 7 * (24 * 60 * 60) * i)
-}
-
 function dim_if(cond, str) {
   if (cond && color) {
     return sprintf("%s%s%s", "\x1b[2m", str, "\x1b[22m")
@@ -15,20 +7,28 @@ function dim_if(cond, str) {
   return str
 }
 
-function add_months(dt, i) {
+function add_days(dt, di) {
+  return strftime("%F", dt + (24 * 60 * 60) * di)
+}
+
+function add_weeks(dt, di) {
+  return strftime("%F", dt + 7 * (24 * 60 * 60) * di)
+}
+
+function add_months(dt, di) {
   yyyy = strftime("%Y", dt)
   mm = strftime("%m", dt)
   dd = strftime("%d", dt)
 
   # skip over 12-month chunks
-  yyyy += int(i / 12)
-  i = i % 12
+  yyyy += int(di / 12)
+  di = di % 12
 
-  if (mm + i > 12) {
+  if (mm + di > 12) {
     yyyy += 1
-    i = i - 12
+    di = di - 12
   }
-  mm += i
+  mm += di
 
   date = mktime(sprintf("%s %s %s 0 0 0", yyyy, mm, dd))
   date_isostr = sprintf("%s-%02d-%02d", yyyy, mm, dd)
