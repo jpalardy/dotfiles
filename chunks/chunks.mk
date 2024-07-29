@@ -73,7 +73,7 @@ endif
 
 #-------------------------------------------------
 # other tips:
-# Your Makefiles are wrong · Jacob Davis-Hansson
+# Your Makefiles are wrong | Jacob Davis-Hansson
 #   https://tech.davis-hansson.com/p/make/
 #-------------------------------------------------
 
