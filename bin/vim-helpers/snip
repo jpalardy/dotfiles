@@ -107,7 +107,7 @@ BEGIN {
   for (i = 1; i <= n; i++) {
     snip(arr[i] ":fn",   "function ▒() {\n}")
     snip(arr[i] ":fori", "for (let i = 0; i < ▒; i += 1) {")
-    snip(arr[i] ":fe",   "forEach(▒)")
+    snip(arr[i] ":.fe",   ".forEach(▒)")
     snip(arr[i] ":iife", "(() => {\n▒\n})();")
   }
 
