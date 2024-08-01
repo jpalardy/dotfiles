@@ -1,0 +1,145 @@
+#!/usr/bin/env awk-f
+
+BEGIN {
+  kana["あ"] = "a"
+  kana["い"] = "i"
+  kana["う"] = "u"
+  kana["え"] = "e"
+  kana["お"] = "o"
+  kana["か"] = "ka"
+  kana["き"] = "ki"
+  kana["く"] = "ku"
+  kana["け"] = "ke"
+  kana["こ"] = "ko"
+  kana["が"] = "ga"
+  kana["ぎ"] = "gi"
+  kana["ぐ"] = "gu"
+  kana["げ"] = "ge"
+  kana["ご"] = "go"
+  kana["さ"] = "sa"
+  kana["し"] = "shi"
+  kana["す"] = "su"
+  kana["せ"] = "se"
+  kana["そ"] = "so"
+  kana["ざ"] = "za"
+  kana["じ"] = "ji"
+  kana["ず"] = "zu"
+  kana["ぜ"] = "ze"
+  kana["ぞ"] = "zo"
+  kana["た"] = "ta"
+  kana["ち"] = "chi"
+  kana["つ"] = "tsu"
+  kana["て"] = "te"
+  kana["と"] = "to"
+  kana["だ"] = "da"
+  kana["ぢ"] = "ji"
+  kana["づ"] = "zu"
+  kana["で"] = "de"
+  kana["ど"] = "do"
+  kana["な"] = "na"
+  kana["に"] = "ni"
+  kana["ぬ"] = "nu"
+  kana["ね"] = "ne"
+  kana["の"] = "no"
+  kana["は"] = "ha"
+  kana["ひ"] = "hi"
+  kana["ふ"] = "fu"
+  kana["へ"] = "he"
+  kana["ほ"] = "ho"
+  kana["ば"] = "ba"
+  kana["び"] = "bi"
+  kana["ぶ"] = "bu"
+  kana["べ"] = "be"
+  kana["ぼ"] = "bo"
+  kana["ぱ"] = "pa"
+  kana["ぴ"] = "pi"
+  kana["ぷ"] = "pu"
+  kana["ぺ"] = "pe"
+  kana["ぽ"] = "po"
+  kana["ま"] = "ma"
+  kana["み"] = "mi"
+  kana["む"] = "mu"
+  kana["め"] = "me"
+  kana["も"] = "mo"
+  kana["や"] = "ya"
+  kana["ゆ"] = "yu"
+  kana["よ"] = "yo"
+  kana["ら"] = "ra"
+  kana["り"] = "ri"
+  kana["る"] = "ru"
+  kana["れ"] = "re"
+  kana["ろ"] = "ro"
+  kana["わ"] = "wa"
+  kana["を"] = "wo"
+  kana["ん"] = "n"
+  kana["きゃ"] = "kya"
+  kana["きゅ"] = "kyu"
+  kana["きょ"] = "kyo"
+  kana["ぎゃ"] = "gya"
+  kana["ぎゅ"] = "gyu"
+  kana["ぎょ"] = "gyo"
+  kana["しゃ"] = "sha"
+  kana["しゅ"] = "shu"
+  kana["しょ"] = "sho"
+  kana["じゃ"] = "ja"
+  kana["じゅ"] = "ju"
+  kana["じょ"] = "jo"
+  kana["ちゃ"] = "cha"
+  kana["ちゅ"] = "chu"
+  kana["ちょ"] = "cho"
+  kana["にゃ"] = "nya"
+  kana["にゅ"] = "nyu"
+  kana["にょ"] = "nyo"
+  kana["ひゃ"] = "hya"
+  kana["ひゅ"] = "hyu"
+  kana["ひょ"] = "hyo"
+  kana["びゃ"] = "bya"
+  kana["びゅ"] = "byu"
+  kana["びょ"] = "byo"
+  kana["ぴゃ"] = "pya"
+  kana["ぴゅ"] = "pyu"
+  kana["ぴょ"] = "pyo"
+  kana["みゃ"] = "mya"
+  kana["みゅ"] = "myu"
+  kana["みょ"] = "myo"
+  kana["りゃ"] = "rya"
+  kana["りゅ"] = "ryu"
+  kana["りょ"] = "ryo"
+}
+
+# -------------------------------------------------
+
+# grab longest possible match
+function getFront(str, si) {
+  front = substr(str, si, 2)
+  if (front in kana) {
+    return front
+  }
+  return substr(str, si, 1)
+}
+
+{
+  i = 1
+  while (i <= length($0)) {
+    front = getFront($0, i)
+    i += length(front)
+
+    # kana
+    if (front in kana) {
+      printf("%s", kana[front])
+      continue
+    }
+
+    # little tsu
+    if (front == "っ") {
+      next_kana = kana[getFront($0, i)]
+      printf("%s", substr(next_kana, 1, 1))
+      continue
+    }
+
+    # everything else
+    printf("%s", front)
+  }
+
+  print ""
+}
