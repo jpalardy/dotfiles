@@ -105,7 +105,7 @@ nnoremap ,2 :colorscheme codedark<CR>
 nnoremap ,3 :colorscheme solarized<CR>
 nnoremap ,4 :colorscheme gruvbox<CR>
 
-" SPLIT-MOVE
+" SPLIT-SEARCH
 nnoremap ,sa :sp<CR><c-w>k?
 
 " SUMMARY OF SEARCH IN CURRENT FILE
@@ -137,8 +137,6 @@ nnoremap ,do :call <SID>setDiffOpt()<CR>
 " BACKSLASH MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-vnoremap \d :<C-U>execute "'<,'> w diff-" . strftime("%s")<CR>
-
 " buffer
 nnoremap \<left>  :leftabove  vnew<CR>
 nnoremap \<right> :rightbelow vnew<CR>
@@ -149,7 +147,8 @@ nnoremap \<down>  :rightbelow new<CR>
 " OTHER MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <silent> Q :qa<CR>
+" noop
+nnoremap <silent> Q :<CR>
 
 " display line up/down (not actual)
 noremap <up> gk
