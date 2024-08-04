@@ -13,6 +13,8 @@ alias nv nvim
 abbr --add nwst --set-cursor 'ls -t % | head -n1'
 abbr --add untilfail --set-cursor 'while %; end'
 
+abbr --add 1pl 'printf "%s\n"'
+
 #-------------------------------------------------
 
 function serve
