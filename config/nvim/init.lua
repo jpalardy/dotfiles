@@ -17,6 +17,9 @@ vim.api.nvim_create_autocmd("FileType", {
 -- search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.keymap.set('n', '<ESC><SPACE>', ':nohl<CR>')
+vim.keymap.set('n', '<ESC>l', ':set list!<CR>')
+vim.keymap.set('n', '<ESC>n', ':set number!<CR>')
 
 -- split
 vim.opt.splitright = true
