@@ -35,9 +35,12 @@ BEGIN {
   # global
   #-------------------------------------------------
   snip("*:--",   "-------------------------------------------------")
-  snip("*:isod", strftime("%F"))
-  snip("*:td",   strftime("%F -- %A"))
-  snip("*:ts",   strftime("%s"))
+  today = strftime("%F")
+  snip("*:isod",   today)
+  snip("*:td",     today)
+  snip("*:" today, today strftime(" -- %A"))
+  snip("*:yd",     strftime("%F", systime() - 86400))
+  snip("*:ts",     strftime("%s"))
 
   # lorem ipsum filler text
   snip("*:lorem", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae efficitur sapien. Cras dictum auctor mattis. Morbi sed interdum metus. Curabitur sit amet eros in urna volutpat porta vel eget lacus. Praesent a rhoncus purus. Nullam purus erat, fermentum sit amet turpis et, consectetur rutrum ante. Suspendisse pharetra in felis vitae blandit. Suspendisse potenti. Cras vestibulum nibh nec scelerisque ullamcorper.")
