@@ -33,6 +33,8 @@ vim.opt.tabstop = 2
 vim.opt.virtualedit = 'block'
 vim.opt.scrolloff = 1
 
+vim.cmd('colorscheme gruvbox-material')
+
 -------------------------------------------------
 -- SLIME
 -------------------------------------------------
