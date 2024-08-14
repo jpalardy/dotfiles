@@ -36,7 +36,6 @@ BEGIN {
   #-------------------------------------------------
   snip("*:--",   "-------------------------------------------------")
   today = strftime("%F")
-  snip("*:isod",   today)
   snip("*:td",     today)
   snip("*:" today, today strftime(" -- %A"))
   snip("*:yd",     strftime("%F", systime() - 86400))
