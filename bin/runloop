@@ -1,7 +1,0 @@
-#!/bin/bash
-
-while true; do
-  "$@"
-  read -r -p "press enter to loop..."
-done
-
