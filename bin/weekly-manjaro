@@ -27,7 +27,7 @@ fi
 
 pacman -Syu
 
- dangling_packages=$(set +o pipefail && pacman -Qdt | awk '{print $1}')
+dangling_packages=$(set +o pipefail && pacman -Qdt | awk '{print $1}')
 if [ -n "$dangling_packages" ]; then
   # shellcheck disable=SC2086
   pacman -Rns $dangling_packages
