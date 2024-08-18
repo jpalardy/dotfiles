@@ -62,11 +62,7 @@ BEGIN {
   snip("*::think",  "🤔")
   snip("*::grim",   "😬")
   snip("*::grin",   "😄")
-  snip("*::clock",  "⏰")
-  snip("*::time",   "⏳")
-  snip("*:O",       "🔆")
   snip("*:X",       "❌")
-  snip("*:!",       "⚠️")
   snip("*::tada",   "🎉")
   snip("*::fire",   "🔥")
   snip("*::boom",   "💥")
@@ -122,15 +118,13 @@ BEGIN {
     snip(arr[i] ":fn", "function")
     snip(arr[i] ":|",  "%>%")
     snip(arr[i] ":>",  "%>%")
-    snip(arr[i] ":_",  ".Last.value");
+    snip(arr[i] ":_",  ".Last.value"); |>
   }
   snip("rmd:```",  "```{r}\n\n▒\n\n```");
 
   #-------------------------------------------------
   # elixir
   #-------------------------------------------------
-  snip("elixir:_m",    "__MODULE__")
-  snip("elixir:defm",  "defmodule")
   snip("elixir::clal", "charlists: :as_lists")
   snip("elixir:pry",   "require IEx; IEx.pry()")
   snip("elixir:inf",   "infinity")
@@ -183,10 +177,8 @@ BEGIN {
   #-------------------------------------------------
   # markdown
   #-------------------------------------------------
-  snip("markdown:a",     "[alt](url)")
-  snip("markdown:img",   "![alt](url)")
-  snip("markdown:img-a", "[![alt](url)](url)")
-  snip("markdown:hl",     "{% highlight ▒ %}\n{% endhighlight %}")
+  snip("markdown:a",   "[alt](url)")
+  snip("markdown:img", "[![alt](url)](url)")
 
   #-------------------------------------------------
   # deck
