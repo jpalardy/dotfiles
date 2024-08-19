@@ -118,7 +118,7 @@ BEGIN {
     snip(arr[i] ":fn", "function")
     snip(arr[i] ":|",  "%>%")
     snip(arr[i] ":>",  "%>%")
-    snip(arr[i] ":_",  ".Last.value"); |>
+    snip(arr[i] ":_",  ".Last.value");
   }
   snip("rmd:```",  "```{r}\n\n▒\n\n```");
 
