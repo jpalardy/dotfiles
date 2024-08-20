@@ -30,12 +30,3 @@ function __cut
   cut -c "1-$COLUMNS" $argv
 end
 
-#-------------------------------------------------
-
-function __ext
-  # delete to slash
-  # contains dot after first character
-  # delete to first dot
-  sed -E -e 's_.*/__' | rg '^..*\.' | sed -E -e 's/[^.]+//'
-end
-
