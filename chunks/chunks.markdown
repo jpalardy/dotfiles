@@ -1,13 +1,13 @@
 
 <!-- -------------------------------------------------
-     IMAGE / LINKED IMAGE
+IMAGE / LINKED IMAGE
 ------------------------------------------------- -->
 
  ![alt](/assets/dir/filename.ext)
 [![alt](/assets/dir/filename.ext)](/assets/dir/filename.ext)
 
 <!-- -------------------------------------------------
-     FOOTNOTES
+FOOTNOTES
 ------------------------------------------------- -->
 
 some [^1] thing
@@ -15,7 +15,7 @@ some [^1] thing
 [^1]: some comment
 
 <!-- -------------------------------------------------
-     SYNTAX HIGHLIGHT BLOCK
+SYNTAX HIGHLIGHT BLOCK
 ------------------------------------------------- -->
 
 {% highlight bash %}

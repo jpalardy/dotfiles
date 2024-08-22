@@ -23,7 +23,7 @@ nnoremap <buffer> <CR> :call <SID>ToggleBox()<CR>
 " -------------------------------------------------
 
 function! FormatMoe(buffer) abort
-    return {'command': 'moefix'}
+  return {'command': 'moefix'}
 endfunction
 
 execute ale#fix#registry#Add('moefix', 'FormatMoe', ['moe'], 'Fix moe with moefix')

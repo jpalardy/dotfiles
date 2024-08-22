@@ -2,7 +2,7 @@ function fish_prompt
   set -l laststatus $status
 
   if test $laststatus -ne 0
-      echo -s (set_color red) "exit: $laststatus"
+    echo -s (set_color red) "exit: $laststatus"
   end
 
   set -l normal (set_color normal)

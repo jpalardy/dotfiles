@@ -2,18 +2,17 @@ module Whatever exposing (..)
 
 {--
 -------------------------------------------------
-    HTTP placeholder
+HTTP placeholder
 -------------------------------------------------
 --}
 
-Process.sleep 2000
-    |> Task.perform (\_ -> Message (Ok value))
+Process.sleep 2000 |> Task.perform (\_ -> Message (Ok value))
 
 -- -------------------------------------------------
 
 {--
 -------------------------------------------------
-    ports
+ports
 -------------------------------------------------
 --}
 

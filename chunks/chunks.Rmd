@@ -57,13 +57,14 @@ geom_point(.., show.legend=FALSE, alpha=0.4, size=2.5, stroke=0) +
 #-------------------------------------------------
 
 d <- read_tsv(filename,
-       col_names=c("...", "..."),
-       col_types=cols(
-         "..." = col_datetime(),
-         "..." = col_character(),
-         "..." = col_factor(),
-         "..." = col_number(),
-     ))
+  col_names = c("...", "..."),
+  col_types = cols(
+    "..." = col_datetime(),
+    "..." = col_character(),
+    "..." = col_factor(),
+    "..." = col_number(),
+  )
+)
 
 # d |> spec()
 # d |> spec() |> cols_condense()
@@ -124,8 +125,10 @@ d %>%
 # alpha density
 #-------------------------------------------------
 
-d$density = fields::interp.surface(MASS::kde2d(d$date, d$duration),
-                                   as.data.frame(d[,c("date","duration")]))
+d$density <- fields::interp.surface(
+  MASS::kde2d(d$date, d$duration),
+  as.data.frame(d[, c("date", "duration")])
+)
 
 # alpha=1/density  ... or
 # alpha=sqrt(1/density)

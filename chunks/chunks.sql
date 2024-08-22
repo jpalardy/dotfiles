@@ -62,7 +62,7 @@ ORDER BY seq_tup_read DESC;
 -- temporary table; for export
 DROP TABLE IF EXISTS results;
 CREATE TEMPORARY TABLE results AS (
-    SELECT * FROM whatever
+  SELECT * FROM whatever
 );
 SELECT * FROM results;
 
