@@ -57,7 +57,7 @@ match($0, /\<([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9])\>/, arr) {
   }
 }
 
-{
+NF {
   match($0, /^ +/)
   indent = RLENGTH == -1 ? 0 : RLENGTH
   diff_indent = indent - prev_indent
