@@ -1,7 +1,6 @@
-" Author: Filip Gospodinov <f@gospodinov.ch>
-" Description: biome for TypeScript files
+" Description: biome for jsonc files
 
-call ale#linter#Define('typescript', {
+call ale#linter#Define('jsonc', {
 \   'name': 'biome',
 \   'lsp': 'stdio',
 \   'language': function('ale#handlers#biome#GetLanguage'),

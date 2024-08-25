@@ -16,7 +16,8 @@ g:ale_biome_options                                       *g:ale_biome_options*
   Type: |String|
   Default: `''`
 
-  This variable can be set to pass additional options to biome.
+  This variable can be set to pass additional options to `biome check` when
+  applying fixes.
 
 
 g:ale_biome_use_global                                 *g:ale_biome_use_global*
@@ -25,6 +26,30 @@ g:ale_biome_use_global                                 *g:ale_biome_use_global*
   Default: `get(g:, 'ale_use_global_executables', 0)`
 
   See |ale-integrations-local-executables|
+
+
+g:ale_biome_fixer_apply_unsafe                 *g:ale_biome_fixer_apply_unsafe*
+                                               *b:ale_biome_fixer_apply_unsafe*
+  Type: |Number|
+  Default: `0`
+
+  If set to `1`, biome will apply unsafe fixes along with safe fixes.
+
+
+g:ale_biome_lsp_project_root                     *g:ale_biome_lsp_project_root*
+                                                 *b:ale_biome_lsp_project_root*
+  Type: |String|
+  Default: `''`
+
+  If this variable is left unset, ALE will try to find the project root by
+  executing the following steps in the given order:
+
+  1. Find an ancestor directory containing a biome.json.
+  2. Find an ancestor directory containing a biome.jsonc.
+  3. Find an ancestor directory containing a package.json.
+  4. Find an ancestor directory containing a .git folder.
+  5. Use the directory of the current buffer (if the buffer was opened from
+     a file).
 
 
 ===============================================================================

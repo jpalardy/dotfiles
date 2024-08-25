@@ -2899,6 +2899,9 @@ documented in additional help files.
   asm.....................................|ale-asm-options|
     gcc...................................|ale-asm-gcc|
     llvm_mc...............................|ale-asm-llvm_mc|
+  astro...................................|ale-astro-options|
+    eslint................................|ale-astro-eslint|
+    prettier..............................|ale-astro-prettier|
   avra....................................|ale-avra-options|
     avra..................................|ale-avra-avra|
   awk.....................................|ale-awk-options|
@@ -3137,6 +3140,7 @@ documented in additional help files.
     standard..............................|ale-javascript-standard|
     xo....................................|ale-javascript-xo|
   json....................................|ale-json-options|
+    biome.................................|ale-json-biome|
     clang-format..........................|ale-json-clangformat|
     cspell................................|ale-json-cspell|
     dprint................................|ale-json-dprint|
@@ -3148,6 +3152,7 @@ documented in additional help files.
     spectral..............................|ale-json-spectral|
     vscodejson............................|ale-json-vscode|
   jsonc...................................|ale-jsonc-options|
+    biome.................................|ale-jsonc-biome|
     eslint................................|ale-jsonc-eslint|
   jsonnet.................................|ale-jsonnet-options|
     jsonnetfmt............................|ale-jsonnet-jsonnetfmt|

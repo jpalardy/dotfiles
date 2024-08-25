@@ -21,20 +21,10 @@
 " Language: GraphQL
 " Maintainer: Jon Parise <jon@indelible.org>
 
-if exists('b:current_syntax')
-  let s:current_syntax = b:current_syntax
-  unlet b:current_syntax
-endif
+call graphql#embed_syntax('GraphQLSyntax')
 
-let b:graphql_nested_syntax = 1
-syn include @GraphQLSyntax syntax/graphql.vim
-unlet b:graphql_nested_syntax
-
-if exists('s:current_syntax')
-  let b:current_syntax = s:current_syntax
-endif
-
-let s:tags = '\%(' . join(graphql#javascript_tags(), '\|') . '\)'
+let s:functions = map(copy(graphql#javascript_functions()), 'v:val .. "("')
+let s:tags = '\%(' . join(graphql#javascript_tags() + s:functions, '\|') . '\)'
 
 exec 'syntax region graphqlTemplateString matchgroup=typescriptTemplate start=+' . s:tags . '\@20<=`+ skip=+\\`+ end=+`+ contains=@GraphQLSyntax,typescriptTemplateSubstitution extend'
 exec 'syntax match graphqlTaggedTemplate +' . s:tags . '\ze`+ nextgroup=graphqlTemplateString'

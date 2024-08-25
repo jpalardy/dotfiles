@@ -46,6 +46,9 @@ formatting.
 * ASM
   * [gcc](https://gcc.gnu.org)
   * [llvm-mc](https://llvm.org)
+* Astro
+  * [eslint](http://eslint.org/)
+  * [prettier](https://github.com/prettier/prettier)
 * AVRA
   * [avra](https://github.com/Ro5bert/avra)
 * Awk
@@ -323,6 +326,7 @@ formatting.
   * [xo](https://github.com/sindresorhus/xo)
 * JSON
   * [VSCode JSON language server](https://github.com/hrsh7th/vscode-langservers-extracted)
+  * [biome](https://biomejs.dev/)
   * [clang-format](https://clang.llvm.org/docs/ClangFormat.html)
   * [cspell](https://github.com/streetsidesoftware/cspell/tree/main/packages/cspell) :warning:
   * [dprint](https://dprint.dev)
@@ -335,6 +339,7 @@ formatting.
 * JSON5
   * [eslint](http://eslint.org/) :warning:
 * JSONC
+  * [biome](https://biomejs.dev/)
   * [eslint](http://eslint.org/) :warning:
 * Jsonnet
   * [jsonnet-lint](https://jsonnet.org/learning/tools.html)
@@ -581,6 +586,7 @@ formatting.
   * [solargraph](https://solargraph.org)
   * [sorbet](https://github.com/sorbet/sorbet)
   * [standardrb](https://github.com/testdouble/standard)
+  * [steep](https://github.com/soutaro/steep)
   * [syntax_tree](https://github.com/ruby-syntax-tree/syntax_tree)
 * Rust
   * [cargo](https://github.com/rust-lang/cargo) :floppy_disk: (see `:help ale-integration-rust` for configuration instructions)

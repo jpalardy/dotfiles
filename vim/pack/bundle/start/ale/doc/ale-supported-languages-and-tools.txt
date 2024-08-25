@@ -37,6 +37,9 @@ Notes:
 * ASM
   * `gcc`
   * `llvm-mc`
+* Astro
+  * `eslint`
+  * `prettier`
 * AVRA
   * `avra`
 * Awk
@@ -314,6 +317,7 @@ Notes:
   * `xo`
 * JSON
   * `VSCode JSON language server`
+  * `biome`
   * `clang-format`
   * `cspell`
   * `dprint`
@@ -326,6 +330,7 @@ Notes:
 * JSON5
   * `eslint`
 * JSONC
+  * `biome`
   * `eslint`
 * Jsonnet
   * `jsonnet-lint`
@@ -572,6 +577,7 @@ Notes:
   * `solargraph`
   * `sorbet`
   * `standardrb`
+  * `steep`
   * `syntax_tree`
 * Rust
   * `cargo`!!
