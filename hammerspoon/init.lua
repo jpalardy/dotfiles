@@ -92,25 +92,3 @@ bindMove({"ctrl", "alt"}, "o", function(win, screen)
   win.h = screen.h
 end)
 
--- window's edge goes to mouse
-bindMove({"ctrl", "alt"}, ".", function(win, screen)
-  mouse = hs.mouse.getRelativePosition()
-  if mouse.x < win.x then
-    dist = math.abs(win.x - mouse.x)
-    win.w = win.w + dist
-    win.x = mouse.x
-  end
-  if mouse.y < win.y then
-    dist = math.abs(win.y - mouse.y)
-    win.h = win.h + dist
-    win.y = mouse.y
-  end
-  if mouse.x > win.x + win.w then
-    dist = math.abs(win.x + win.w - mouse.x)
-    win.w = win.w + dist
-  end
-  if mouse.y > win.y + win.h then
-    dist = math.abs(win.y + win.h - mouse.y)
-    win.h = win.h + dist
-  end
-end)
