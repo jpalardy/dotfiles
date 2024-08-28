@@ -99,11 +99,6 @@ let g:elm_setup_keybindings = 0
 let g:elm_format_autosave = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" emmet
-
-let g:user_emmet_leader_key = '<C-e>'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vindent
 
 let g:vindent_motion_OO_prev   = '[='

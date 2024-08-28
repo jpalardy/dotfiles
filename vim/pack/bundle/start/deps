@@ -7,7 +7,6 @@ spacehi        https://github.com/jpalardy/spacehi.vim.git
 lightline      https://github.com/itchyny/lightline.vim
 surround       https://github.com/tpope/vim-surround.git
 elixir         https://github.com/elixir-editors/vim-elixir.git
-emmet          https://github.com/mattn/emmet-vim.git
 minizinc       https://github.com/vale1410/vim-minizinc.git
 graphql        https://github.com/jparise/vim-graphql.git
 vindent        https://github.com/jessekelighine/vindent.vim
