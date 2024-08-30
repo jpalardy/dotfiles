@@ -121,6 +121,9 @@ endfunction
 nnoremap ,, :call writefile([<SID>currentLineInGrepFormat()], ".ws", "a")<CR>
 nnoremap ,< :cfile .ws<CR>
 
+" EASIER SYSTEM CLIPBOARD
+vnoremap ,y "*y
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! s:setDiffOpt()
