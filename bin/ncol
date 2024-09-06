@@ -1,8 +1,44 @@
 #!/bin/bash
 
-cols="${1:-5}"
+cols=5
 
-dashes=$(printf "%${cols}s" | sed -e 's/ / -/g')
+while getopts "n:" opt; do
+  case "$opt" in
+    n)
+      cols="$OPTARG"
+      ;;
+    *)
+      exit 1
+  esac
+done
 
-eval "paste $dashes" | column -t -s $'\t'
+shift $((OPTIND - 1))
+
+# -------------------------------------------------
+
+awk -v cols="$cols" '
+
+BEGIN {
+  if (cols < 1) {
+    cols = 1
+  }
+}
+
+{
+  for (i=1; i<=NF; i++) {
+    if (col >= cols) {
+      col = 0
+      print ""
+    }
+    if (col > 0) {
+      printf "\t"
+    }
+    printf("%s", $i)
+    col++
+  }
+}
+
+END { print "" }
+
+' "$@"
 
