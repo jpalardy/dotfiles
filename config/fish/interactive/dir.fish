@@ -3,9 +3,9 @@ function tad
   set -l start_cd $PWD
   set -l dst "$HOME/.throw-away/"(date +%s)
   mkdir -p $dst
-  cd $dst; or return
+  cd $dst; or return 1
   if test -n "$argv[1]"
-    git clone $argv[1]
+    git clone $argv[1]; or return 1
     cd (basename $argv[1] .git)
   end
   fish -c "exec tmux"
