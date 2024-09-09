@@ -198,4 +198,5 @@ BEGIN {
 # no match, print as-is
 {
   print
+  exit
 }
