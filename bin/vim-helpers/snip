@@ -189,7 +189,7 @@ BEGIN {
       key = pre[j] ":" ss
       if (key in snippets) {
         print substr($0, 1, i-1) snippets[key]
-        exit
+        next
       }
     }
   }
@@ -198,5 +198,4 @@ BEGIN {
 # no match, print as-is
 {
   print
-  exit
 }
