@@ -27,9 +27,8 @@ function cycle(key, v1, v2, v3, v4) {
 }
 
 BEGIN {
-  # prefixes
-  split(filetype, pre, ".")
-  pre[length(pre)+1] = "*"
+  # prefixes, where filetype comes from -v
+  split(filetype ".*", pre, ".")
 
   #-------------------------------------------------
   # global
