@@ -1,19 +1,19 @@
 #!/usr/bin/env awk-f
 
-function snip(key, value) {
+function snip(ft, key, value) {
   if (value == "") {
     print "missing value for key:", key > "/dev/stderr"
     exit 1
   }
-  if (snippets[key]) {
+  if (snippets[ft][key]) {
     print "duplicate key:", key > "/dev/stderr"
     exit 1
   }
-  snippets[key] = value
+  snippets[ft][key] = value
 }
 
 # current max: 4
-function cycle(key, v1, v2, v3, v4) {
+function cycle(ft, v1, v2, v3, v4) {
   delete parts
   if (v1 != "") parts[1] = v1
   if (v2 != "") parts[2] = v2
@@ -22,7 +22,7 @@ function cycle(key, v1, v2, v3, v4) {
   len = length(parts)
   parts[len+1] = parts[1]
   for (i = 1; i <= len; i++) {
-    snip(key ":" parts[i], parts[i+1])
+    snip(ft, parts[i], parts[i+1])
   }
 }
 
@@ -33,71 +33,69 @@ BEGIN {
   #-------------------------------------------------
   # global
   #-------------------------------------------------
-  snip("*:--",   "-------------------------------------------------")
-  today = strftime("%F")
-  snip("*:td",     today)
-  snip("*:" today, today strftime(" -- %A"))
-  snip("*:yd",     strftime("%F", systime() - 86400))
-  snip("*:ts",     strftime("%s"))
+  snip("*", "--", "-------------------------------------------------")
+  cycle("*", "td", strftime("%F"), strftime("%F -- %A"))
+  snip("*", "yd", strftime("%F", systime() - 86400))
+  snip("*", "ts", strftime("%s"))
 
   # lorem ipsum filler text
-  snip("*:lorem", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae efficitur sapien. Cras dictum auctor mattis. Morbi sed interdum metus. Curabitur sit amet eros in urna volutpat porta vel eget lacus. Praesent a rhoncus purus. Nullam purus erat, fermentum sit amet turpis et, consectetur rutrum ante. Suspendisse pharetra in felis vitae blandit. Suspendisse potenti. Cras vestibulum nibh nec scelerisque ullamcorper.")
+  snip("*", "lorem", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae efficitur sapien. Cras dictum auctor mattis. Morbi sed interdum metus. Curabitur sit amet eros in urna volutpat porta vel eget lacus. Praesent a rhoncus purus. Nullam purus erat, fermentum sit amet turpis et, consectetur rutrum ante. Suspendisse pharetra in felis vitae blandit. Suspendisse potenti. Cras vestibulum nibh nec scelerisque ullamcorper.")
 
   # unicode
-  snip("*:cr",   "⏎")
-  snip("*:cmd",  "⌘")
-  snip("*:alt",  "⌥")
+  snip("*", "cr",  "⏎")
+  snip("*", "cmd", "⌘")
+  snip("*", "alt", "⌥")
 
   # emojis
-  cycle("*",        "_", "📦", "✅")
-  snip("*::think",  "🤔")
-  snip("*::grim",   "😬")
-  snip("*::grin",   "😄")
-  snip("*:X",       "❌")
-  snip("*::tada",   "🎉")
-  snip("*::fire",   "🔥")
-  snip("*::boom",   "💥")
-  snip("*::rot",    "🔄")
-  snip("*::shrug",  "¯\\_(ツ)_/¯")
+  cycle("*", "_", "📦", "✅")
+  snip("*", ":think",  "🤔")
+  snip("*", ":grim",   "😬")
+  snip("*", ":grin",   "😄")
+  snip("*", "X",       "❌")
+  snip("*", ":tada",   "🎉")
+  snip("*", ":fire",   "🔥")
+  snip("*", ":boom",   "💥")
+  snip("*", ":rot",    "🔄")
+  snip("*", ":shrug",  "¯\\_(ツ)_/¯")
 
   # fruit
   srand()
   fruits = "🍇🍈🍉🍊🍋🍌🍍🥭🍎🍏🍐🍑🍒🍓🫐🥝"
   fruit = substr(fruits, int(length(fruits) * rand()), 1)
-  snip("*:%", fruit)
+  snip("*", "%", fruit)
 
   # spanish accents
-  snip("*:a'", "á")
-  snip("*:i'", "í")
-  snip("*:u'", "ú")
-  snip("*:e'", "é")
-  snip("*:o'", "ó")
-  snip("*:n~", "ñ")
+  snip("*", "a'", "á")
+  snip("*", "i'", "í")
+  snip("*", "u'", "ú")
+  snip("*", "e'", "é")
+  snip("*", "o'", "ó")
+  snip("*", "n~", "ñ")
 
   # french accents: `
-  snip("*:a`", "à")
-  snip("*:u`", "ù")
-  snip("*:e`", "è")
+  snip("*", "a`", "à")
+  snip("*", "u`", "ù")
+  snip("*", "e`", "è")
   # french accents: :
-  snip("*:i:", "ï")
-  snip("*:u:", "ü")
-  snip("*:e:", "ë")
+  snip("*", "i:", "ï")
+  snip("*", "u:", "ü")
+  snip("*", "e:", "ë")
   # french accents: ^
-  snip("*:a^", "â")
-  snip("*:i^", "î")
-  snip("*:u^", "û")
-  snip("*:e^", "ê")
-  snip("*:o^", "ô")
+  snip("*", "a^", "â")
+  snip("*", "i^", "î")
+  snip("*", "u^", "û")
+  snip("*", "e^", "ê")
+  snip("*", "o^", "ô")
 
   #-------------------------------------------------
   # javascript
   #-------------------------------------------------
   n = split("javascript typescript", arr)
   for (i = 1; i <= n; i++) {
-    snip(arr[i] ":fn",   "function ▒() {\n}")
-    snip(arr[i] ":fori", "for (let i = 0; i < ▒; i += 1) {")
-    snip(arr[i] ":.fe",   ".forEach(▒)")
-    snip(arr[i] ":iife", "(() => {\n▒\n})();")
+    snip(arr[i], "fn",   "function ▒() {\n}")
+    snip(arr[i], "fori", "for (let i = 0; i < ▒; i += 1) {")
+    snip(arr[i], ".fe",   ".forEach(▒)")
+    snip(arr[i], "iife", "(() => {\n▒\n})();")
   }
 
   #-------------------------------------------------
@@ -105,76 +103,77 @@ BEGIN {
   #-------------------------------------------------
   n = split("r rmd", arr)
   for (i = 1; i <= n; i++) {
-    snip(arr[i] ":in", "%in%")
-    snip(arr[i] ":fn", "function")
-    snip(arr[i] ":|",  "%>%")
-    snip(arr[i] ":>",  "%>%")
-    snip(arr[i] ":_",  ".Last.value");
+    snip(arr[i], "in", "%in%")
+    snip(arr[i], "fn", "function")
+    snip(arr[i], "|",  "%>%")
+    snip(arr[i], ">",  "%>%")
+    snip(arr[i], "_",  ".Last.value");
   }
-  snip("rmd:```",  "```{r}\n\n▒\n\n```");
+  snip("rmd", "```",  "```{r}\n\n▒\n\n```");
 
   #-------------------------------------------------
   # elixir
   #-------------------------------------------------
-  snip("elixir::clal", "charlists: :as_lists")
-  snip("elixir:pry",   "require IEx; IEx.pry()")
-  snip("elixir:inf",   "infinity")
-  snip("elixir:tc",    "{usec, result} = :timer.tc(fn -> ▒ end)")
-  snip("elixir:!",     "raise \"hell\"")
-  cycle("elixir",      "@", "@tag :", "@tag :focus")
-  cycle("elixir",      "IO.", "IO.inspect()", "IO.inspect(label: \"***** #{Path.relative_to_cwd(__ENV__.file)}:#{__ENV__.line}\")")
+  snip("elixir", ":clal", "charlists: :as_lists")
+  snip("elixir", "pry",   "require IEx; IEx.pry()")
+  snip("elixir", "inf",   "infinity")
+  snip("elixir", "tc",    "{usec, result} = :timer.tc(fn -> ▒ end)")
+  snip("elixir", "!",     "raise \"hell\"")
+  cycle("elixir", "@", "@tag :", "@tag :focus")
+  cycle("elixir", "IO.", "IO.inspect()", "IO.inspect(label: \"***** #{Path.relative_to_cwd(__ENV__.file)}:#{__ENV__.line}\")")
   #-------------------------------------------------
   # eex
   #-------------------------------------------------
-  snip("eelixir:_", "<%= ▒ %>")
-  cycle("eelixir",  "<%= ", "<%# ", "<% ")
+  snip("eelixir", "_", "<%= ▒ %>")
+  cycle("eelixir", "<%= ", "<%# ", "<% ")
 
   #-------------------------------------------------
   # zig
   #-------------------------------------------------
-  snip("zig:std", "const std = @import(\"std\");")
+  snip("zig", "std", "const std = @import(\"std\");")
 
   #-------------------------------------------------
   # elm
   #-------------------------------------------------
-  snip("elm:letin", "let _ = ▒ in")
-  snip("elm:log",   "Debug.log \"label\"")
-  snip("elm:if",    "if ▒ then True else False")
+  snip("elm", "letin", "let _ = ▒ in")
+  snip("elm", "log",   "Debug.log \"label\"")
+  snip("elm", "if",    "if ▒ then True else False")
 
   #-------------------------------------------------
   # sql
   #-------------------------------------------------
-  cycle("sql",     "ea", "EXPLAIN ANALYZE", "EXPLAIN (ANALYZE, BUFFERS)")
-  snip("sql:cte",  "WITH results AS (\n▒\n-- ), other_results AS (\n)\nSELECT * FROM results WHERE ...")
-  snip("sql:csv",  "\\copy (SELECT * FROM table) to 'table.csv' with csv header")
-  snip("sql:psql", "\\pset pager off\n\\pset null NULL\n\\x auto")
-  cycle("sql",     "format", "\\pset format wrapped", "\\pset format aligned")
-  snip("sql:ssf",  "SELECT * FROM ")
-  snip("sql:scf",  "SELECT count(*) FROM ")
-  snip("sql:sccf", "SELECT _column_, count(*) FROM ▒ GROUP BY 1 ORDER BY 1")
-  snip("sql:lim",  "LIMIT 15")
+  cycle("sql", "ea", "EXPLAIN ANALYZE", "EXPLAIN (ANALYZE, BUFFERS)")
+  snip("sql", "cte",  "WITH results AS (\n▒\n-- ), other_results AS (\n)\nSELECT * FROM results WHERE ...")
+  snip("sql", "csv",  "\\copy (SELECT * FROM table) to 'table.csv' with csv header")
+  snip("sql", "psql", "\\pset pager off\n\\pset null NULL\n\\x auto")
+  cycle("sql", "format", "\\pset format wrapped", "\\pset format aligned")
+  snip("sql", "ssf",  "SELECT * FROM ")
+  snip("sql", "scf",  "SELECT count(*) FROM ")
+  snip("sql", "sccf", "SELECT _column_, count(*) FROM ▒ GROUP BY 1 ORDER BY 1")
+  snip("sql", "lim",  "LIMIT 15")
 
   #-------------------------------------------------
   # gitcommit
   #-------------------------------------------------
-  snip("gitcommit:ud", "Update dependencies")
-  snip("gitcommit:cab", "Co-authored-by: ")
+  snip("gitcommit", "ud", "Update dependencies")
+  snip("gitcommit", "cab", "Co-authored-by: ")
 
   #-------------------------------------------------
   # graphviz: dot
   #-------------------------------------------------
-  snip("dot:sg", "subgraph cluster_" strftime("%s"))
+  snip("dot", "sg", "subgraph cluster_" strftime("%s"))
 
   #-------------------------------------------------
   # markdown
   #-------------------------------------------------
-  snip("markdown:a",   "[alt](url)")
-  snip("markdown:img", "[![alt](url)](url)")
+  snip("markdown", "a",   "[alt](url)")
+  snip("markdown", "img", "[![alt](url)](url)")
 
   #-------------------------------------------------
   # deck
   #-------------------------------------------------
-  snip("deck:ja", "<span lang=\"ja\">")
+  snip("deck", "ja", "<span lang=\"ja\">")
+
 }
 
 #-------------------------------------------------
@@ -185,9 +184,9 @@ BEGIN {
   for (i = length($0); i > 0; i--) {
     ss = substr($0, i)
     for (j = 1; j <= length(pre); j++) {
-      key = pre[j] ":" ss
-      if (key in snippets) {
-        print substr($0, 1, i-1) snippets[key]
+    ft = pre[j]
+      if (ss in snippets[ft]) {
+        print substr($0, 1, i-1) snippets[ft][ss]
         next
       }
     }
