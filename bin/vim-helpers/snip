@@ -27,8 +27,8 @@ function cycle(ft, v1, v2, v3, v4) {
 }
 
 BEGIN {
-  # prefixes, where filetype comes from -v
-  split(filetype ".*", pre, ".")
+  # fts, where filetype comes from -v
+  split("*." filetype, fts, ".")
 
   #-------------------------------------------------
   # global
@@ -189,22 +189,20 @@ BEGIN {
 
 #-------------------------------------------------
 
-# try to match from the right
-# try ft-specific first, global next
+# start with original line
+# match from the right
+# try each ft, global first, others after
+# a longer and/or latter match wins
 {
+  line = $0
   for (i = length($0); i > 0; i--) {
     ss = substr($0, i)
-    for (j = 1; j <= length(pre); j++) {
-    ft = pre[j]
+    for (j = 1; j <= length(fts); j++) {
+      ft = fts[j]
       if (ss in snippets[ft]) {
-        print substr($0, 1, i-1) snippets[ft][ss]
-        next
+        line = substr($0, 1, i-1) snippets[ft][ss]
       }
     }
   }
-}
-
-# no match, print as-is
-{
-  print
+  print line
 }
