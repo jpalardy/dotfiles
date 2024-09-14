@@ -2,3 +2,4 @@ plenary          https://github.com/nvim-lua/plenary.nvim.git
 telescope        https://github.com/nvim-telescope/telescope.nvim.git
 treesitter       https://github.com/nvim-treesitter/nvim-treesitter.git
 gruvbox-material https://github.com/sainnhe/gruvbox-material
+lspconfig        https://github.com/neovim/nvim-lspconfig
