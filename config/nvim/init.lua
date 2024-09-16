@@ -32,6 +32,9 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.virtualedit = 'block'
 vim.opt.scrolloff = 1
+vim.opt.startofline = true
+vim.keymap.set('n', '>', '>>')
+vim.keymap.set('n', '<', '<<')
 
 vim.cmd('colorscheme gruvbox-material')
 
