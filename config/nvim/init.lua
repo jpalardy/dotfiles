@@ -35,7 +35,8 @@ vim.opt.startofline = true
 vim.keymap.set("n", ">", ">>")
 vim.keymap.set("n", "<", "<<")
 
-vim.cmd('colorscheme gruvbox-material')
+-- vim.cmd("colorscheme gruvbox-material")
+vim.cmd("colorscheme tokyonight-night")
 
 -------------------------------------------------
 -- SLIME
