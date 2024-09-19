@@ -4,3 +4,4 @@ treesitter       https://github.com/nvim-treesitter/nvim-treesitter
 gruvbox-material https://github.com/sainnhe/gruvbox-material
 lspconfig        https://github.com/neovim/nvim-lspconfig
 tokyonight       https://github.com/folke/tokyonight.nvim
+conform          https://github.com/stevearc/conform.nvim
