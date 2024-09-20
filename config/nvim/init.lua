@@ -38,6 +38,9 @@ vim.keymap.set("n", "<", "<<")
 -- vim.cmd("colorscheme gruvbox-material")
 vim.cmd("colorscheme tokyonight-night")
 
+-- backward compatibility
+vim.cmd("unmap Y")
+
 -------------------------------------------------
 -- SLIME
 -------------------------------------------------
