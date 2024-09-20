@@ -81,6 +81,7 @@ lspconfig.zls.setup({})
 require("conform").setup({
   formatters_by_ft = {
     elixir = { "mix" },
+    lua = { "stylua" },
     zig = { "zigfmt" },
   },
   default_format_opts = {
