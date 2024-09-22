@@ -1,14 +1,13 @@
 
-dirs  = $(shell awk '{print $$1}' deps)
-bundle_tasks = $(dirs:%=bundle.%)
+dirs = $(shell awk '{print $$1}' deps)
 
 #-------------------------------------------------
 
-all: $(bundle_tasks)
+all: $(dirs)
 
 .deps.mk: deps
 	@awk '{ \
-	  print "bundle." $$1 ":"; \
+	  print $$1 ":"; \
 		print "	@rm -rf", $$1; \
 	  print "	git clone --quiet --depth=1", $$2, $$1; \
 	  print "	rm -rf", $$1 "/.git", $$1 "/.gitignore", $$1 "/.github", $$1 "/.gitattributes", $$1 "/.gitmodules", $$1 "/test"; \
