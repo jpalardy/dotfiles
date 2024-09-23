@@ -61,6 +61,7 @@ BASE_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
 relink fish     "$DOTFILES/config/fish"
 relink yamllint "$DOTFILES/config/yamllint"
 relink nvim     "$DOTFILES/config/nvim"
+relink wezterm  "$DOTFILES/config/wezterm"
 
 # -------------------------------------------------
 
