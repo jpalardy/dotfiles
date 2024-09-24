@@ -35,8 +35,6 @@ function b
 end
 
 function cdl
-  echo */ | string split " " | fzf -q "$argv[1]" | read -l result
-  if test -n "$result"
-    cd $result
-  end
+  for dir in */; echo $dir; end | fzf -0 -q "$argv[1]" | read -l result
+  test -n "$result"; and cd $result
 end
