@@ -8,7 +8,8 @@ alias R "R --quiet --no-save --no-restore"
 abbr --add --position anywhere @u @{upstream}
 abbr --add --position anywhere ..@u ..@{upstream}
 
-alias nv nvim
+abbr --add nv  nvim
+abbr --add nvi nvim
 
 abbr --add nwst --set-cursor 'ls -t % | head -n1'
 abbr --add untilfail --set-cursor 'while %; end'
