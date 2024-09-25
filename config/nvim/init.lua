@@ -60,10 +60,10 @@ vim.keymap.set("n", "<c-c>}", "<c-c><c-c>}j", { remap = true })
 -- TELESCOPE
 -------------------------------------------------
 
-vim.keymap.set("n", ",ff", ":Telescope find_files<CR>")
-vim.keymap.set("n", ",fg", ":Telescope live_grep<CR>")
-vim.keymap.set("n", ",fb", ":Telescope buffers<CR>")
-vim.keymap.set("n", ",fh", ":Telescope help_tags<CR>")
+vim.keymap.set("n", "\\f", ":Telescope find_files<CR>")
+vim.keymap.set("n", "\\g", ":Telescope live_grep<CR>")
+vim.keymap.set("n", "\\b", ":Telescope buffers<CR>")
+vim.keymap.set("n", "\\h", ":Telescope help_tags<CR>")
 
 -------------------------------------------------
 
