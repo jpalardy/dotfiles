@@ -1,8 +1,5 @@
 
-function git-diff
-  git diff $argv &| vim -R -
-end
-
+abbr --add gd --set-cursor 'git diff %&| vim -R -'
 abbr --add glg  "git log --graph --pretty=colorful --date-order"
 abbr --add grf --set-cursor 'git log --name-only --pretty=format: --since=2w% | rg . | __count'
 
