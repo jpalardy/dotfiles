@@ -8,7 +8,7 @@ local config = wezterm.config_builder()
 -- text and fonts
 config.font_size = 16
 config.adjust_window_size_when_changing_font_size = false
-config.selection_word_boundary = ' {}[]()"\'`.,;:'
+config.selection_word_boundary = " {}[]()\"'`,;:"
 
 -- colors
 config.color_scheme = "Tokyo Night"
