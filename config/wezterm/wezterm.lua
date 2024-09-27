@@ -15,9 +15,6 @@ config.color_scheme = "Tokyo Night"
 
 -- tabs
 config.hide_tab_bar_if_only_one_tab = true
-wezterm.on("format-tab-title", function(tab)
-  return string.format("%d", tab.tab_index + 1)
-end)
 
 -- windows
 config.initial_cols = 120
