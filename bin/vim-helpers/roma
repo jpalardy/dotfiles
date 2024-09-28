@@ -120,6 +120,12 @@ function getFront(str, si) {
 
 {
   i = 1
+
+  if (from_start && !(getFront($0, 1) in kana)) {
+    print
+    next
+  }
+
   while (i <= length($0)) {
     front = getFront($0, i)
     i += length(front)
