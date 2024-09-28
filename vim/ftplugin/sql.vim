@@ -1,3 +1,3 @@
 
-let &equalprg = "pp-sql | copy"
+setlocal equalprg=pp-sql
 
