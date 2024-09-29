@@ -26,4 +26,10 @@ config.window_padding = {
   bottom = 5,
 }
 
+-- local overrides
+local status, module = pcall(require, "local")
+if status then
+  module.adjust(config)
+end
+
 return config

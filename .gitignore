@@ -2,6 +2,7 @@ bash/local
 bin/local
 config/fish/local
 config/fish/fish_variables
+config/wezterm/local
 vim/spell/
 vim/.netrwhist
 vim/swap/
