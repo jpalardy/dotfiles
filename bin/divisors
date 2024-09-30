@@ -1,0 +1,21 @@
+#!/bin/bash
+
+printf "%s\n" "$@" | awk '
+
+# numbers
+int($0) == $0 {
+  n = $1
+  printf "%s:", n
+  for (i=1; i*i<=n; i++) {
+    if (n % i == 0) {
+      printf " (%d, %d)", i, n/i
+    }
+  }
+  print ""
+  next
+}
+
+# others...
+{ print }
+'
+
