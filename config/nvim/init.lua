@@ -41,6 +41,10 @@ vim.cmd("colorscheme tokyonight-night")
 -- backward compatibility
 vim.cmd("unmap Y")
 
+-- commenting
+vim.keymap.set("n", "#", "gcc", { remap = true })
+vim.keymap.set("v", "#", "gc", { remap = true })
+
 -------------------------------------------------
 -- SLIME
 -------------------------------------------------
