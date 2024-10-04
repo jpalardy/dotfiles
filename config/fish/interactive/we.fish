@@ -13,10 +13,12 @@ function we
     command -s $name | read src
   end
 
-  if test -z "$src"; and alias | grep -q -w $name
-    echo >&1 "$name is an alias"
-    alias | grep -w $name
-    return 1
+  if test -z "$src"; and alias | grep -w $name
+    return 0
+  end
+
+  if test -z "$src"; and abbr | grep -w $name
+    return 0
   end
 
   if test -z "$src"
