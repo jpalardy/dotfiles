@@ -28,8 +28,8 @@ bind \eh 'commandline -r "vim -c \"normal h\""; commandline -f execute'
 # esc-`
 bind \e` 'commandline -i "\$($history[1])"'
 
-# esc-_ -- open rg results in vim
-bind \e_ 'commandline -r "vim -q \$($history[1] --vimgrep | psub)"; commandline -f execute'
+# esc-- -- open rg results in vim
+bind \e- 'commandline -r "vim -q \$($history[1] --vimgrep | psub)"; commandline -f execute'
 
 # esc-,
 bind \e, fzf-contextual
