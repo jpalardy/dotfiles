@@ -16,6 +16,8 @@ abbr --add untilfail --set-cursor 'while %; end'
 
 abbr --add 1pl 'printf "%s\n"'
 
+abbr --add awk_ --set-cursor "awk '{ print % }'"
+
 #-------------------------------------------------
 
 function serve
