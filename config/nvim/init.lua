@@ -108,3 +108,7 @@ end)
 vim.diagnostic.config({ float = { border = "rounded" } })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+-------------------------------------------------
+
+vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$DOTFILES/bin/vim-helpers")
+
