@@ -1,9 +1,12 @@
 -- general
 vim.opt.wrap = false
 vim.opt.number = true
-vim.opt.writebackup = false
 vim.opt.completeopt = { "menuone", "popup" }
 vim.opt.mouse = "i"
+vim.opt.cursorline = true
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.scrolloff = 10
 
 -- edit
 vim.api.nvim_create_autocmd("FileType", {
@@ -12,6 +15,8 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.formatoptions:remove("r")
   end,
 })
+vim.opt.inccommand = 'split'
+vim.opt.writebackup = false
 
 -- search
 vim.opt.ignorecase = true
@@ -99,3 +104,7 @@ require("conform").setup({
 vim.keymap.set("n", ",f", function()
   require("conform").format({ async = true })
 end)
+
+vim.diagnostic.config({ float = { border = "rounded" } })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
