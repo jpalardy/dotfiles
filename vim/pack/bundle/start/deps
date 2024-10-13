@@ -10,6 +10,5 @@ elixir         https://github.com/elixir-editors/vim-elixir.git
 minizinc       https://github.com/vale1410/vim-minizinc.git
 graphql        https://github.com/jparise/vim-graphql.git
 vindent        https://github.com/jessekelighine/vindent.vim
-solarized      https://github.com/altercation/vim-colors-solarized.git
 gruvbox        https://github.com/morhetz/gruvbox.git
 terraform      https://github.com/hashivim/vim-terraform.git

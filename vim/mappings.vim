@@ -99,12 +99,6 @@ nnoremap ,x :execute ":vnew \| :Scratchy \"xxd " . expand("%") . "\""<CR>:set ft
 " RELOAD TO RELATIVE PATH
 nnoremap ,r :execute ":bwipeout \| vsp +" . line('.') fnamemodify(@%, ":~:.")<CR>zz
 
-" COLORSCHEMES
-nnoremap ,1 :colorscheme 256_xoria<CR>
-nnoremap ,2 :colorscheme codedark<CR>
-nnoremap ,3 :colorscheme solarized<CR>
-nnoremap ,4 :colorscheme gruvbox<CR>
-
 " SPLIT-SEARCH
 nnoremap ,sa :sp<CR><c-w>k?
 
