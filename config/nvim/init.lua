@@ -110,5 +110,15 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 -------------------------------------------------
 
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  -- group = "MyNewFiletype",
+  pattern = { "*.moe" },
+  callback = function()
+    vim.bo.filetype = "moe"
+  end,
+})
+
+-------------------------------------------------
+
 vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$DOTFILES/bin/vim-helpers")
 
