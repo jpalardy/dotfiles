@@ -5,7 +5,7 @@ vim.opt.completeopt = { "menuone", "popup" }
 vim.opt.mouse = "i"
 vim.opt.cursorline = true
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.opt.scrolloff = 10
 
 -- edit
@@ -15,7 +15,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.formatoptions:remove("r")
   end,
 })
-vim.opt.inccommand = 'split'
+vim.opt.inccommand = "split"
 vim.opt.writebackup = false
 
 -- search
