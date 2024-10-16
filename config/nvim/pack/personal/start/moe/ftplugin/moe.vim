@@ -24,3 +24,5 @@ nnoremap <buffer> <CR> :call <SID>ToggleBox()<CR>
 
 setlocal nonumber
 
+setlocal commentstring=#\ %s\ #
+
