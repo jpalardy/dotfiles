@@ -9,6 +9,10 @@ local config = wezterm.config_builder()
 config.font_size = 16
 config.adjust_window_size_when_changing_font_size = false
 config.selection_word_boundary = " {}[]()\"'`,;:"
+-- turn off italic
+config.font_rules = {
+  { italic = true, font = wezterm.font("JetBrains Mono") },
+}
 
 -- colors
 config.color_scheme = "Tokyo Night"
