@@ -40,3 +40,8 @@ function implode
   end
 end
 
+#-------------------------------------------------
+
+function vim-is
+  alias vim (printf "%s\n" vim nvim hx | fzf)
+end
