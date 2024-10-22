@@ -21,9 +21,6 @@ vim.opt.writebackup = false
 -- search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.keymap.set("n", "<ESC><SPACE>", ":nohl<CR>")
-vim.keymap.set("n", "<ESC>l", ":set list!<CR>")
-vim.keymap.set("n", "<ESC>n", ":set number!<CR>")
 
 -- split
 vim.opt.splitright = true
@@ -37,18 +34,9 @@ vim.opt.tabstop = 2
 vim.opt.virtualedit = "block"
 vim.opt.scrolloff = 1
 vim.opt.startofline = true
-vim.keymap.set("n", ">", ">>")
-vim.keymap.set("n", "<", "<<")
 
 -- vim.cmd("colorscheme gruvbox-material")
 vim.cmd("colorscheme tokyonight-night")
-
--- backward compatibility
-vim.cmd("unmap Y")
-
--- commenting
-vim.keymap.set("n", "#", "gcc", { remap = true })
-vim.keymap.set("v", "#", "gc", { remap = true })
 
 -------------------------------------------------
 -- SLIME
@@ -106,9 +94,11 @@ vim.keymap.set("n", ",f", function()
 end)
 
 vim.diagnostic.config({ float = { border = "rounded" } })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -------------------------------------------------
 
 vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$DOTFILES/bin/vim-helpers")
 
+-------------------------------------------------
+
+require("mappings")
