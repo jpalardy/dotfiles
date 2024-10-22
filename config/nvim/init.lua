@@ -35,8 +35,8 @@ vim.opt.virtualedit = "block"
 vim.opt.scrolloff = 1
 vim.opt.startofline = true
 
--- vim.cmd("colorscheme gruvbox-material")
-vim.cmd("colorscheme tokyonight-night")
+-- color
+vim.cmd("colorscheme tokyonight-storm")
 
 -- lsp
 vim.diagnostic.config({ float = { border = "rounded" } })
