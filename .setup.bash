@@ -39,6 +39,8 @@ relink .vim          "$DOTFILES/vim"
 relink .gitconfig    "$DOTFILES/git/gitconfig"
 relink .gitignore    "$DOTFILES/git/gitignore"
 
+relink .jjconfig.toml "$DOTFILES/jj/config.toml"
+
 relink .tmux.conf    "$DOTFILES/tmux.conf"
 
 if [ "$(uname)" == "Linux" ]; then
