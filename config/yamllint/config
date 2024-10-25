@@ -10,4 +10,6 @@ rules:
     min-spaces-from-content: 1
   empty-lines:
     max-end: 1
+  # document-start:
+    # present: false
 
