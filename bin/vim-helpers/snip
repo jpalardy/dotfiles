@@ -63,9 +63,12 @@ BEGIN {
 
   # fruit
   srand()
-  fruits = "🍇🍈🍉🍊🍋🍌🍍🥭🍎🍏🍐🍑🍒🍓🫐🥝"
+  fruits = "🍎🍏🍌🫐🍒🍇🥝🍋🍊🍑🍍🍓🍉"
   fruit = substr(fruits, int(length(fruits) * rand()), 1)
   snip("%", fruit)
+  for (i = 0; i < length(fruits); i++) {
+    snip(substr(fruits, i + 1, 1), substr(fruits, (i + 1) % length(fruits) + 1, 1))
+  }
 
   # spanish accents
   snip("a'", "á")
