@@ -10,7 +10,7 @@ abbr --add --position anywhere ..@u ..@{upstream}
 
 abbr --add nv  nvim
 abbr --add nvi nvim
-alias vim nvim
+# alias vim nvim
 
 abbr --add nwst --set-cursor 'ls -t % | head -n1'
 abbr --add untilfail --set-cursor 'while %; end'
