@@ -58,7 +58,6 @@ require("conform").setup({
     lsp_format = "fallback",
   },
   format_on_save = {
-    async = true,
     lsp_format = "fallback",
   },
 })
