@@ -87,12 +87,6 @@ let g:NERDCustomDelimiters['moe'] = {'left': '#', 'right': '#'}
 let g:NERDSpaceDelims = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" bag
-
-nmap <silent> ,b :r ~/.bag<CR>
-vmap <silent> ,b :w! ~/.bag<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " elm-vim
 
 let g:elm_setup_keybindings = 0

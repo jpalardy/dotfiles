@@ -16,3 +16,7 @@ vim.keymap.set("v", "#", "gc", { remap = true })
 
 -- lsp
 vim.keymap.set("n", "\\q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+
+-- clipboard
+vim.keymap.set("v", ",b", "\"*y")
+vim.keymap.set("n", ",b", "\"*p")

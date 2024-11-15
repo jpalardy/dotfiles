@@ -116,7 +116,8 @@ nnoremap ,, :call writefile([<SID>currentLineInGrepFormat()], ".ws", "a")<CR>
 nnoremap ,< :cfile .ws<CR>
 
 " EASIER SYSTEM CLIPBOARD
-vnoremap ,y "*y
+vnoremap ,b "*y
+nnoremap ,b "*p
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
