@@ -1,0 +1,40 @@
+#!/bin/bash
+
+printf "%s\n" "$@" | awk '
+
+function gcd(a, b) {
+  if (a < b) return gcd(b, a);
+  if (b == 0) return a;
+  return gcd(b, a % b);
+}
+
+function lcm(a, b) {
+  return (a * b) / gcd(a, b);
+}
+
+
+# not an integer
+int($0) != $0 {
+  print "invalid:", $0 > "/dev/stderr"
+  exit 1
+}
+
+{
+  nums[i++] = $0
+}
+
+END {
+  cumlcm = nums[0]
+  cumgcd = nums[0]
+  for (k in nums) {
+    if (k == 0) continue;
+    printf "%d %d: gcd = %d, lcm = %d\n", nums[k-1], nums[k], gcd(nums[k], nums[k-1]), lcm(nums[k], nums[k-1])
+    cumgcd = gcd(cumgcd, nums[k])
+    cumlcm = lcm(cumlcm, nums[k])
+  }
+  if (i > 2) {
+    printf "cumulative gcd = %d, lcm = %d\n", cumgcd, cumlcm
+  }
+}
+'
+
