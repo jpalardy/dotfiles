@@ -9,9 +9,7 @@ vim.g.slime_dont_ask_default = 1
 vim.keymap.set("n", "<c-c><c-l>", ':SlimeSend0 "\\x0c"<CR>')
 vim.keymap.set("n", "<c-c><c-u>", ':SlimeSend0 "\\x15"<CR>')
 vim.keymap.set("n", "<c-c>q", ':SlimeSend0 "q"<CR>')
--- FIXME decide by use
 vim.keymap.set("n", "<c-c>j", "<c-c><c-c>}j", { remap = true })
-vim.keymap.set("n", "<c-c>}", "<c-c><c-c>}j", { remap = true })
 
 -------------------------------------------------
 -- telescope
