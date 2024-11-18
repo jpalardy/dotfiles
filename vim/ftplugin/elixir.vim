@@ -12,7 +12,6 @@ let b:ale_elixir_elixir_ls_release=expand("~/local/bin")
 " -------------------------------------------------
 
 nnoremap <buffer> <c-c><c-l> :SlimeSend1 clear()<CR>
-nnoremap <buffer> <c-c>, :call SlimeHotKey(['recompile', '#iex:break', ':observer.start'])<CR>
 
 " -------------------------------------------------
 

@@ -29,16 +29,6 @@ nmap <c-c>j     <c-c><c-c>}j
 
 nmap <c-c>d <Plug>SlimeSendCell
 
-function! SlimeHotKey(choices)
-  let items = ['send:']
-  call extend(items, map(copy(a:choices), 'printf("%d. %s", v:key+1, v:val)'))
-  let i = inputlist(items)
-  if i == 0 || i > len(a:choices)
-    return
-  endif
-  execute('SlimeSend1 ' . a:choices[i - 1])
-endfunction
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ALE
 
