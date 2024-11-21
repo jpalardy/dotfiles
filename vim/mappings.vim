@@ -71,12 +71,6 @@ vnoremap ," :! jq -R .<CR>
 " AWK
 vnoremap ,a :! awk '{print }'<LEFT><LEFT>
 
-" ONLY KEEP LINES WHICH CONTAIN SEARCH
-nnoremap ,v :v/<C-R>//d<CR>gg
-nnoremap ,d :g/<C-R>//d<CR>gg
-vnoremap ,v :v/<C-R>//d<CR>gg
-vnoremap ,d :g/<C-R>//d<CR>gg
-
 nnoremap ,l :!clear; cloc --quiet --by-file %<CR>
 nnoremap ,a :exe "!clear; CURRENT_LINE=" . line(".") . " summary-" . &ft . " " . expand("%")<CR>
 
