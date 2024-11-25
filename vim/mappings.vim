@@ -42,6 +42,9 @@ nnoremap <ESC><SPACE> :nohl<CR>
 " COMMA MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" DELETE MATCHING LINE
+nnoremap ,d :g/<C-R>//d<CR>gg
+
 function! s:preserve(command)
   " preparation: save last search, and cursor position.
   let _s=@/
