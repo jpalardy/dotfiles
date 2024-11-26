@@ -42,9 +42,6 @@ nnoremap <ESC><SPACE> :nohl<CR>
 " COMMA MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" DELETE MATCHING LINE
-nnoremap ,d :g/<C-R>//d<CR>gg
-
 function! s:preserve(command)
   " preparation: save last search, and cursor position.
   let _s=@/
@@ -73,6 +70,12 @@ vnoremap ,' :! jq -R . \| sed -e "s/\"/'/g"<CR>
 vnoremap ," :! jq -R .<CR>
 " AWK
 vnoremap ,a :! awk '{print }'<LEFT><LEFT>
+
+" ONLY KEEP/DROP LINES WHICH CONTAIN SEARCH
+nnoremap ,v :v/<C-R>//d<CR>gg
+nnoremap ,d :g/<C-R>//d<CR>gg
+vnoremap ,v :v/<C-R>//d<CR>gg
+vnoremap ,d :g/<C-R>//d<CR>gg
 
 nnoremap ,l :!clear; cloc --quiet --by-file %<CR>
 nnoremap ,a :exe "!clear; CURRENT_LINE=" . line(".") . " summary-" . &ft . " " . expand("%")<CR>

@@ -4,12 +4,6 @@ function! FPScratchy(...)
   setlocal cursorline
   nmap <buffer> <CR> 0gf
   nmap <buffer> <ESC><CR> 0<c-w>f<c-w>w
-  " keep/drop matching lines
-  nnoremap <buffer> ,v :v/<C-R>//d<CR>gg
-  nnoremap <buffer> ,d :g/<C-R>//d<CR>gg
-  " keep/drop matching lines, from visual selection
-  vnoremap <buffer> ,v :v/<C-R>//d<CR>gg
-  vnoremap <buffer> ,d :g/<C-R>//d<CR>gg
 endfunction
 command -nargs=* FPScratchy :call FPScratchy(<args>)
 
