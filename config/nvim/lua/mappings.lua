@@ -24,3 +24,7 @@ vim.keymap.set("n", ",b", "\"*p")
 -- f-keys
 vim.keymap.set("n", "<F7>", ":set wrap!<CR>")
 vim.keymap.set("i", "<F7>", "<C-o>:set wrap!<CR>")
+
+-- keep/drop matching lines
+vim.keymap.set({'n', 'x'}, ',v', ':v/<C-r>//d<CR>gg', { silent = true })
+vim.keymap.set({'n', 'x'}, ',d', ':g/<C-r>//d<CR>gg', { silent = true })
