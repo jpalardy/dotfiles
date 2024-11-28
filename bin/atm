@@ -9,19 +9,20 @@ BEGIN {
   }
 }
 
-# skip empty lines
+# remove comments
+{
+  sub(/ *#.*/, "")
+}
+
+# skip blank lines
 NF == 0 {
-  print
+  blank++
+  if (blank == 1) { print }
   next
 }
 
 {
-  # remove comments
-  sub(/ *#.*/, "")
-  if ($0 == "") {
-    next
-  }
-
+  blank = 0
   print "tmux", $0
 }
 
