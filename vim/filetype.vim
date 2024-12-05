@@ -8,7 +8,6 @@ augroup other_filetypedetect
   autocmd!
   " misc
   autocmd BufNewFile,BufRead *.deck      setf deck
-  autocmd BufNewFile,BufRead *.moe       setf moe
   autocmd BufNewFile,BufRead *.mxm       setf maxima
   autocmd BufNewFile,BufRead *.har       setf json
 augroup END
