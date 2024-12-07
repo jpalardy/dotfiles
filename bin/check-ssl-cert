@@ -1,14 +1,12 @@
 #!/bin/bash
 
 check_cert() {
-  # shellcheck disable=SC2155
   local COLOR_RESET=$(tput sgr0)
-  # shellcheck disable=SC2155
   local COLOR_RED=$(tput setaf 1)
-  # shellcheck disable=SC2155
   local COLOR_GREEN=$(tput setaf 2)
 
-  local domain="$1"
+  # remove leading https, if present
+  local domain=${1#https://}
 
   cert_end_date=$(curl --insecure -v "https://$domain" 2>&1 | awk -F"date: " '/expire date:/ {print $2}')
   days_valid=$(( ($(date -d "${cert_end_date}" +%s) - $(date +%s)) / 86400 ))
