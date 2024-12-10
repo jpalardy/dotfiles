@@ -69,7 +69,7 @@ vnoremap ,[ :! jq -R . \| jq -s . -c<CR>
 vnoremap ,' :! jq -R . \| sed -e "s/\"/'/g"<CR>
 vnoremap ," :! jq -R .<CR>
 " AWK
-vnoremap ,a :! awk '{print }'<LEFT><LEFT>
+vnoremap ,a :! awk -e '{print }'<LEFT><LEFT>
 
 " ONLY KEEP/DROP LINES WHICH CONTAIN SEARCH
 nnoremap ,v :v/<C-R>//d<CR>gg
