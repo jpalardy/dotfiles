@@ -38,7 +38,7 @@ require("nvim-treesitter.configs").setup({
 
 local lspconfig = require("lspconfig")
 lspconfig.elixirls.setup({
-  cmd = { vim.fn.expand("$HOME/local/bin/language_server.sh") },
+  cmd = { "language_server.sh" },
 })
 lspconfig.zls.setup({})
 
@@ -53,10 +53,10 @@ require("conform").setup({
     zig = { "zigfmt" },
   },
   default_format_opts = {
-    lsp_format = "fallback",
+    lsp_format = "prefer",
   },
-  format_on_save = {
-    lsp_format = "fallback",
+  format_after_save = {
+    lsp_format = "prefer",
   },
 })
 
