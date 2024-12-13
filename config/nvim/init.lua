@@ -36,7 +36,7 @@ vim.opt.scrolloff = 1
 vim.opt.startofline = true
 
 -- color
-vim.cmd("colorscheme tokyonight-storm")
+vim.cmd("colorscheme gruvbox")
 
 -- lsp
 vim.diagnostic.config({ float = { border = "rounded" } })
