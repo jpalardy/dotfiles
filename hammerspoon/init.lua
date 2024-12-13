@@ -74,7 +74,7 @@ end)
 -- restricted
 bindMove({ "ctrl", "alt" }, "r", function(win, screen)
   win.x = 300
-  win.w = 780
+  win.w = 1000
 end)
 
 -- fit
