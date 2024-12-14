@@ -33,6 +33,11 @@ if [ -n "$dangling_packages" ]; then
   pacman -Rns $dangling_packages
 fi
 
+pacman -Scc --noconfirm
+
+# cleanup logs
+journalctl --vacuum-size=50M
+
 mhwd-kernel -li
 echo '-------------------------------------------------'
 pacman -Ss 'kernel and modules'
@@ -40,11 +45,6 @@ pacman -Ss 'kernel and modules'
 echo '-------------------------------------------------'
 echo 'sudo mhwd-kernel -i linux6x'
 echo '-------------------------------------------------'
-
-pacman -Scc --noconfirm
-
-# cleanup logs
-journalctl --vacuum-size=50M
 
 if confirm "reboot?"; then
   reboot
