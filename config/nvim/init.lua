@@ -45,5 +45,6 @@ vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$DOTFILES/bin/vim-helpers")
 
 -------------------------------------------------
 
+require("auto")
 require("mappings")
 require("plugins")
