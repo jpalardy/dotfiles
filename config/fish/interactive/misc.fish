@@ -8,10 +8,6 @@ alias R "R --quiet --no-save --no-restore"
 abbr --add --position anywhere @u @{upstream}
 abbr --add --position anywhere ..@u ..@{upstream}
 
-abbr --add nv  nvim
-abbr --add nvi nvim
-# alias vim nvim
-
 abbr --add nwst --set-cursor 'ls -t % | head -n1'
 abbr --add untilfail --set-cursor 'while %; end'
 
@@ -42,6 +38,9 @@ end
 
 #-------------------------------------------------
 
+abbr --add nv  nvim
+abbr --add nvi nvim
+alias vim nvim
 function vim-is
   alias vim (printf "%s\n" vim nvim hx | fzf)
 end
