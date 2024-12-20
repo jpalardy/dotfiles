@@ -51,6 +51,7 @@ require("conform").setup({
     elixir = { "mix" },
     lua = { "stylua" },
     zig = { "zigfmt" },
+    ["*"] = { "trim_whitespace" },
   },
   default_format_opts = {
     lsp_format = "prefer",
