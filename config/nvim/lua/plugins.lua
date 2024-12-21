@@ -41,6 +41,7 @@ lspconfig.elixirls.setup({
   cmd = { "language_server.sh" },
 })
 lspconfig.zls.setup({})
+lspconfig.gopls.setup({})
 
 -------------------------------------------------
 -- conform
