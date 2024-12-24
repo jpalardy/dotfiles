@@ -22,6 +22,8 @@ vim.keymap.set("v", ",b", '"*y')
 vim.keymap.set("n", ",b", '"*p')
 
 -- f-keys
+vim.keymap.set("n", "<F6>", ":set spell!<CR>")
+vim.keymap.set("i", "<F6>", "<C-o>:set spell!<CR>")
 vim.keymap.set("n", "<F7>", ":set wrap!<CR>")
 vim.keymap.set("i", "<F7>", "<C-o>:set wrap!<CR>")
 
