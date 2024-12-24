@@ -15,6 +15,8 @@ abbr --add 1pl 'printf "%s\n"'
 
 abbr --add awk_ --set-cursor "awk '{ print % }'"
 
+alias vim nvim
+
 #-------------------------------------------------
 
 function serve
@@ -36,11 +38,3 @@ function implode
   end
 end
 
-#-------------------------------------------------
-
-abbr --add nv  nvim
-abbr --add nvi nvim
-alias vim nvim
-function vim-is
-  alias vim (printf "%s\n" vim nvim hx | fzf)
-end
