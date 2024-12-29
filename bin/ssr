@@ -70,6 +70,5 @@ check_bin shellcheck
 check_bin yamllint
 check_bin pg_format pgformatter
 check_bin entr
-check_bin watch
 flush
 
