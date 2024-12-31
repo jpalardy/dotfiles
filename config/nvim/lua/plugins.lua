@@ -52,6 +52,7 @@ require("conform").setup({
     elixir = { "mix" },
     lua = { "stylua" },
     zig = { "zigfmt" },
+    html = { "prettier" },
     ["*"] = { "trim_whitespace" },
   },
   default_format_opts = {
@@ -65,3 +66,6 @@ require("conform").setup({
 vim.keymap.set("n", ",f", function()
   require("conform").format({ async = true })
 end)
+
+vim.keymap.set("n", "<ESC>?", ":ConformInfo<CR>")
+
