@@ -59,6 +59,7 @@ BEGIN {
   snip(":fire",   "🔥")
   snip(":boom",   "💥")
   snip(":rot",    "🔄")
+  snip("@",       "🌀")
   snip(":shrug",  "¯\\_(ツ)_/¯")
 
   # fruit
