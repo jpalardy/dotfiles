@@ -69,3 +69,21 @@ end)
 
 vim.keymap.set("n", "<ESC>?", ":ConformInfo<CR>")
 
+-------------------------------------------------
+-- nvim-lint
+-------------------------------------------------
+
+-- https://github.com/mfussenegger/nvim-lint#available-linters
+require("lint").linters_by_ft = {
+  awk = { "gawk" },
+  fish = { "fish" },
+  json = { "jsonlint" },
+  sh = { "shellcheck" },
+  yaml = { "yamllint" },
+}
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    require("lint").try_lint()
+  end,
+})
