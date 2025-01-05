@@ -35,6 +35,9 @@ vim.opt.virtualedit = "block"
 vim.opt.scrolloff = 1
 vim.opt.startofline = true
 
+-- statusline
+vim.opt.statusline = "%<%t %m%r%=%{&fileencoding?&fileencoding:&encoding} [%{&fileformat}] %.(%l,%c%V%) %P"
+
 -- color
 vim.cmd("colorscheme gruvbox")
 
@@ -45,6 +48,5 @@ vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$DOTFILES/bin/vim-helpers")
 
 -------------------------------------------------
 
-require("auto")
 require("mappings")
 require("plugins")
