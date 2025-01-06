@@ -47,10 +47,12 @@ lspconfig.gopls.setup({})
 -- conform
 -------------------------------------------------
 
+-- https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters
 require("conform").setup({
   formatters_by_ft = {
     elixir = { "mix" },
     lua = { "stylua" },
+    json = { "fixjson" },
     zig = { "zigfmt" },
     html = { "prettier" },
     ["*"] = { "trim_whitespace" },
@@ -78,6 +80,7 @@ require("lint").linters_by_ft = {
   awk = { "gawk" },
   fish = { "fish" },
   json = { "jsonlint" },
+  lua = { "luac" },
   sh = { "shellcheck" },
   yaml = { "yamllint" },
 }
