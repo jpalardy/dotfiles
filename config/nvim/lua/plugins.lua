@@ -87,3 +87,14 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     require("lint").try_lint()
   end,
 })
+
+-- custom: .moe
+require("lint").linters.moelint = {
+  cmd = "moelint",
+  ignore_exitcode = true, -- set this to true if the linter exits with a code != 0 and that's considered normal.
+  parser = require("lint.parser").from_errorformat("%f:%l:%c:%m", {
+    source = "moelint",
+    severity = vim.diagnostic.severity.WARN,
+  }),
+}
+require("lint").linters_by_ft.moe = { "moelint" }
