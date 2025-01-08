@@ -7,6 +7,10 @@ vim.keymap.set("n", "<ESC>n", ":set number!<CR>")
 vim.keymap.set("n", "tt", ":tabedit<CR>")
 vim.keymap.set("n", "tf", ":tabedit <cfile><CR>")
 
+-- unimpaired-like
+vim.keymap.set("n", "[q", ":cprevious<CR>")
+vim.keymap.set("n", "]q", ":cnext<CR>")
+
 -- indent
 vim.keymap.set("n", ">", ">>")
 vim.keymap.set("n", "<", "<<")
