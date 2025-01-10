@@ -1,6 +1,6 @@
 function we
   if test (count $argv) != 1
-    echo >&1 "usage: we command"
+    echo >&2 "usage: we command"
     return 1
   end
   set -l name $argv[1]
@@ -22,7 +22,7 @@ function we
   end
 
   if test -z "$src"
-    echo >&1 "not sure what $name is..."
+    echo >&2 "not sure what $name is..."
     return 1
   end
 
