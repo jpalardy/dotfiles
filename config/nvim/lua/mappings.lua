@@ -2,6 +2,9 @@
 vim.keymap.set("n", "<ESC><SPACE>", ":nohl<CR>")
 vim.keymap.set("n", "<ESC>l", ":set list!<CR>")
 vim.keymap.set("n", "<ESC>n", ":set number!<CR>")
+vim.keymap.set("n", "*", "*N")
+vim.keymap.set("n", "g*", "g*N")
+vim.keymap.set("v", "//", 'y/<C-R>"<CR>')
 
 -- tabs
 vim.keymap.set("n", "tt", ":tabedit<CR>")
