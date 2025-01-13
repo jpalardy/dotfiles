@@ -88,6 +88,8 @@ end
 # https://arrowsmithlabs.com/blog/iex-configure-auto-reload
 IEx.configure(auto_reload: true)
 
+{:messages, messages} = Process.info(pid, :messages)
+
 # -------------------------------------------------
 #  :recon_trace
 # -------------------------------------------------
