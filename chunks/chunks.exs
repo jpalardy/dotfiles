@@ -82,6 +82,13 @@ defmodule Mix.Tasks.GetToken do
 end
 
 # -------------------------------------------------
+#  IEx
+# -------------------------------------------------
+
+# https://arrowsmithlabs.com/blog/iex-configure-auto-reload
+IEx.configure(auto_reload: true)
+
+# -------------------------------------------------
 #  :recon_trace
 # -------------------------------------------------
 
