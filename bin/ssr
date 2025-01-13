@@ -60,6 +60,7 @@ check_bin duf
 check_bin dust
 check_bin pstree
 check_bin cloc
+check_bin socat
 flush
 
 # dev
