@@ -131,7 +131,7 @@ BEGIN {
     snip("inf",   "infinity")
     snip("tc",    "{usec, result} = :timer.tc(fn -> ▒ end)")
     snip("!",     "raise \"hell\"")
-    cycle("@", "@tag :", "@tag :focus")
+    cycle("@:",  "@tag :k", "@tag k: v")
     cycle("IO.", "IO.inspect()", "IO.inspect(label: \"***** #{Path.relative_to_cwd(__ENV__.file)}:#{__ENV__.line}\")")
   }
 
