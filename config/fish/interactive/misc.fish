@@ -38,3 +38,20 @@ function implode
   end
 end
 
+#-------------------------------------------------
+
+function ftr
+  if test (count $argv) = 0
+    echo >&2 "usage: ftr command [args...]"
+    return 1
+  end
+  set -l selection
+  fzf --exit-0 | while read -l line
+    set selection $selection $line
+  end
+  if test -z "$selection"
+    return
+  end
+  $argv $selection
+end
+
