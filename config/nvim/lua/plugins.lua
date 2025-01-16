@@ -52,6 +52,7 @@ require("nvim-treesitter.configs").setup({
 -- lspconfig
 -------------------------------------------------
 
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#lsp-configs
 local lspconfig = require("lspconfig")
 lspconfig.elixirls.setup({
   cmd = { "language_server.sh" },
