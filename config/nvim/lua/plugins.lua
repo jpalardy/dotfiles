@@ -15,6 +15,21 @@ vim.keymap.set("n", "<c-c>j", "<c-c><c-c>}j", { remap = true })
 -- telescope
 -------------------------------------------------
 
+require("telescope").setup({
+  defaults = {
+    sorting_strategy = "ascending",
+    layout_strategy = "vertical",
+    layout_config = {
+      prompt_position = "top",
+    },
+    mappings = {
+      i = {
+        ["<ESC>"] = "close",
+      },
+    },
+  },
+})
+
 vim.keymap.set("n", "\\f", ":Telescope find_files<CR>")
 vim.keymap.set("n", "\\g", ":Telescope live_grep<CR>")
 vim.keymap.set("n", "\\b", ":Telescope buffers<CR>")
