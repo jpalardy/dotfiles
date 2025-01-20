@@ -91,7 +91,27 @@ IEx.configure(auto_reload: true)
 {:messages, messages} = Process.info(pid, :messages)
 
 # -------------------------------------------------
-#  :recon_trace
+#  :recon_trace : custom formatter
+# -------------------------------------------------
+
+require Logger
+formatter = fn trace_payload ->
+  [:trace, pid | rest] = trace_payload |> Tuple.to_list()
+  rest
+  |> inspect()
+  |> Logger.debug()
+  "~n"
+end
+
+[
+  {Module, :function, :return_trace}
+]
+|> :recon_trace.calls({100, 1000}, scope: :local, formatter: formatter)
+
+:recon_trace.clear
+
+# -------------------------------------------------
+#  :recon_trace : default formatter
 # -------------------------------------------------
 
 [
