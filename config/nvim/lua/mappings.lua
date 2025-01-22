@@ -58,3 +58,9 @@ vim.keymap.set("n", ",c", function()
   vim.cmd("colorscheme " .. next_scheme)
   vim.notify("colorscheme: " .. next_scheme)
 end)
+
+-- splits
+vim.keymap.set("n", "\\<left>", ":leftabove vnew<CR>")
+vim.keymap.set("n", "\\<right>", ":rightbelow vnew<CR>")
+vim.keymap.set("n", "\\<up>", ":leftabove  new<CR>")
+vim.keymap.set("n", "\\<down>", ":rightbelow new<CR>")
