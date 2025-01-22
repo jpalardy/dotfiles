@@ -44,7 +44,7 @@ vim.keymap.set({ "n", "x" }, ",d", ":g/<C-r>//d<CR>gg", { silent = true })
 
 -- cycle between colorschemes
 vim.keymap.set("n", ",c", function()
-  local schemes = { "gruvbox", "gruvbox-material", "tokyonight-storm" }
+  local schemes = { "gruvbox", "gruvbox-material", "tokyonight-storm", "tokyonight-moon" }
   local current = vim.g.colors_name
 
   local next_scheme = current
