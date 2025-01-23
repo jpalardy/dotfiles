@@ -92,6 +92,18 @@ end)
 
 vim.keymap.set("n", "<ESC>?", ":ConformInfo<CR>")
 
+vim.keymap.set("n", "<f3>", function()
+  if vim.b.show_diagnostics == nil then
+    vim.b.show_diagnostics = true
+  end
+  vim.b.show_diagnostics = not vim.b.show_diagnostics
+  if vim.b.show_diagnostics then
+    vim.diagnostic.show(nil, 0)
+  else
+    vim.diagnostic.hide(nil, 0)
+  end
+end)
+
 -------------------------------------------------
 -- nvim-lint
 -------------------------------------------------
