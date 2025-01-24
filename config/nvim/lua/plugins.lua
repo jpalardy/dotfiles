@@ -81,9 +81,7 @@ require("conform").setup({
   default_format_opts = {
     lsp_format = "prefer",
   },
-  format_after_save = {
-    lsp_format = "prefer",
-  },
+  format_after_save = {},
 })
 
 vim.keymap.set("n", ",f", function()
