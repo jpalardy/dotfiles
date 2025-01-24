@@ -63,6 +63,7 @@ lspconfig.elixirls.setup({
 })
 lspconfig.zls.setup({})
 lspconfig.gopls.setup({})
+lspconfig.ts_ls.setup({})
 
 -------------------------------------------------
 -- conform
@@ -76,6 +77,7 @@ require("conform").setup({
     json = { "fixjson" },
     zig = { "zigfmt" },
     html = { "prettier" },
+    typescript = { "prettier", lsp_format = "fallback" },
     ["*"] = { "trim_whitespace" },
   },
   default_format_opts = {
