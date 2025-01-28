@@ -83,8 +83,18 @@ require("conform").setup({
   default_format_opts = {
     lsp_format = "prefer",
   },
-  format_after_save = {},
+  format_after_save = function(bufnr)
+    if vim.b[bufnr].disable_autoformat then
+      return
+    end
+    return {}
+  end,
 })
+
+vim.api.nvim_create_user_command("ToggleAutoformat", function()
+  vim.b.disable_autoformat = not vim.b.disable_autoformat
+  print("autoformat: " .. tostring(not vim.b.disable_autoformat))
+end, {})
 
 vim.keymap.set("n", ",f", function()
   require("conform").format({ async = true })
