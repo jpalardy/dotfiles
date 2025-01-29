@@ -96,7 +96,7 @@ IEx.configure(auto_reload: true)
 
 require Logger
 formatter = fn trace_payload ->
-  [:trace, pid | rest] = trace_payload |> Tuple.to_list()
+  [:trace, _pid | rest] = trace_payload |> Tuple.to_list()
   rest
   |> inspect()
   |> Logger.debug()
