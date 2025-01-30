@@ -91,6 +91,12 @@ IEx.configure(auto_reload: true)
 {:messages, messages} = Process.info(pid, :messages)
 
 # -------------------------------------------------
+#  stop at BEAM assembly
+# -------------------------------------------------
+
+@compile :S
+
+# -------------------------------------------------
 #  :recon_trace : custom formatter
 # -------------------------------------------------
 
