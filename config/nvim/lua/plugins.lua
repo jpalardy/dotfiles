@@ -39,6 +39,7 @@ vim.keymap.set("n", "\\q", ":Telescope quickfix<CR>")
 
 -- meta-pick
 vim.keymap.set("n", "\\t", ":Telescope builtin<CR>")
+vim.keymap.set("n", "\\r", ":Telescope resume<CR>")
 
 -------------------------------------------------
 -- treesitter
