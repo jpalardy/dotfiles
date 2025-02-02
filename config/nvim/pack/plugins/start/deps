@@ -7,3 +7,4 @@ lspconfig        https://github.com/neovim/nvim-lspconfig
 tokyonight       https://github.com/folke/tokyonight.nvim
 conform          https://github.com/stevearc/conform.nvim
 nvim-lint        https://github.com/mfussenegger/nvim-lint
+age-secret       https://github.com/jpalardy/age-secret.nvim.git

@@ -145,3 +145,10 @@ require("lint").linters.moelint = {
   }),
 }
 require("lint").linters_by_ft.moe = { "moelint" }
+
+-------------------------------------------------
+-- age
+-------------------------------------------------
+
+-- default to ENV vars...
+require("age_secret").setup({})
