@@ -1,6 +1,5 @@
 ale            https://github.com/dense-analysis/ale.git
 fugitive       https://github.com/tpope/vim-fugitive.git
-gnupg          https://github.com/jamessan/vim-gnupg.git
 nerdcommenter  https://github.com/preservim/nerdcommenter.git
 slime          https://github.com/jpalardy/vim-slime
 spacehi        https://github.com/jpalardy/spacehi.vim.git
