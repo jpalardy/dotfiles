@@ -39,7 +39,7 @@ vim.opt.startofline = true
 vim.opt.statusline = "%<%t %m%r%=%{&fileencoding?&fileencoding:&encoding} [%{&fileformat}] %.(%l,%c%V%) %P"
 
 -- color
-vim.cmd("colorscheme gruvbox")
+vim.cmd("colorscheme nord")
 
 -- lsp
 vim.diagnostic.config({ float = { border = "rounded" } })
