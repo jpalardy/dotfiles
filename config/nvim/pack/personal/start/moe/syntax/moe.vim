@@ -8,45 +8,44 @@ endif
 
 "-------------------------------------------------
 
-" a header is a line that starts with a capital letter and
-" doesn't have lowercase letters
+" a header is a line that starts with a capital letter and doesn't have lowercase letters
 syntax match moeHeader /^[A-Z][^a-z]*$/
+hi def link moeHeader Keyword
 
 " @person
 syntax match moePerson "\w\@<!@\w\+"
+hi def link moePerson SpecialChar
 
 " #hashtag
 syntax match moeHashtag "\w\@<!#[-a-zA-Z0-9_]\+"
+hi def link moeHashtag Underlined
 
-" emphasis
-syntax match moeLessImportant /.* #$/
+" comment
+syntax match moeComment /.* #$/
+hi def link moeComment Comment
 
 " [TAGS]
-syntax match moeTag     /\[[^]]\+\]/
+syntax match moeTag /\[[^]]\+\]/
+hi def link moeTag Identifier
 
 " `backtick`
 syntax match moeBacktick /`[^`]\+`/
+hi def link moeBacktick String
 
 syntax match moeDivider /^-\+$/
+hi def link moeDivider Comment
 
-syntax match moeDate        /\d\d\d\d-\d\d-\d\d/
+" ####-##-##
+syntax match moeDate /\d\d\d\d-\d\d-\d\d/
+hi def link moeDate Number
+
+" ###.###.####
 syntax match moePhoneNumber /\<\(1\.\)\?\d\d\d\.\d\d\d\.\d\d\d\d\>/
-syntax match moeURL         /https\?:[^ ]\+/
+hi def link moePhoneNumber Number
 
-"-------------------------------------------------
-
-hi def link moeHeader        Keyword
-hi def link moePerson        Special
-hi def link moeHashtag       Underlined
-hi def link moeHighlight     Todo
-hi def link moeImportant     Error
-hi def link moeLessImportant Comment
-hi def link moeTag           Identifier
-hi def link moeDivider       Comment
-hi def link moeDate          Number
-hi def link moePhoneNumber   Number
-hi def link moeURL           Comment
-hi def link moeBacktick      String
+" url
+syntax match moeURL /https\?:[^ ]\+/
+hi def link moeURL Comment
 
 let b:current_syntax = "moe"
 
