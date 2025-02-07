@@ -78,6 +78,7 @@ require("conform").setup({
     json = { "fixjson" },
     zig = { "zigfmt" },
     html = { "prettier" },
+    graphql = { "prettier" },
     typescript = { "prettier", lsp_format = "fallback" },
     ["*"] = { "trim_whitespace" },
   },
