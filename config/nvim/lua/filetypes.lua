@@ -6,3 +6,5 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     end
   end,
 })
+
+vim.api.nvim_set_hl(0, "@diff.command", { bg = "#FF0000" })

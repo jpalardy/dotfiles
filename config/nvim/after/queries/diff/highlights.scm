@@ -1,0 +1,4 @@
+; extends
+
+(command) @diff.command
+
