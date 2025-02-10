@@ -1,0 +1,40 @@
+#!/usr/bin/env awk-f
+
+function columns_as_print() {
+  printf("%sprint(vim.inspect({ ", leading_spaces)
+  # special case
+  if ($2 == "...") {
+    printf("... }))")
+    return
+  }
+  printf("%s = %s", $2, $2)
+  for (i=3; i<=NF; i++) {
+    printf(", %s = %s", $i, $i)
+  }
+  printf(" }))")
+}
+
+{
+  match($0, "^\\s*")
+  leading_spaces = substr($0, 1, RLENGTH)
+}
+
+#
+# lines like:
+#   tap x y z
+#   tap x, y, z
+# are expanded to:
+#   print(vim.inspect({x = x, y = y, z = z}))
+#
+$1 == "tap" && NF > 1 {
+  # survive dangling `,`
+  gsub(",", "")
+  columns_as_print()
+  next
+}
+
+# passthrough
+{
+  print
+}
+
