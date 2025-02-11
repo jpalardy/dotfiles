@@ -48,6 +48,7 @@ BEGIN {
   snip("cr",  "⏎")
   snip("cmd", "⌘")
   snip("alt", "⌥")
+  snip("*",   "×")
 
   # emojis
   cycle("_", "📦", "✅")
