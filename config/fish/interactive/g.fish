@@ -48,7 +48,13 @@ function g
       }
     }
   ' $config | read -l dst
-  test -n "$dst"; and cd "$dst"
+
+
+  if test -z "$dst"
+    g
+  else
+    cd "$dst"
+  end
 end
 
 function __g_keys
