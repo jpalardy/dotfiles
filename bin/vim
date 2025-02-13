@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo 1<&2 "nvim"
+exit 1
+

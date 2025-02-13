@@ -32,7 +32,7 @@ for commit in $(git rev-list --no-merges --reverse "$@"); do
   git show --stat "$commit"
   echo
   if confirm "review?"; then
-    git show "$commit" | vim -R -
+    git show "$commit" | $EDITOR -R -
   fi
 done
 

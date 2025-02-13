@@ -23,13 +23,13 @@ bind \et fzf-date
 # -------------------------------------------------
 
 # esc-h
-bind \eh 'commandline -r "vim -c \"normal h\""; commandline -f execute'
+bind \eh 'commandline -r "'$EDITOR' -c \"normal h\""; commandline -f execute'
 
 # esc-`
 bind \e` 'commandline -i "\$($history[1])"'
 
 # esc-- -- open rg results in vim
-bind \e- 'commandline -r "vim -q \$($history[1] --vimgrep | psub)"; commandline -f execute'
+bind \e- 'commandline -r "'$EDITOR' -q \$($history[1] --vimgrep | psub)"; commandline -f execute'
 
 # esc-,
 bind \e, fzf-contextual

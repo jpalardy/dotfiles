@@ -1,6 +1,6 @@
 
 function git-diff
-  git diff $argv &| vim -R -
+  git diff $argv &| $EDITOR -R -
 end
 
 abbr --add glg  "git log --graph --pretty=colorful --date-order"

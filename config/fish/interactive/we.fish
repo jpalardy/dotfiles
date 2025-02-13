@@ -26,7 +26,7 @@ function we
     return 1
   end
 
-  vim $src +$line
+  $EDITOR $src +$line
 end
 
 complete -c we -a "(__fish_complete_command)"
