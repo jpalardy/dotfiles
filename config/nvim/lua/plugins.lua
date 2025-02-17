@@ -59,9 +59,20 @@ require("nvim-treesitter.configs").setup({
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#lsp-configs
 local lspconfig = require("lspconfig")
-lspconfig.elixirls.setup({
-  cmd = { "language_server.sh" },
-})
+do
+  local elixir_ls_path = function()
+    local executables = { "language-server.sh", "elixir-ls" }
+    for _, exec in ipairs(executables) do
+      if vim.fn.executable(exec) == 1 then
+        return exec
+      end
+    end
+    return executables[1]
+  end
+  lspconfig.elixirls.setup({
+    cmd = { elixir_ls_path() },
+  })
+end
 lspconfig.zls.setup({})
 lspconfig.gopls.setup({})
 lspconfig.ts_ls.setup({})
