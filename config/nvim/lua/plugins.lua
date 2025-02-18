@@ -61,7 +61,7 @@ require("nvim-treesitter.configs").setup({
 local lspconfig = require("lspconfig")
 do
   local elixir_ls_path = function()
-    local executables = { "language-server.sh", "elixir-ls" }
+    local executables = { "language_server.sh", "elixir-ls" }
     for _, exec in ipairs(executables) do
       if vim.fn.executable(exec) == 1 then
         return exec
