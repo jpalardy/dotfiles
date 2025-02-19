@@ -54,7 +54,7 @@ fi
 tmux rename-window "vimrepl-$ext"
 
 if [ "$ALREADY_SPLIT" == 1 ]; then
-  $EDITOR "$filename"
+  vim "$filename"
   exit
 fi
 
@@ -68,7 +68,7 @@ fi
 tmux select-pane -l
 
 # vim...
-$EDITOR "$filename"
+vim "$filename"
 
 # after vim, kill other pane(s)
 tmux kill-pane -a

@@ -11,7 +11,7 @@ ulimit -c 0
 
 set -x DOTFILES "$HOME/dotfiles"
 
-set -x EDITOR "nvim"
+set -x EDITOR "vim"
 set -x BLOCKSIZE "K"
 
 set -x LANG "en_US.UTF-8"
@@ -23,7 +23,7 @@ set -x FZF_CTRL_T_COMMAND "rg --files --no-ignore-parent --sort path"
 set -x CLICOLOR 1    # used by `tree`, possibly others
 set -x RIPGREP_CONFIG_PATH ~/dotfiles/ripgreprc
 
-set -x MANPAGER "$EDITOR +MANPAGER -"
+set -x MANPAGER "vim +MANPAGER -"
 
 #-------------------------------------------------
 # PROMPT
