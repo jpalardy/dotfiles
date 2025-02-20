@@ -26,7 +26,6 @@ vim.keymap.set("n", "#", "gcc", { remap = true })
 vim.keymap.set("v", "#", "gc", { remap = true })
 
 -- lsp (and adjacent)
-vim.keymap.set("n", "\\q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 vim.keymap.set("n", "\\ca", vim.lsp.buf.code_action)
 
 -- clipboard
