@@ -82,6 +82,7 @@ end
 lspconfig.zls.setup({})
 lspconfig.gopls.setup({})
 lspconfig.ts_ls.setup({})
+lspconfig.elmls.setup({})
 
 -- border: urgh... works but so manual
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
