@@ -18,6 +18,8 @@
   rss       = restore --staged
   wip       = "!f() { git commit -a -m \"wip $(date +%s)\"; }; f"
   lsf       = ls-files --exclude-standard --modified --others --deleted
+  di        = diff ..@{upstream}
+  do        = diff @{upstream}..
 [diff]
   noprefix = true
   tool = vimdiff
