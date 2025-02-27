@@ -24,16 +24,28 @@
   noprefix = true
   tool = vimdiff
   algorith = histogram
+  renames = true
 [push]
   default = current
   autoSetupRemote = true
+  followTags = true
 [core]
   excludesfile = ~/.gitignore
 [init]
   defaultBranch = main
 [rebase]
-  autosquash = true
+  autoSquash = true
+  autoStash = true
+  updateRefs = true
 [status]
   submoduleSummary = true
 [pretty]
   colorful = "%Cred%h%Creset - %s %Cgreen(%cr)%Creset%C(auto)%d%Creset %C(dim white)%an%Creset"
+[branch]
+  sort = -committerdate
+[tag]
+  sort = version:refname
+[fetch]
+  prune = true
+  pruneTags = true
+  all = true
