@@ -47,7 +47,7 @@ local function preserve(command)
   local saved_search = vim.fn.getreg("/")
   local cursor = vim.api.nvim_win_get_cursor(0)
   vim.cmd(command)
-  vim.api.nvim_win_set_cursor(0, cursor)
+  pcall(vim.api.nvim_win_set_cursor, 0, cursor)
   vim.fn.setreg("/", saved_search)
 end
 
