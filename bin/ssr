@@ -42,7 +42,6 @@ check_bin rg          ripgrep
 check_bin fzf
 check_bin parallel
 check_bin curl
-check_bin gpg
 check_bin pwgen
 check_bin qrencode
 check_bin utimer
@@ -60,7 +59,6 @@ check_bin duf
 check_bin dust
 check_bin pstree
 check_bin cloc
-check_bin socat
 flush
 
 # dev
