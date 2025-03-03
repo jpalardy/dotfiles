@@ -78,3 +78,22 @@ vim.keymap.set("n", "\\<left>", ":leftabove vnew<CR>")
 vim.keymap.set("n", "\\<right>", ":rightbelow vnew<CR>")
 vim.keymap.set("n", "\\<up>", ":leftabove  new<CR>")
 vim.keymap.set("n", "\\<down>", ":rightbelow new<CR>")
+
+-- split resize
+local function resize_to_width(start_line, end_line)
+  local max_width = 0
+  local lines = vim.api.nvim_buf_get_lines(0, start_line, end_line, false)
+  for _, line in ipairs(lines) do
+    max_width = math.max(max_width, vim.fn.strdisplaywidth(line))
+  end
+  local padding = 2
+  local gutter = vim.wo.number and vim.wo.numberwidth or 0
+  vim.api.nvim_win_set_width(0, max_width + gutter + padding)
+end
+
+vim.keymap.set("n", ",-", function()
+  resize_to_width(0, -1)
+end)
+vim.keymap.set("v", ",-", function()
+  resize_to_width(vim.fn.line("v") - 1, vim.fn.line("."))
+end)
