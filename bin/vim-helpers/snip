@@ -60,6 +60,7 @@ BEGIN {
   snip(":fire",   "🔥")
   snip(":boom",   "💥")
   snip(":rot",    "🔄")
+  snip(":skull",  "💀")
   snip("@",       "🌀")
   snip(":shrug",  "¯\\_(ツ)_/¯")
 
