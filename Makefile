@@ -3,7 +3,7 @@ preview:
 	@bash .setup.bash $$FLAGS
 
 diff:
-	@vimdiff ssh/config ~/.ssh/config
+	@vim -d ssh/config ~/.ssh/config
 
 # -------------------------------------------------
 

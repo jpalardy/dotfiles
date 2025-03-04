@@ -8,13 +8,13 @@ fi
 diff -rq "$@" | awk '
 
 /^Files / {
-  print "vimdiff", $2, $4
+  print "vim -d", $2, $4
 }
 
 /^Only in/ {
   path = $3
   sub(/:$/, "", path)
-  print "vimdiff _", path "/" $4
+  print "vim -d _", path "/" $4
 }
 
 ' | sort
