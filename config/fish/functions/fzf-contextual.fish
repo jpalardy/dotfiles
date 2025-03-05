@@ -17,6 +17,8 @@ function __fzf_contextual
   if [ -e "mix.exs" ]
     echo "mix deps.get"
     echo "mix deps.compile"
+    echo "mix format --migrate"
+    echo "mix hex.outdated"
     echo "mix deps.update --all; and mix deps.unlock --unused"
     echo ""
     test -d .elixir_ls; and echo "rm -rf -v .elixir_ls"
