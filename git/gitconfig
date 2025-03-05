@@ -8,7 +8,7 @@
   co        = checkout
   ffm       = merge --ff-only
   rl        = remote -v
-  fp        = fetch --prune
+  fp        = fetch
   gone      = !git branch -vv | sed -e 's/^..//' | awk '/: gone/ {print \"git branch -D\", $1}'
   rewind    = reset HEAD^
   vimdiff   = difftool
