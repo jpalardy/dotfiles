@@ -6,8 +6,7 @@ function fzf-warp
   commandline -f repaint
 end
 
-# esc-w
-bind \ew fzf-warp
+bind escape,w fzf-warp
 
 # -------------------------------------------------
 
@@ -17,20 +16,18 @@ function fzf-date
   commandline -f repaint
 end
 
-# esc-t
-bind \et fzf-date
+bind escape,t fzf-date
 
 # -------------------------------------------------
 
-# esc-h
-bind \eh 'commandline -r "vim -c \"normal h\""; commandline -f execute'
+# open vim, with esc-h
+bind escape,h 'commandline -r "vim -c \"normal h\""; commandline -f execute'
 
-# esc-`
-bind \e` 'commandline -i "\$($history[1])"'
+# insert last command-line $(...)
+bind escape,` 'commandline -i "\$($history[1])"'
 
-# esc-- -- open rg results in vim
-bind \e- 'commandline -r "vim -q \$($history[1] --vimgrep | psub)"; commandline -f execute'
+# open rg results in vim
+bind escape,minus 'commandline -r "vim -q \$($history[1] --vimgrep | psub)"; commandline -f execute'
 
-# esc-,
-bind \e, fzf-contextual
+bind escape,comma fzf-contextual
 
