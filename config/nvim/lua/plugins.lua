@@ -110,6 +110,7 @@ require("conform").setup({
     zig = { "zigfmt" },
     html = { "prettier" },
     graphql = { "prettier" },
+    javascript = { "prettier" },
     typescript = { "prettier", lsp_format = "fallback" },
     ["*"] = { "trim_whitespace" },
   },
