@@ -55,6 +55,7 @@ BEGIN {
   snip(":think",  "🤔")
   snip(":grim",   "😬")
   snip(":grin",   "😄")
+  snip("+1",      "👍")
   snip("X",       "❌")
   snip(":tada",   "🎉")
   snip(":fire",   "🔥")
