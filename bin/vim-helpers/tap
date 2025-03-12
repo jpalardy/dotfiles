@@ -1,0 +1,87 @@
+#!/usr/bin/env awk-f
+
+# -------------------------------------------------
+
+#
+# lines like:
+#   tap x y z
+#   tap x, y, z
+# are expanded to:
+#   [x: x, y: y, z: z] |> IO.inspect()
+#
+function format_elixir() {
+  printf("[")
+  for (i=2; i<=NF; i++) {
+    if (i>2) printf(", ")
+    printf("%s: %s", $i, $i)
+  }
+  print("] |> IO.inspect()")
+}
+
+#
+# lines like:
+#   tap x y z
+#   tap x, y, z
+# are expanded to:
+#   print(vim.inspect({x = x, y = y, z = z}))
+#
+function format_lua() {
+  printf("print(vim.inspect({ ")
+  for (i=2; i<=NF; i++) {
+    if (i>2) printf(", ")
+    printf("%s = %s", $i, $i)
+  }
+  print(" }))")
+}
+
+#
+# lines like:
+#   tap x y z
+#   tap x, y, z
+# are expanded to:
+#   std.debug.print("x = {}, y = {}, z = {}\n", .{x, y, z});
+#
+function format_zig() {
+  printf("std.debug.print(\"")
+  for (i=2; i<=NF; i++) {
+    if (i>2) printf(", ")
+    printf("%s = {}", $i)
+  }
+  printf("\\n\", .{")
+  for (i=2; i<=NF; i++) {
+    if (i>2) printf(", ")
+    printf("%s", $i)
+  }
+  print("});")
+}
+
+# -------------------------------------------------
+
+{
+  match($0, "^\\s*")
+  leading_spaces = substr($0, 1, RLENGTH)
+}
+
+#
+# lines like:
+#   tap x y z
+#   tap x, y, z
+# are expanded to:
+#   print(vim.inspect({x = x, y = y, z = z}))
+#
+$1 == "tap" && NF > 1 {
+  # survive dangling `,`
+  gsub(",", "")
+  printf("%s", leading_spaces)
+  # fname = "format_elixir"
+  # fname = "format_lua"
+  fname = "format_zig"
+  @fname()
+  next
+}
+
+# passthrough
+{
+  print
+}
+
