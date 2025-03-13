@@ -6,7 +6,7 @@
 # lines like:
 #   tap x y z
 #   tap x, y, z
-# are expanded to:
+# become:
 #   [x: x, y: y, z: z] |> IO.inspect()
 #
 function format_elixir() {
@@ -22,7 +22,7 @@ function format_elixir() {
 # lines like:
 #   tap x y z
 #   tap x, y, z
-# are expanded to:
+# become:
 #   print(vim.inspect({x = x, y = y, z = z}))
 #
 function format_lua() {
@@ -38,7 +38,7 @@ function format_lua() {
 # lines like:
 #   tap x y z
 #   tap x, y, z
-# are expanded to:
+# become:
 #   std.debug.print("x = {}, y = {}, z = {}\n", .{x, y, z});
 #
 function format_zig() {
@@ -62,20 +62,11 @@ function format_zig() {
   leading_spaces = substr($0, 1, RLENGTH)
 }
 
-#
-# lines like:
-#   tap x y z
-#   tap x, y, z
-# are expanded to:
-#   print(vim.inspect({x = x, y = y, z = z}))
-#
 $1 == "tap" && NF > 1 {
   # survive dangling `,`
   gsub(",", "")
   printf("%s", leading_spaces)
-  # fname = "format_elixir"
-  # fname = "format_lua"
-  fname = "format_zig"
+  fname = "format_" filetype
   @fname()
   next
 }
