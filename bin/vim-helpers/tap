@@ -55,6 +55,22 @@ function format_zig() {
   print("});")
 }
 
+#
+# lines like:
+#   tap x y z
+#   tap x, y, z
+# become:
+#   let _ = Debug.log "" { x = x, y = y, z = z } in
+#
+function format_elm() {
+  printf("let _ = Debug.log \"\" { ")
+  for (i=2; i<=NF; i++) {
+    if (i>2) printf(", ")
+    printf("%s = %s", $i, $i)
+  }
+  print(" } in")
+}
+
 # -------------------------------------------------
 
 {
