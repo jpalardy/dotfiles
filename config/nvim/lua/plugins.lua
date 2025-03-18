@@ -173,6 +173,17 @@ require("lint").linters.moelint = {
 }
 require("lint").linters_by_ft.moe = { "moelint" }
 
+-- custom: .deck
+require("lint").linters.decklint = {
+  cmd = "decklint",
+  ignore_exitcode = true, -- set this to true if the linter exits with a code != 0 and that's considered normal.
+  parser = require("lint.parser").from_errorformat("%f:%l:%c:%m", {
+    source = "decklint",
+    severity = vim.diagnostic.severity.WARN,
+  }),
+}
+require("lint").linters_by_ft.deck = { "decklint" }
+
 -------------------------------------------------
 -- age
 -------------------------------------------------
