@@ -5,6 +5,7 @@ function __fzf_contextual
     echo "ncu -u"
     echo "npm install"
     echo "git add package*; npm audit fix; rm -rf package-lock.json node_modules; npm install"
+    echo "npm install -g typescript typescript-language-server"
   end
 
   # go
