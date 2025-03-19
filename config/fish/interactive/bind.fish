@@ -21,7 +21,7 @@ bind escape,t fzf-date
 # -------------------------------------------------
 
 # open vim, with esc-h
-bind escape,h 'commandline -r "vim -c \"normal h\""; commandline -f execute'
+bind escape,h 'commandline -r "vim -c FPScratchyH"; commandline -f execute'
 
 # insert last command-line $(...)
 bind escape,` 'commandline -i "\$($history[1])"'
