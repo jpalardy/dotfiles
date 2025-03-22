@@ -71,6 +71,22 @@ function format_elm() {
   print(" } in")
 }
 
+#
+# lines like:
+#   tap x y z
+#   tap x, y, z
+# become:
+#   console.log({x, y, z});
+#
+function format_javascript() {
+  printf("console.log({")
+  for (i=2; i<=NF; i++) {
+    if (i>2) printf(", ")
+    printf("%s", $i)
+  }
+  print("};")
+}
+
 # -------------------------------------------------
 
 {

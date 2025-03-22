@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tap -v filetype=javascript "$@"
