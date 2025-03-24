@@ -8,6 +8,11 @@ function __fzf_contextual
     echo "npm install -g typescript typescript-language-server"
   end
 
+  # elm
+  if [ -e "elm.json" ]
+    echo "npm install -g @elm-tooling/elm-language-server"
+  end
+
   # go
   if [ -e "go.mod" ]
     echo "go get -u"
