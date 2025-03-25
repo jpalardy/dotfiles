@@ -1,6 +1,11 @@
 #!/usr/bin/env awk-f
 
 BEGIN {
+  if (ENVIRON["TMUX"] == "") {
+    print "need to run inside tmux" > "/dev/stderr"
+    exit
+  }
+
   # - no filename given
   # - interactive (not pipe) input
   if (ARGV[1] == "" && !system("tty > /dev/null")) {
