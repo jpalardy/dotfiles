@@ -60,7 +60,7 @@ defmodule SomeApp.Application do
   use Application
 
   def start(_type, _args) do
-    opts = [strategy: :one_for_one name: SomeApp.Supervisor]
+    opts = [strategy: :one_for_one, name: SomeApp.Supervisor]
 
     DynamicSupervisor.start_link(options)
   end
@@ -114,7 +114,7 @@ end
 ]
 |> :recon_trace.calls({100, 1000}, scope: :local, formatter: formatter)
 
-:recon_trace.clear
+:recon_trace.clear()
 
 # -------------------------------------------------
 #  :recon_trace : default formatter
@@ -125,5 +125,4 @@ end
 ]
 |> :recon_trace.calls({100, 1000}, scope: :local)
 
-:recon_trace.clear
-
+:recon_trace.clear()
