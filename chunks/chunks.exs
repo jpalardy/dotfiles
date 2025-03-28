@@ -91,16 +91,6 @@ IEx.configure(auto_reload: true)
 {:messages, messages} = Process.info(pid, :messages)
 
 # -------------------------------------------------
-#  show stacktrace
-# -------------------------------------------------
-
-try do
-  raise "hell"
-rescue
-  error -> IO.puts(Exception.format(:error, error, __STACKTRACE__))
-end
-
-# -------------------------------------------------
 #  stop at BEAM assembly
 # -------------------------------------------------
 

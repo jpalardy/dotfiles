@@ -134,8 +134,9 @@ BEGIN {
     snip("inf",   "infinity")
     snip("tc",    "{usec, result} = :timer.tc(fn -> ▒ end)")
     snip("!",     "raise \"hell\"")
-    cycle("@:",  "@tag :k", "@tag k: v")
-    cycle("IO.", "IO.inspect()", "IO.inspect(label: \"***** #{Path.relative_to_cwd(__ENV__.file)}:#{__ENV__.line}\")")
+    snip("st",    "IO.puts(\"** stacktrace L#{__ENV__.line}\\n\" <> Exception.format_stacktrace())")
+    cycle("@:",   "@tag :k", "@tag k: v")
+    cycle("IO.",  "IO.inspect()", "IO.inspect(label: \"***** #{Path.relative_to_cwd(__ENV__.file)}:#{__ENV__.line}\")")
   }
 
   #-------------------------------------------------
