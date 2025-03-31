@@ -84,7 +84,7 @@ function format_javascript() {
     if (i>2) printf(", ")
     printf("%s", $i)
   }
-  print("};")
+  print("});")
 }
 
 # -------------------------------------------------
