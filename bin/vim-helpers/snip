@@ -1,5 +1,14 @@
 #!/usr/bin/env awk-f
 
+function randhex(len) {
+  hex_chars = "0123456789abcdef"
+  result = ""
+  for (i = 1; i <= len; i++) {
+    result = result substr(hex_chars, int(rand() * 16) + 1, 1)
+  }
+  return result
+}
+
 function snip(key, value, overwrite) {
   if (value == "") {
     print "missing value for key:", key > "/dev/stderr"
@@ -27,6 +36,9 @@ function cycle(v1, v2, v3, v4) {
 }
 
 BEGIN {
+  # fresh seed
+  srand()
+
   # filetype comes from -v
   split(filetype, arr, ".")
   for (i in arr) {
@@ -66,7 +78,6 @@ BEGIN {
   snip(":shrug",  "¯\\_(ツ)_/¯")
 
   # fruit
-  srand()
   fruits = "🍎🍏🍌🫐🍒🍇🥝🍋🍊🍑🍍🍓🍉"
   fruit = substr(fruits, int(length(fruits) * rand()), 1)
   snip("%", fruit)
@@ -133,8 +144,8 @@ BEGIN {
     snip("pry",   "require IEx; IEx.pry()")
     snip("inf",   "infinity")
     snip("tc",    "{usec, result} = :timer.tc(fn -> ▒ end)")
-    snip("!",     "raise \"hell\"")
-    snip("st",    "IO.puts(\"** stacktrace L#{__ENV__.line}\\n\" <> Exception.format_stacktrace())")
+    snip("!",     "raise \"" randhex(8) "\"")
+    snip("__",    "IO.puts(\"** stacktrace " randhex(8) "\\n\" <> Exception.format_stacktrace())")
     cycle("@:",   "@tag :k", "@tag k: v")
     cycle("IO.",  "IO.inspect()", "IO.inspect(label: \"***** #{Path.relative_to_cwd(__ENV__.file)}:#{__ENV__.line}\")")
   }
