@@ -1,7 +1,9 @@
--- search
-vim.keymap.set("n", "<ESC><SPACE>", ":nohl<CR>")
+-- context
 vim.keymap.set("n", "<ESC>l", ":set list!<CR>")
 vim.keymap.set("n", "<ESC>n", ":set number!<CR>")
+
+-- search
+vim.keymap.set("n", "<ESC><SPACE>", ":nohl<CR>")
 vim.keymap.set("n", "*", "*N")
 vim.keymap.set("n", "g*", "g*N")
 vim.keymap.set("v", "//", 'y/<C-R>"<CR>')
