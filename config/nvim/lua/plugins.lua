@@ -11,6 +11,10 @@ vim.keymap.set("n", "<c-c><c-u>", ':SlimeSend0 "\\x15"<CR>')
 vim.keymap.set("n", "<c-c>q", ':SlimeSend0 "q"<CR>')
 vim.keymap.set("n", "<c-c>j", "<c-c><c-c>}j", { remap = true })
 
+-- cell
+-- vim.g.slime_cell_delimiter = "%%"
+-- vim.keymap.set("n", "<c-c>d", "<Plug>SlimeSendCell")
+
 -------------------------------------------------
 -- fugitive
 -------------------------------------------------
