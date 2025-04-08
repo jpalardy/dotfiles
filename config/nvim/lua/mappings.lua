@@ -12,10 +12,6 @@ vim.keymap.set("v", "//", 'y/<C-R>"<CR>')
 vim.keymap.set("n", "tt", ":tabedit<CR>")
 vim.keymap.set("n", "tf", ":tabedit <cfile><CR>")
 
--- unimpaired-like
-vim.keymap.set("n", "[q", ":cprevious<CR>")
-vim.keymap.set("n", "]q", ":cnext<CR>")
-
 -- indent
 vim.keymap.set("n", ">", ">>")
 vim.keymap.set("n", "<", "<<")
@@ -26,9 +22,6 @@ vim.cmd("unmap Y")
 -- commenting
 vim.keymap.set("n", "#", "gcc", { remap = true })
 vim.keymap.set("v", "#", "gc", { remap = true })
-
--- lsp (and adjacent)
-vim.keymap.set("n", "\\ca", vim.lsp.buf.code_action)
 
 -- clipboard
 vim.keymap.set("v", ",b", '"*y')
