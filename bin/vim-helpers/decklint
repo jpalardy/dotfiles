@@ -1,8 +1,8 @@
 #!/usr/bin/env awk-f
 
-function report_warning(msg) {
+function report_warning(msg, diff) {
   warnings++
-  printf "%s:%d:0: %s\n", (FILENAME == "-" ? "<stdin>" : FILENAME), FNR, msg
+  printf "%s:%d:0: %s\n", (FILENAME == "-" ? "<stdin>" : FILENAME), FNR + diff, msg
 }
 
 #-------------------------------------------------
@@ -20,10 +20,10 @@ BEGINFILE {
   if (NF == 0) {
     empty_lines++
     if (deck_lines == 1) {
-      report_warning("card doesn't have enough lines")
+      report_warning("card doesn't have enough lines", -1)
     }
     if (deck_lines > 4) {
-      report_warning("card has too many lines")
+      report_warning("card has too many lines", -1)
     }
     deck_lines = 0
   } else {
