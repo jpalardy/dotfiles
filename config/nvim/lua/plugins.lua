@@ -19,7 +19,7 @@ vim.keymap.set("n", "<c-c>j", "<c-c><c-c>}j", { remap = true })
 -- fugitive
 -------------------------------------------------
 
-vim.keymap.set("n", "\\d", ":Gvdiffsplit<CR>")
+vim.keymap.set("n", ",d", ":Gvdiffsplit<CR>")
 
 -------------------------------------------------
 -- telescope
@@ -47,11 +47,12 @@ vim.keymap.set("n", "\\m", ":Telescope lsp_references<CR>")
 
 vim.keymap.set("n", "\\b", ":Telescope buffers<CR>")
 vim.keymap.set("n", "\\q", ":Telescope quickfix<CR>")
+vim.keymap.set("n", "\\s", ":Telescope git_status<CR>")
+vim.keymap.set("n", "\\d", ":Telescope diagnostics<CR>")
 
 -- meta-pick
 vim.keymap.set("n", "\\t", ":Telescope builtin<CR>")
 vim.keymap.set("n", "\\r", ":Telescope resume<CR>")
-vim.keymap.set("n", "\\s", ":Telescope git_status<CR>")
 
 -------------------------------------------------
 -- treesitter
