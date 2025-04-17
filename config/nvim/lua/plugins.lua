@@ -19,7 +19,7 @@ vim.keymap.set("n", "<c-c>j", "<c-c><c-c>}j", { remap = true })
 -- fugitive
 -------------------------------------------------
 
-vim.keymap.set("n", ",d", ":Gvdiffsplit<CR>")
+vim.keymap.set("n", ",gd", ":Gvdiffsplit<CR>")
 
 -------------------------------------------------
 -- telescope
