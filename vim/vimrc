@@ -69,11 +69,8 @@ set completeopt=menuone,popup
 set tabpagemax=100
 
 set background=dark
-if match($TERM, '256color$') != -1
-  " config: gruvbox
-  let g:gruvbox_vert_split='dark0_soft'
-  colorscheme gruvbox
-  hi EndOfBuffer ctermfg=234 ctermbg=234
+if match($TERM, '256color$') != -1 || match($TERM, 'ghostty')
+  colorscheme 256_xoria
 endif
 
 " remove other fill chars (purpose accomplished by colors)
