@@ -3,31 +3,6 @@
 " F-KEYS MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <F2>   :ALENextWrap<CR>
-inoremap <F2>   <C-o>:ALENextWrap<CR>
-nnoremap <F3>   :ALEToggle<CR>
-inoremap <F3>   <C-o>:ALEToggle<CR>
-nnoremap <F4>   :call <SID>toggleQuickfix()<CR>
-nnoremap ,<F4>  :call <SID>toggleLoclist()<CR>
-
-function! s:toggleQuickfix()
-  if empty(filter(getwininfo(win_getid()), 'v:val.quickfix'))
-    copen
-  else
-    cclose
-  endif
-endfunction
-
-function! s:toggleLoclist()
-  if empty(filter(getwininfo(win_getid()), 'v:val.loclist'))
-    lopen
-  else
-    lclose
-  endif
-endfunction
-
-nnoremap <F5>   :ToggleSpaceHi<CR>
-inoremap <F5>   <C-o>:ToggleSpaceHi<CR>
 nnoremap <F6>   :set spell!<CR>
 inoremap <F6>   <C-o>:set spell!<CR>
 nnoremap <F7>   :set wrap!<CR>
@@ -80,7 +55,7 @@ vnoremap ,d :g/<C-R>//d<CR>gg
 nnoremap ,l :!clear; cloc --quiet --by-file %<CR>
 nnoremap ,a :exe "!clear; CURRENT_LINE=" . line(".") . " summary-" . &ft . " " . expand("%")<CR>
 
-nnoremap ,wd :windo normal 
+nnoremap ,wd :windo normal
 
 function! s:widthWithGutter(lines)
   let max_width = max(map(a:lines,'len(v:val)'))
@@ -120,18 +95,6 @@ vnoremap ,b "*y
 nnoremap ,b "*p
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function! s:setDiffOpt()
-  let current_diffopt = &diffopt
-  if current_diffopt !~ 'iwhite'
-    let current_diffopt .= ',iwhite'
-  endif
-  let &diffopt = input("diffopt: ", current_diffopt)
-endfunction
-
-nnoremap ,do :call <SID>setDiffOpt()<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BACKSLASH MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -163,9 +126,6 @@ vnoremap // y/<C-R>"<CR>
 nnoremap > >>
 nnoremap < <<
 
-" open non-existing file; inspired by gf
-nnoremap gF :e <cfile><CR>
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NEW TAB
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -175,16 +135,6 @@ nnoremap tt :tabedit<CR>
 
 " open current-file in a tab
 nnoremap tf :tabedit <cfile><CR>
-
-function! s:grepForCurrentSearch()
-  let _s=@/
-  let _s=substitute(_s, '^[\\]<', '\\b', '')
-  let _s=substitute(_s, '[\\]>', '\\b', '')
-  silent! execute "grep -i " . shellescape(_s)
-  redraw!
-endfunction
-
-nnoremap tg :call <SID>grepForCurrentSearch()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " QUICKFIX
