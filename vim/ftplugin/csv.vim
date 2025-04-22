@@ -1,3 +1,0 @@
-
-setlocal equalprg=xsv\ table
-
