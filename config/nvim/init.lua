@@ -2,7 +2,7 @@
 vim.opt.wrap = false
 vim.opt.number = true
 vim.opt.completeopt = { "menuone", "popup" }
-vim.opt.mouse = "i"
+vim.opt.mouse = ""
 vim.opt.cursorline = true
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
