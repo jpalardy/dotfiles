@@ -71,7 +71,6 @@ require("nvim-treesitter.configs").setup({
 -------------------------------------------------
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#lsp-configs
-local lspconfig = require("lspconfig")
 do
   local elixir_ls_path = function()
     local executables = { "language_server.sh", "elixir-ls" }
@@ -82,15 +81,15 @@ do
     end
     return executables[1]
   end
-  lspconfig.elixirls.setup({
+  vim.lsp.config("elixirls", {
     cmd = { elixir_ls_path() },
   })
 end
-lspconfig.zls.setup({})
-lspconfig.gopls.setup({})
-lspconfig.ts_ls.setup({})
-lspconfig.elmls.setup({})
-lspconfig.rust_analyzer.setup({})
+vim.lsp.enable("zls")
+vim.lsp.enable("gopls")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("elms")
+vim.lsp.enable("rust_analyzer")
 
 -- border: urgh... works but so manual
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
