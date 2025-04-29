@@ -88,7 +88,7 @@ end
 vim.lsp.enable("zls")
 vim.lsp.enable("gopls")
 vim.lsp.enable("ts_ls")
-vim.lsp.enable("elms")
+vim.lsp.enable("elmls")
 vim.lsp.enable("rust_analyzer")
 
 -- border: urgh... works but so manual
