@@ -117,6 +117,7 @@ require("conform").setup({
     graphql = { "prettier" },
     javascript = { "prettier" },
     typescript = { "prettier", lsp_format = "fallback" },
+    r = { "air" },
     ["*"] = { "trim_whitespace" },
   },
   default_format_opts = {
