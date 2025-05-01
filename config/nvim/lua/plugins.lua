@@ -91,6 +91,15 @@ vim.lsp.enable("ts_ls")
 vim.lsp.enable("elmls")
 vim.lsp.enable("rust_analyzer")
 
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client:supports_method("textDocument/completion") then
+      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+    end
+  end,
+})
+
 -- border: urgh... works but so manual
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
