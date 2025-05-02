@@ -5,17 +5,28 @@ if [ $# -ne 2 ]; then
   exit 1
 fi
 
-diff -rq "$@" | awk '
+diff -rq "$@" | awk -v left="$1" '
+
+BEGIN {
+  sub("/$", "", left)
+}
 
 /^Files / {
-  print "vim -d", $2, $4
+  printf "vim %s %s -d\n", $2, $4
 }
 
 /^Only in/ {
   path = $3
   sub(/:$/, "", path)
-  print "vim -d _", path "/" $4
+  first_dir = path
+  path = path "/" $4
+  sub("/.*", "", first_dir)
+  if (first_dir == left) {
+    printf "vim %s _ -d -R\n", path
+  } else {
+    printf "vim _ %s -d -R\n", path
+  }
 }
 
-' | sort
+'
 
