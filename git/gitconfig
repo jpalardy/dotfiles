@@ -5,7 +5,6 @@
   ui = auto
 [alias]
   st        = status --short --branch
-  co        = checkout
   ffm       = merge --ff-only
   rl        = remote -v
   fp        = fetch
@@ -15,7 +14,6 @@
   cab       = !git log | rg -i 'co-authored-by:' | sort | uniq -c | sort -n
   behind    = !git branch -v | rg behind
   rs        = restore
-  rss       = restore --staged
   wip       = "!f() { git commit -a -m \"wip $(date +%s)\"; }; f"
   lsf       = ls-files --exclude-standard --modified --others --deleted
   di        = diff ..@{upstream}
