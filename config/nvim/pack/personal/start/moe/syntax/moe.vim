@@ -21,7 +21,7 @@ syntax match moeHashtag "\w\@<!#[-a-zA-Z0-9_]\+"
 hi def link moeHashtag Underlined
 
 " comment
-syntax match moeComment /.* #$/
+syntax match moeComment /# .*$/
 hi def link moeComment Comment
 
 " [TAGS]

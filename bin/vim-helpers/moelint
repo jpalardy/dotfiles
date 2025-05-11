@@ -18,7 +18,7 @@ BEGINFILE {
 
 #-------------------------------------------------
 
-/^# warn: past #$/ {
+/^# warn: past$/ {
   warn_past = 1
 }
 
@@ -43,6 +43,11 @@ match($0, /\<([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9])\>/, arr) {
   if (warn_past && arr[1] <= today) {
     report_warning("date in past: " arr[1])
   }
+}
+
+# look for old-style comments
+/#$/ {
+  report_warning("old-style comment?")
 }
 
 # look for 2+ empty lines
