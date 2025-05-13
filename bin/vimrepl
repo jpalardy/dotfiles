@@ -1,12 +1,24 @@
 #!/bin/bash
 
-die() {
-  echo >&2 "$1"
+# shellcheck disable=SC2120
+usage() {
+  local error="$1"
+  if test -n "$error"; then
+    echo >&2 "$error"
+  fi
+
+  echo >&2 "Usage: vimrepl [-c command] [-f filename] [ext]"
+  echo >&2 "  -c command   command to execute"
+  echo >&2 "  -f filename  filename to edit"
+  echo >&2 "  ext          extension; used if -f is missing"
   exit 1
 }
 
+# -------------------------------------------------
+
 if [ -z "$TMUX" ]; then
-  die "need to run inside tmux"
+  echo >&2 "need to run inside tmux"
+  exit 1
 fi
 
 ALREADY_SPLIT=0
@@ -15,16 +27,14 @@ if [ "$(tmux list-panes -F'#{window_panes}' | head -n1)" -gt 1 ]; then
 fi
 
 if test "$#" -eq 0; then
-  die "usage: vimrepl ext [-c command] [-f filename.ext]"
+  usage
 fi
 
-#-------------------------------------------------
+# -------------------------------------------------
 
 cmd=""
-ext="$1"
-filename="_vimrepl.$ext"
+filename=""
 split_flag="-h"
-shift
 
 while getopts "c:f:v" opt; do
   case "$opt" in
@@ -38,20 +48,30 @@ while getopts "c:f:v" opt; do
       split_flag="-v"
       ;;
     *)
-      die "unrecognized flag"
+      usage
       ;;
   esac
 done
 
 shift $((OPTIND - 1))
 
-if test "$#" -gt 0; then
-  die "extra arguments: $*"
+# grab ext
+if [ "$#" -gt 0 ] && [ -z "$filename" ]; then
+  filename="_vimrepl.$1"
+  shift
 fi
 
-#-------------------------------------------------
+if test "$#" -gt 0; then
+  usage
+fi
 
-tmux rename-window "vimrepl-$ext"
+if test -z "$filename"; then
+  usage
+fi
+
+# -------------------------------------------------
+
+tmux rename-window "vimrepl-${cmd:-shell}"
 
 if [ "$ALREADY_SPLIT" == 1 ]; then
   vim "$filename"
