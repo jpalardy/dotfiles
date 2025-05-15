@@ -1,0 +1,3 @@
+#!/bin/bash
+
+awk '{print length, $0}' "$@" | sort -n
