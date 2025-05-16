@@ -3,3 +3,4 @@ window-width = 120
 window-height = 35
 
 copy-on-select = true
+macos-option-as-alt = left
