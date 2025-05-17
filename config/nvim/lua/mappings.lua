@@ -28,8 +28,15 @@ vim.keymap.set("v", ",b", '"*y')
 vim.keymap.set("n", ",b", '"*p')
 
 -- f-keys
-vim.keymap.set("n", "<F6>", ":set spell!<CR>")
-vim.keymap.set("i", "<F6>", "<C-o>:set spell!<CR>")
+vim.keymap.set({ "n", "i" }, "<F6>", function()
+  if vim.opt.spell:get() then
+    vim.opt.spell = false
+    vim.opt.dictionary = "/usr/share/dict/words"
+  else
+    vim.opt.spell = true
+    vim.opt.dictionary = ""
+  end
+end)
 vim.keymap.set("n", "<F7>", ":set wrap!<CR>")
 vim.keymap.set("i", "<F7>", "<C-o>:set wrap!<CR>")
 

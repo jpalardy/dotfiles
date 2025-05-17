@@ -17,6 +17,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 vim.opt.inccommand = "split"
 vim.opt.writebackup = false
+vim.opt.dictionary = "/usr/share/dict/words"
 
 -- search
 vim.opt.ignorecase = true
