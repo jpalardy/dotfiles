@@ -37,8 +37,10 @@ vim.keymap.set({ "n", "i" }, "<F6>", function()
     vim.opt.dictionary = ""
   end
 end)
-vim.keymap.set("n", "<F7>", ":set wrap!<CR>")
-vim.keymap.set("i", "<F7>", "<C-o>:set wrap!<CR>")
+
+vim.keymap.set({ "n", "i" }, "<F7>", function()
+  vim.opt.wrap = not vim.opt.wrap:get()
+end)
 
 -- keep/drop matching lines
 vim.keymap.set({ "n", "x" }, ",v", ":v/<C-r>//d<CR>", { silent = true })
