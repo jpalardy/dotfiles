@@ -18,6 +18,3 @@ command FPScratchyH :normal <ESC>h
 nmap <ESC>t :new<CR><ESC>h
 nmap <ESC>T :vnew<CR><ESC>h
 
-" chunks in split
-nmap <ESC>c :vnew<CR>:FPScratchy "rg -u --files --no-ignore-parent --sort path $DOTFILES/chunks"<CR>
-

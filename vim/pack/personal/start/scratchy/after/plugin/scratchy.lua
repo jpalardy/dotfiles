@@ -18,3 +18,8 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("v", "<CR>", send_all_to_qf)
   end,
 })
+
+vim.keymap.set("n", "<ESC>c", function()
+  vim.cmd("vnew")
+  vim.fn.FPScratchy("rg -u --files --no-ignore-parent --sort path $DOTFILES/chunks")
+end)
