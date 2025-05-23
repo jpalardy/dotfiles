@@ -6,3 +6,5 @@ conform          https://github.com/stevearc/conform.nvim
 nvim-lint        https://github.com/mfussenegger/nvim-lint
 age-secret       https://github.com/jpalardy/age-secret.nvim
 nord             https://github.com/shaunsingh/nord.nvim
+fugitive         https://github.com/tpope/vim-fugitive.git
+slime            https://github.com/jpalardy/vim-slime
