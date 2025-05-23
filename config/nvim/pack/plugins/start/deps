@@ -1,10 +1,7 @@
 plenary          https://github.com/nvim-lua/plenary.nvim
 telescope        https://github.com/nvim-telescope/telescope.nvim
 treesitter       https://github.com/nvim-treesitter/nvim-treesitter
-gruvbox          https://github.com/ellisonleao/gruvbox.nvim
-gruvbox-material https://github.com/sainnhe/gruvbox-material
 lspconfig        https://github.com/neovim/nvim-lspconfig
-tokyonight       https://github.com/folke/tokyonight.nvim
 conform          https://github.com/stevearc/conform.nvim
 nvim-lint        https://github.com/mfussenegger/nvim-lint
 age-secret       https://github.com/jpalardy/age-secret.nvim
