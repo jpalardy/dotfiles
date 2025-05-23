@@ -60,23 +60,6 @@ vim.keymap.set("n", "_B", function()
   preserve("g/\\_^\\n\\{2,}/d")
 end)
 
--- cycle between colorschemes
-vim.keymap.set("n", ",c", function()
-  local schemes = { "gruvbox", "gruvbox-material", "tokyonight-storm", "tokyonight-moon", "nord" }
-  local current = vim.g.colors_name
-
-  local next_scheme = current
-  for i, scheme in ipairs(schemes) do
-    if scheme == current then
-      next_scheme = schemes[i % #schemes + 1]
-      break
-    end
-  end
-
-  vim.cmd("colorscheme " .. next_scheme)
-  vim.notify("colorscheme: " .. next_scheme)
-end)
-
 -- splits
 vim.keymap.set("n", "\\<left>", ":leftabove vnew<CR>")
 vim.keymap.set("n", "\\<right>", ":rightbelow vnew<CR>")
