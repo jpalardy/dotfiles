@@ -29,12 +29,12 @@ set -x MANPAGER "nvim +Man!"
 # PROMPT
 #-------------------------------------------------
 
-set -g fish_prompt_pwd_dir_length 0
+set -x fish_prompt_pwd_dir_length 0
 
-set -g __fish_git_prompt_showcolorhints true
-set -g __fish_git_prompt_showupstream verbose
-set -g __fish_git_prompt_char_upstream_ahead '+'
-set -g __fish_git_prompt_char_upstream_behind '-'
+set -x __fish_git_prompt_showcolorhints true
+set -x __fish_git_prompt_showupstream verbose
+set -x __fish_git_prompt_char_upstream_ahead '+'
+set -x __fish_git_prompt_char_upstream_behind '-'
 
 #-------------------------------------------------
 # PATHs
