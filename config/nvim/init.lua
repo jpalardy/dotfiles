@@ -1,7 +1,7 @@
 -- general
 vim.opt.wrap = false
 vim.opt.number = true
-vim.opt.completeopt = { "menuone", "noselect", "longest", "fuzzy", "popup" }
+vim.opt.completeopt = { "menuone", "noselect", "fuzzy", "popup" }
 vim.opt.mouse = ""
 vim.opt.cursorline = true
 vim.opt.list = true
