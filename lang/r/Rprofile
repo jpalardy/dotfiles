@@ -1,11 +1,10 @@
-
 options("repos" = c(CRAN = "https://cloud.r-project.org"))
 
-.First = function () {
+.First = function() {
   if (interactive()) {
-    cols <- as.integer(system('tput cols', intern=TRUE))
-    options(width=cols)
-    options(tibble.print_min=30)
+    cols <- as.integer(system('tput cols', intern = TRUE))
+    options(width = cols)
+    options(tibble.print_min = 30)
+    options(pager = "cat")
   }
 }
-
