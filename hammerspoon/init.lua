@@ -1,9 +1,12 @@
+local prevWin = nil
+
 function bindMove(mods, key, logic)
   hs.hotkey.bind(mods, key, function()
     local win = hs.window.focusedWindow()
     local screen = win:screen()
     local winFrame = win:frame()
     logic(winFrame, screen:frame())
+    prevWin = win:frame()
     win:setFrame(winFrame, 0.1)
   end)
 end
@@ -41,6 +44,18 @@ end)
 
 bindMove({ "ctrl", "alt" }, "down", function(win, screen)
   win.y = screen.y + screen.h - win.h
+end)
+
+-- -------------------------------------------------
+
+function mean(a, b)
+  return (a + b) / 2
+end
+
+-- average-out last move
+bindMove({ "ctrl", "alt" }, "/", function(win, screen)
+  win.x = mean(win.x, prevWin.x)
+  win.y = mean(win.y, prevWin.y)
 end)
 
 -- -------------------------------------------------
