@@ -178,6 +178,9 @@ vim.api.nvim_create_autocmd({ "BufWritePost", "FileType" }, {
   end,
 })
 
+-- custom: gawk
+require("lint").linters.gawk.args = { "-f-", "-Lno-ext" }
+
 -- custom: .moe
 require("lint").linters.moelint = {
   cmd = "moelint",
