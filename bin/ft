@@ -2,7 +2,7 @@
 
 function dim_if(cond, str) {
   if (cond && color) {
-    return sprintf("%s%s%s", "\x1b[2m", str, "\x1b[22m")
+    return sprintf("%s%s%s", "\033[2m", str, "\033[0m")
   }
   return str
 }
