@@ -1,8 +1,8 @@
 #!/usr/bin/env awk-f
 
-function dim_if(cond, str) {
+function color_if(cond, str) {
   if (cond && color) {
-    return sprintf("%s%s%s", "\033[2m", str, "\033[0m")
+    return sprintf("%s%s%s", "\033[34m", str, "\033[0m")
   }
   return str
 }
@@ -50,8 +50,8 @@ BEGIN {
 
   for (i=1; i<=30; i++) {
     printf "%2d  ", i
-    printf "%s  ", dim_if(i % 7 == 0, add_days(now, i))
+    printf "%s  ", color_if(i % 7 == 0, add_days(now, i))
     printf "%s  ", add_weeks(now, i)
-    printf "%s\n", dim_if(i % 12 == 0, add_months(now, i))
+    printf "%s\n", color_if(i % 12 == 0, add_months(now, i))
   }
 }
