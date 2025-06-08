@@ -1,8 +1,17 @@
+-- equalprg -> tap
 vim.api.nvim_create_autocmd({ "FileType" }, {
   callback = function()
-    local equalprg = "eq-" .. vim.bo.filetype
-    if vim.fn.executable(equalprg) == 1 then
-      vim.bo.equalprg = equalprg
+    local supported_filetypes = {
+      "elixir",
+      "elm",
+      "javascript",
+      "lua",
+      "sh",
+      "typescript",
+      "zig",
+    }
+    if vim.tbl_contains(supported_filetypes, vim.bo.filetype) then
+      vim.bo.equalprg = "tap -v filetype=" .. vim.bo.filetype
     end
   end,
 })
