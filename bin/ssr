@@ -48,6 +48,7 @@ check_bin qrencode
 check_bin utimer
 check_bin age
 check_bin mise
+check_bin bat
 flush
 
 # data

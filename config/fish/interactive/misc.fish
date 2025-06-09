@@ -17,6 +17,8 @@ abbr --add awk_ --set-cursor "awk '{ print % }'"
 
 alias lsplog 'tail -f ~/.local/state/nvim/lsp.log'
 
+alias cat bat
+
 #-------------------------------------------------
 
 function serve
