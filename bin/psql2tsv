@@ -1,4 +1,0 @@
-#!/bin/bash
-
-cat "$@" | sed -E -e 's/ *\| */\t/g' -e 's/^ *//' -e 's/ *$//' | rg \\t
-
