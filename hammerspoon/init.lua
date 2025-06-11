@@ -95,3 +95,13 @@ bindMove({ "ctrl", "alt" }, "o", function(win, screen)
   win.y = screen.y
   win.h = screen.h
 end)
+
+-- -------------------------------------------------
+-- mouse move
+-- -------------------------------------------------
+
+hs.hotkey.bind({ "ctrl", "alt" }, "0", function()
+  local screen = hs.screen.mainScreen():frame()
+  local pointer = { x = screen.x + screen.w / 2, y = screen.y + screen.h / 2 }
+  hs.mouse.absolutePosition(pointer)
+end)
