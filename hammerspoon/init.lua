@@ -100,7 +100,17 @@ end)
 -- mouse move
 -- -------------------------------------------------
 
+local stickyPointer = nil
+
+hs.hotkey.bind({ "ctrl", "alt", "shift" }, "0", function()
+  stickyPointer = hs.mouse.absolutePosition()
+end)
+
 hs.hotkey.bind({ "ctrl", "alt" }, "0", function()
+  if stickyPointer then
+    hs.mouse.absolutePosition(stickyPointer)
+    return
+  end
   local screen = hs.screen.mainScreen():frame()
   local pointer = { x = screen.x + screen.w / 2, y = screen.y + screen.h / 2 }
   hs.mouse.absolutePosition(pointer)
