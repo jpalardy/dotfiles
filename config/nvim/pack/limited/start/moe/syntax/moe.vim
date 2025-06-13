@@ -22,6 +22,7 @@ hi def link moeHashtag Underlined
 
 " comment
 syntax match moeComment /# .*$/
+syntax match moeComment /^#$/
 hi def link moeComment Comment
 
 " [TAGS]
