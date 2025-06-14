@@ -100,18 +100,17 @@ end)
 -- mouse move
 -- -------------------------------------------------
 
-local stickyPointer = nil
+local stickyPointers = {}
 
-hs.hotkey.bind({ "ctrl", "alt", "shift" }, "0", function()
-  stickyPointer = hs.mouse.absolutePosition()
-end)
+for _, i in pairs({ 5, 6, 7, 8, 9, 0 }) do
+  hs.hotkey.bind({ "ctrl", "alt", "shift" }, tostring(i), function()
+    stickyPointers[i] = hs.mouse.absolutePosition()
+  end)
 
-hs.hotkey.bind({ "ctrl", "alt" }, "0", function()
-  if stickyPointer then
-    hs.mouse.absolutePosition(stickyPointer)
-    return
-  end
-  local screen = hs.screen.mainScreen():frame()
-  local pointer = { x = screen.x + screen.w / 2, y = screen.y + screen.h / 2 }
-  hs.mouse.absolutePosition(pointer)
-end)
+  hs.hotkey.bind({ "ctrl", "alt" }, tostring(i), function()
+    if not stickyPointers[i] then
+      return
+    end
+    hs.mouse.absolutePosition(stickyPointers[i])
+  end)
+end
