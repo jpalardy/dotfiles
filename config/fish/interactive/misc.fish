@@ -1,5 +1,6 @@
 
 alias l ll
+alias cat bat
 
 abbr --add rsy "rsync -av --progress"
 abbr --add pwgen "pwgen -cny 30"
@@ -8,16 +9,11 @@ alias R "R --quiet --no-save --no-restore"
 abbr --add --position anywhere @u @{upstream}
 abbr --add --position anywhere ..@u ..@{upstream}
 
-abbr --add nwst --set-cursor 'ls -t % | head -n1'
 abbr --add untilfail --set-cursor 'while %; end'
-
 abbr --add 1pl 'printf "%s\n"'
-
 abbr --add awk_ --set-cursor "awk '{ print % }'"
 
 alias lsplog 'tail -f ~/.local/state/nvim/lsp.log'
-
-alias cat bat
 
 #-------------------------------------------------
 
