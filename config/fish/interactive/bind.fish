@@ -10,16 +10,6 @@ bind escape,w fzf-warp
 
 # -------------------------------------------------
 
-function fzf-date
-  printf "%s\n" (date +%F) (date +%s) | fzf | read -l result
-  and commandline -i $result
-  commandline -f repaint
-end
-
-bind escape,t fzf-date
-
-# -------------------------------------------------
-
 # open vim, with esc-h
 bind escape,h 'commandline -r "vim -c FPScratchyH"; commandline -f execute'
 
