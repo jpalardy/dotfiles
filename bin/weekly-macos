@@ -28,5 +28,6 @@ brew outdated
 if confirm "upgrade?"; then
   brew upgrade
   brew cleanup -s
+  brew cleanup --prune=all
 fi
 
