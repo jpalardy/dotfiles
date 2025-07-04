@@ -1,4 +1,4 @@
-#!/usr/bin/env awk-f
+#!/usr/bin/env -S awk -f
 
 function randhex(len) {
   hex_chars = "0123456789abcdef"

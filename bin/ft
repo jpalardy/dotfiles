@@ -1,4 +1,4 @@
-#!/usr/bin/env awk-f
+#!/usr/bin/env -S awk -f
 
 function color_if(cond, str) {
   if (cond && color) {

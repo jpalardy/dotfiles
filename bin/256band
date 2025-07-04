@@ -1,4 +1,4 @@
-#!/usr/bin/env awk-f
+#!/usr/bin/env -S awk -f
 
 # https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/
 BEGIN {
