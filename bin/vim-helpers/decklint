@@ -7,6 +7,10 @@ function report_warning(msg, diff) {
 
 #-------------------------------------------------
 
+BEGIN {
+  warnings = 0
+}
+
 BEGINFILE {
   empty_lines = 0
   deck_lines = 0
