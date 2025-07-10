@@ -1,5 +1,10 @@
 #!/usr/bin/env -S awk -f
 
+BEGIN {
+  spaces = 0
+  tabs = 0
+}
+
 {
   original_length = length($0)
   sub(/^ */, "")
@@ -13,7 +18,9 @@
 
 ENDFILE {
   indents = spaces / 2 + tabs
-  print FILENAME, indents, FNR, indents / FNR
+  if (FNR > 0) {
+    print FILENAME, indents, FNR, indents / FNR
+  }
   # reset
   spaces = 0
   tabs = 0
