@@ -1,4 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env -S awk -f
 
-awk 'ARGIND == 1 {lut[$0]; next} !($0 in lut) {print}' "$@"
+ARGIND == 1 {
+  lut[$0] = 1
+  next
+}
+
+!($0 in lut) {print}
 

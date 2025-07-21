@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env -S awk -f
 
-awk -v n_sets=$# '++seen[$0] == n_sets' "$@"
+++seen[$0] == (ARGC - 1)
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env -S awk -f
 
-awk '!seen[$0]++' "$@"
+!seen[$0]++
 
