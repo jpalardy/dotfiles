@@ -38,9 +38,9 @@ end
 
 #-------------------------------------------------
 
-function ftr
+function foreach
   if test (count $argv) = 0
-    echo >&2 "usage: ftr command [args...]"
+    echo >&2 "usage: foreach command [args...]"
     return 1
   end
   set -l selection
