@@ -15,10 +15,9 @@ end
 
 # date name directory
 function dnd
-  if test (count $argv) = 0
-    echo >&2 "missing directory name"
-    return 1
+  set -l name (date +%F)
+  if test (count $argv) -ge 1
+    set name $name-(string join "-" $argv)
   end
-  set -l name (date +%F)-(string join "-" $argv)
   mkdir $name; and cd $name
 end
