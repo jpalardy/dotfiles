@@ -11,9 +11,6 @@ abbr --add --position anywhere ..@u ..@{upstream}
 
 abbr --add untilfail --set-cursor 'while %; end'
 abbr --add 1pl 'printf "%s\n"'
-abbr --add awk_ --set-cursor "awk '{ print % }'"
-
-alias lsplog 'tail -f ~/.local/state/nvim/lsp.log'
 
 #-------------------------------------------------
 
