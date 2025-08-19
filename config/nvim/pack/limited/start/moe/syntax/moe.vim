@@ -29,6 +29,10 @@ hi def link moeComment Comment
 syntax match moeTag /\[[^]]\+\]/
 hi def link moeTag Identifier
 
+" task done
+syntax match moeTaskDone /\[x\] .*/
+hi def link moeTaskDone Comment
+
 " `backtick`
 syntax match moeBacktick /`[^`]\+`/
 hi def link moeBacktick String
