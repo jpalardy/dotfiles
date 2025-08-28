@@ -116,12 +116,13 @@ local cmd = {
   ]],
 }
 
+---@type vim.lsp.Config
 return {
   cmd = cmd,
   filetypes = { 'julia' },
   root_markers = root_files,
-  on_attach = function()
-    vim.api.nvim_buf_create_user_command(0, 'LspJuliaActivateEnv', activate_env, {
+  on_attach = function(_, bufnr)
+    vim.api.nvim_buf_create_user_command(bufnr, 'LspJuliaActivateEnv', activate_env, {
       desc = 'Activate a Julia environment',
       nargs = '?',
       complete = 'file',

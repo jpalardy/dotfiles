@@ -6,6 +6,8 @@
 --- ```sh
 --- npm install -g emmet-ls
 --- ```
+
+---@type vim.lsp.Config
 return {
   cmd = { 'emmet-ls', '--stdio' },
   filetypes = {
@@ -13,6 +15,7 @@ return {
     'css',
     'eruby',
     'html',
+    'htmlangular',
     'htmldjango',
     'javascriptreact',
     'less',
@@ -20,9 +23,9 @@ return {
     'sass',
     'scss',
     'svelte',
+    'templ',
     'typescriptreact',
     'vue',
-    'htmlangular',
   },
   root_markers = { '.git' },
 }

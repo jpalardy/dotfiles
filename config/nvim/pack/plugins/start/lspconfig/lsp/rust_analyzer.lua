@@ -25,7 +25,8 @@ local function reload_workspace(bufnr)
   local clients = vim.lsp.get_clients { bufnr = bufnr, name = 'rust_analyzer' }
   for _, client in ipairs(clients) do
     vim.notify 'Reloading Cargo Workspace'
-    client.request('rust-analyzer/reloadWorkspace', nil, function(err)
+    ---@diagnostic disable-next-line:param-type-mismatch
+    client:request('rust-analyzer/reloadWorkspace', nil, function(err)
       if err then
         error(tostring(err))
       end
@@ -51,6 +52,7 @@ local function is_library(fname)
   end
 end
 
+---@type vim.lsp.Config
 return {
   cmd = { 'rust-analyzer' },
   filetypes = { 'rust' },
@@ -111,9 +113,9 @@ return {
       init_params.initializationOptions = config.settings['rust-analyzer']
     end
   end,
-  on_attach = function()
-    vim.api.nvim_buf_create_user_command(0, 'LspCargoReload', function()
-      reload_workspace(0)
+  on_attach = function(_, bufnr)
+    vim.api.nvim_buf_create_user_command(bufnr, 'LspCargoReload', function()
+      reload_workspace(bufnr)
     end, { desc = 'Reload current cargo workspace' })
   end,
 }
