@@ -21,7 +21,7 @@ generate_commands() {
       echo
       echo "tmux split-window -v"
     fi
-    echo "tmux send-keys 'clear; cd \"$repo\"; and repo-sync .' C-m"
+    echo "tmux send-keys 'clear; cd \"$repo\"; and repo-sync .; and exit' C-m"
     prev="$repo"
   done
 
@@ -31,6 +31,9 @@ generate_commands() {
 
 if [ "$1" == "." ]; then
   sync
+  if [ -n "$(git status --porcelain)" ] || [ "$(git rev-parse HEAD)" != "$(git rev-parse "@{u}")" ]; then
+    exit 1
+  fi
 else
   generate_commands | bash
 fi
