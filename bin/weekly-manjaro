@@ -39,7 +39,7 @@ pacman -Scc --noconfirm
 journalctl --vacuum-size=50M
 
 echo '-------------------------------------------------'
-pacman -Ss 'kernel and modules' --color=always | grep --color=no 'core/'
+pacman -Ss 'kernel and modules' --color=always | grep --color=no -E -e 'core/.*linux[0-9]+ '
 
 echo '-------------------------------------------------'
 echo 'sudo mhwd-kernel -i linux6x'

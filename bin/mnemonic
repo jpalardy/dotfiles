@@ -1,0 +1,14 @@
+#!/bin/bash
+
+look . | awk -v letters="$1" '
+
+BEGIN {
+  re = gensub("", ".*", "g", letters)
+}
+
+$0 ~ re {
+  print length, $0
+}
+
+' | sort -nr
+
