@@ -26,6 +26,12 @@ NF == 0 {
   next
 }
 
+/^sleep/ {
+  blank = 0
+  print $0
+  next
+}
+
 {
   blank = 0
   print "tmux", $0
