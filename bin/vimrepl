@@ -57,6 +57,7 @@ shift $((OPTIND - 1))
 
 # grab ext
 if [ "$#" -gt 0 ] && [ -z "$filename" ]; then
+  ext="$1"
   filename="_vimrepl.$1"
   shift
 fi
@@ -71,14 +72,15 @@ fi
 
 # -------------------------------------------------
 
-tmux rename-window "vimrepl-${cmd:-shell}"
+cmd_first_word="${cmd%% *}"
+tmux rename-window "vimrepl-${cmd_first_word:-$ext}"
 
 if [ "$ALREADY_SPLIT" == 1 ]; then
   vim "$filename"
   exit
 fi
 
-# split pane runs shell, or cmd if given
+# split pane runs cmd, if given
 tmux split-window $split_flag
 if [ -n "$cmd" ]; then
   tmux send-keys "clear; $cmd" C-m
