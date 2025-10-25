@@ -86,6 +86,7 @@ do
     cmd = { elixir_ls_path() },
   })
 end
+vim.lsp.enable("elixirls")
 vim.lsp.enable("zls")
 vim.lsp.enable("gopls")
 vim.lsp.enable("ts_ls")
