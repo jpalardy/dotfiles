@@ -10,7 +10,7 @@ function __fzf_contextual
 
   # elm
   if [ -e "elm.json" ]
-    echo "npm install -g @elm-tooling/elm-language-server elm-json"
+    echo "npm install -g @elm-tooling/elm-language-server elm-json elm-format"
     echo "npm exec -- elm-json upgrade"
   end
 
