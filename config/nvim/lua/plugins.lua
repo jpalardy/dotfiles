@@ -125,6 +125,7 @@ require("conform").setup({
     json = { "fixjson" },
     zig = { "zigfmt" },
     html = { "prettier" },
+    css = { "prettier" },
     graphql = { "prettier" },
     javascript = { "prettier" },
     typescript = { "prettier", lsp_format = "fallback" },
