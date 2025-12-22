@@ -1,9 +1,0 @@
-#!/bin/bash
-
-cat <<EOF
-:syntax on
-:set hlsearch
-:set ignorecase
-:set incsearch
-:set nowrap
-EOF
