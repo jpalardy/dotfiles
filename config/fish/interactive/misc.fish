@@ -1,6 +1,5 @@
 
 alias l ll
-alias cat bat
 
 abbr --add rsy "rsync -av --progress"
 abbr --add pwgen "pwgen -cny 30"
@@ -31,22 +30,5 @@ function implode
     cd ..
     rm -rf -v $target
   end
-end
-
-#-------------------------------------------------
-
-function foreach
-  if test (count $argv) = 0
-    echo >&2 "usage: foreach command [args...]"
-    return 1
-  end
-  set -l selection
-  fzf --exit-0 | while read -l line
-    set selection $selection $line
-  end
-  if test -z "$selection"
-    return
-  end
-  $argv $selection
 end
 
