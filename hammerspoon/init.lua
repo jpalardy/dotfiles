@@ -114,3 +114,18 @@ for _, i in pairs({ 5, 6, 7, 8, 9, 0 }) do
     hs.mouse.absolutePosition(stickyPointers[i])
   end)
 end
+
+-------------------------------------------------
+
+local switcher = hs.window.switcher.new(hs.window.filter.new():setCurrentSpace(true):setDefaultFilter({}))
+hs.window.switcher.ui.showThumbnails = false
+hs.window.switcher.ui.showSelectedThumbnail = false
+hs.window.animationDuration = 0
+
+hs.hotkey.bind("alt", "tab", function()
+  switcher:next()
+end)
+
+hs.hotkey.bind("alt-shift", "tab", function()
+  switcher:previous()
+end)
