@@ -5,13 +5,12 @@ function __fzf_contextual
     echo "ncu -u"
     echo "npm install"
     echo "git add package*; npm audit fix; rm -rf package-lock.json node_modules; npm install"
-    echo "npm install -g typescript typescript-language-server"
   end
 
   # elm
   if [ -e "elm.json" ]
     echo "npm install -g @elm-tooling/elm-language-server elm-json elm-format"
-    echo "npm exec -- elm-json upgrade"
+    echo "elm-json upgrade"
   end
 
   # go
@@ -31,12 +30,6 @@ function __fzf_contextual
     test -d .elixir_ls; and echo "rm -rf -v .elixir_ls"
     test -d _build;     and echo "rm -rf -v _build"
     test -d deps;       and echo "rm -rf -v deps"
-  end
-
-  # vimrepl
-  test -e "report.Rmd"; and echo "vimrepl Rmd -c R -f report.Rmd"
-  for f in _vimrepl.*
-    echo "vimrepl $(string replace '_vimrepl.' '' $f)"
   end
 end
 
