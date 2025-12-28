@@ -103,6 +103,26 @@ function format_sh() {
   print("\"")
 }
 
+#
+# lines like:
+#   tap x y z
+#   tap x, y, z
+# become:
+#   printf "x = %s, y = %s, z = %s", x, y, z
+#
+function format_awk() {
+  printf("printf \"")
+  for (i=2; i<=NF; i++) {
+    if (i>2) printf(", ")
+    printf("%s = %%s", $i, $i)
+  }
+  printf("\", ")
+  for (i=2; i<=NF; i++) {
+    if (i>2) printf(", ")
+    printf("%s", $i)
+  }
+}
+
 # -------------------------------------------------
 
 {

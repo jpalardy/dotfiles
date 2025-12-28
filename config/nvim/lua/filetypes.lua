@@ -2,6 +2,7 @@
 vim.api.nvim_create_autocmd({ "FileType" }, {
   callback = function()
     local supported_filetypes = {
+      "awk",
       "elixir",
       "elm",
       "javascript",
