@@ -172,9 +172,9 @@ BEGIN {
   # elm
   #-------------------------------------------------
   if ("elm" in filetypes) {
-    snip("letin", "let _ = ▒ in")
-    snip("log",   "Debug.log \"label\"")
-    snip("if",    "if ▒ then True else False")
+    snip("let", "let _ = ▒ in")
+    snip("log", "Debug.log \"label\"")
+    snip("if",  "if ▒ then True else False")
   }
 
   #-------------------------------------------------

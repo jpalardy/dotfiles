@@ -63,12 +63,12 @@ function format_zig() {
 #   let _ = Debug.log "" { x = x, y = y, z = z } in
 #
 function format_elm() {
-  printf("let _ = Debug.log \"\" { ")
+  printf("_ = Debug.log \"\" { ")
   for (i=2; i<=NF; i++) {
     if (i>2) printf(", ")
     printf("%s = %s", $i, $i)
   }
-  print(" } in")
+  print(" }")
 }
 
 #
