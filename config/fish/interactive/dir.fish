@@ -8,7 +8,13 @@ function tad
     git clone $argv[1]; or return 1
     cd (basename $argv[1] .git)
   end
-  fish -c "exec tmux"
+  if set -q TMUX
+    echo "enter: $dst"
+    fish
+    echo "exit: $dst"
+  else
+    fish -c "exec tmux"
+  end
   rm -rf $dst
   cd $start_cd
 end
