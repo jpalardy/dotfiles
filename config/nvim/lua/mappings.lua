@@ -84,3 +84,10 @@ end)
 vim.keymap.set("v", ",-", function()
   resize_to_width(vim.fn.line("v") - 1, vim.fn.line("."))
 end)
+
+-- experiment: show calendars in new scratch
+vim.keymap.set("n", "<ESC>#", function()
+  vim.cmd("vnew")
+  vim.fn.FPScratchy("cal -3; ft")
+  resize_to_width(0, -1)
+end)
