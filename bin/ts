@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for f in "$@"; do
+  printf 'mv "%s" "%s"\n' "$f" "$(date -r "$f" +%F).${f#*.}"
+done
+
