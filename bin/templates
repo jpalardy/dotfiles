@@ -20,5 +20,9 @@ if [ -f "$src/.parent" ]; then
   templates "$(cat "$src/.parent")"
 fi
 
-rsync -av --exclude .parent "$src/" .
+rsync -av --exclude .parent --exclude after.sh "$src/" .
+
+if test -e "$src/after.sh"; then
+  bash "$src/after.sh"
+fi
 
