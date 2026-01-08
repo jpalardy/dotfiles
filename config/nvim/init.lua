@@ -50,6 +50,9 @@ vim.diagnostic.config({
 
 vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$DOTFILES/bin/vim-helpers")
 
+-- no "yellow highlight"
+vim.cmd("hi clear SpellCap")
+
 -------------------------------------------------
 
 require("mappings")
