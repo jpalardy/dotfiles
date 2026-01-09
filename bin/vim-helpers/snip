@@ -172,9 +172,13 @@ BEGIN {
   # elm
   #-------------------------------------------------
   if ("elm" in filetypes) {
-    snip("let", "let _ = ▒ in")
+    snip("let", "let _ = value▒ in")
     snip("log", "Debug.log \"label\"")
-    snip("if",  "if ▒ then True else False")
+    snip("if",  "if condition▒ then True else False")
+    snip("h=",  "Html")
+    snip("a=",  "HA")
+    snip("ac",  "HA.class \"▒\"")
+    snip("e=",  "HE")
   }
 
   #-------------------------------------------------
