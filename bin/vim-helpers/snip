@@ -78,6 +78,12 @@ BEGIN {
   snip("@",       "🌀")
   snip(":shrug",  "¯\\_(ツ)_/¯")
 
+  # arrows
+  snip(":up",    "⬆️")
+  snip(":down",  "⬇️")
+  snip(":left",  "⬅️")
+  snip(":right", "➡️")
+
   # fruit
   fruits = "🍎🍏🍌🫐🍒🍇🥝🍋🍊🍑🍍🍓🍉"
   fruit = substr(fruits, int(length(fruits) * rand()), 1)
