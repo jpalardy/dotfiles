@@ -13,3 +13,16 @@ select-window -t 0
 
 split-window -v    # default
 split-window -h
+
+# -------------------------------------------------
+
+rename-window "_build_"
+send-keys "make watch" C-m
+
+split-window -h
+send-keys "cd public; serve" C-m
+
+split-window -h
+send-keys "make tailwind" C-m
+
+select-layout even-vertical
