@@ -42,15 +42,15 @@ BEGINFILE {
 match($0, /\<([0-9]{4}-[0-9]{2}-[0-9]{2})\>/, arr) {
   date_pos = index($0, arr[1])
   comment_pos = index($0, "#")
-  if (comment_pos && comment_pos < date_pos) {
-    next
-  }
-  date = mktime(gensub("-", " ", "g", arr[1]) " 0 0 0")
-  if (strftime("%F", date) != arr[1]) {
-    report_warning("invalid date: " arr[1])
-  }
-  if (warn_past && arr[1] <= today) {
-    report_warning("date in past: " arr[1])
+  # no comment, or comment after date
+  if (!comment_pos || comment_pos > date_pos) {
+    date = mktime(gensub("-", " ", "g", arr[1]) " 0 0 0")
+    if (strftime("%F", date) != arr[1]) {
+      report_warning("invalid date: " arr[1])
+    }
+    if (warn_past && arr[1] <= today) {
+      report_warning("date in past: " arr[1])
+    }
   }
 }
 
