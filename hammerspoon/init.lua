@@ -37,18 +37,6 @@ bindMove({ "ctrl", "alt" }, "down", function(win, screen)
 end)
 
 -- -------------------------------------------------
-
-function mean(a, b)
-  return (a + b) / 2
-end
-
--- average-out last move
-bindMove({ "ctrl", "alt" }, "/", function(win, screen)
-  win.x = mean(win.x, prevWin.x)
-  win.y = mean(win.y, prevWin.y)
-end)
-
--- -------------------------------------------------
 -- resize, maybe move
 -- -------------------------------------------------
 
