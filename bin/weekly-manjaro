@@ -22,7 +22,7 @@ confirm() {
 # -------------------------------------------------
 
 if confirm "update mirrors?"; then
-  pacman-mirrors --continent --method rank
+  pacman-mirrors --timezone --method rank
 fi
 
 pacman -Syu
