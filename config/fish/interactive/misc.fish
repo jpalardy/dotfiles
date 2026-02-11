@@ -32,3 +32,11 @@ function implode
   end
 end
 
+#-------------------------------------------------
+
+function sscp
+  set -l src $argv[1]
+  set -l dst .
+  set -q argv[2]; and set dst (string replace -r '/$' '' $argv[2])
+  cp -v "$src" "$dst/$(date +%F)-$src"
+end
