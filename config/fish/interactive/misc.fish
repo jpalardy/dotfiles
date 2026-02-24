@@ -11,6 +11,8 @@ abbr --add --position anywhere ..@u ..@{upstream}
 abbr --add untilfail --set-cursor 'while %; end'
 abbr --add 1pl 'printf "%s\n"'
 
+alias bc 'bc -l'
+
 #-------------------------------------------------
 
 function serve
