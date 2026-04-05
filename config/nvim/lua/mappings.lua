@@ -87,9 +87,9 @@ end)
 
 vim.keymap.set("n", "<ESC>#", function()
   vim.cmd("vnew")
-  vim.fn.FPScratchy("cal -3; ft")
-  -- search for today's date
-  vim.cmd("/[ -]" .. os.date("%d") .. " \\?")
+  vim.fn.FPScratchy("cal -A 2; ft")
+  -- search for today's date (with and without leading 0)
+  vim.cmd("/" .. string.gsub(os.date("%d"), "^0", " ") .. "\\>")
   -- resize
   resize_to_width(0, -1)
 end)
