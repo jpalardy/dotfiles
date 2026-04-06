@@ -1,8 +1,11 @@
 #!/bin/bash
 
 check_cert() {
+  # shellcheck disable=SC2155
   local COLOR_RESET=$(tput sgr0)
+  # shellcheck disable=SC2155
   local COLOR_RED=$(tput setaf 1)
+  # shellcheck disable=SC2155
   local COLOR_GREEN=$(tput setaf 2)
 
   # remove leading https, if present
