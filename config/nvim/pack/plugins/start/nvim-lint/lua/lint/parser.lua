@@ -4,6 +4,9 @@ local M = {}
 local vd = vim.diagnostic
 local api = vim.api
 
+local maxint = 2 ^ 32 - 1
+M.maxint = maxint
+
 local severity_by_qftype = {
   E = vd.severity.ERROR,
   W = vd.severity.WARN,
@@ -106,7 +109,7 @@ function M.from_pattern(pattern, groups, severity_map, defaults, opts)
     local end_lnum_offset = opts.end_lnum_offset or 0
     local col_offset = opts.col_offset or -1
     local end_col_offset = opts.end_col_offset or -1
-    local lnum = tonumber(captures.lnum) - 1
+    local lnum = captures.lnum and tonumber(captures.lnum) - 1 or 0
     local end_lnum = captures.end_lnum and (tonumber(captures.end_lnum) - 1) or lnum
     local col = tonumber(captures.col) and (tonumber(captures.col) + col_offset) or 0
     local end_col = tonumber(captures.end_col) and (tonumber(captures.end_col) + end_col_offset) or col
@@ -198,7 +201,7 @@ function M.for_sarif(skeleton)
             -- If endColumn is absent, it SHALL default to a value one greater
             -- than the column number of the last character on the line,
             -- excluding any newline sequence.
-            local end_col = region.endColumn and region.endColumn - 2 or math.huge
+            local end_col = region.endColumn and region.endColumn - 2 or maxint
             table.insert(
               diagnostics,
               vim.tbl_extend("keep", {

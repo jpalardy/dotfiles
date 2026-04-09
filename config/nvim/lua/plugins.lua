@@ -56,18 +56,6 @@ vim.keymap.set("n", "\\t", ":Telescope builtin<CR>")
 vim.keymap.set("n", "\\r", ":Telescope resume<CR>")
 
 -------------------------------------------------
--- treesitter
--------------------------------------------------
-
-require("nvim-treesitter.configs").setup({
-  auto_install = true,
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-})
-
--------------------------------------------------
 -- lspconfig
 -------------------------------------------------
 

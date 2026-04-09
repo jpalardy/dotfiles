@@ -1,176 +1,174 @@
-local api = vim.api
-local fn = vim.fn
-
-local queries = require "nvim-treesitter.query"
-local info = require "nvim-treesitter.info"
-local shell = require "nvim-treesitter.shell_command_selectors"
-local install = require "nvim-treesitter.install"
-local utils = require "nvim-treesitter.utils"
-local ts = require "nvim-treesitter.compat"
-
-local health = vim.health or require "health"
-
--- "report_" prefix has been deprecated, use the recommended replacements if they exist.
-local _start = health.start or health.report_start
-local _ok = health.ok or health.report_ok
-local _warn = health.warn or health.report_warn
-local _error = health.error or health.report_error
+local parsers = require('nvim-treesitter.parsers')
+local config = require('nvim-treesitter.config')
+local util = require('nvim-treesitter.util')
+local tsq = vim.treesitter.query
+local health = vim.health
 
 local M = {}
 
 local NVIM_TREESITTER_MINIMUM_ABI = 13
+local TREE_SITTER_MIN_VER = { 0, 26, 1 }
+
+---@param name string
+---@return table?
+local function check_exe(name)
+  if vim.fn.executable(name) == 1 then
+    local path = vim.fn.exepath(name)
+    local out = vim.trim(vim.fn.system({ name, '--version' }))
+    local version = vim.version.parse(out)
+    return { path = path, version = version, out = out }
+  end
+end
 
 local function install_health()
-  _start "Installation"
+  health.start('Requirements')
 
-  if fn.has "nvim-0.10" ~= 1 then
-    _error "Nvim-treesitter requires Nvim 0.10 or newer"
-  end
+  do -- nvim check
+    if vim.fn.has('nvim-0.12') ~= 1 then
+      health.error('Nvim-treesitter requires Neovim 0.12.0 or later.')
+    end
 
-  if fn.executable "tree-sitter" == 0 then
-    _warn(
-      "`tree-sitter` executable not found (parser generator, only needed for :TSInstallFromGrammar,"
-        .. " not required for :TSInstall)"
-    )
-  else
-    _ok(
-      "`tree-sitter` found "
-        .. (utils.ts_cli_version() or "(unknown version)")
-        .. " (parser generator, only needed for :TSInstallFromGrammar)"
-    )
-  end
-
-  if fn.executable "node" == 0 then
-    _warn("`node` executable not found (only needed for :TSInstallFromGrammar," .. " not required for :TSInstall)")
-  else
-    local handle = io.popen "node --version"
-    local result = handle:read "*a"
-    handle:close()
-    local version = vim.split(result, "\n")[1]
-    _ok("`node` found " .. version .. " (only needed for :TSInstallFromGrammar)")
-  end
-
-  if fn.executable "git" == 0 then
-    _error("`git` executable not found.", {
-      "Install it with your package manager.",
-      "Check that your `$PATH` is set correctly.",
-    })
-  else
-    _ok "`git` executable found."
-  end
-
-  local cc = shell.select_executable(install.compilers)
-  if not cc then
-    _error("`cc` executable not found.", {
-      "Check that any of "
-        .. vim.inspect(install.compilers)
-        .. " is in your $PATH"
-        .. ' or set the environment variable CC or `require"nvim-treesitter.install".compilers` explicitly!',
-    })
-  else
-    local version = vim.fn.systemlist(cc .. (cc == "cl" and "" or " --version"))[1]
-    _ok(
-      "`"
-        .. cc
-        .. "` executable found. Selected from "
-        .. vim.inspect(install.compilers)
-        .. (version and ("\nVersion: " .. version) or "")
-    )
-  end
-  if vim.treesitter.language_version then
     if vim.treesitter.language_version >= NVIM_TREESITTER_MINIMUM_ABI then
-      _ok(
-        "Neovim was compiled with tree-sitter runtime ABI version "
+      health.ok(
+        'Neovim was compiled with tree-sitter runtime ABI version '
           .. vim.treesitter.language_version
-          .. " (required >="
+          .. ' (required >='
           .. NVIM_TREESITTER_MINIMUM_ABI
-          .. "). Parsers must be compatible with runtime ABI."
+          .. ').'
       )
     else
-      _error(
-        "Neovim was compiled with tree-sitter runtime ABI version "
+      health.error(
+        'Neovim was compiled with tree-sitter runtime ABI version '
           .. vim.treesitter.language_version
-          .. ".\n"
-          .. "nvim-treesitter expects at least ABI version "
+          .. '.\n'
+          .. 'nvim-treesitter expects at least ABI version '
           .. NVIM_TREESITTER_MINIMUM_ABI
-          .. "\n"
-          .. "Please make sure that Neovim is linked against are recent tree-sitter runtime when building"
-          .. " or raise an issue at your Neovim packager. Parsers must be compatible with runtime ABI."
+          .. '\n'
+          .. 'Please make sure that Neovim is linked against a recent tree-sitter library when building'
+          .. ' or raise an issue at your Neovim packager. Parsers must be compatible with runtime ABI.'
       )
     end
   end
 
-  _start("OS Info:\n" .. vim.inspect(vim.loop.os_uname()))
+  do -- treesitter check
+    local ts = check_exe('tree-sitter')
+    if ts then
+      if vim.version.ge(ts.version, TREE_SITTER_MIN_VER) then
+        health.ok(string.format('tree-sitter-cli %s (%s)', ts.version, ts.path))
+      else
+        health.error(
+          string.format('tree-sitter-cli v%d.%d.%d is required', unpack(TREE_SITTER_MIN_VER))
+        )
+      end
+    else
+      health.error('tree-sitter-cli not found')
+    end
+  end
+
+  do -- curl+tar check
+    local tar = check_exe('tar')
+    if tar then
+      health.ok(string.format('tar %s (%s)', tar.version, tar.path))
+    else
+      health.error('tar not found')
+    end
+
+    local curl = check_exe('curl')
+    if curl then
+      health.ok(string.format('curl %s (%s)\n%s', curl.version, curl.path, curl.out))
+    else
+      health.error('curl not found')
+    end
+  end
+
+  health.start('OS Info')
+  local osinfo = vim.uv.os_uname() ---@type table<string,string>
+  for k, v in pairs(osinfo) do
+    health.info(k .. ': ' .. v)
+  end
+
+  local installdir = config.get_install_dir('')
+  health.start('Install directory for parsers and queries')
+  health.info(installdir)
+  if vim.uv.fs_access(installdir, 'w') then
+    health.ok('is writable.')
+  else
+    health.error('is not writable.')
+  end
+  if
+    vim.list_contains(vim.tbl_map(vim.fs.normalize, vim.api.nvim_list_runtime_paths()), installdir)
+  then
+    health.ok('is in runtimepath.')
+  else
+    health.error('is not in runtimepath.')
+  end
 end
 
 local function query_status(lang, query_group)
-  local ok, err = pcall(queries.get_query, lang, query_group)
+  local ok, err = pcall(tsq.get, lang, query_group)
   if not ok then
-    return "x", err
+    return 'x', err
   elseif not err then
-    return "."
+    return '.'
   else
-    return "✓"
+    return '✓'
   end
 end
 
 function M.check()
+  --- @type {[1]: string, [2]: string, [3]: string}[]
   local error_collection = {}
   -- Installation dependency checks
   install_health()
-  queries.invalidate_query_cache()
-  -- Parser installation checks
-  local parser_installation = { "Parser/Features" .. string.rep(" ", 9) .. "H L F I J" }
-  for _, parser_name in pairs(info.installed_parsers()) do
-    local installed = #api.nvim_get_runtime_file("parser/" .. parser_name .. ".so", false)
 
-    -- Only append information about installed parsers
-    if installed >= 1 then
-      local multiple_parsers = installed > 1 and "+" or ""
-      local out = "  - " .. parser_name .. multiple_parsers .. string.rep(" ", 20 - (#parser_name + #multiple_parsers))
-      for _, query_group in pairs(queries.built_in_query_groups) do
-        local status, err = query_status(parser_name, query_group)
-        out = out .. status .. " "
+  -- Parser installation checks
+  health.start('Installed languages' .. string.rep(' ', 5) .. 'H L F I J')
+  local languages = config.get_installed()
+  table.sort(languages)
+  for _, lang in ipairs(languages) do
+    local parser = parsers[lang]
+    local out = lang .. string.rep(' ', 22 - #lang)
+    if parser and parser.install_info then
+      for _, query_group in pairs(M.bundled_queries) do
+        local status, err = query_status(lang, query_group)
+        out = out .. status .. ' '
         if err then
-          table.insert(error_collection, { parser_name, query_group, err })
+          table.insert(error_collection, { lang, query_group, err })
         end
       end
-      table.insert(parser_installation, vim.fn.trim(out, " ", 2))
     end
+    if parser and parser.requires then
+      for _, p in pairs(parser.requires) do
+        if not vim.list_contains(languages, p) then
+          table.insert(error_collection, { lang, 'queries', 'dependency ' .. p .. ' missing' })
+        end
+      end
+    end
+    health.info(vim.fn.trim(out, ' ', 2))
   end
-  local legend = [[
+  health.start('  Legend: [H]ighlights, [L]ocals, [F]olds, [I]ndents, In[J]ections')
 
-  Legend: H[ighlight], L[ocals], F[olds], I[ndents], In[j]ections
-         +) multiple parsers found, only one will be used
-         x) errors found in the query, try to run :TSUpdate {lang}]]
-  table.insert(parser_installation, legend)
-  -- Finally call the report function
-  _start(table.concat(parser_installation, "\n"))
   if #error_collection > 0 then
-    _start "The following errors have been detected:"
+    health.start('The following errors have been detected in query files:')
     for _, p in ipairs(error_collection) do
-      local lang, type, err = unpack(p)
+      local lang, type = p[1], p[2]
       local lines = {}
-      table.insert(lines, lang .. "(" .. type .. "): " .. err)
-      local files = ts.get_query_files(lang, type)
+      table.insert(lines, lang .. '(' .. type .. '): ')
+      local files = tsq.get_files(lang, type)
       if #files > 0 then
-        table.insert(lines, lang .. "(" .. type .. ") is concatenated from the following files:")
         for _, file in ipairs(files) do
-          local fd = io.open(file, "r")
-          if fd then
-            local ok, file_err = pcall(ts.parse_query, lang, fd:read "*a")
-            if ok then
-              table.insert(lines, '|    [OK]:"' .. file .. '"')
-            else
-              table.insert(lines, '| [ERROR]:"' .. file .. '", failed to load: ' .. file_err)
-            end
-            fd:close()
+          local query = util.read_file(file)
+          local _, file_err = pcall(tsq.parse, lang, query)
+          if file_err then
+            table.insert(lines, file)
           end
         end
       end
-      _error(table.concat(lines, "\n"))
+      health.error(table.concat(lines, ''))
     end
   end
 end
+
+M.bundled_queries = { 'highlights', 'locals', 'folds', 'indents', 'injections' }
 
 return M

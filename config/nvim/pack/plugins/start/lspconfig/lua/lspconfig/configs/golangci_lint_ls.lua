@@ -1,3 +1,10 @@
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-- This config is DEPRECATED.
+-- Use the configs in `lsp/` instead (requires Nvim 0.11).
+--
+-- ALL configs in `lua/lspconfig/configs/` will be DELETED.
+-- They exist only to support Nvim 0.10 or older.
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 local util = require 'lspconfig.util'
 
 return {
@@ -5,7 +12,22 @@ return {
     cmd = { 'golangci-lint-langserver' },
     filetypes = { 'go', 'gomod' },
     init_options = {
-      command = { 'golangci-lint', 'run', '--output.json.path=stdout', '--show-stats=false' },
+      command = {
+        'golangci-lint',
+        'run',
+        -- disable all output formats that might be enabled by the users .golangci.yml
+        '--output.text.path=',
+        '--output.tab.path=',
+        '--output.html.path=',
+        '--output.checkstyle.path=',
+        '--output.junit-xml.path=',
+        '--output.teamcity.path=',
+        '--output.sarif.path=',
+        -- disable stats output
+        '--show-stats=false',
+        -- enable JSON output to be used by the language server
+        '--output.json.path=stdout',
+      },
     },
     root_dir = function(fname)
       return util.root_pattern(

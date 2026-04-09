@@ -84,6 +84,13 @@ example on the `InsertLeave` or `TextChanged` events.
 If you want to customize how the diagnostics are displayed, read `:help
 vim.diagnostic.config`.
 
+## Security
+
+Some linters prioritize using an executable relative to the current working
+directory over the executable in `$PATH`. For example the `eslint` linter will
+use `./node_modules/.bin/eslint` if it exists. The executable is executed with
+your users permission. Because of that, you must _not_ call `try_lint()` in
+untrusted repositories.
 
 ## Available Linters
 
@@ -117,6 +124,7 @@ Other dedicated linters that are built-in are:
 | [clippy][clippy]                       | `clippy`               |
 | [clj-kondo][24]                        | `clj-kondo`            |
 | [cmakelint][cmakelint]                 | `cmakelint`            |
+| [cmake-lint][cmake_format]             | `cmake_lint`           |
 | [codespell][18]                        | `codespell`            |
 | [commitlint][commitlint]               | `commitlint`           |
 | [cppcheck][22]                         | `cppcheck`             |
@@ -126,8 +134,10 @@ Other dedicated linters that are built-in are:
 | [cue][cue]                             | `cue`                  |
 | [curlylint][curlylint]                 | `curlylint`            |
 | [dash][dash]                           | `dash`                 |
+| [dclint][dclint]                       | `dclint`               |
 | [deadnix][deadnix]                     | `deadnix`              |
 | [deno][deno]                           | `deno`                 |
+| [detect-secrets][detect-secrets]       | `detect-secrets`       |
 | [dmypy][dmypy]                         | `dmypy`                |
 | [DirectX Shader Compiler][dxc]         | `dxc`                  |
 | [djlint][djlint]                       | `djlint`               |
@@ -138,6 +148,7 @@ Other dedicated linters that are built-in are:
 | [eslint_d][37]                         | `eslint_d`             |
 | [eugene][eugene]                       | `eugene`               |
 | [fennel][fennel]                       | `fennel`               |
+| [fieldalignment][fieldalignment]       | `fieldalignment`       |
 | [fish][fish]                           | `fish`                 |
 | [Flake8][13]                           | `flake8`               |
 | [flawfinder][35]                       | `flawfinder`           |
@@ -146,6 +157,7 @@ Other dedicated linters that are built-in are:
 | [gawk][gawk]                           | `gawk`                 |
 | [gdlint (gdtoolkit)][gdlint]           | `gdlint`               |
 | [GHDL][ghdl]                           | `ghdl`                 |
+| [gitleaks][gitleaks]                   | `gitleaks`             |
 | [gitlint][gitlint]                     | `gitlint`              |
 | [glslc][glslc]                         | `glslc`                |
 | [Golangci-lint][16]                    | `golangcilint`         |
@@ -160,16 +172,23 @@ Other dedicated linters that are built-in are:
 | [jshint][jshint]                       | `jshint`               |
 | [json5][json5]                         | `json5`                |
 | [jsonlint][jsonlint]                   | `jsonlint`             |
+| [json.tool][json.py]                   | `json_tool`            |
 | [ksh][ksh]                             | `ksh`                  |
 | [ktlint][ktlint]                       | `ktlint`               |
 | [lacheck][lacheck]                     | `lacheck`              |
 | [Languagetool][5]                      | `languagetool`         |
 | [lslint][lslint]                       | `lslint`               |
+| [ls-lint][ls-lint]                     | `ls_lint`              |
 | [luac][luac]                           | `luac`                 |
 | [luacheck][19]                         | `luacheck`             |
+| [mado][mado]                           | `mado`                 |
+| [mago_lint][mago]                      | `mago_lint`            |
+| [mago_analyze][mago]                   | `mago_analyze`         |
 | [markdownlint][26]                     | `markdownlint`         |
 | [markdownlint-cli2][markdownlint-cli2] | `markdownlint-cli2`    |
 | [markuplint][markuplint]               | `markuplint`           |
+| [mbake][mbake]                         | `mbake`                |
+| [mh_lint][miss_hit]                    | `mh_lint`              |
 | [mlint][34]                            | `mlint`                |
 | [Mypy][11]                             | `mypy`                 |
 | [Nagelfar][nagelfar]                   | `nagelfar`             |
@@ -197,8 +216,9 @@ Other dedicated linters that are built-in are:
 | [pydocstyle][pydocstyle]               | `pydocstyle`           |
 | [Pylint][15]                           | `pylint`               |
 | [pyproject-flake8][pflake8]            | `pflake8`              |
+| [pyrefly][pyrefly]                     | `pyrefly`              |
 | [quick-lint-js][quick-lint-js]         | `quick-lint-js`        |
-| [redocly][redocly]                     | `redolcy`              |
+| [redocly][redocly]                     | `redocly`              |
 | [regal][regal]                         | `regal`                |
 | [Revive][14]                           | `revive`               |
 | [rflint][rflint]                       | `rflint`               |
@@ -210,6 +230,7 @@ Other dedicated linters that are built-in are:
 | [RuboCop][rubocop]                     | `rubocop`              |
 | [Ruby][ruby]                           | `ruby`                 |
 | [Ruff][ruff]                           | `ruff`                 |
+| [rumdl][rumdl]                         | `rumdl`                |
 | [salt-lint][salt-lint]                 | `saltlint`             |
 | [Selene][31]                           | `selene`               |
 | [ShellCheck][10]                       | `shellcheck`           |
@@ -221,6 +242,7 @@ Other dedicated linters that are built-in are:
 | [sphinx-lint][sphinx-lint]             | `sphinx-lint`          |
 | [sqlfluff][sqlfluff]                   | `sqlfluff`             |
 | [sqruff][sqruff]                       | `sqruff`               |
+| [squawk][squawk]                       | `squawk`               |
 | [standardjs][standardjs]               | `standardjs`           |
 | [StandardRB][27]                       | `standardrb`           |
 | [statix check][33]                     | `statix`               |
@@ -229,13 +251,16 @@ Other dedicated linters that are built-in are:
 | [SwiftLint][swiftlint]                 | `swiftlint`            |
 | [systemd-analyze][systemd-analyze]     | `systemd-analyze`      |
 | [systemdlint][systemdlint]             | `systemdlint`          |
+| [tclint][tclint]                       | `tclint`               |
 | [tflint][tflint]                       | `tflint`               |
 | [tfsec][tfsec]                         | `tfsec`                |
 | [tlint][tlint]                         | `tlint`                |
+| [Tombi][tombi]                         | `tombi`                |
 | [trivy][trivy]                         | `trivy`                |
 | [ts-standard][ts-standard]             | `ts-standard`          |
 | [twig-cs-fixer][twig-cs-fixer]         | `twig-cs-fixer`        |
 | [typos][typos]                         | `typos`                |
+| [vacuum][vacuum]                       | `vacuum`               |
 | [Vala][vala-lint]                      | `vala_lint`            |
 | [Vale][8]                              | `vale`                 |
 | [Verilator][verilator]                 | `verilator`            |
@@ -247,6 +272,7 @@ Other dedicated linters that are built-in are:
 | [yamllint][yamllint]                   | `yamllint`             |
 | [yq][yq]                               | `yq`                   |
 | [zizmor][zizmor]                       | `zizmor`               |
+| [zlint][zlint]                         | `zlint`                |
 | [zsh][zsh]                             | `zsh`                  |
 
 ## Custom Linters
@@ -330,7 +356,7 @@ parser = require('lint.parser').from_pattern(pattern, groups, severity_map, defa
 
 The function allows to parse the linter's output using a pattern which can be either:
 
-- A Lua pattern. See `:help lua-patterns`.
+- A Lua pattern. See `:help lua-pattern`.
 - A LPEG pattern object. See `:help vim.lpeg`.
 - A function (`fun(line: string):string[]`). It takes one parameter - a line
   from the linter output and must return a string array with the matches. The
@@ -473,12 +499,30 @@ end
 
 Running tests requires [busted][busted].
 
-See [neorocks][neorocks] or [Using Neovim as Lua interpreter with
-Luarocks][neovim-luarocks] for installation instructions.
+```bash
+busted spec/
+```
+
+Or with [luarocks]:
 
 ```bash
-busted tests/
+luarocks test
 ```
+
+If you get an error like:
+
+```text
+E5113: Error while calling lua chunk: ...uarocks/lib/luarocks/rocks-5.1/busted/2.2.0-1/bin/busted:3: module 'busted.runner' not found:
+    no field package.preload['busted.runner']
+```
+
+You need to run `eval $(luarocks path --no-bin)` first.
+
+
+See also:
+
+- [neorocks][neorocks]
+- [Using Neovim as Lua interpreter with Luarocks][neovim-luarocks] for installation instructions.
 
 
 ### Docs
@@ -537,6 +581,7 @@ vimcats -t -f lua/lint.lua lua/lint/parser.lua > doc/lint.txt
 [jshint]: https://jshint.com/
 [json5]: https://json5.org/
 [jsonlint]: https://github.com/zaach/jsonlint
+[json.py]: https://docs.python.org/3/library/json.html#module-json.tool
 [rflint]: https://github.com/boakley/robotframework-lint
 [robocop]: https://github.com/MarketSquare/robotframework-robocop
 [vsg]: https://github.com/jeremiah-c-leary/vhdl-style-guide
@@ -546,6 +591,7 @@ vimcats -t -f lua/lint.lua lua/lint/parser.lua > doc/lint.txt
 [proselint]: https://github.com/amperser/proselint
 [protolint]: https://github.com/yoheimuta/protolint
 [cmakelint]: https://github.com/cmake-lint/cmake-lint
+[cmake_format]: https://github.com/cheshirekow/cmake_format
 [rstcheck]: https://github.com/myint/rstcheck
 [rstlint]: https://github.com/twolfson/restructuredtext-lint
 [ksh]: https://github.com/ksh93/ksh
@@ -560,6 +606,7 @@ vimcats -t -f lua/lint.lua lua/lint/parser.lua > doc/lint.txt
 [luac]: https://www.lua.org/manual/5.1/luac.html
 [credo]: https://github.com/rrrene/credo
 [ghdl]: https://github.com/ghdl/ghdl
+[gitleaks]: https://github.com/gitleaks/gitleaks
 [glslc]: https://github.com/google/shaderc
 [rubocop]: https://github.com/rubocop/rubocop
 [dxc]: https://github.com/microsoft/DirectXShaderCompiler
@@ -581,6 +628,7 @@ vimcats -t -f lua/lint.lua lua/lint/parser.lua > doc/lint.txt
 [curlylint]: https://www.curlylint.org/
 [sqlfluff]: https://github.com/sqlfluff/sqlfluff
 [sqruff]: https://github.com/quarylabs/sqruff
+[squawk]: https://github.com/sbdchd/squawk
 [verilator]: https://verilator.org/guide/latest/
 [actionlint]: https://github.com/rhysd/actionlint
 [buf_lint]: https://github.com/bufbuild/buf
@@ -632,6 +680,7 @@ vimcats -t -f lua/lint.lua lua/lint/parser.lua > doc/lint.txt
 [markuplint]: https://markuplint.dev/
 [markdownlint-cli2]: https://github.com/DavidAnson/markdownlint-cli2
 [swiftlint]: https://github.com/realm/SwiftLint
+[tclint]: https://github.com/nmoroze/tclint
 [tflint]: https://github.com/terraform-linters/tflint
 [ameba]: https://github.com/crystal-ameba/ameba
 [eugene]: https://github.com/kaaveland/eugene
@@ -653,3 +702,17 @@ vimcats -t -f lua/lint.lua lua/lint/parser.lua > doc/lint.txt
 [vimcats]: https://github.com/mrcjkb/vimcats
 [lslint]: https://github.com/Makopo/lslint/
 [fsharplint]: https://github.com/fsprojects/FSharpLint
+[fieldalignment]: https://pkg.go.dev/golang.org/x/tools/go/analysis/passes/fieldalignment
+[zlint]: https://donisaac.github.io/zlint/
+[dclint]: https://github.com/zavoloklom/docker-compose-linter
+[detect-secrets]: https://github.com/Yelp/detect-secrets
+[tombi]: https://github.com/tombi-toml/tombi
+[mado]: https://github.com/akiomik/mado
+[rumdl]: https://github.com/rvben/rumdl
+[ls-lint]: https://github.com/loeffel-io/ls-lint
+[mago]: https://mago.carthage.software/
+[miss_hit]: https://github.com/florianschanda/miss_hit
+[pyrefly]: https://pyrefly.org/
+[Vacuum]: https://quobix.com/vacuum/
+[luarocks]: https://luarocks.org/
+[mbake]: https://github.com/EbodShojaei/bake

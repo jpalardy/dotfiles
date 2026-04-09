@@ -2,12 +2,12 @@
 ---
 --- https://github.com/julia-vscode/julia-vscode
 ---
---- LanguageServer.jl can be installed with `julia` and `Pkg`:
+--- LanguageServer.jl, SymbolServer.jl and StaticLint.jl can be installed with `julia` and `Pkg`:
 --- ```sh
---- julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.add("LanguageServer")'
+--- julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.add("LanguageServer"); Pkg.add("SymbolServer"); Pkg.add("StaticLint")'
 --- ```
 --- where `~/.julia/environments/nvim-lspconfig` is the location where
---- the default configuration expects LanguageServer.jl to be installed.
+--- the default configuration expects LanguageServer.jl, SymbolServer.jl and StaticLint.jl to be installed.
 ---
 --- To update an existing install, use the following command:
 --- ```sh
@@ -20,12 +20,17 @@
 --- julia --project=/path/to/my/project -e 'using Pkg; Pkg.instantiate()'
 --- ```
 ---
+--- To activate a Julia environment, use the `:LspJuliaActivateEnv` command. A prompt will ask you to select a Julia
+--- environment from the list of environments found in the current working directory and the `environments/` folder of
+--- `$JULIA_DEPOT_PATH` entries. You can also provide a path to a Julia environment directly.
+--- Example: `:LspJuliaActivateEnv /path/to/my/project`.
+---
 --- Note: The julia programming language searches for global environments within the `environments/`
 --- folder of `$JULIA_DEPOT_PATH` entries. By default this simply `~/.julia/environments`
 
 local root_files = { 'Project.toml', 'JuliaProject.toml' }
 
-local function activate_env(path)
+local function activate_env(args)
   assert(vim.fn.has 'nvim-0.10' == 1, 'requires Nvim 0.10 or newer')
   local bufnr = vim.api.nvim_get_current_buf()
   local julials_clients = vim.lsp.get_clients { bufnr = bufnr, name = 'julials' }
@@ -36,12 +41,14 @@ local function activate_env(path)
   local function _activate_env(environment)
     if environment then
       for _, julials_client in ipairs(julials_clients) do
+        ---@diagnostic disable-next-line: param-type-mismatch
         julials_client:notify('julia/activateenvironment', { envPath = environment })
       end
       vim.notify('Julia environment activated: \n`' .. environment .. '`', vim.log.levels.INFO)
     end
   end
-  if path then
+  local path = args.args
+  if path ~= nil and #path > 0 then
     path = vim.fs.normalize(vim.fn.fnamemodify(vim.fn.expand(path), ':p'))
     local found_env = false
     for _, project_file in ipairs(root_files) do
@@ -89,7 +96,7 @@ local cmd = {
         "environments", "nvim-lspconfig"
     )
     pushfirst!(LOAD_PATH, ls_install_path)
-    using LanguageServer
+    using LanguageServer, SymbolServer, StaticLint
     popfirst!(LOAD_PATH)
     depot_path = get(ENV, "JULIA_DEPOT_PATH", "")
     project_path = let

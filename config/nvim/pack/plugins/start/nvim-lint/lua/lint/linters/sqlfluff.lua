@@ -3,11 +3,10 @@ return {
   args = {
     "lint",
     "--format=json",
-    -- note: users will have to replace the --dialect argument accordingly
-    "--dialect=ansi",
+    "-",
   },
   ignore_exitcode = true,
-  stdin = false,
+  stdin = true,
   parser = function(output, _)
     local per_filepath = {}
     if #output > 0 then
@@ -46,6 +45,7 @@ return {
           end_col = violation.end_line_pos and (violation.end_line_pos - 1) or nil,
           severity = severity,
           message = violation.description,
+          code = violation.code,
           user_data = { lsp = { code = violation.code } },
         })
       end

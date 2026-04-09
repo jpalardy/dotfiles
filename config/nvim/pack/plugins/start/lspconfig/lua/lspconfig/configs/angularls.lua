@@ -1,3 +1,10 @@
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-- This config is DEPRECATED.
+-- Use the configs in `lsp/` instead (requires Nvim 0.11).
+--
+-- ALL configs in `lua/lspconfig/configs/` will be DELETED.
+-- They exist only to support Nvim 0.10 or older.
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 local util = require 'lspconfig.util'
 
 -- Angular requires a node_modules directory to probe for @angular/language-service and typescript
@@ -49,7 +56,7 @@ return {
       '--angularCoreVersion',
       default_angular_core_version,
     },
-    filetypes = { 'typescript', 'html', 'typescriptreact', 'typescript.tsx', 'htmlangular' },
+    filetypes = { 'typescript', 'html', 'typescriptreact', 'htmlangular' },
     -- Check for angular.json since that is the root of the project.
     -- Don't check for tsconfig.json or package.json since there are multiple of these
     -- in an angular monorepo setup.

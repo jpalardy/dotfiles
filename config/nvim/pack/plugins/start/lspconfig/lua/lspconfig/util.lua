@@ -41,7 +41,8 @@ function M.root_pattern(...)
       end)
 
       if match ~= nil then
-        return match
+        local real = vim.uv.fs_realpath(match)
+        return real or match -- fallback to original if realpath fails
       end
     end
   end
@@ -58,16 +59,18 @@ end
 --- @param fname string Full path of the current buffer name to start searching upwards from.
 function M.root_markers_with_field(root_files, new_names, field, fname)
   local path = vim.fn.fnamemodify(fname, ':h')
-  local found = vim.fs.find(new_names, { path = path, upward = true })
+  local found = vim.fs.find(new_names, { path = path, upward = true, type = 'file' })
 
   for _, f in ipairs(found or {}) do
     -- Match the given `field`.
-    for line in io.lines(f) do
+    local file = assert(io.open(f, 'r'))
+    for line in file:lines() do
       if line:find(field) then
         root_files[#root_files + 1] = vim.fs.basename(f)
         break
       end
     end
+    file:close()
   end
 
   return root_files

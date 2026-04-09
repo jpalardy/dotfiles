@@ -1,34 +1,75 @@
--- Last Change: 2022 Apr 16
-
 if vim.g.loaded_nvim_treesitter then
   return
 end
 vim.g.loaded_nvim_treesitter = true
 
--- setup modules
-require("nvim-treesitter").setup()
-
 local api = vim.api
 
--- define autocommands
-local augroup = api.nvim_create_augroup("NvimTreesitter", {})
+local function complete_available_parsers(arglead)
+  return vim.tbl_filter(
+    --- @param v string
+    function(v)
+      return v:find(arglead) ~= nil
+    end,
+    require('nvim-treesitter.config').get_available()
+  )
+end
 
-api.nvim_create_autocmd("Filetype", {
-  pattern = "query",
-  group = augroup,
-  callback = function()
-    api.nvim_clear_autocmds {
-      group = augroup,
-      event = "BufWritePost",
-    }
-    api.nvim_create_autocmd("BufWritePost", {
-      group = augroup,
-      buffer = 0,
-      callback = function(opts)
-        require("nvim-treesitter.query").invalidate_query_file(opts.file)
-      end,
-      desc = "Invalidate query file",
-    })
-  end,
-  desc = "Reload query",
+local function complete_installed_parsers(arglead)
+  return vim.tbl_filter(
+    --- @param v string
+    function(v)
+      return v:find(arglead) ~= nil
+    end,
+    require('nvim-treesitter.config').get_installed()
+  )
+end
+
+-- create user commands
+api.nvim_create_user_command('TSInstall', function(args)
+  require('nvim-treesitter.install').install(args.fargs, { force = args.bang, summary = true })
+end, {
+  nargs = '+',
+  bang = true,
+  bar = true,
+  complete = complete_available_parsers,
+  desc = 'Install treesitter parsers',
+})
+
+api.nvim_create_user_command('TSInstallFromGrammar', function(args)
+  require('nvim-treesitter.install').install(args.fargs, {
+    generate = true,
+    summary = true,
+    force = args.bang,
+  })
+end, {
+  nargs = '+',
+  bang = true,
+  bar = true,
+  complete = complete_available_parsers,
+  desc = 'Install treesitter parsers from grammar',
+})
+
+api.nvim_create_user_command('TSUpdate', function(args)
+  require('nvim-treesitter.install').update(args.fargs, { summary = true })
+end, {
+  nargs = '*',
+  bar = true,
+  complete = complete_installed_parsers,
+  desc = 'Update installed treesitter parsers',
+})
+
+api.nvim_create_user_command('TSUninstall', function(args)
+  require('nvim-treesitter.install').uninstall(args.fargs, { summary = true })
+end, {
+  nargs = '+',
+  bar = true,
+  complete = complete_installed_parsers,
+  desc = 'Uninstall treesitter parsers',
+})
+
+api.nvim_create_user_command('TSLog', function()
+  require('nvim-treesitter.log').show()
+end, {
+  desc = 'View log messages',
 })

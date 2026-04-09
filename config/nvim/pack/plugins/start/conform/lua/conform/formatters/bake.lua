@@ -4,7 +4,6 @@ return {
     url = "https://github.com/EbodShojaei/bake",
     description = "A Makefile formatter and linter.",
   },
-  command = "bake",
-  args = { "format", "$FILENAME" },
-  stdin = false,
+  command = "mbake",
+  args = { "format", "--stdin" },
 }

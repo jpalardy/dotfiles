@@ -18,12 +18,14 @@ M.find_executable = function(paths, default)
     for _, path in ipairs(paths) do
       local normpath = vim.fs.normalize(path)
       local is_absolute = vim.startswith(normpath, "/")
-      if is_absolute and vim.fn.executable(normpath) then
+
+      if is_absolute and vim.fn.executable(normpath) == 1 then
         return normpath
       end
 
       local idx = normpath:find("/", 1, true)
       local dir, subpath
+
       if idx then
         dir = normpath:sub(1, idx - 1)
         subpath = normpath:sub(idx)
@@ -32,9 +34,11 @@ M.find_executable = function(paths, default)
         dir = normpath
         subpath = ""
       end
+
       local results = vim.fs.find(dir, { upward = true, path = ctx.dirname, limit = math.huge })
       for _, result in ipairs(results) do
         local fullpath = result .. subpath
+
         if vim.fn.executable(fullpath) == 1 then
           return fullpath
         end
@@ -164,7 +168,8 @@ M.merge_formatter_configs = function(config, override)
   local ret = vim.tbl_deep_extend("force", config, override)
   if override.prepend_args then
     M.add_formatter_args(ret, override.prepend_args, { append = false })
-  elseif override.append_args then
+  end
+  if override.append_args then
     M.add_formatter_args(ret, override.append_args, { append = true })
   end
   return ret
@@ -190,14 +195,17 @@ end
 ---@param dir string
 ---@return string?
 M.parse_rust_edition = function(dir)
-  local manifest = vim.fs.find("Cargo.toml", { upward = true, path = dir })[1]
-  if manifest then
+  local manifest_files = vim.fs.find("Cargo.toml", { upward = true, path = dir, limit = math.huge })
+  for _, manifest in ipairs(manifest_files) do
     for line in io.lines(manifest) do
-      if line:match("^edition *=") then
-        local edition = line:match("%d+")
-        if edition then
-          return edition
-        end
+      -- if a project is part of a workspace, the edition might be defined top-level
+      local is_in_workspace = line:match("^edition *= *{ *workspace *= *true *}")
+        or line:match("^edition.workspace *= *true")
+      local edition = line:match('^edition *= *"(%d+)"')
+      if is_in_workspace then
+        break
+      elseif edition then
+        return edition
       end
     end
   end
