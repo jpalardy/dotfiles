@@ -44,6 +44,10 @@ hi def link moeDivider Comment
 syntax match moeDate /\d\d\d\d-\d\d-\d\d/
 hi def link moeDate Number
 
+" yyyy-mm-##
+syntax match moeStubDate /yyyy-..-\d\d/
+hi def link moeStubDate String
+
 " ###.###.####
 syntax match moePhoneNumber /\<\(1\.\)\?\d\d\d\.\d\d\d\.\d\d\d\d\>/
 hi def link moePhoneNumber Number
