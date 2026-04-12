@@ -5,6 +5,5 @@ options("repos" = c(CRAN = "https://cloud.r-project.org"))
     cols <- as.integer(system('tput cols', intern = TRUE))
     options(width = cols)
     options(tibble.print_min = 30)
-    options(pager = "cat")
   }
 }
