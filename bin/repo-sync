@@ -15,26 +15,24 @@ sync() {
 
 generate_commands() {
   local prev=""
-  echo "tmux set-hook pane-exited 'select-layout even-vertical'"
   for repo in $REPOS; do
     if [ -n "$prev" ]; then
       echo
-      echo "tmux split-window -v"
+      echo "tmux new-window"
     fi
     echo "tmux send-keys 'clear; cd \"$repo\"; and repo-sync .; and exit' C-m"
     prev="$repo"
   done
-
-  echo
-  echo "tmux select-layout even-vertical"
 }
 
-if [ "$1" == "." ]; then
-  sync
-  if [ -n "$(git status --porcelain)" ] || [ "$(git rev-parse HEAD)" != "$(git rev-parse "@{u}")" ]; then
-    exit 1
-  fi
-else
+if [ -z "$1" ]; then
   generate_commands | bash
+  exit
+fi
+
+cd "$1" || exit 1
+sync
+if [ -n "$(git status --porcelain)" ] || [ "$(git rev-parse HEAD)" != "$(git rev-parse "@{u}")" ]; then
+  exit 1
 fi
 
