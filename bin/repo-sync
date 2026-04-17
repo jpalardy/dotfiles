@@ -16,10 +16,12 @@ sync() {
 generate_commands() {
   local prev=""
   for repo in $REPOS; do
+    local bn=$(basename "$repo")
     if [ -n "$prev" ]; then
       echo
       echo "tmux new-window"
     fi
+    echo "tmux rename-window $bn"
     echo "tmux send-keys 'clear; cd \"$repo\"; and repo-sync .; and exit' C-m"
     prev="$repo"
   done
