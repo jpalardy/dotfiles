@@ -34,3 +34,6 @@ function implode
   end
 end
 
+#-------------------------------------------------
+
+abbr trw 'tmux rename-window'
