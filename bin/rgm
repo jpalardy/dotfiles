@@ -4,8 +4,8 @@ prepare() {
   awk '
     {
       sub(/^-/, "-v ")
-      printf "%s rg -i %s", sep, $0
-      sep = "|"
+      if (NR > 1) printf " | "
+      printf "rg -i %s", $0
     }
 
     END { print "" }
