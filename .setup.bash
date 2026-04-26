@@ -62,6 +62,7 @@ relink fish     "$DOTFILES/config/fish"
 relink yamllint "$DOTFILES/config/yamllint"
 relink nvim     "$DOTFILES/config/nvim"
 relink ghostty  "$DOTFILES/config/ghostty"
+relink helix    "$DOTFILES/config/helix"
 
 # -------------------------------------------------
 
