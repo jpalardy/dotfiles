@@ -1,2 +1,3 @@
 [editor]
 trim-trailing-whitespace = true
+bufferline = "multiple"
