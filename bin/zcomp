@@ -5,17 +5,16 @@ report() {
 }
 export -f report
 
-utils=""
-for util in gzip bzip2 xz zstd; do
-  if test "$(command -v $util)"; then
-    utils="$utils $util"
-  fi
-done
+filter_exists() {
+  for cmd in "$@"; do
+    test "$(command -v "$cmd")" && echo "$cmd"
+  done
+}
 
 (
   printf "original %d\n" "$(wc -c < "$@")"
-  # shellcheck disable=SC2086
-  parallel report ::: $utils ::: 1 5 9 ::: "$@"
+  # shellcheck disable=SC2046
+  parallel -k report ::: $(filter_exists gzip bzip2 xz zstd) ::: 1 5 9 ::: "$@"
 ) | awk '
   NR == 1 {original=$2}
   {printf "%12d %5.1f%% %8s\n", $2, $NF/original*100, $1}
