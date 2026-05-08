@@ -1,3 +1,14 @@
 [editor]
 trim-trailing-whitespace = true
 bufferline = "multiple"
+
+[keys.normal]
+A-ret = "@;mip:pipe-to tmux-send %{language}<ret>;"
+
+[keys.normal.'\']
+'\' = ":pipe-to tmux-send %{language}"
+p = "@;mip:pipe-to tmux-send %{language}<ret>;"
+l = "@;x:pipe-to tmux-send %{language}<ret>;"
+
+[keys.select.'\']
+'\' = ":pipe-to tmux-send %{language}"

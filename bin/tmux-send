@@ -1,0 +1,36 @@
+#!/usr/bin/env lua
+
+local target_pane = "{last}"
+local language = arg[1] or ""
+
+-- read stdin into memory
+local input = io.read("*a")
+
+-- language-specific transforms
+local transforms = {
+  fsharp = function(s)
+    s = s:match("^(.-)%s*$")
+    local suffix = (s:sub(-2) == ";;" and "\n" or "\n;;\n")
+    return s .. suffix
+  end,
+}
+
+-- transform for language (if necessary)
+if type(transforms[language]) == "function" then
+  input = transforms[language](input)
+end
+
+-- send in 1000-byte chunks
+for offset = 1, #input, 1000 do
+  local chunk = input:sub(offset, offset + 999)
+
+  local pipe = io.popen("tmux load-buffer -", "w")
+  if not pipe then
+    io.stderr:write("Failed to open tmux load-buffer pipe\n")
+    os.exit(1)
+  end
+  pipe:write(chunk)
+  pipe:close()
+
+  os.execute("tmux paste-buffer -dpr -t " .. target_pane)
+end
