@@ -42,6 +42,10 @@ vim.keymap.set({ "n", "i" }, "<F7>", function()
   vim.opt.wrap = not vim.opt.wrap:get()
 end)
 
+vim.keymap.set({ "n", "i" }, "<F8>", function()
+  vim.treesitter.start()
+end)
+
 -- keep/drop matching lines
 vim.keymap.set({ "n", "x" }, ",v", ":v/<C-r>//d<CR>", { silent = true })
 vim.keymap.set({ "n", "x" }, ",d", ":g/<C-r>//d<CR>", { silent = true })
