@@ -1,5 +1,7 @@
 #!/bin/bash
 
+EDITOR=${EDITOR:-vim}
+
 # shellcheck disable=SC2120
 usage() {
   local error="$1"
@@ -7,7 +9,7 @@ usage() {
     echo >&2 "$error"
   fi
 
-  echo >&2 "Usage: vimrepl [-c command] [-f filename] [ext]"
+  echo >&2 "Usage: ${EDITOR}repl [-c command] [-f filename] [ext]"
   echo >&2 "  -c command   command to execute"
   echo >&2 "  -f filename  filename to edit"
   echo >&2 "  ext          extension; used if -f is missing"
@@ -58,7 +60,7 @@ shift $((OPTIND - 1))
 # grab ext
 if [ "$#" -gt 0 ] && [ -z "$filename" ]; then
   ext="$1"
-  filename="_vimrepl.$1"
+  filename="_${EDITOR}repl.$1"
   shift
 fi
 
@@ -73,10 +75,10 @@ fi
 # -------------------------------------------------
 
 cmd_first_word="${cmd%% *}"
-tmux rename-window "vimrepl-${cmd_first_word:-$ext}"
+tmux rename-window "${EDITOR}repl-${cmd_first_word:-$ext}"
 
 if [ "$ALREADY_SPLIT" == 1 ]; then
-  vim "$filename"
+  ${EDITOR} "$filename"
   exit
 fi
 
@@ -89,9 +91,9 @@ fi
 # go back to initiating (last) pane
 tmux select-pane -l
 
-# vim...
-vim "$filename"
+# ${EDITOR}...
+${EDITOR} "$filename"
 
-# after vim, kill other pane(s)
+# after ${EDITOR}, kill other pane(s)
 tmux kill-pane -a
 
