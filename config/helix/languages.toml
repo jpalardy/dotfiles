@@ -1,7 +1,7 @@
 [[language]]
 name = "lua"
 auto-format = true
-formatter = { command = "stylua", args = ["-"] }
+formatter = { command = "stylua", args = ["--search-parent-directories", "-"] }
 
 [[language]]
 name = "json"
