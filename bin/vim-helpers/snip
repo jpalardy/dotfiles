@@ -76,6 +76,7 @@ BEGIN {
   snip(":rot",    "🔄")
   snip(":skull",  "💀")
   snip("@",       "🌀")
+  snip(":wait",   "🕒")
   snip(":shrug",  "¯\\_(ツ)_/¯")
 
   # arrows
