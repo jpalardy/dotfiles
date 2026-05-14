@@ -1,4 +1,5 @@
 new-window
+new-window -c PATH
 rename-window "name"
 send-keys "..." C-m
 
