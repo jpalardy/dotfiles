@@ -5,5 +5,4 @@ formatter = { command = "stylua", args = ["--search-parent-directories", "-"] }
 
 [[language]]
 name = "json"
-auto-format = true
 formatter = { command = "prettier", args = ["--parser", "json"] }
