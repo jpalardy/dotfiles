@@ -1,40 +1,20 @@
 #!/bin/bash
 
-# start tmux if not already inside tmux
 if [ -z "$TMUX" ]; then
-  tmux new-session -d
-  tmux send-keys "repo-sync" Enter
-  tmux attach-session
+  tmux new-session "$0"
   exit
 fi
 
-sync() {
+if test -n "$1"; then
   git fetch --prune
   git status --short
-}
-
-generate_commands() {
-  local prev=""
-  for repo in $REPOS; do
-    local bn=$(basename "$repo")
-    if [ -n "$prev" ]; then
-      echo
-      echo "tmux new-window"
-    fi
-    echo "tmux rename-window $bn"
-    echo "tmux send-keys 'clear; cd \"$repo\"; and repo-sync .; and exit' C-m"
-    prev="$repo"
-  done
-}
-
-if [ -z "$1" ]; then
-  generate_commands | bash
+  if [ -n "$(git status --porcelain)" ] || [ "$(git rev-parse HEAD)" != "$(git rev-parse "@{u}")" ]; then
+    exit 1
+  fi
   exit
 fi
 
-cd "$1" || exit 1
-sync
-if [ -n "$(git status --porcelain)" ] || [ "$(git rev-parse HEAD)" != "$(git rev-parse "@{u}")" ]; then
-  exit 1
-fi
+for repo in $REPOS; do
+  printf "%s\t%s\t%s\n" "$repo" "clear; repo-sync .; and exit" "$(basename "$repo")"
+done | tmux.map
 

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ -z "$TMUX" ]; then
+  echo >&2 "need to run inside tmux"
+  exit 1
+fi
+
+while IFS=$'\t' read -r dir cmd name; do
+  if test -f "$dir"; then
+    dir=$(dirname "$dir")
+  fi
+  tmux new-window -c "$dir"
+
+  if test -n "$name"; then
+    tmux rename-window "$name"
+  fi
+
+  tmux send-keys "$cmd"
+done
+
