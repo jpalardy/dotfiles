@@ -64,6 +64,8 @@ check_bin jq
 check_bin xsv
 check_bin jsonlint "jsonlint @ npm"
 check_bin fixjson  "fixjson @ npm"
+check_bin prettier "prettier @ npm"
+check_bin ncu      "npm-check-updates @ npm"
 check_bin luac
 check_bin stylua
 check_bin shellcheck
