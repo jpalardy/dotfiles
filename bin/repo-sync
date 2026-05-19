@@ -16,5 +16,5 @@ fi
 
 for repo in $REPOS; do
   printf "%s\t%s\t%s\n" "$repo" "clear; repo-sync .; and exit" "$(basename "$repo")"
-done | tmux.map
+done | tmux.each
 
