@@ -4,3 +4,4 @@
 .ignore
 _vimrepl.*
 .ws*
+~*
