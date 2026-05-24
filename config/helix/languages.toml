@@ -6,3 +6,7 @@ formatter = { command = "stylua", args = ["--search-parent-directories", "-"] }
 [[language]]
 name = "json"
 formatter = { command = "prettier", args = ["--parser", "json"] }
+
+[[language]]
+name = "rust"
+formatter = { command = "rustfmt" }
