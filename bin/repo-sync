@@ -29,6 +29,7 @@ if test -n "$1"; then
     exit 1
   fi
   if [ "$(git rev-parse HEAD)" != "$(git rev-parse "@{u}")" ]; then
+    echo
     if confirm "git merge --ff-only?"; then
       git merge --ff-only
     fi
