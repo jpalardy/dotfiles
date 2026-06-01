@@ -4,7 +4,6 @@ function git-diff
 end
 
 abbr --add glg  "git log --graph --pretty=colorful --date-order"
-abbr --add grf --set-cursor 'git log --name-only --pretty=format: --since=2w% | rg . | __count'
 
 function gcp
   argparse enable -- $argv
