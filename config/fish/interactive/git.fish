@@ -27,7 +27,11 @@ function gcp
     return 1
   end
 
-  git commit -av -m '-'; or return 1
+  # commmit if status isn't clean
+  if [ -n "$(git status --porcelain)" ]
+    git commit -av -m '-'
+  end
+
   git push
 end
 
