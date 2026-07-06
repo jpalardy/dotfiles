@@ -44,6 +44,7 @@ check_bin rg          ripgrep
 check_bin fzf
 check_bin parallel
 check_bin curl
+check_bin pv
 check_bin pwgen
 check_bin qrencode
 check_bin utimer
