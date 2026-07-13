@@ -22,6 +22,17 @@ function cd
   __cd $argv
 end
 
+function __cd_home_prefix
+  set -l tok (commandline -t)
+  if test -z "$tok"; or test -e "$tok"
+    return
+  end
+
+  if test -e "$HOME/$tok"
+    commandline -t -- "~/$tok"
+  end
+end
+
 function b
   set -l cwd $PWD
   while test $cwd != "/"
