@@ -128,6 +128,7 @@ BEGIN {
     snip("fori", "for (let i = 0; i < ▒; i += 1) {")
     snip(".fe",  ".forEach(▒)")
     snip("iife", "(() => {\n▒\n})();")
+    snip("js",   "JSON.stringify(▒)")
   }
 
   #-------------------------------------------------
