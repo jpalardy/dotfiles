@@ -21,5 +21,3 @@ bind escape,minus 'commandline -r "vim -q \$($history[1] --vimgrep | psub)"; com
 
 bind escape,comma fzf-contextual
 
-bind escape,c __cd_home_prefix
-
