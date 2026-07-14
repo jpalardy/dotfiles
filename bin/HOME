@@ -5,7 +5,7 @@ SRC="$HOME/.HOME"
 if [ "$1" = "-f" ]; then
   echo >&2 "generating $SRC..."
   cd "$HOME" || return
-  rg --files -uu -g !Library 2>/dev/null > "$SRC"
+  rg --files -uu -g !Library 2>/dev/null | awk '{print "~/" $0}' > "$SRC"
   exit
 fi
 
