@@ -1,4 +1,0 @@
-#!/usr/bin/env -S awk -f
-
-{ sum+=$0; print sum, $0 }
-

@@ -11,6 +11,10 @@ sum() {
   awk '{sum+=$1} END {print sum}' "$@"
 }
 
+cumsum() {
+  awk '{sum+=$1; print sum}' "$@"
+}
+
 diff() {
   awk 'NR > 1 { print $1-prev } { prev=$1 }' "$@"
 }
