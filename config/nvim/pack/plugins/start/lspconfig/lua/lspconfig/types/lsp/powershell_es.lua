@@ -109,12 +109,6 @@
 ---default = true
 ---```
 ---@field whitespaceAroundOperator? boolean
----**Deprecated:** Please use the `#powershell.codeFormatting.addWhitespaceAroundPipe#` setting instead. If you've used this setting before, we have moved it for you automatically.
----
----```lua
----default = true
----```
----@field whitespaceAroundPipe? boolean
 ---Adds a space between a keyword and its associated script-block expression.
 ---
 ---```lua
@@ -207,6 +201,8 @@
 ---@field startLocation? "Editor" | "Panel"
 ---Do not show the startup banner in the PowerShell Extension Terminal.
 ---@field suppressStartupBanner? boolean
+---Do not show a notification when the PowerShell Extension Terminal has stopped.
+---@field suppressTerminalStoppedNotification? boolean
 ---This will disable the use of PSReadLine in the PowerShell Extension Terminal and use a legacy implementation. **This setting is not recommended and likely to be deprecated!**
 ---@field useLegacyReadLine? boolean
 
@@ -229,12 +225,18 @@
 ---default = "FromPreference"
 ---```
 ---@field outputVerbosity? "FromPreference" | "None" | "Minimal" | "Normal" | "Detailed" | "Diagnostic"
----Use a CodeLens that is compatible with Pester 4. Disabling this will show `Run Tests` on all `It`, `Describe` and `Context` blocks, and will correctly work only with Pester 5 and newer.
+---Use the legacy CodeLens compatible with Pester 4 (only shows `Run Tests` on `Describe` blocks). When disabled (the default), `Run Tests` is shown on all `It`, `Describe` and `Context` blocks for Pester 5 and newer.
+---@field useLegacyCodeLens? boolean
+
+---@class _.lspconfig.settings.powershell_es.Powershell.Rename
+---Auto-accepts the [disclaimer for the PowerShell Rename Symbol feature](https://aka.ms/powershell-rename-disclaimer) which has support limitations and risks.
+---@field acceptDisclaimer? boolean
+---Creates an alias attribute for a parameter when renaming a parameter definition.
 ---
 ---```lua
 ---default = true
 ---```
----@field useLegacyCodeLens? boolean
+---@field createParameterAlias? boolean
 
 ---@class _.lspconfig.settings.powershell_es.Powershell.ScriptAnalysis
 ---Enables real-time script analysis using [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) that populates the [Problems view](command:workbench.panel.markers.view.focus).
@@ -258,6 +260,10 @@
 ---```
 ---@field CommandExplorerExcludeFilter? string[]
 ---Specifies the visibility of the Command Explorer in the side bar.
+---
+---```lua
+---default = true
+---```
 ---@field CommandExplorerVisibility? boolean
 
 ---@class _.lspconfig.settings.powershell_es.Powershell.StartAsLoginShell
@@ -338,6 +344,7 @@
 ---default = true
 ---```
 ---@field promptToUpdatePowerShell? boolean
+---@field rename? _.lspconfig.settings.powershell_es.Powershell.Rename
 ---@field scriptAnalysis? _.lspconfig.settings.powershell_es.Powershell.ScriptAnalysis
 ---@field sideBar? _.lspconfig.settings.powershell_es.Powershell.SideBar
 ---@field startAsLoginShell? _.lspconfig.settings.powershell_es.Powershell.StartAsLoginShell
@@ -349,8 +356,6 @@
 ---@field startAutomatically? boolean
 ---Suppresses the warning message when any of `#powershell.powerShellAdditionalExePaths#` is not found.
 ---@field suppressAdditionalExeNotFoundWarning? boolean
----Do not show a notification when the PowerShell Extension Terminal has stopped.
----@field suppressTerminalStoppedNotification? boolean
 ---@field trace? _.lspconfig.settings.powershell_es.Powershell.Trace
 ---**Deprecated:** Uses the 32-bit language service on 64-bit Windows. This setting has no effect on 32-bit Windows or on the PowerShell extension debugger, which has its own architecture configuration.
 ---@field useX86Host? boolean

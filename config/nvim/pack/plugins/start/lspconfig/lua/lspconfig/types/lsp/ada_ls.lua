@@ -8,6 +8,14 @@
 ---If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `false`.
 ---@field indentOnly? true | false
 
+---@class _.lspconfig.settings.ada_ls.Ada.ProjectView
+---Show all projects as a flat list instead of a hierarchy in the Project View.
+---@field flatMode? boolean
+---Show the object directory as a child of each project in the Project View.
+---@field showObjectDirectories? boolean
+---Show the Ada runtime project and its source files in the Project View.
+---@field showRuntimeFiles? boolean
+
 ---@class _.lspconfig.settings.ada_ls.Ada.Trace
 ---Traces the communication between VS Code and the Ada language server in the 'Ada Language Server' Output view.
 ---
@@ -99,6 +107,7 @@
 ---
 ---If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists.
 ---@field projectFile? string
+---@field projectView? _.lspconfig.settings.ada_ls.Ada.ProjectView
 ---Enable fallback indenter in case the file is not syntactically correct.
 ---
 ---If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
@@ -123,6 +132,10 @@
 ---
 ---If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists.
 ---@field scenarioVariables? table
+---Controls whether or not the Ada Language Server should emit diagnostics related to the semantic analysis of Ada files.
+---
+---If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
+---@field semanticDiagnostics? true | false
 ---Whether to show error notifications in VS Code for failing LSP requests.
 ---@field showNotificationsOnErrors? boolean
 ---Controls whether or not the Ada Language Server should emit source information diagnostics (e.g: for opened files that do not belong to the loaded project tree).
@@ -134,6 +147,12 @@
 ---
 ---If not set in VS Code, this setting takes its value from the [`.als.json`](https://github.com/AdaCore/ada_language_server/blob/master/doc/settings.md) file at the root of the workspace, if that file exists. Otherwise it defaults to `true`.
 ---@field useCompletionSnippets? true | false
+---Workspace symbol search method.
+---
+---```lua
+---default = "fuzzy"
+---```
+---@field workspaceSearch? "fuzzy" | "startWord"
 
 ---@class _.lspconfig.settings.ada_ls.E3Testsuite
 ---Command line arguments to pass to testsuite.py when running tests

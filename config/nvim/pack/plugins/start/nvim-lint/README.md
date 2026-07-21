@@ -26,7 +26,7 @@ For example:
 
 ```bash
 git clone \
-    https://github.com/mfussenegger/nvim-lint.git
+    https://codeberg.org/mfussenegger/nvim-lint.git
     ~/.config/nvim/pack/plugins/start/nvim-lint
 ```
 
@@ -92,6 +92,45 @@ use `./node_modules/.bin/eslint` if it exists. The executable is executed with
 your users permission. Because of that, you must _not_ call `try_lint()` in
 untrusted repositories.
 
+To improve security you could run linters using sandbox systems like
+[bubblewrap] using the `wrap_linter` functionality. Here is an example using
+`systemd-run`:
+
+
+```lua
+local lint = require("lint")
+
+
+---@param linter lint.Linter
+---@return lint.Linter
+local function systemd_run(linter)
+  local cwd = vim.fn.getcwd()
+  local args = {
+    "--user",
+    "--collect",
+    "--same-dir",
+    "--quiet",
+    "--pipe",
+    "-p", "PrivateUsers=true",
+    "-p", "ProtectSystem=true",
+    "-p", "PrivateNetwork=true",
+    "-p", string.format("BindReadOnlyPaths='%s':'%s'", cwd, cwd),
+    "-E", "PATH=" .. os.getenv("PATH"),
+    linter.cmd,
+  }
+  linter.cmd = "systemd-run"
+  vim.list_extend(args, linter.args or {})
+  linter.args = args
+  return linter
+end
+
+
+lint.try_lint(nil, {
+    wrap_linter = systemd_run
+})
+```
+
+
 ## Available Linters
 
 There is a generic linter called `compiler` that uses the `makeprg` and
@@ -115,6 +154,7 @@ Other dedicated linters that are built-in are:
 | [buildifier][buildifier]               | `buildifier`           |
 | [cfn-lint][cfn-lint]                   | `cfn_lint`             |
 | [cfn_nag][cfn_nag]                     | `cfn_nag`              |
+| [checkbashisms][checkbashisms]         | `checkbashisms`        |
 | [checkmake][checkmake]                 | `checkmake`            |
 | [checkpatch.pl][checkpatch]            | `checkpatch`           |
 | [checkstyle][checkstyle]               | `checkstyle`           |
@@ -130,6 +170,7 @@ Other dedicated linters that are built-in are:
 | [cppcheck][22]                         | `cppcheck`             |
 | [cpplint][cpplint]                     | `cpplint`              |
 | [credo][credo]                         | `credo`                |
+| [dialyxir][dialyxir]                   | `dialyxir`             |
 | [cspell][36]                           | `cspell`               |
 | [cue][cue]                             | `cue`                  |
 | [curlylint][curlylint]                 | `curlylint`            |
@@ -138,6 +179,7 @@ Other dedicated linters that are built-in are:
 | [deadnix][deadnix]                     | `deadnix`              |
 | [deno][deno]                           | `deno`                 |
 | [detect-secrets][detect-secrets]       | `detect-secrets`       |
+| [detekt][detekt]                       | `detekt`               |
 | [dmypy][dmypy]                         | `dmypy`                |
 | [DirectX Shader Compiler][dxc]         | `dxc`                  |
 | [djlint][djlint]                       | `djlint`               |
@@ -162,6 +204,7 @@ Other dedicated linters that are built-in are:
 | [glslc][glslc]                         | `glslc`                |
 | [Golangci-lint][16]                    | `golangcilint`         |
 | [hadolint][28]                         | `hadolint`             |
+| [herb][herb]                           | `herb`                 |
 | [hledger][hledger]                     | `hledger`              |
 | [hlint][32]                            | `hlint`                |
 | [htmlhint][htmlhint]                   | `htmlhint`             |
@@ -198,6 +241,7 @@ Other dedicated linters that are built-in are:
 | [opa_check][opa_check]                 | `opa_check`            |
 | [tofu][tofu]                           | `tofu`                 |
 | [oxlint][oxlint]                       | `oxlint`               |
+| [Panache][panache]                     | `panache`              |
 | [perlcritic][perlcritic]               | `perlcritic`           |
 | [perlimports][perlimports]             | `perlimports`          |
 | [phpcs][phpcs]                         | `phpcs`                |
@@ -257,9 +301,11 @@ Other dedicated linters that are built-in are:
 | [tlint][tlint]                         | `tlint`                |
 | [Tombi][tombi]                         | `tombi`                |
 | [trivy][trivy]                         | `trivy`                |
+| [trivy_secret][trivy_secret]           | `trivy_secret`         |
 | [ts-standard][ts-standard]             | `ts-standard`          |
 | [twig-cs-fixer][twig-cs-fixer]         | `twig-cs-fixer`        |
 | [typos][typos]                         | `typos`                |
+| [unmake][unmake]                       | `unmake`               |
 | [vacuum][vacuum]                       | `vacuum`               |
 | [Vala][vala-lint]                      | `vala_lint`            |
 | [Vale][8]                              | `vale`                 |
@@ -279,6 +325,20 @@ Other dedicated linters that are built-in are:
 
 You can register custom linters by adding them to the `linters` table, but
 please consider contributing a linter if it is missing.
+
+Consider the contribution guidelines:
+
+- Linters must not have custom logic to detect a project root. Users should
+  pass the `cwd` to `try_lint` instead
+- Linters must not have complex pre-processing logic. A linter should only call
+  a command and parse the output. Ideally using one of the predefined parser
+  functions. `for_sarif` is the preferred option. If that's not possible either
+  `from_errorformat` or `from_pattern` can be used. If neither of those options
+  are appropriate, parsing JSON output using `vim.json.decode` is okay too.
+- Don't contribute using generative AI. If you can't be bothered defining a
+  table and a parser yourself, I can't be bothered to review it.
+- Tests are optional for linter additions, but help ensure they don't regress
+  and are a good way to make sure format patterns are correct.
 
 
 ```lua
@@ -533,7 +593,6 @@ API docs is generated using [vimcats]:
 vimcats -t -f lua/lint.lua lua/lint/parser.lua > doc/lint.txt
 ```
 
-
 [1]: https://github.com/dense-analysis/ale
 [3]: https://github.com/junegunn/vim-plug
 [4]: https://github.com/wbthomason/packer.nvim
@@ -605,6 +664,7 @@ vimcats -t -f lua/lint.lua lua/lint/parser.lua > doc/lint.txt
 [lacheck]: https://www.ctan.org/tex-archive/support/lacheck
 [luac]: https://www.lua.org/manual/5.1/luac.html
 [credo]: https://github.com/rrrene/credo
+[dialyxir]: https://github.com/jeremyjh/dialyxir
 [ghdl]: https://github.com/ghdl/ghdl
 [gitleaks]: https://github.com/gitleaks/gitleaks
 [glslc]: https://github.com/google/shaderc
@@ -618,6 +678,7 @@ vimcats -t -f lua/lint.lua lua/lint/parser.lua > doc/lint.txt
 [nagelfar]: https://nagelfar.sourceforge.net/
 [oelint-adv]: https://github.com/priv-kweihmann/oelint-adv
 [cfn_nag]: https://github.com/stelligent/cfn_nag
+[checkbashisms]: https://tracker.debian.org/pkg/devscripts
 [checkmake]: https://github.com/mrtazz/checkmake
 [ruff]: https://github.com/astral-sh/ruff
 [janet]: https://github.com/janet-lang/janet
@@ -636,6 +697,7 @@ vimcats -t -f lua/lint.lua lua/lint/parser.lua > doc/lint.txt
 [tfsec]: https://github.com/aquasecurity/tfsec
 [tlint]: https://github.com/tighten/tlint
 [trivy]: https://github.com/aquasecurity/trivy
+[trivy_secret]: https://github.com/aquasecurity/trivy
 [djlint]: https://djlint.com/
 [buildifier]: https://github.com/bazelbuild/buildtools/tree/main/buildifier
 [solhint]: https://protofire.github.io/solhint/
@@ -716,3 +778,8 @@ vimcats -t -f lua/lint.lua lua/lint/parser.lua > doc/lint.txt
 [Vacuum]: https://quobix.com/vacuum/
 [luarocks]: https://luarocks.org/
 [mbake]: https://github.com/EbodShojaei/bake
+[panache]: https://github.com/jolars/panache
+[herb]: https://herb-tools.dev/
+[bubblewrap]: https://github.com/containers/bubblewrap
+[unmake]: https://github.com/mcandre/unmake
+[detekt]: https://detekt.dev/

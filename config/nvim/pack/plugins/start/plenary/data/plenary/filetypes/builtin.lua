@@ -59,6 +59,8 @@ return {
     ['smithy'] = [[smithy]],
     ['sol'] = 'solidity',
     ['dtsi'] = 'dts',
+    ['zig'] = 'zig',
+    ['zon'] = 'zig',
   },
   file_name = {
     ['cakefile'] = 'coffee',

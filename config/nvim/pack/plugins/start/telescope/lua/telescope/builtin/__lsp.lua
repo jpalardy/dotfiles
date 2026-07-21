@@ -5,7 +5,6 @@ local lsp = vim.lsp
 
 local channel = require("plenary.async.control").channel
 local actions = require "telescope.actions"
-local sorters = require "telescope.sorters"
 local conf = require("telescope.config").values
 local finders = require "telescope.finders"
 local make_entry = require "telescope.make_entry"
@@ -108,10 +107,12 @@ local function calls(opts, direction)
   end)
 end
 
+---@param opts telescope.builtin.lsp_in_out_calls.opts: options to pass to the picker
 M.incoming_calls = function(opts)
   calls(opts, "from")
 end
 
+---@param opts telescope.builtin.lsp_in_out_calls.opts: options to pass to the picker
 M.outgoing_calls = function(opts)
   calls(opts, "to")
 end
@@ -141,7 +142,7 @@ end
 ---@param opts table
 ---@return vim.quickfix.entry[]
 local function filter_file_ignore_patterns(items, opts)
-  local file_ignore_patterns = vim.F.if_nil(opts.file_ignore_patterns, conf.file_ignore_patterns)
+  local file_ignore_patterns = utils.if_nil(opts.file_ignore_patterns, conf.file_ignore_patterns)
   file_ignore_patterns = file_ignore_patterns or {}
   if vim.tbl_isempty(file_ignore_patterns) then
     return items
@@ -163,7 +164,7 @@ end
 ---@param params lsp.TextDocumentPositionParams|(fun(client: lsp.Client, bufnr: integer): table?)
 ---@param opts table
 local function list_or_jump(action, title, funname, params, opts)
-  opts.reuse_win = vim.F.if_nil(opts.reuse_win, false)
+  opts.reuse_win = utils.if_nil(opts.reuse_win, false)
   opts.curr_filepath = api.nvim_buf_get_name(opts.bufnr)
 
   lsp.buf_request_all(opts.bufnr, action, params, function(results_per_client)
@@ -249,19 +250,22 @@ local function list_or_jump(action, title, funname, params, opts)
   end)
 end
 
+---@param opts telescope.builtin.lsp_references.opts: options to pass to the picker (default: false)
 M.references = function(opts)
-  opts.include_current_line = vim.F.if_nil(opts.include_current_line, false)
+  opts.include_current_line = utils.if_nil(opts.include_current_line, false)
   local params = client_position_params(opts.winnr, {
-    context = { includeDeclaration = vim.F.if_nil(opts.include_declaration, true) },
+    context = { includeDeclaration = utils.if_nil(opts.include_declaration, true) },
   })
   return list_or_jump("textDocument/references", "LSP References", "builtin.lsp_references", params, opts)
 end
 
+---@param opts telescope.builtin.list_or_jump.opts: options to pass to the picker
 M.definitions = function(opts)
   local params = client_position_params(opts.winnr)
   return list_or_jump("textDocument/definition", "LSP Definitions", "builtin.lsp_definitions", params, opts)
 end
 
+---@param opts telescope.builtin.list_or_jump.opts: options to pass to the picker
 M.type_definitions = function(opts)
   local params = client_position_params(opts.winnr)
   return list_or_jump(
@@ -273,6 +277,7 @@ M.type_definitions = function(opts)
   )
 end
 
+---@param opts telescope.builtin.list_or_jump.opts: options to pass to the picker
 M.implementations = function(opts)
   local params = client_position_params(opts.winnr)
   return list_or_jump("textDocument/implementation", "LSP Implementations", "builtin.lsp_implementations", params, opts)
@@ -310,6 +315,7 @@ local symbols_sorter = function(symbols)
   return symbols
 end
 
+---@param opts telescope.builtin.lsp_document_symbols.opts: options to pass to the picker
 M.document_symbols = function(opts)
   local params = client_position_params(opts.winnr)
   lsp.buf_request(opts.bufnr, "textDocument/documentSymbol", params, function(err, result, ctx, _)
@@ -364,6 +370,7 @@ M.document_symbols = function(opts)
   end)
 end
 
+---@param opts telescope.builtin.lsp_workspace_symbols.opts: options to pass to the picker
 M.workspace_symbols = function(opts)
   local params = { query = opts.query or "" }
   lsp.buf_request(opts.bufnr, "workspace/symbol", params, function(err, server_result, ctx, _)
@@ -391,7 +398,7 @@ M.workspace_symbols = function(opts)
       return
     end
 
-    opts.ignore_filename = vim.F.if_nil(opts.ignore_filename, false)
+    opts.ignore_filename = utils.if_nil(opts.ignore_filename, false)
 
     pickers
       .new(opts, {
@@ -437,6 +444,7 @@ local function get_workspace_symbols_requester(bufnr, opts)
   end
 end
 
+---@param opts telescope.builtin.lsp_dynamic_workspace_symbols.opts: options to pass to the picker
 M.dynamic_workspace_symbols = function(opts)
   pickers
     .new(opts, {
@@ -446,7 +454,7 @@ M.dynamic_workspace_symbols = function(opts)
         fn = get_workspace_symbols_requester(opts.bufnr, opts),
       },
       previewer = conf.qflist_previewer(opts),
-      sorter = sorters.highlighter_only(opts),
+      sorter = conf.generic_sorter(opts),
       attach_mappings = function(_, map)
         map("i", "<c-space>", actions.to_fuzzy_refine)
         return true

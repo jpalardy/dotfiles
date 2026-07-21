@@ -77,7 +77,16 @@ local eslint_config_files = {
 
 ---@type vim.lsp.Config
 return {
-  cmd = { 'vscode-eslint-language-server', '--stdio' },
+  cmd = function(dispatchers, config)
+    local cmd = 'vscode-eslint-language-server'
+    if (config or {}).root_dir then
+      local local_cmd = vim.fs.joinpath(config.root_dir, 'node_modules/.bin', cmd)
+      if vim.fn.executable(local_cmd) == 1 then
+        cmd = local_cmd
+      end
+    end
+    return vim.lsp.rpc.start({ cmd, '--stdio' }, dispatchers)
+  end,
   filetypes = {
     'javascript',
     'javascriptreact',
@@ -185,7 +194,7 @@ return {
     if root_dir then
       config.settings = config.settings or {}
       config.settings.workspaceFolder = {
-        uri = root_dir,
+        uri = vim.uri_from_fname(root_dir),
         name = vim.fn.fnamemodify(root_dir, ':t'),
       }
 

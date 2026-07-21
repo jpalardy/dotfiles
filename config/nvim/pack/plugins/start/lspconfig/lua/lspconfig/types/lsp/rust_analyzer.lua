@@ -122,6 +122,10 @@
 ---default = { "debug_assertions", "miri" }
 ---```
 ---@field cfgs? string[]
+---Path to a `.cargo/config.toml` style file to pass to cargo via `--config`
+---for every cargo invocation (metadata, build scripts, config discovery).
+---Useful to give rust-analyzer a consistent view of the project configuration.
+---@field configPath? string
 ---Extra arguments that are passed to every cargo invocation.
 ---
 ---```lua
@@ -330,6 +334,12 @@
 ---For traits the type "methods" can be used to only exclude the methods but not the trait
 ---itself.
 ---
+---For modules the type "sub_items" can be used to only exclude the all items in it but not the module
+---itself. This does not include items defined in nested modules.
+---
+---For enums the type "variants" can be used to only exclude the all variants in it but not the enum
+---itself.
+---
 ---This setting also inherits `#rust-analyzer.completion.excludeTraits#`.
 ---
 ---```lua
@@ -436,6 +446,14 @@
 ---@field fuel? integer
 
 ---@class _.lspconfig.settings.rust_analyzer.RustAnalyzer.Completion
+---Automatically add `::` when completing the module.
+---
+---Will not be completed in `use`.
+---
+---```lua
+---default = true
+---```
+---@field addColonsToModule? boolean
 ---Automatically add a semicolon when completing unit-returning functions.
 ---
 ---In `match` arms it completes a comma instead.
@@ -886,7 +904,7 @@
 ---@field minLines? integer
 
 ---@class _.lspconfig.settings.rust_analyzer.RustAnalyzer.InlayHints.ClosureCaptureHints
----Show inlay hints for closure captures.
+---Show inlay hints for closure and coroutine captures.
 ---@field enable? boolean
 
 ---@class _.lspconfig.settings.rust_analyzer.RustAnalyzer.InlayHints.ClosureReturnTypeHints
@@ -1227,7 +1245,7 @@
 ---runs in parallel to handle macro expansion.
 ---
 ---```lua
----default = 1
+---default = 2
 ---```
 ---@field processes? number|"physical"
 ---Internal config, path to proc-macro server executable.
@@ -1239,6 +1257,14 @@
 ---**Note:** Memory profiling is not enabled by default in rust-analyzer builds, you need to build
 ---from source for it.
 ---@field memoryProfile? string
+
+---@class _.lspconfig.settings.rust_analyzer.RustAnalyzer.ProjectCreation
+---Control what happens after `rust-analyzer: Create New Project...` finishes creating a Cargo project.
+---
+---```lua
+---default = "ask"
+---```
+---@field openAfterCreate? "ask" | "open" | "openNewWindow" | "addToWorkspace"
 
 ---@class _.lspconfig.settings.rust_analyzer.RustAnalyzer.References
 ---Exclude imports from find-all-references.
@@ -1264,18 +1290,30 @@
 ---Override the command used for bench runnables.
 ---The first element of the array should be the program to execute (for example, `cargo`).
 ---
----Use the placeholders `${package}`, `${target_arg}`, `${target}`, `${executable_args}` to dynamically
----replace the package name, target option (such as `--bin` or `--example`), the target name and
----the arguments passed to test binary args (includes `rust-analyzer.runnables.extraTestBinaryArgs`).
+---Use the placeholders:
+---- `${package}`: package name.
+---- `${target_arg}`: target option such as `--bin`, `--test`, `--lib`, etc.
+---- `${target}`: target name (empty for `--lib`).
+---- `${test_name}`: the test path filter, e.g. `module::bench_func`.
+---- `${exact}`: `--exact` for single benchmarks, empty for modules.
+---- `${include_ignored}`: always empty for benchmarks.
+---- `${executable_args}`: all of the above binary args bundled together
+---    (includes `rust-analyzer.runnables.extraTestBinaryArgs`).
 ---@field overrideCommand? string[]
 
 ---@class _.lspconfig.settings.rust_analyzer.RustAnalyzer.Runnables.Doctest
----Override the command used for bench runnables.
+---Override the command used for doc-test runnables.
 ---The first element of the array should be the program to execute (for example, `cargo`).
 ---
----Use the placeholders `${package}`, `${target_arg}`, `${target}`, `${executable_args}` to dynamically
----replace the package name, target option (such as `--bin` or `--example`), the target name and
----the arguments passed to test binary args (includes `rust-analyzer.runnables.extraTestBinaryArgs`).
+---Use the placeholders:
+---- `${package}`: package name.
+---- `${target_arg}`: target option such as `--bin`, `--test`, `--lib`, etc.
+---- `${target}`: target name (empty for `--lib`).
+---- `${test_name}`: the test path filter, e.g. `module::func`.
+---- `${exact}`: always empty for doc-tests.
+---- `${include_ignored}`: always empty for doc-tests.
+---- `${executable_args}`: all of the above binary args bundled together
+---    (includes `rust-analyzer.runnables.extraTestBinaryArgs`).
 ---@field overrideCommand? string[]
 
 ---@class _.lspconfig.settings.rust_analyzer.RustAnalyzer.Runnables.Test
@@ -1288,9 +1326,15 @@
 ---Override the command used for test runnables.
 ---The first element of the array should be the program to execute (for example, `cargo`).
 ---
----Use the placeholders `${package}`, `${target_arg}`, `${target}`, `${executable_args}` to dynamically
----replace the package name, target option (such as `--bin` or `--example`), the target name and
----the arguments passed to test binary args (includes `rust-analyzer.runnables.extraTestBinaryArgs`).
+---Available placeholders:
+---- `${package}`: package name.
+---- `${target_arg}`: target option such as `--bin`, `--test`, `--lib`, etc.
+---- `${target}`: target name (empty for `--lib`).
+---- `${test_name}`: the test path filter, e.g. `module::test_func`.
+---- `${exact}`: `--exact` for single tests, empty for modules.
+---- `${include_ignored}`: `--include-ignored` for single tests, empty otherwise.
+---- `${executable_args}`: all of the above binary args bundled together
+---    (includes `rust-analyzer.runnables.extraTestBinaryArgs`).
 ---@field overrideCommand? string[]
 
 ---@class _.lspconfig.settings.rust_analyzer.RustAnalyzer.Runnables
@@ -1768,6 +1812,7 @@
 ---@field numThreads? any|number|"physical" | "logical"
 ---@field procMacro? _.lspconfig.settings.rust_analyzer.RustAnalyzer.ProcMacro
 ---@field profiling? _.lspconfig.settings.rust_analyzer.RustAnalyzer.Profiling
+---@field projectCreation? _.lspconfig.settings.rust_analyzer.RustAnalyzer.ProjectCreation
 ---@field references? _.lspconfig.settings.rust_analyzer.RustAnalyzer.References
 ---@field rename? _.lspconfig.settings.rust_analyzer.RustAnalyzer.Rename
 ---Restart the server automatically when settings that require a restart are changed.

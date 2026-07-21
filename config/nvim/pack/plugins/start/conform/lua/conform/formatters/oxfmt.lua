@@ -1,9 +1,13 @@
 local util = require("conform.util")
 
 local config_file_names = {
-  -- https://oxc.rs/docs/guide/usage/formatter.html#configuration-file
+  -- https://oxc.rs/docs/guide/usage/formatter/config.html#create-a-config-file
   ".oxfmtrc.json",
   ".oxfmtrc.jsonc",
+  "oxfmt.config.ts",
+  -- https://viteplus.dev/guide/fmt#configuration
+  "vite.config.ts",
+  "vite.config.js",
 }
 
 ---@type conform.FileFormatterConfig

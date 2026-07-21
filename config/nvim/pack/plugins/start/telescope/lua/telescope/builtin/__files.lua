@@ -23,7 +23,7 @@ local files = {}
 ---@return string
 local escape_chars = function(s)
   return (
-    s:gsub("[%(|%)|\\|%[|%]|%-|%{%}|%?|%+|%*|%^|%$|%.]", {
+    s:gsub("[%(|%)|\\|%[|%]|%-|%{%}|%?|%+|%*|%^|%$|%.|%|]", {
       ["\\"] = "\\\\",
       ["-"] = "\\-",
       ["("] = "\\(",
@@ -38,6 +38,7 @@ local escape_chars = function(s)
       ["^"] = "\\^",
       ["$"] = "\\$",
       ["."] = "\\.",
+      ["|"] = "\\|",
     })
   )
 end
@@ -114,6 +115,7 @@ end
 -- Special keys:
 --  opts.search_dirs -- list of directory to search in
 --  opts.grep_open_files -- boolean to restrict search to open files
+---@param opts telescope.builtin.live_grep.opts
 files.live_grep = function(opts)
   local vimgrep_arguments = opts.vimgrep_arguments or conf.vimgrep_arguments
   if not has_rg_program("live_grep", vimgrep_arguments[1]) then
@@ -176,7 +178,7 @@ files.live_grep = function(opts)
     end
 
     return flatten { args, "--", prompt, search_list }
-  end, opts.entry_maker or make_entry.gen_from_vimgrep(opts), opts.max_results, opts.cwd)
+  end, opts.entry_maker or make_entry.gen_from_vimgrep(opts), nil, opts.cwd)
 
   pickers
     .new(opts, {
@@ -195,8 +197,9 @@ files.live_grep = function(opts)
     :find()
 end
 
+---@param opts telescope.builtin.grep_string.opts
 files.grep_string = function(opts)
-  local vimgrep_arguments = vim.F.if_nil(opts.vimgrep_arguments, conf.vimgrep_arguments)
+  local vimgrep_arguments = utils.if_nil(opts.vimgrep_arguments, conf.vimgrep_arguments)
   if not has_rg_program("grep_string", vimgrep_arguments[1]) then
     return
   end
@@ -208,9 +211,9 @@ files.grep_string = function(opts)
     vim.cmd [[noautocmd sil norm! "vy]]
     local sele = vim.fn.getreg "v"
     vim.fn.setreg("v", saved_reg)
-    word = vim.F.if_nil(opts.search, sele)
+    word = utils.if_nil(opts.search, sele)
   else
-    word = vim.F.if_nil(opts.search, vim.fn.expand "<cword>")
+    word = utils.if_nil(opts.search, vim.fn.expand "<cword>")
   end
 
   word = tostring(word)
@@ -274,6 +277,7 @@ files.grep_string = function(opts)
     :find()
 end
 
+---@param opts telescope.builtin.find_files.opts
 files.find_files = function(opts)
   local find_command = (function()
     if opts.find_command then
@@ -405,9 +409,9 @@ files.find_files = function(opts)
     :find()
 end
 
---  TODO: finish docs for opts.show_line
+---@param opts telescope.builtin.treesitter.opts
 files.treesitter = function(opts)
-  opts.show_line = vim.F.if_nil(opts.show_line, true)
+  opts.show_line = utils.if_nil(opts.show_line, true)
   local ts = vim.treesitter
   local ft = vim.bo[opts.bufnr].filetype
   local lang = ts.language.get_lang(ft)
@@ -468,6 +472,7 @@ files.treesitter = function(opts)
     :find()
 end
 
+---@param opts telescope.builtin.current_buffer_fuzzy_find.opts
 files.current_buffer_fuzzy_find = function(opts)
   -- All actions are on the current buffer
   local filename = api.nvim_buf_get_name(opts.bufnr)
@@ -580,6 +585,7 @@ files.current_buffer_fuzzy_find = function(opts)
     :find()
 end
 
+---@param opts telescope.builtin.tags.opts
 files.tags = function(opts)
   local tagfiles = opts.ctags_file and { opts.ctags_file } or vim.fn.tagfiles()
   for i, ctags_file in ipairs(tagfiles) do
@@ -592,7 +598,7 @@ files.tags = function(opts)
     })
     return
   end
-  opts.entry_maker = vim.F.if_nil(opts.entry_maker, make_entry.gen_from_ctags(opts))
+  opts.entry_maker = utils.if_nil(opts.entry_maker, make_entry.gen_from_ctags(opts))
 
   pickers
     .new(opts, {
@@ -630,6 +636,7 @@ files.tags = function(opts)
     :find()
 end
 
+---@param opts telescope.builtin.current_buffer_tags.opts
 files.current_buffer_tags = function(opts)
   return files.tags(vim.tbl_extend("force", {
     prompt_title = "Current Buffer Tags",

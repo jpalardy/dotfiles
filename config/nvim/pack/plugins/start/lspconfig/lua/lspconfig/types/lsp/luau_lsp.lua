@@ -43,6 +43,26 @@
 ---```
 ---@field vectorType? string
 
+---@class _.lspconfig.settings.luau_lsp.LuauLsp.Completion.AnonymousAutofilledFunction
+---Whether to add snippet tabstops on each parameter name in the generated anonymous function snippet, allowing quick navigation and editing
+---
+---```lua
+---default = true
+---```
+---@field addTabstopForParameters? boolean
+---Whether to include type annotations in the generated anonymous function snippet
+---
+---```lua
+---default = true
+---```
+---@field addTypeAnnotations? boolean
+---Whether to show the auto-generated anonymous function completion item when autocompleting callback arguments
+---
+---```lua
+---default = true
+---```
+---@field enabled? boolean
+
 ---@class _.lspconfig.settings.luau_lsp.LuauLsp.Completion.Imports.StringRequires
 ---Whether to use string requires when auto-importing requires. Only checked if `#luau-lsp.platform.type#` is `roblox`
 ---@field enabled? boolean
@@ -93,6 +113,8 @@
 ---default = true
 ---```
 ---@field suggestServices? boolean
+---Whether to use `const` instead of `local` for auto-imported requires and services
+---@field useConst? boolean
 
 ---@class _.lspconfig.settings.luau_lsp.LuauLsp.Completion
 ---Add parentheses after completing a function call
@@ -107,6 +129,7 @@
 ---default = true
 ---```
 ---@field addTabstopAfterParentheses? boolean
+---@field anonymousAutofilledFunction? _.lspconfig.settings.luau_lsp.LuauLsp.Completion.AnonymousAutofilledFunction
 ---Automatically insert an `end` when opening a block
 ---@field autocompleteEnd? boolean
 ---Enables the fragment autocomplete system for performance improvements
@@ -401,6 +424,22 @@
 ---Whether the VSCode filesystem watchers are used to regenerate the sourcemap. If disabled, delegates to the generator process. If using `rojo`, this command stops using `--watch`
 ---@field useVSCodeWatcher? boolean
 
+---@class _.lspconfig.settings.luau_lsp.LuauLsp.StudioPlugin
+---Use Roblox Studio Plugin to provide DataModel information
+---@field enabled? boolean
+---The maximum request body size accepted from the plugin, in a string representation parse-able by the [bytes](https://www.npmjs.com/package/bytes) library
+---
+---```lua
+---default = "3mb"
+---```
+---@field maximumRequestBodySize? string
+---Port number to connect to the Studio Plugin
+---
+---```lua
+---default = 3667
+---```
+---@field port? number
+
 ---@class _.lspconfig.settings.luau_lsp.LuauLsp.Types
 ---A mapping of package names to paths of definition files to load in to the type checker. Note that definition file syntax is currently unstable and may change at any time
 ---
@@ -457,6 +496,7 @@
 ---@field server? _.lspconfig.settings.luau_lsp.LuauLsp.Server
 ---@field signatureHelp? _.lspconfig.settings.luau_lsp.LuauLsp.SignatureHelp
 ---@field sourcemap? _.lspconfig.settings.luau_lsp.LuauLsp.Sourcemap
+---@field studioPlugin? _.lspconfig.settings.luau_lsp.LuauLsp.StudioPlugin
 ---@field types? _.lspconfig.settings.luau_lsp.LuauLsp.Types
 
 ---@class lspconfig.settings.luau_lsp
