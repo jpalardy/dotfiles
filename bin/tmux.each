@@ -9,6 +9,11 @@ while IFS=$'\t' read -r dir cmd name; do
   if test -f "$dir"; then
     dir=$(dirname "$dir")
   fi
+  if test ! -e "$dir"; then
+    cmd="cd $dir"
+    dir="$HOME"
+  fi
+
   tmux new-window -c "$dir"
 
   if test -n "$name"; then
