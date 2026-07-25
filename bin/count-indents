@@ -1,28 +1,30 @@
 #!/usr/bin/env -S awk -f
 
 BEGIN {
-  spaces = 0
-  tabs = 0
+  total_indents = 0
+  valid_lines = 0
+  max_indent = 0
 }
 
-{
-  original_length = length($0)
-  sub(/^ */, "")
-  without_spaces = length($0)
-  sub(/^\t*/, "")
-  without_tabs = length($0)
+# skip blank lines
+NF {
+  # count whitespace in front of line
+  match($0, /^[ \t]*/)
+  indent = RLENGTH
+  # indent = length($0) - length(gensub(/^\s*/, "", 1, $0))
 
-  spaces += original_length - without_spaces
-  tabs += without_spaces - without_tabs
+  if (indent > max_indent) max_indent = indent
+  total_indents += indent
+  valid_lines++
 }
 
 ENDFILE {
-  indents = spaces / 2 + tabs
-  if (FNR > 0) {
-    print FILENAME, indents, FNR, indents / FNR
+  if (valid_lines > 0) {
+    print FILENAME, total_indents, valid_lines, sprintf("%.1f", total_indents / valid_lines), max_indent
   }
   # reset
-  spaces = 0
-  tabs = 0
+  total_indents = 0
+  valid_lines = 0
+  max_indent = 0
 }
 
