@@ -1,5 +1,37 @@
 #!/bin/bash
 
+dryrun=0
+
+usage() {
+  cat >&2 <<EOM
+Usage: $(basename "$0") [OPTION]...
+  -n          dry-run
+  -h          display help
+EOM
+  # shellcheck disable=SC2086
+  exit ${1:-0}
+}
+
+while getopts "hn" opt; do
+  case "$opt" in
+    n)
+      # shellcheck disable=SC2034
+      dryrun=1
+      ;;
+    h)
+      usage 0
+      ;;
+    *)
+      usage 1
+      ;;
+  esac
+done
+
+# flush
+shift $((OPTIND - 1))
+
+# -------------------------------------------------
+
 confirm() {
   local msg=$1
   while true; do
@@ -17,12 +49,12 @@ confirm() {
 
 # -------------------------------------------------
 
-if [ -z "$TMUX" ]; then
+if [[ -z "$TMUX" && $dryrun -eq 0 ]]; then
   tmux new-session "$0"
   exit
 fi
 
-if test -n "$1"; then
+if [[ -n "$1" ]]; then
   git fetch --prune
   git status --short
   if [ -n "$(git status --porcelain)" ]; then
@@ -38,7 +70,15 @@ if test -n "$1"; then
   exit
 fi
 
+# -------------------------------------------------
+
+# dry-run sets the filter
+filter="tmux.each"
+if [[ $dryrun -eq 1 ]]; then
+  filter="cat"
+fi
+
 for repo in $REPOS; do
   printf "%s\t%s\t%s\n" "$repo" "clear; repo-sync .; and exit" "$(basename "$repo")"
-done | tmux.each
+done | $filter
 
