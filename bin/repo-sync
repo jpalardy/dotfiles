@@ -58,7 +58,7 @@ if [[ -n "$1" ]]; then
   git fetch --prune
   git status --short
   # repo behind upstream?
-  if [ "$(git rev-list --count "@{u}"..HEAD)" -gt 0 ]; then
+  if [ "$(git rev-list --count "@{u}"...HEAD)" -gt 0 ]; then
     echo
     if confirm "git merge --ff-only?"; then
       git merge --ff-only
