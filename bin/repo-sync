@@ -57,14 +57,16 @@ fi
 if [[ -n "$1" ]]; then
   git fetch --prune
   git status --short
-  if [ -n "$(git status --porcelain)" ]; then
-    exit 1
-  fi
-  if [ "$(git rev-parse HEAD)" != "$(git rev-parse "@{u}")" ]; then
+  # repo behind upstream?
+  if [ "$(git rev-list --count "@{u}"..HEAD)" -gt 0 ]; then
     echo
     if confirm "git merge --ff-only?"; then
       git merge --ff-only
     fi
+    exit 1
+  fi
+  # repo not clean?
+  if [ -n "$(git status --porcelain)" ]; then
     exit 1
   fi
   exit
