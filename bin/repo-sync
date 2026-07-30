@@ -1,18 +1,23 @@
 #!/bin/bash
 
 dryrun=0
+keepopen=0
 
 usage() {
   cat >&2 <<EOM
 Usage: $(basename "$0") [OPTION]...
+  -k          keep open
   -n          dry-run
   -h          display help
 EOM
   exit "${1:-0}"
 }
 
-while getopts "hn" opt; do
+while getopts "hkn" opt; do
   case "$opt" in
+    k)
+      keepopen=1
+      ;;
     n)
       dryrun=1
       ;;
@@ -24,6 +29,10 @@ while getopts "hn" opt; do
       ;;
   esac
 done
+
+if [[ -z "$TMUX" && $dryrun -eq 0 ]]; then
+  exec tmux new-session -- "$0" "$@"
+fi
 
 # flush
 shift $((OPTIND - 1))
@@ -46,11 +55,6 @@ confirm() {
 }
 
 # -------------------------------------------------
-
-if [[ -z "$TMUX" && $dryrun -eq 0 ]]; then
-  tmux new-session "$0"
-  exit
-fi
 
 if [[ -n "$1" ]]; then
   git fetch --prune
@@ -79,6 +83,10 @@ if [[ $dryrun -eq 1 ]]; then
 fi
 
 for repo in $REPOS; do
-  printf "%s\t%s\t%s\n" "$repo" "clear; repo-sync .; and exit" "$(basename "$repo")"
+  if [[ $keepopen -eq 1 ]]; then
+    printf "%s\t%s\t%s\n" "$repo" "clear; repo-sync ." "$(basename "$repo")"
+  else
+    printf "%s\t%s\t%s\n" "$repo" "clear; repo-sync .; and exit" "$(basename "$repo")"
+  fi
 done | $filter
 
