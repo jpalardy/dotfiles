@@ -8,14 +8,12 @@ Usage: $(basename "$0") [OPTION]...
   -n          dry-run
   -h          display help
 EOM
-  # shellcheck disable=SC2086
-  exit ${1:-0}
+  exit "${1:-0}"
 }
 
 while getopts "hn" opt; do
   case "$opt" in
     n)
-      # shellcheck disable=SC2034
       dryrun=1
       ;;
     h)
