@@ -2,25 +2,20 @@
 
 EDITOR=${EDITOR:-vim}
 
-# shellcheck disable=SC2120
 usage() {
-  local error="$1"
-  if test -n "$error"; then
-    echo >&2 "$error"
-  fi
-
-  echo >&2 "Usage: ${EDITOR}repl [-c command] [-f filename] [ext]"
-  echo >&2 "  -c command   command to execute"
-  echo >&2 "  -f filename  filename to edit"
-  echo >&2 "  ext          extension; used if -f is missing"
+  cat >&2 <<EOM
+Usage: ${EDITOR}repl [-c command] [-f filename] [ext]
+  -c command   command to execute
+  -f filename  filename to edit
+  ext          extension; used if -f is missing
+EOM
   exit 1
 }
 
 # -------------------------------------------------
 
 if [ -z "$TMUX" ]; then
-  echo >&2 "need to run inside tmux"
-  exit 1
+  exec tmux new-session -- "$0" "$@"
 fi
 
 ALREADY_SPLIT=0
