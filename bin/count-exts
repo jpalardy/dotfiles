@@ -1,0 +1,18 @@
+#!/usr/bin/env -S awk -f
+
+{
+  basename=gensub(".*/", "", 1, $0)
+}
+
+# contains a "." somewhere in the middle of the filename
+basename ~ /.\../ {
+  ext=gensub(/^.*\./,"", 1, $NF)
+  exts[tolower(ext)]++
+}
+
+END {
+  for(ext in exts) {
+    printf "%6d %s\n", exts[ext], ext
+  }
+}
+
