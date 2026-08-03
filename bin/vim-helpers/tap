@@ -116,7 +116,7 @@ function format_awk() {
     if (i>2) printf(", ")
     printf("%s = %%s", $i, $i)
   }
-  printf("\", ")
+  printf("\\n\", ")
   for (i=2; i<=NF; i++) {
     if (i>2) printf(", ")
     printf("%s", $i)

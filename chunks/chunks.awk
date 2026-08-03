@@ -10,6 +10,12 @@ filename=gensub(" ", "-", 1, $0)
 # https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html
 # sub(regexp, replacement [, target])
 
+function dump(arr) {
+  for(k in arr) {
+    printf "%s = %s\n", k, arr[k]
+  }
+}
+
 {
   print "something" > "/dev/stderr"
 }
