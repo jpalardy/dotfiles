@@ -1,0 +1,64 @@
+#!/bin/bash
+
+set -euo pipefail
+
+mode="pull"
+
+# -------------------------------------------------
+
+usage() {
+  cat <<EOF
+Usage:
+  sink host [path]         # push files
+  sink host                # pull files
+  sink host -d             # delete remote files
+EOF
+}
+
+while getopts "dh" opt; do
+  case "$opt" in
+    d)
+      mode="delete"
+      ;;
+    h)
+      usage
+      exit
+      ;;
+    *)
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND - 1))
+
+if [[ $# -lt 1 ]]; then
+  usage
+  exit 1
+fi
+
+host="$1"
+shift 1
+
+if [[ "$mode" != "delete" && $# -gt 0 ]]; then
+  mode="push"
+fi
+
+# -------------------------------------------------
+
+if [ "$mode" == "push" ]; then
+  rsync -av --progress "$@" "${host}:.sink/"
+  exit
+fi
+
+if [ "$mode" == "pull" ]; then
+  rsync -av --progress "${host}:.sink/" ./
+  exit
+fi
+
+if [ "$mode" == "delete" ]; then
+  ssh "$host" "rm -v -rf ~/.sink/*"
+  exit
+fi
+
