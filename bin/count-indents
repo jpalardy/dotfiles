@@ -1,30 +1,78 @@
 #!/usr/bin/env -S awk -f
 
-BEGIN {
-  total_indents = 0
-  valid_lines = 0
-  max_indent = 0
+function abs(num) {
+  return num < 0 ? -num : num
 }
 
-# skip blank lines
-NF {
+function mode(arr) {
+  max_k = 0
+  max_v = 0
+  for (k in arr) {
+    if (arr[k] > max_v) {
+      max_v = arr[k]
+      max_k = k
+    }
+  }
+  return max_k
+}
+
+function max(arr) {
+  max_k = 0
+  for (k in arr) {
+    k = int(k)
+    if (k > max_k) {
+      max_k = k
+    }
+  }
+  return max_k
+}
+
+# -------------------------------------------------
+
+{
   # count whitespace in front of line
   match($0, /^[ \t]*/)
   indent = RLENGTH
-  # indent = length($0) - length(gensub(/^\s*/, "", 1, $0))
 
-  if (indent > max_indent) max_indent = indent
-  total_indents += indent
-  valid_lines++
+  if (prev_indent != "") {
+    delta = abs(indent - prev_indent)
+    if (delta > 0) {
+      deltas[delta]++
+    }
+  }
+  prev_indent = indent
+
+  # not blank lines
+  if (NF > 0) {
+    indents[indent]++
+  }
+
 }
 
 ENDFILE {
-  if (valid_lines > 0) {
-    print FILENAME, total_indents, valid_lines, sprintf("%.1f", total_indents / valid_lines), max_indent
-  }
-  # reset
   total_indents = 0
   valid_lines = 0
-  max_indent = 0
+  for (k in indents) {
+    total_indents += (k * indents[k])
+    valid_lines += indents[k]
+  }
+
+  if (valid_lines > 0) {
+    guess_indent = mode(deltas)
+    if (guess_indent < 1) {
+      guess_indent = 1
+    }
+    max_indent = max(indents)
+    if (!print_once) {
+      printf "%40s %6s %6s %6s %6s\n", "filename", "indent", "lines", "mean", "max"
+      print_once = 1
+    }
+    printf "%40s %6s %6s %6s %6s\n", FILENAME, guess_indent, valid_lines, sprintf("%.1f", total_indents / valid_lines / guess_indent), max_indent / guess_indent
+  }
+
+  # reset
+  delete indents
+  delete deltas
+  prev_indent = 0
 }
 
