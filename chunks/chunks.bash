@@ -27,8 +27,6 @@ Usage: $(basename "$0") [OPTION]...
               line four
   -h          display help
 EOM
-  # shellcheck disable=SC2086
-  exit ${1:-0}
 }
 
 # init switch flags
@@ -54,7 +52,8 @@ while getopts "a:b:cdh" opt; do
       d=1
       ;;
     h|*)
-      usage 0
+      usage
+      exit 0
       ;;
   esac
 done

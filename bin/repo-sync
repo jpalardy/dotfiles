@@ -10,7 +10,6 @@ Usage: $(basename "$0") [OPTION]...
   -n          dry-run
   -h          display help
 EOM
-  exit "${1:-0}"
 }
 
 while getopts "hkn" opt; do
@@ -22,10 +21,12 @@ while getopts "hkn" opt; do
       dryrun=1
       ;;
     h)
-      usage 0
+      usage
+      exit 0
       ;;
     *)
-      usage 1
+      usage
+      exit 1
       ;;
   esac
 done
