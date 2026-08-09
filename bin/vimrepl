@@ -1,39 +1,29 @@
 #!/bin/bash
 
 EDITOR=${EDITOR:-vim}
+args=("$@")
 
 usage() {
   cat >&2 <<EOM
-Usage: ${EDITOR}repl [-c command] [-f filename] [ext]
+Usage: ${EDITOR}repl [OPTIONS] [ext]
+
+  -h           display help
   -c command   command to execute
   -f filename  filename to edit
   ext          extension; used if -f is missing
+
+Examples:
+  ${EDITOR}repl R
+  ${EDITOR}repl -f report.R
 EOM
-  exit 1
 }
-
-# -------------------------------------------------
-
-if [ -z "$TMUX" ]; then
-  exec tmux new-session -- "$0" "$@"
-fi
-
-ALREADY_SPLIT=0
-if [ "$(tmux list-panes -F'#{window_panes}' | head -n1)" -gt 1 ]; then
-  ALREADY_SPLIT=1
-fi
-
-if test "$#" -eq 0; then
-  usage
-fi
 
 # -------------------------------------------------
 
 cmd=""
 filename=""
-split_flag="-h"
 
-while getopts "c:f:v" opt; do
+while getopts "c:f:h" opt; do
   case "$opt" in
     c)
       cmd=$OPTARG
@@ -41,11 +31,13 @@ while getopts "c:f:v" opt; do
     f)
       filename=$OPTARG
       ;;
-    v)
-      split_flag="-v"
+    h)
+      usage
+      exit 0
       ;;
     *)
       usage
+      exit 1
       ;;
   esac
 done
@@ -53,38 +45,32 @@ done
 shift $((OPTIND - 1))
 
 # grab ext
-if [ "$#" -gt 0 ] && [ -z "$filename" ]; then
-  ext="$1"
+if [[ -z "$filename" && "$#" -eq 1 ]]; then
   filename="_${EDITOR}repl.$1"
   shift
 fi
 
-if test "$#" -gt 0; then
-  usage
-fi
-
 if test -z "$filename"; then
   usage
+  exit 1
+fi
+
+if [ -z "$TMUX" ]; then
+  exec tmux new-session -- "$0" "${args[@]}"
 fi
 
 # -------------------------------------------------
 
-cmd_first_word="${cmd%% *}"
-tmux rename-window "${EDITOR}repl-${cmd_first_word:-$ext}"
-
-if [ "$ALREADY_SPLIT" == 1 ]; then
-  ${EDITOR} "$filename"
-  exit
+# split if not already split
+if [ "$(tmux list-panes -F'#{window_panes}' | head -n1)" -eq 1 ]; then
+  # split pane runs cmd, if given
+  tmux split-window -h
+  if [ -n "$cmd" ]; then
+    tmux send-keys "clear; $cmd" C-m
+  fi
+  # go back to initiating (last) pane
+  tmux select-pane -l
 fi
-
-# split pane runs cmd, if given
-tmux split-window $split_flag
-if [ -n "$cmd" ]; then
-  tmux send-keys "clear; $cmd" C-m
-fi
-
-# go back to initiating (last) pane
-tmux select-pane -l
 
 # ${EDITOR}...
 ${EDITOR} "$filename"
