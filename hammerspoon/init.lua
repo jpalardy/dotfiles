@@ -76,33 +76,6 @@ bindMove({ "ctrl", "alt" }, "f", function(win, screen)
   win.h = screen.y + screen.h - win.y
 end)
 
--- both t and w
-bindMove({ "ctrl", "alt" }, "o", function(win, screen)
-  win.w = 1400
-  win.x = math.min(win.x, screen.x + screen.w - win.w)
-  win.y = screen.y
-  win.h = screen.h
-end)
-
--- -------------------------------------------------
--- mouse move
--- -------------------------------------------------
-
-local stickyPointers = {}
-
-for _, i in pairs({ 5, 6, 7, 8, 9, 0 }) do
-  hs.hotkey.bind({ "ctrl", "alt", "shift" }, tostring(i), function()
-    stickyPointers[i] = hs.mouse.absolutePosition()
-  end)
-
-  hs.hotkey.bind({ "ctrl", "alt" }, tostring(i), function()
-    if not stickyPointers[i] then
-      return
-    end
-    hs.mouse.absolutePosition(stickyPointers[i])
-  end)
-end
-
 -------------------------------------------------
 
 local switcher = hs.window.switcher.new(hs.window.filter.new():setCurrentSpace(true):setDefaultFilter({}))
