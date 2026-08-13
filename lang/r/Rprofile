@@ -2,8 +2,8 @@ options("repos" = c(CRAN = "https://cloud.r-project.org"))
 
 .First = function() {
   if (interactive()) {
-    cols <- as.integer(system('tput cols', intern = TRUE))
-    options(width = cols)
+    options(width = cli::console_width())
+    options(setWidthOnResize = TRUE)
     options(tibble.print_min = 30)
   }
 }
