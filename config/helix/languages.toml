@@ -10,3 +10,12 @@ formatter = { command = "prettier", args = ["--parser", "json"] }
 [[language]]
 name = "rust"
 formatter = { command = "rustfmt" }
+
+[[language]]
+name = "html"
+formatter = { command = "prettier", args = ["--parser", "html", "--print-width", "300"] }
+
+[[language]]
+name = "css"
+formatter = { command = "prettier", args = ["--parser", "css"] }
+
