@@ -5,7 +5,7 @@ My config files for:
 
 - [fish](/config/fish)
 - [bash](/bash)
-- [vim](/vim)
+- [vim](/vim) / [neovim](/config/nvim)
 
 Also, some [scripts](/bin), and a bunch of other tool/language configs.
 
