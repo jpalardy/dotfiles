@@ -3,6 +3,9 @@
 FOOTNOTES
 ------------------------------------------------- -->
 
+<!-- link w/ image -->
+[![alt](url)](url)
+
 some [^1] thing
 ...
 [^1]: some comment

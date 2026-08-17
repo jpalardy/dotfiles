@@ -54,9 +54,6 @@ BEGIN {
   snip("ts", strftime("%s"))
   snip("hx", randhex(8))
 
-  # lorem ipsum filler text
-  snip("lorem", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae efficitur sapien. Cras dictum auctor mattis. Morbi sed interdum metus. Curabitur sit amet eros in urna volutpat porta vel eget lacus. Praesent a rhoncus purus. Nullam purus erat, fermentum sit amet turpis et, consectetur rutrum ante. Suspendisse pharetra in felis vitae blandit. Suspendisse potenti. Cras vestibulum nibh nec scelerisque ullamcorper.")
-
   # unicode
   snip("cr",  "⏎")
   snip("cmd", "⌘")
@@ -70,13 +67,11 @@ BEGIN {
   snip(":grim",   "😬")
   snip(":grin",   "😄")
   snip("+1",      "👍")
-  snip("X",       "❌")
+  snip(":x",      "❌")
   snip(":tada",   "🎉")
   snip(":fire",   "🔥")
   snip(":boom",   "💥")
   snip(":rot",    "🔄")
-  snip(":skull",  "💀")
-  snip("@",       "🌀")
   snip(":wait",   "🕒")
   snip(":shrug",  "¯\\_(ツ)_/¯")
 
@@ -141,7 +136,6 @@ BEGIN {
   }
   if ("r" in filetypes) {
     snip("in", "%in%")
-    snip("fn", "function")
     snip("|",  "%>%")
     snip(">",  "%>%")
     snip("=",  "<-")
@@ -156,7 +150,6 @@ BEGIN {
     snip("pry",   "require IEx; IEx.pry()")
     snip("inf",   "infinity")
     snip("tc",    "{usec, result} = :timer.tc(fn -> ▒ end)")
-    snip("!",     "raise \"" randhex(8) "\"")
     snip("__",    "IO.puts(\"** stacktrace " randhex(8) "\\n\" <> Exception.format_stacktrace())")
     cycle("@:",   "@tag :k", "@tag k: v")
     cycle("IO.",  "IO.inspect()", "IO.inspect(label: \"***** #{Path.relative_to_cwd(__ENV__.file)}:#{__ENV__.line}\")")
@@ -175,19 +168,6 @@ BEGIN {
   #-------------------------------------------------
   if ("zig" in filetypes) {
     snip("std", "const std = @import(\"std\");")
-  }
-
-  #-------------------------------------------------
-  # elm
-  #-------------------------------------------------
-  if ("elm" in filetypes) {
-    snip("let", "let _ = value▒ in")
-    snip("log", "Debug.log \"label\"")
-    snip("if",  "if condition▒ then True else False")
-    snip("h=",  "Html")
-    snip("a=",  "HA")
-    snip("ac",  "HA.class \"▒\"")
-    snip("e=",  "HE")
   }
 
   #-------------------------------------------------
@@ -210,7 +190,6 @@ BEGIN {
   #-------------------------------------------------
   if ("gitcommit" in filetypes) {
     snip("ud", "Update dependencies")
-    snip("cab", "Co-authored-by: ")
   }
 
   #-------------------------------------------------
@@ -218,14 +197,6 @@ BEGIN {
   #-------------------------------------------------
   if ("dot" in filetypes) {
     snip("sg", "subgraph cluster_" strftime("%s"))
-  }
-
-  #-------------------------------------------------
-  # markdown
-  #-------------------------------------------------
-  if ("markdown" in filetypes) {
-    snip("a",   "[alt](url)")
-    snip("img", "[![alt](url)](url)")
   }
 
   #-------------------------------------------------
