@@ -123,6 +123,27 @@ function format_awk() {
   }
 }
 
+#
+# lines like:
+#   tap x y z
+#   tap x, y, z
+# become:
+#   fmt.Printf("%+v, %+v, %+v\n", x, y, z)
+#
+function format_go() {
+  printf("fmt.Printf(\"")
+  for (i=2; i<=NF; i++) {
+    if (i>2) printf(", ")
+    printf("%s = %+v", $i)
+  }
+  printf("\\n\", ")
+  for (i=2; i<=NF; i++) {
+    if (i>2) printf(", ")
+    printf("%s", $i)
+  }
+  print(")")
+}
+
 # -------------------------------------------------
 
 {
