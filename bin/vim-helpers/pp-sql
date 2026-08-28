@@ -1,13 +1,10 @@
 #!/bin/bash
 
-# pg_format might not be installed
-format() {
-  if test "$(command -v pg_format)"; then
-    pg_format --wrap-after 10 --no-extra-line
-  else
-    cat
-  fi
-}
+if ! test "$(command -v pg_format)"; then
+  echo "-- pg_format is not installed"
+  exit 1
+fi
+
 
 # -------------------------------------------------
 
@@ -25,5 +22,5 @@ END {
   }
 }
 
-' "$@" | format
+' "$@" | pg_format --wrap-after 10 --no-extra-line
 
