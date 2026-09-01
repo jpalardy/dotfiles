@@ -12,7 +12,7 @@ sum() {
 }
 
 cumsum() {
-  awk '{sum+=$1; print sum}' "$@"
+  awk '{sum+=$1; print sum, $0}' "$@"
 }
 
 diff() {
