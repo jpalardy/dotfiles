@@ -7,6 +7,7 @@ function __fzf_contextual
     echo "npm install"
     echo "npm audit fix"
     echo "rm -rf package-lock.json node_modules; npm install"
+    echo "npm install -g typescript-language-server typescript@6"
   end
 
   # elm
