@@ -1,4 +1,15 @@
 #!/bin/bash
 
+usage() {
+  cat >&2 <<EOM
+Usage: $(basename "$0") dstDir filename
+EOM
+}
+
+if [[ $# -lt 2 ]]; then
+  usage
+  exit 1
+fi
+
 vim -d "./$2" "${1%/}/$2"
 
