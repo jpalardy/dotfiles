@@ -50,13 +50,16 @@ end)
 vim.keymap.set({ "n", "x" }, ",v", ":v/<C-r>//d<CR>", { silent = true })
 vim.keymap.set({ "n", "x" }, ",d", ":g/<C-r>//d<CR>", { silent = true })
 
--- translation of vimscript logic, might need tweaking
+-- run a cmd, trying to restore modified state
 local function preserve(command)
+  local hlsearch_active = vim.v.hlsearch == 1
   local saved_search = vim.fn.getreg("/")
   local cursor = vim.api.nvim_win_get_cursor(0)
   vim.cmd(command)
   pcall(vim.api.nvim_win_set_cursor, 0, cursor)
-  vim.fn.setreg("/", saved_search)
+  if hlsearch_active then
+    vim.fn.setreg("/", saved_search)
+  end
 end
 
 -- empty line trim
