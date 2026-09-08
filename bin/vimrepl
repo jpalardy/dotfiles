@@ -55,17 +55,17 @@ if test -z "$filename"; then
   exit 1
 fi
 
-if [ -z "$TMUX" ]; then
+if [[ -z "$TMUX" ]]; then
   exec tmux new-session -- "$0" "${args[@]}"
 fi
 
 # -------------------------------------------------
 
 # split if not already split
-if [ "$(tmux list-panes -F'#{window_panes}' | head -n1)" -eq 1 ]; then
+if [[ $(tmux list-panes -F'#{window_panes}' | head -n1) -eq 1 ]]; then
   # split pane runs cmd, if given
   tmux split-window -h
-  if [ -n "$cmd" ]; then
+  if [[ -n "$cmd" ]]; then
     tmux send-keys "clear; $cmd" C-m
   fi
   # go back to initiating (last) pane

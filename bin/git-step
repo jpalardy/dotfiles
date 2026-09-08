@@ -16,7 +16,7 @@ confirm() {
 }
 
 clear
-if [ "$(git rev-list --count "$@")" -eq 0 ]; then
+if [[ $(git rev-list --count "$@") -eq 0 ]]; then
   echo >&2 "no commits found for:" "$@"
   exit
 fi

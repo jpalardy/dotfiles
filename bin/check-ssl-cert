@@ -15,7 +15,7 @@ check_cert() {
   days_valid=$(( ($(date -d "${cert_end_date}" +%s) - $(date +%s)) / 86400 ))
 
   local highlight_color="$COLOR_RED"
-  if [ "$days_valid" -ge 30 ]; then
+  if [[ $days_valid -ge 30 ]]; then
     highlight_color="${COLOR_GREEN}"
   fi
 

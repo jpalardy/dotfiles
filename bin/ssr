@@ -20,14 +20,14 @@ check_bin() {
   printf " %-21s" "$pkg_name"
 
   i=$((i + 1))
-  if [ "$i" -ge "$n" ]; then
+  if [[ $i -ge $n ]]; then
     i=0
     echo
   fi
 }
 
 flush() {
-  if [ "$i" != 0 ]; then
+  if [[ $i != 0 ]]; then
     i=0
     echo
   fi

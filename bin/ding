@@ -6,7 +6,7 @@ play_sound() {
     return
   fi
 
-  if [ "$1" -eq 0 ]; then
+  if [[ $1 -eq 0 ]]; then
     afplay "/System/Library/Sounds/Purr.aiff"
     return
   fi

@@ -47,17 +47,17 @@ fi
 
 # -------------------------------------------------
 
-if [ "$mode" == "push" ]; then
+if [[ $mode == "push" ]]; then
   rsync -av --progress "$@" "${host}:.sink/"
   exit
 fi
 
-if [ "$mode" == "pull" ]; then
+if [[ $mode == "pull" ]]; then
   rsync -av --progress "${host}:.sink/" ./
   exit
 fi
 
-if [ "$mode" == "delete" ]; then
+if [[ $mode == "delete" ]]; then
   ssh "$host" "rm -v -rf ~/.sink/*"
   exit
 fi

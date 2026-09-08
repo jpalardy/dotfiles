@@ -2,14 +2,14 @@
 
 SRC="$HOME/.HOME"
 
-if [ "$1" = "-f" ]; then
+if [[ $1 = "-f" ]]; then
   echo >&2 "generating $SRC..."
   cd "$HOME" || return
   rg --files -uu -g !Library 2>/dev/null > "$SRC"
   exit
 fi
 
-if [ ! -e "$SRC" ]; then
+if [[ ! -e $SRC ]]; then
   HOME -f
 fi
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$1" == "--list" ]; then
+if [[ $1 == "--list" ]]; then
   # shellcheck disable=SC2012
   ls -1 "$HOME/.github/templates/" | sort
   exit
@@ -8,7 +8,7 @@ fi
 
 dir=$1
 
-if [ -z "$dir" ]; then
+if [[ -z $dir ]]; then
   dir=$(templates --list | fzf)
   test -z "$dir" && exit
 fi
@@ -16,7 +16,7 @@ fi
 src="$HOME/.github/templates/$dir"
 
 # do parent first, recursively
-if [ -f "$src/.parent" ]; then
+if [[ -f "$src/.parent" ]]; then
   templates "$(cat "$src/.parent")"
 fi
 

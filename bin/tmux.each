@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z "$TMUX" ]; then
+if [[ -z "$TMUX" ]]; then
   echo >&2 "need to run inside tmux"
   exit 1
 fi
