@@ -20,6 +20,7 @@ function __fzf_contextual
   if [ -e "go.mod" ]
     echo "go get -u"
     echo "go mod tidy"
+    echo "go install golang.org/x/tools/gopls@latest"
   end
 
   # elixir
