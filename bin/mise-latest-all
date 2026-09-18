@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -o nounset  # -u
+set -o errexit  # -e
+set -o pipefail # ...
+
+awk '
+{
+  printf "echo %s $(mise latest %s)\n", $1, $1
+}
+' .tool-versions | bash > .tool-versions.new
+
+mv .tool-versions.new .tool-versions
