@@ -1,0 +1,9 @@
+#!/usr/bin/env lua
+
+local outfile = assert(arg[1], "usage: sponge FILE")
+
+local data = io.stdin:read("*a")
+
+local f = assert(io.open(outfile, "wb"))
+f:write(data)
+f:close()
