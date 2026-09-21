@@ -18,6 +18,7 @@
   lsf       = ls-files --exclude-standard --modified --others --deleted
   di        = diff ..@{upstream}
   do        = diff @{upstream}..
+  paste     = cherry-pick --no-commit
 [diff]
   noprefix = true
   tool = vimdiff
