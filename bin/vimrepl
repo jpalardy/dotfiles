@@ -5,16 +5,17 @@ args=("$@")
 
 usage() {
   cat >&2 <<EOM
-Usage: ${EDITOR}repl [OPTIONS] [ext]
+Usage: ${EDITOR}repl [OPTIONS] filename
 
   -h           display help
   -c command   command to execute
-  -f filename  filename to edit
-  ext          extension; used if -f is missing
+
+  if filename contains "___" it is replaced with "_${EDITOR}repl"
 
 Examples:
-  ${EDITOR}repl R
-  ${EDITOR}repl -f report.R
+  ${EDITOR}repl ___.R
+  ${EDITOR}repl report.R
+  ${EDITOR}repl -c R ___.R
 EOM
 }
 
@@ -23,13 +24,10 @@ EOM
 cmd=""
 filename=""
 
-while getopts "c:f:h" opt; do
+while getopts "c:h" opt; do
   case "$opt" in
     c)
       cmd=$OPTARG
-      ;;
-    f)
-      filename=$OPTARG
       ;;
     h)
       usage
@@ -44,13 +42,9 @@ done
 
 shift $((OPTIND - 1))
 
-# grab ext
-if [[ -z "$filename" && "$#" -eq 1 ]]; then
-  filename="_${EDITOR}repl.$1"
-  shift
-fi
-
-if test -z "$filename"; then
+if [[ $# -eq 1 ]]; then
+  filename="${1/___/_${EDITOR}repl}"
+else
   usage
   exit 1
 fi
