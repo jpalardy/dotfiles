@@ -17,3 +17,10 @@ ifelse condition v1 v2 =
     else
         v2
 
+-------------------------------------------------
+
+type RemoteData err a
+    = NotAsked
+    | Loading
+    | Failure err
+    | Success a
