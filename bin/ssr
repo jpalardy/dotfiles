@@ -74,5 +74,6 @@ check_bin yamllint
 check_bin pg_format pgformatter
 check_bin entr
 check_bin cloc
+check_bin air
 flush
 
