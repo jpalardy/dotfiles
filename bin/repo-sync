@@ -62,6 +62,10 @@ if [[ -n "$1" ]]; then
   git status --short
   # repo position versus upstream?
   read -r behind ahead < <(git rev-list --left-right --count "@{u}"...HEAD)
+  # no upstream
+  if [[ -z $behind ]]; then
+    exit 1
+  fi
   if [[ $behind -gt 0 ]]; then
     echo
     if confirm "git merge --ff-only?"; then
