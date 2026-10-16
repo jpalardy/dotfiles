@@ -82,12 +82,16 @@ vim.lsp.enable("elmls")
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("r_language_server")
 
+vim.opt.complete = ".,w,b,o"
+vim.opt.autocomplete = true
+vim.diagnostic.config({ virtual_text = true, severity_sort = true })
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if client:supports_method("textDocument/completion") then
-      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+      vim.lsp.completion.enable(true, client.id, ev.buf)
     end
+    vim.notify(client.name .. " attached to buffer " .. ev.buf)
   end,
 })
 
