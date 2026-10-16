@@ -80,6 +80,7 @@ vim.lsp.enable("gopls")
 vim.lsp.enable("ts_ls")
 vim.lsp.enable("elmls")
 vim.lsp.enable("rust_analyzer")
+vim.lsp.enable("r_language_server")
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
@@ -117,7 +118,7 @@ require("conform").setup({
     graphql = { "prettier" },
     javascript = { "prettier" },
     typescript = { "prettier", lsp_format = "fallback" },
-    r = { "air" },
+    r = { "air", lsp_format = "never" },
     ["*"] = { "trim_whitespace" },
   },
   default_format_opts = {

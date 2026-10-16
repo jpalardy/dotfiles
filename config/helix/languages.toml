@@ -19,3 +19,6 @@ formatter = { command = "prettier", args = ["--parser", "html", "--print-width",
 name = "css"
 formatter = { command = "prettier", args = ["--parser", "css"] }
 
+[[language]]
+name = "r"
+auto-format = true
