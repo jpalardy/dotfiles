@@ -184,6 +184,7 @@ Other dedicated linters that are built-in are:
 | [DirectX Shader Compiler][dxc]         | `dxc`                  |
 | [djlint][djlint]                       | `djlint`               |
 | [dotenv-linter][dotenv-linter]         | `dotenv_linter`        |
+| [droast][droast]                       | `droast`               |
 | [editorconfig-checker][ec]             | `editorconfig-checker` |
 | [erb-lint][erb-lint]                   | `erb_lint`             |
 | [ESLint][25]                           | `eslint`               |
@@ -201,6 +202,7 @@ Other dedicated linters that are built-in are:
 | [GHDL][ghdl]                           | `ghdl`                 |
 | [gitleaks][gitleaks]                   | `gitleaks`             |
 | [gitlint][gitlint]                     | `gitlint`              |
+| [glinter][glinter]                     | `glinter`              |
 | [glslc][glslc]                         | `glslc`                |
 | [Golangci-lint][16]                    | `golangcilint`         |
 | [hadolint][28]                         | `hadolint`             |
@@ -210,6 +212,7 @@ Other dedicated linters that are built-in are:
 | [htmlhint][htmlhint]                   | `htmlhint`             |
 | [HTML Tidy][12]                        | `tidy`                 |
 | [Inko][17]                             | `inko`                 |
+| [j2lint][j2lint]                       | `j2lint`               |
 | [janet][janet]                         | `janet`                |
 | [joker][joker]                         | `joker`                |
 | [jshint][jshint]                       | `jshint`               |
@@ -263,6 +266,7 @@ Other dedicated linters that are built-in are:
 | [pyrefly][pyrefly]                     | `pyrefly`              |
 | [quick-lint-js][quick-lint-js]         | `quick-lint-js`        |
 | [redocly][redocly]                     | `redocly`              |
+| [refurb][refurb]                       | `refurb`               |
 | [regal][regal]                         | `regal`                |
 | [Revive][14]                           | `revive`               |
 | [rflint][rflint]                       | `rflint`               |
@@ -339,6 +343,9 @@ Consider the contribution guidelines:
   table and a parser yourself, I can't be bothered to review it.
 - Tests are optional for linter additions, but help ensure they don't regress
   and are a good way to make sure format patterns are correct.
+- PRs should be opened on the [main
+  repository](https://codeberg.org/mfussenegger/nvim-lint). Github is only a
+  mirror.
 
 
 ```lua
@@ -783,3 +790,7 @@ vimcats -t -f lua/lint.lua lua/lint/parser.lua > doc/lint.txt
 [bubblewrap]: https://github.com/containers/bubblewrap
 [unmake]: https://github.com/mcandre/unmake
 [detekt]: https://detekt.dev/
+[glinter]: https://github.com/pairshaped/glinter
+[droast]: https://github.com/immanuwell/dockerfile-roast
+[refurb]: https://github.com/dosisod/refurb
+[j2lint]: https://github.com/aristanetworks/j2lint

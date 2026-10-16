@@ -231,6 +231,7 @@ You can view this list in vim with `:help conform-formatters`
 - [deno_fmt](https://deno.land/manual/tools/formatter) - Use [Deno](https://deno.land/) to format TypeScript, JavaScript/JSON and markdown.
 - [dfmt](https://github.com/dlang-community/dfmt) - Formatter for D source code.
 - [dioxus](https://github.com/dioxuslabs/dioxus) - Format `rsx!` snippets in Rust files.
+- [djangofmt](https://github.com/UnknownPlatypus/djangofmt) - A fast, HTML aware, Django template formatter, written in Rust.
 - [djlint](https://github.com/Riverside-Healthcare/djLint) - ✨ HTML Template Linter and Formatter. Django - Jinja - Nunjucks - Handlebars - GoLang.
 - [docformatter](https://pypi.org/project/docformatter/) - docformatter automatically formats docstrings to follow a subset of the PEP 257 conventions.
 - [dockerfmt](https://github.com/reteps/dockerfmt) - Dockerfile formatter. a modern dockfmt.
@@ -268,7 +269,7 @@ You can view this list in vim with `:help conform-formatters`
 - [goimports-reviser](https://github.com/incu6us/goimports-reviser) - Right imports sorting & code formatting tool (goimports alternative).
 - [gojq](https://github.com/itchyny/gojq) - Pure Go implementation of jq.
 - [golangci-lint](https://golangci-lint.run/usage/configuration/#fmt) - Fast linters runner for Go (with formatter).
-- [golines](https://github.com/segmentio/golines) - A golang formatter that fixes long lines.
+- [golines](https://github.com/golangci/golines) - A golang formatter that fixes long lines.
 - [google-java-format](https://github.com/google/google-java-format) - Reformats Java source code according to Google Java Style.
 - [grain_format](https://grain-lang.org/docs/tooling/grain_cli#grain-format) - Code formatter for the grain programming language.
 - [hcl](https://github.com/hashicorp/hcl) - A formatter for HCL files.
@@ -300,6 +301,7 @@ You can view this list in vim with `:help conform-formatters`
 - [liquidsoap-prettier](https://github.com/savonet/liquidsoap-prettier) - A binary to format Liquidsoap scripts
 - [llf](https://repo.or.cz/llf.git) - A LaTeX reformatter / beautifier.
 - [lua-format](https://github.com/Koihik/LuaFormatter) - Code formatter for Lua.
+- [luafmt](https://github.com/EmmyLuaLs/emmylua-analyzer-rust/tree/main/crates/emmylua_formatter) - The Lua and EmmyLua formatter from EmmyLua Analyzer Rust.
 - [mago_format](https://github.com/carthage-software/mago) - Mago is a toolchain for PHP that aims to provide a set of tools to help developers write better code.
 - [mago_lint](https://github.com/carthage-software/mago) - Mago is a toolchain for PHP that aims to provide a set of tools to help developers write better code.
 - [markdown-toc](https://github.com/jonschlinkert/markdown-toc) - API and CLI for generating a markdown TOC (table of contents) for a README or any markdown files.

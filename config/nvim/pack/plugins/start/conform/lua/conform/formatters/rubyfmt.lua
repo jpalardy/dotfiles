@@ -4,4 +4,6 @@ return {
     description = "Ruby Autoformatter! (Written in Rust)",
   },
   command = "rubyfmt",
+  args = { "--stdin-filepath", "$FILENAME" },
+  stdin = true,
 }

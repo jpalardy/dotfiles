@@ -10,6 +10,8 @@
   (old_file)
 ] @diff.minus
 
+(change) @diff.delta
+
 (commit) @constant
 
 (location) @attribute
@@ -32,16 +34,20 @@
   "++"
   "+++"
   "++++"
+  ">"
   "-"
   "--"
   "---"
   "----"
+  "<"
+  "!"
 ] @punctuation.special
   (#set! priority 95))
 
 [
   (binary_change)
   (similarity)
+  (dissimilarity)
   (file_change)
 ] @label
 
@@ -51,3 +57,27 @@
 (similarity
   (score) @number
   "%" @number)
+
+(dissimilarity
+  (score) @number
+  "%" @number)
+
+(binary_patch
+  [
+    "GIT"
+    "binary"
+    "patch"
+  ] @label)
+
+(binary_hunk
+  [
+    "literal"
+    "delta"
+  ] @keyword
+  (size) @number)
+
+forward: (binary_hunk
+  (payload) @diff.plus)
+
+reverse: (binary_hunk
+  (payload) @diff.minus)
