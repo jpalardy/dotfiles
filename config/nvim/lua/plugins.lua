@@ -117,13 +117,19 @@ require("conform").setup({
     lua = { "stylua" },
     json = { "fixjson" },
     zig = { "zigfmt" },
-    html = { "prettier" },
+    html = { "prettier_html" },
     css = { "prettier" },
     graphql = { "prettier" },
     javascript = { "prettier" },
     typescript = { "prettier", lsp_format = "fallback" },
     r = { "air", lsp_format = "never" },
     ["*"] = { "trim_whitespace" },
+  },
+  formatters = {
+    prettier_html = {
+      inherit = "prettier",
+      args = { "--stdin-filepath", "$FILENAME", "--print-width", "300" },
+    },
   },
   default_format_opts = {
     lsp_format = "prefer",
