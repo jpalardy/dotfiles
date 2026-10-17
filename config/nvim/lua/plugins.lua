@@ -112,6 +112,7 @@ require("lspconfig.ui.windows").default_options.border = "single"
 
 -- https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters
 require("conform").setup({
+  log_level = vim.log.levels.INFO,
   formatters_by_ft = {
     elixir = { "mix" },
     lua = { "stylua" },
