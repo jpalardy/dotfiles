@@ -1,25 +1,66 @@
 #!/bin/bash
 
-if [[ -z "$TMUX" ]]; then
+usage() {
+  echo >&2 "usage: <lines> | ${0##*/}"
+  echo >&2 "  type [-c dir] [-n name] [command...]"
+  echo >&2 "  run  [-c dir] [-n name] [command...]"
+}
+
+open_window() {
+  local mode=$1 dir=$PWD name='' opt cmd win
+  shift
+
+  case $mode in
+    type|run) ;;
+    *) echo >&2 "bad verb '$mode'"; return 1 ;;
+  esac
+
+  OPTIND=1
+  while getopts c:n: opt; do
+    case $opt in
+      c) dir=${OPTARG/#\~/$HOME} ;;
+      n) name=$OPTARG ;;
+      *) usage; return 2 ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+  cmd="$*"
+
+  [[ -f $dir ]] && dir=$(dirname "$dir")
+  if [[ ! -d $dir ]]; then
+    echo >&2 "skipping: no such dir: $dir"
+    return 1
+  fi
+
+  win=$(tmux new-window -P -F '#{window_id}' -c "$dir") || return 1
+  tmux rename-window -t "$win" "${name:-$(basename "$dir")}" || return 1
+
+  if [[ -n $cmd ]]; then
+    tmux send-keys -t "$win" -l "$cmd" </dev/null
+    [[ $mode == run ]] && tmux send-keys -t "$win" Enter </dev/null
+  fi
+  return 0
+}
+
+# -------------------------------------------------
+# (main)
+# -------------------------------------------------
+
+if (( $# )) || [[ -t 0 ]]; then
+  usage
+  exit 1
+fi
+
+if [[ -z $TMUX ]]; then
   echo >&2 "need to run inside tmux"
   exit 1
 fi
 
-while IFS=$'\t' read -r dir cmd name; do
-  if test -f "$dir"; then
-    dir=$(dirname "$dir")
-  fi
-  if test ! -e "$dir"; then
-    cmd="cd $dir"
-    dir="$HOME"
-  fi
-
-  tmux new-window -c "$dir"
-
-  if test -n "$name"; then
-    tmux rename-window "$name"
-  fi
-
-  tmux send-keys "$cmd"
+status=0
+while IFS= read -r line || [[ -n $line ]]; do
+  [[ -z $line || $line == \#* ]] && continue
+  eval "set -- $line" || { echo >&2 "parse error: $line"; status=1; continue; }
+  open_window "$@" || status=1
 done
 
+exit $status

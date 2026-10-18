@@ -1,13 +1,11 @@
 #!/bin/bash
 
-dryrun=0
 keepopen=0
 
 usage() {
   cat >&2 <<EOM
 Usage: $(basename "$0") [OPTION]...
   -k          keep open
-  -n          dry-run
   -h          display help
 EOM
 }
@@ -16,9 +14,6 @@ while getopts "hkn" opt; do
   case "$opt" in
     k)
       keepopen=1
-      ;;
-    n)
-      dryrun=1
       ;;
     h)
       usage
@@ -31,7 +26,7 @@ while getopts "hkn" opt; do
   esac
 done
 
-if [[ -z "$TMUX" && $dryrun -eq 0 ]]; then
+if [[ -z "$TMUX" ]]; then
   exec tmux new-session -- "$0" "$@"
 fi
 
@@ -82,17 +77,10 @@ fi
 
 # -------------------------------------------------
 
-# dry-run sets the filter
-filter="tmux.each"
-if [[ $dryrun -eq 1 ]]; then
-  filter="cat"
-fi
+post=""
+[[ $keepopen -eq 0 ]] && post="; and exit"
 
 for repo in $REPOS; do
-  if [[ $keepopen -eq 1 ]]; then
-    printf "%s\t%s\t%s\n" "$repo" "clear; repo-sync ." "$(basename "$repo")"
-  else
-    printf "%s\t%s\t%s\n" "$repo" "clear; repo-sync .; and exit" "$(basename "$repo")"
-  fi
-done | $filter
+  printf "run -c %s \"clear; repo-sync .%s\"\n" "$repo" "$post"
+done | tmux.each
 
