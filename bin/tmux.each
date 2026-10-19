@@ -46,9 +46,23 @@ open_window() {
 # (main)
 # -------------------------------------------------
 
+dry_run=0
+while getopts n opt; do
+  case $opt in
+    n) dry_run=1 ;;
+    *) usage; exit 1 ;;
+  esac
+done
+shift $((OPTIND - 1))
+
 if (( $# )) || [[ -t 0 ]]; then
   usage
   exit 1
+fi
+
+if (( dry_run )); then
+  cat
+  exit 0
 fi
 
 if [[ -z $TMUX ]]; then
