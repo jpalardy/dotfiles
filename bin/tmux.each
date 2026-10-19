@@ -1,9 +1,32 @@
 #!/bin/bash
 
 usage() {
-  echo >&2 "usage: <lines> | ${0##*/}"
-  echo >&2 "  type [-c dir] [-n name] [command...]"
-  echo >&2 "  run  [-c dir] [-n name] [command...]"
+  cat >&2 <<EOF
+usage: <lines> | ${0##*/} [-n] [-x] [-k]
+
+options:
+  -n  dry-run: only echo STDIN back
+  -x  exit window shell if command succeeds
+  -k  keep shell open (default/override)
+
+lines:
+  type [-c dir] [-n name] [command...]
+  run  [-c dir] [-n name] [command...]
+
+line flags:
+  -c  working directory (default: PWD)
+  -n  window name (default: basename of dir)
+EOF
+}
+
+exit_suffix() {
+  local sh
+  sh=$(tmux show-option -gv default-shell 2>/dev/null)
+  sh=${sh:-${SHELL:-sh}}
+  case ${sh##*/} in
+    fish) printf '; and exit' ;;
+    *)    printf ' && exit' ;;
+  esac
 }
 
 open_window() {
@@ -12,7 +35,7 @@ open_window() {
 
   case $mode in
     type|run) ;;
-    *) echo >&2 "bad verb '$mode'"; return 1 ;;
+    *) echo >&2 "bad verb '$mode'"; return 2 ;;
   esac
 
   OPTIND=1
@@ -25,11 +48,12 @@ open_window() {
   done
   shift $((OPTIND - 1))
   cmd="$*"
+  [[ -n $cmd ]] && (( exit_on_success )) && cmd+=$(exit_suffix)
 
   [[ -f $dir ]] && dir=$(dirname "$dir")
   if [[ ! -d $dir ]]; then
     echo >&2 "skipping: no such dir: $dir"
-    return 1
+    return 2
   fi
 
   win=$(tmux new-window -P -F '#{window_id}' -c "$dir") || return 1
@@ -47,9 +71,12 @@ open_window() {
 # -------------------------------------------------
 
 dry_run=0
-while getopts n opt; do
+exit_on_success=0
+while getopts nxk opt; do
   case $opt in
     n) dry_run=1 ;;
+    x) exit_on_success=1 ;;
+    k) exit_on_success=0 ;;
     *) usage; exit 1 ;;
   esac
 done

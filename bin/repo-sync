@@ -1,37 +1,8 @@
 #!/bin/bash
 
-keepopen=0
-
-usage() {
-  cat >&2 <<EOM
-Usage: $(basename "$0") [OPTION]...
-  -k          keep open
-  -h          display help
-EOM
-}
-
-while getopts "hkn" opt; do
-  case "$opt" in
-    k)
-      keepopen=1
-      ;;
-    h)
-      usage
-      exit 0
-      ;;
-    *)
-      usage
-      exit 1
-      ;;
-  esac
-done
-
 if [[ -z "$TMUX" ]]; then
   exec tmux new-session -- "$0" "$@"
 fi
-
-# flush
-shift $((OPTIND - 1))
 
 # -------------------------------------------------
 
@@ -52,7 +23,7 @@ confirm() {
 
 # -------------------------------------------------
 
-if [[ -n "$1" ]]; then
+if [[ $1 == . ]]; then
   git fetch --prune
   git status --short
   # repo position versus upstream?
@@ -77,10 +48,7 @@ fi
 
 # -------------------------------------------------
 
-post=""
-[[ $keepopen -eq 0 ]] && post="; and exit"
-
-for repo in $REPOS; do
-  printf "run -c %s \"clear; repo-sync .%s\"\n" "$repo" "$post"
-done | tmux.each
+for path in $REPOS; do
+  printf "run -c %s \"clear; repo-sync .\"\n" "$path"
+done | tmux.each -x "$@"
 
