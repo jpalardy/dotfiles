@@ -2,9 +2,10 @@
 
 usage() {
   cat >&2 <<EOF
-usage: <lines> | ${0##*/} [-n] [-x] [-k]
+usage: <lines> | ${0##*/} [-n] [-x] [-k] [-h]
 
 options:
+  -h  print this help message
   -n  dry-run: only echo STDIN back
   -x  exit window shell if command succeeds
   -k  keep shell open (default/override)
@@ -72,11 +73,12 @@ open_window() {
 
 dry_run=0
 exit_on_success=0
-while getopts nxk opt; do
+while getopts nxkh opt; do
   case $opt in
     n) dry_run=1 ;;
     x) exit_on_success=1 ;;
     k) exit_on_success=0 ;;
+    h) usage; exit 0 ;;
     *) usage; exit 1 ;;
   esac
 done
