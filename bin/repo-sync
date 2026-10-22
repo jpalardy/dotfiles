@@ -1,11 +1,5 @@
 #!/bin/bash
 
-if [[ -z "$TMUX" ]]; then
-  exec tmux new-session -- "$0" "$@"
-fi
-
-# -------------------------------------------------
-
 confirm() {
   local msg=$1
   while true; do
@@ -48,7 +42,10 @@ fi
 
 # -------------------------------------------------
 
-for path in $REPOS; do
-  printf "run -c %s \"clear; repo-sync .\"\n" "$path"
-done | tmux.each -x "$@"
+# all repos
+spec="$(for path in $REPOS; do
+  printf 'run -c %s "clear; repo-sync ."\n' "$path"
+done)"
+
+tmux.each -x "$@" "$spec"
 

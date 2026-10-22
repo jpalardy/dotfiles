@@ -2,15 +2,15 @@
 
 usage() {
   cat >&2 <<EOF
-usage: <lines> | ${0##*/} [-n] [-x] [-k] [-h]
+usage: ${0##*/} [-n] [-x] [-k] [-h] <SPEC>
 
 options:
   -h  print this help message
-  -n  dry-run: only echo STDIN back
+  -n  dry-run: only echo SPEC back
   -x  exit window shell if command succeeds
   -k  keep shell open (default/override)
 
-lines:
+SPEC lines:
   type [-c dir] [-n name] [command...]
   run  [-c dir] [-n name] [command...]
 
@@ -82,28 +82,33 @@ while getopts nxkh opt; do
     *) usage; exit 1 ;;
   esac
 done
+flags=("${@:1:OPTIND-1}")
 shift $((OPTIND - 1))
 
-if (( $# )) || [[ -t 0 ]]; then
+# input: arguments win, otherwise STDIN
+if (( $# )); then
+  input=$(printf '%s\n' "$@")
+elif [[ ! -t 0 ]]; then
+  input=$(cat)
+else
   usage
   exit 1
 fi
 
 if (( dry_run )); then
-  cat
+  printf "%s\n" "$input"
   exit 0
 fi
 
 if [[ -z $TMUX ]]; then
-  echo >&2 "need to run inside tmux"
-  exit 1
+  exec tmux new-session -- "$0" "${flags[@]}" "$input"
 fi
 
 status=0
 while IFS= read -r line || [[ -n $line ]]; do
-  [[ -z $line || $line == \#* ]] && continue
+  [[ -z $line ]] && continue
   eval "set -- $line" || { echo >&2 "parse error: $line"; status=1; continue; }
   open_window "$@" || status=1
-done
+done <<<"$input"
 
 exit $status
