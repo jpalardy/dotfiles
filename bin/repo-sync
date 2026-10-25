@@ -24,8 +24,10 @@ if [[ $1 == . ]]; then
   read -r behind ahead < <(git rev-list --left-right --count "@{u}"...HEAD)
   # no upstream
   if [[ -z $behind ]]; then
+    echo >&2 "❌ no upstream"
     exit 1
   fi
+  # is behind
   if [[ $behind -gt 0 ]]; then
     echo
     if confirm "git merge --ff-only?"; then
@@ -35,6 +37,12 @@ if [[ $1 == . ]]; then
   fi
   # repo not clean?
   if [[ -n "$(git status --porcelain)" || $ahead -gt 0 ]]; then
+    exit 1
+  fi
+  # not on "main"
+  branch=$(git branch --show-current)
+  if [[ $branch != main && $branch != gh-pages ]]; then
+    echo >&2 "❌ on a branch"
     exit 1
   fi
   exit
