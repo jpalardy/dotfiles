@@ -52,7 +52,7 @@ fi
 
 # all repos
 spec="$(for path in $REPOS; do
-  printf 'run -c %s "clear; repo-sync ."\n' "$path"
+  printf 'run -c %s "clear; bell repo-sync ."\n' "$path"
 done)"
 
 tmux.each -x "$@" "$spec"
