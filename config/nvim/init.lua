@@ -42,12 +42,6 @@ vim.opt.statusline = "%<%t %m%r%=%{&fileencoding?&fileencoding:&encoding} [%{&fi
 -- color
 vim.cmd("colorscheme nord")
 
--- lsp
-vim.diagnostic.config({
-  jump = { float = true },
-  float = { border = "rounded" },
-})
-
 vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$DOTFILES/bin/vim-helpers")
 
 -- no "yellow highlight"
