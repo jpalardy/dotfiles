@@ -41,19 +41,26 @@ require("telescope").setup({
   },
 })
 
-vim.keymap.set("n", "\\f", ":Telescope find_files<CR>")
-vim.keymap.set("n", "\\g", ":Telescope live_grep<CR>")
-vim.keymap.set("v", "\\g", 'y:Telescope live_grep<CR><C-R>"')
-vim.keymap.set("n", "\\m", ":Telescope lsp_references<CR>")
+vim.keymap.set("n", "<space>f", ":Telescope find_files<CR>")
+vim.keymap.set("n", "<space>/", ":Telescope live_grep<CR>")
+vim.keymap.set("v", "<space>/", 'y:Telescope live_grep<CR><C-R>"')
+vim.keymap.set("n", "<space>s", ":Telescope lsp_references<CR>")
 
-vim.keymap.set("n", "\\b", ":Telescope buffers<CR>")
-vim.keymap.set("n", "\\q", ":Telescope quickfix<CR>")
-vim.keymap.set("n", "\\s", ":Telescope git_status<CR>")
-vim.keymap.set("n", "\\e", ":Telescope diagnostics<CR>")
+vim.keymap.set("n", "<space>b", ":Telescope buffers<CR>")
+vim.keymap.set("n", "<space>q", ":Telescope quickfix<CR>")
+vim.keymap.set("n", "<space>g", ":Telescope git_status<CR>")
+vim.keymap.set("n", "<space>d", ":Telescope diagnostics<CR>")
 
 -- meta-pick
-vim.keymap.set("n", "\\t", ":Telescope builtin<CR>")
-vim.keymap.set("n", "\\r", ":Telescope resume<CR>")
+vim.keymap.set("n", "<space>t", ":Telescope builtin<CR>")
+vim.keymap.set("n", "<space>'", ":Telescope resume<CR>")
+
+-- open telescope bindings (_THIS_ file)
+vim.keymap.set("n", "<space>?", function()
+  local path = vim.fn.stdpath("config") .. "/lua/plugins.lua"
+  vim.cmd("vsplit | view +44 " .. vim.fn.fnameescape(path))
+  vim.cmd("normal! zt")
+end)
 
 -------------------------------------------------
 -- lspconfig
