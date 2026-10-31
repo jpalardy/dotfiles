@@ -1,10 +1,4 @@
 function __fzf_contextual
-  # .atm file
-  if [ -e ".atm" ]
-    echo "cat .atm"
-    echo "source .atm"
-  end
-
   # nodejs
   if [ -e "package.json" ]
     echo "npm outdated"
