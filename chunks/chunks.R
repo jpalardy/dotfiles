@@ -8,3 +8,9 @@ theme_set(theme_bw())
 library(gridExtra)
 
 list(p1, p2) |> grid.arrange(grobs = _, ncol = 1)
+
+# -------------------------------------------------
+# helpers
+# -------------------------------------------------
+
+options(width = cli::console_width())
