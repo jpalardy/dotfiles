@@ -25,6 +25,8 @@ set -x RIPGREP_CONFIG_PATH ~/dotfiles/ripgreprc
 
 set -x MANPAGER "nvim +Man!"
 
+set -x AWKPATH ".:$HOME/dotfiles/lang/awk"
+
 #-------------------------------------------------
 # PATHs
 #-------------------------------------------------
