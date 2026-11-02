@@ -1,12 +1,9 @@
-local prevWin = nil
-
-function bindMove(mods, key, logic)
+local function bindMove(mods, key, logic)
   hs.hotkey.bind(mods, key, function()
     local win = hs.window.focusedWindow()
     local screen = win:screen()
     local winFrame = win:frame()
     logic(winFrame, screen:frame())
-    prevWin = win:frame()
     win:setFrame(winFrame, 0.1)
   end)
 end
@@ -65,7 +62,7 @@ bindMove({ "ctrl", "alt" }, "w", function(win, screen)
 end)
 
 -- restricted
-bindMove({ "ctrl", "alt" }, "r", function(win, screen)
+bindMove({ "ctrl", "alt" }, "r", function(win, _)
   win.x = 300
   win.w = 1000
 end)

@@ -88,6 +88,7 @@ vim.lsp.enable("ts_ls")
 vim.lsp.enable("elmls")
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("r_language_server")
+vim.lsp.enable("lua_ls")
 
 vim.opt.complete = ".,w,b,o"
 vim.opt.autocomplete = true
@@ -192,6 +193,7 @@ require("lint").linters.gawk.args = { "-f-", "-Lno-ext" }
 
 -- custom: .moe
 require("lint").linters.moelint = {
+  name = "moelint",
   cmd = "moelint",
   ignore_exitcode = true, -- set this to true if the linter exits with a code != 0 and that's considered normal.
   parser = require("lint.parser").from_errorformat("%f:%l:%c:%m", {
@@ -203,6 +205,7 @@ require("lint").linters_by_ft.moe = { "moelint" }
 
 -- custom: .deck
 require("lint").linters.decklint = {
+  name = "decklint",
   cmd = "decklint",
   ignore_exitcode = true, -- set this to true if the linter exits with a code != 0 and that's considered normal.
   parser = require("lint.parser").from_errorformat("%f:%l:%c:%m", {
