@@ -92,7 +92,6 @@ vim.lsp.enable("lua_ls")
 
 vim.opt.complete = ".,w,b,o"
 vim.opt.autocomplete = true
-vim.diagnostic.config({ virtual_text = true, severity_sort = true })
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
@@ -102,6 +101,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.notify(client.name .. " attached to buffer " .. ev.buf)
   end,
 })
+-- fix interference w/ telescope
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "TelescopePrompt",
+  callback = function(args)
+    vim.bo[args.buf].autocomplete = false
+  end,
+})
+vim.diagnostic.config({ virtual_text = true, severity_sort = true })
 
 -- border: urgh... works but so manual
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
