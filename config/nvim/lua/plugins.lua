@@ -228,3 +228,28 @@ require("lint").linters_by_ft.deck = { "decklint" }
 
 -- default to ENV vars...
 require("age_secret").setup({})
+
+-------------------------------------------------
+-- mini.snippets
+-------------------------------------------------
+
+local gen_loader = require('mini.snippets').gen_loader
+local function dynamic(_) -- dynamic(_context)
+  return {
+    { prefix = 'td', body = os.date('%F') },
+    { prefix = 'yd', body = os.date('%F', os.time() - 86400) },
+    { prefix = 'ts', body = tostring(os.time()) },
+  }
+end
+
+require('mini.snippets').setup({
+  snippets = {
+    gen_loader.from_file('~/.config/nvim/snippets/global.lua'),
+    dynamic,
+    gen_loader.from_lang(),
+  },
+  mappings = {
+    expand = '<Tab>',
+    stop = '<C-x>',
+  },
+})
