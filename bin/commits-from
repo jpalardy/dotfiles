@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -euo pipefail
+
+other="${1:?missing other branch}"
+base=$(git merge-base "$other" HEAD)
+
+awk -F'\t' 'NR==FNR { seen[$2]++; next } !seen[$2] { print $1 }' \
+  <(git log --no-merges --pretty='%h%x09%s' "$base..HEAD") \
+  <(git log --no-merges --pretty='%h%x09%s' "$base..$other") | \
+  xargs --no-run-if-empty git log --pretty=colorful --no-walk=unsorted
+
