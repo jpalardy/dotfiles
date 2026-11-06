@@ -160,8 +160,20 @@ $1 == "tap" && NF > 1 {
   next
 }
 
-# passthrough
+# match-and-replace YYYY-MM-DD
+# passthrough for rest
 {
-  print
+  out  = ""
+  rest = $0
+  while (match(rest, /\y[0-9]{4}-[0-9]{2}-[0-9]{2}\y/)) {
+    d  = substr(rest, RSTART, RLENGTH)
+    ts = mktime(gensub(/-/, " ", "g", d) " 12 0 0")
+    if (ts != -1 && strftime("%F", ts) == d) {
+      d = strftime("%F -- %A", ts)
+    }
+    out  = out substr(rest, 1, RSTART - 1) d
+    rest = substr(rest, RSTART + RLENGTH)
+  }
+  print out rest
 }
 
