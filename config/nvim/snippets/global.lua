@@ -1,6 +1,8 @@
 local snippets = {
   { prefix = '--', body = '-------------------------------------------------' },
   { prefix = '[]', body = '▒' },
+  { prefix = 'hex', body = '$RANDOM_HEX' },
+  { prefix = 'uuid', body = '$UUID' },
 
   -- unicode
   { prefix = 'cr', body = '⏎' },

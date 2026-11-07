@@ -234,18 +234,16 @@ require("age_secret").setup({})
 -------------------------------------------------
 
 local gen_loader = require('mini.snippets').gen_loader
-local function dynamic(_) -- dynamic(_context)
-  return {
-    { prefix = 'td', body = os.date('%F') },
-    { prefix = 'yd', body = os.date('%F', os.time() - 86400) },
-    { prefix = 'ts', body = tostring(os.time()) },
-  }
-end
-
 require('mini.snippets').setup({
   snippets = {
     gen_loader.from_file('~/.config/nvim/snippets/global.lua'),
-    dynamic,
+    function(_) -- arg is context
+      return {
+        { prefix = 'td', body = os.date('%F') },
+        { prefix = 'yd', body = os.date('%F', os.time() - 86400) },
+        { prefix = 'ts', body = os.date('%s') },
+      }
+    end,
     gen_loader.from_lang(),
   },
   mappings = {
