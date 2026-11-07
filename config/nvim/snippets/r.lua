@@ -1,4 +1,4 @@
-return {
+local result = {
   { prefix = 'in',  body = '%in%' },
   { prefix = '\\',  body = '\\(${1:d}) { $1$0 }' },
   { prefix = 'fn',  body = { '${1:name} <- function(${2:variables}) {', '  ${0}', '}' } },
@@ -6,3 +6,7 @@ return {
   { prefix = '###', body = { '# -------------------------------------------------', '# $0', '# -------------------------------------------------' } },
   { prefix = "lib", body = "library(${0:tidyverse})" },
 }
+
+cycle_snippets(result, { '%>%', '|>' })
+
+return result

@@ -1,4 +1,4 @@
-local snippets = {
+local result = {
   { prefix = '--', body = '-------------------------------------------------' },
   { prefix = '[]', body = '▒' },
   { prefix = 'hex', body = '$RANDOM_HEX' },
@@ -31,13 +31,13 @@ local snippets = {
   { prefix = ':right', body = '➡️' },
 }
 
-local function cycle(items)
+function _G.cycle_snippets(snippets, items)
   for i, item in ipairs(items) do
     table.insert(snippets, { prefix = item, body = items[i % #items + 1] })
   end
 end
 
-cycle({ '%', '🍓', '🍎', '🍏', '🍌', '🫐', '🍒', '🍇', '🥝', '🍋', '🍊', '🍑', '🍍', '🍉' })
-cycle({ '_', '📦', '✅' })
+cycle_snippets(result, { '%', '🍓', '🍎', '🍏', '🍌', '🫐', '🍒', '🍇', '🥝', '🍋', '🍊', '🍑', '🍍', '🍉' })
+cycle_snippets(result, { '_', '📦', '✅' })
 
-return snippets
+return result
