@@ -6,11 +6,13 @@ vim.g.slime_target = "tmux"
 vim.g.slime_default_config = { socket_name = "default", target_pane = "{last}" }
 vim.g.slime_dont_ask_default = 1
 
-vim.keymap.set("n", "<c-c><c-l>", ':SlimeSend0 "\\x0c"<CR>')
-vim.keymap.set("n", "<c-c><c-u>", ':SlimeSend0 "\\x15"<CR>')
-vim.keymap.set("n", "<c-c>q", ':SlimeSend0 "q"<CR>')
-vim.keymap.set("n", "<c-c>j", "<c-c><c-c>}j", { remap = true })
-vim.keymap.set("n", "<c-c>-", "<Plug>SlimeLineSend")
+local function send_keys(text)
+  local config = vim.b.slime_config
+  vim.fn["slime#targets#tmux#send_keys"](config, text)
+end
+vim.keymap.set("n", "<c-c><c-l>", function() send_keys("C-l") end)
+vim.keymap.set("n", "<c-c><c-u>", function() send_keys("C-u") end)
+vim.keymap.set("n", "<c-c>q", function() send_keys("q") end)
 
 -- cell
 -- vim.g.slime_cell_delimiter = "%%"
