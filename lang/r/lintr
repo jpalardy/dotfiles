@@ -1,0 +1,5 @@
+linters: linters_with_defaults(
+    commented_code_linter = NULL,
+    trailing_blank_lines_linter = NULL
+  )
+encoding: "UTF-8"

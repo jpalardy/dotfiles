@@ -48,6 +48,7 @@ fi
 # lang
 relink .npmrc        "$DOTFILES/lang/js/npmrc"
 relink .Rprofile     "$DOTFILES/lang/r/Rprofile"
+relink .lintr        "$DOTFILES/lang/r/lintr"
 
 # misc
 relink .psqlrc       "$DOTFILES/psqlrc"
