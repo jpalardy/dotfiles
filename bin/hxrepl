@@ -1,4 +1,0 @@
-#!/bin/bash
-
-EDITOR=hx vimrepl "$@"
-

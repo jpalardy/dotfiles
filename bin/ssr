@@ -37,7 +37,6 @@ flush() {
 #-------------------------------------------------
 
 # cli
-check_bin hx   "helix"
 check_bin nvim "neovim"
 check_bin tmux
 check_bin rg          ripgrep
