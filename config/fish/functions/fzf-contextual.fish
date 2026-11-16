@@ -2,11 +2,13 @@ function __fzf_contextual
   # nodejs
   if [ -e "package.json" ]
     echo "npm outdated"
-    echo "npm install -g npm-check-updates"
     echo "ncu -u"
     echo "npm install"
     echo "npm audit fix"
     echo "rm -rf package-lock.json node_modules; npm install"
+  end
+
+  if test -e package.json; and grep -q '"typescript"' package.json
     echo "npm install -g typescript-language-server typescript@6"
   end
 
