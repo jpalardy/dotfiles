@@ -248,8 +248,5 @@ require('mini.snippets').setup({
     end,
     gen_loader.from_lang(),
   },
-  mappings = {
-    expand = '<Tab>',
-    stop = '<C-x>',
-  },
+  mappings = { expand = '<Tab>' },
 })
