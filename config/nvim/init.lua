@@ -8,6 +8,9 @@ vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.opt.scrolloff = 10
 
+-- buffer
+vim.opt.hidden = false
+
 -- edit
 vim.api.nvim_create_autocmd("FileType", {
   callback = function()
