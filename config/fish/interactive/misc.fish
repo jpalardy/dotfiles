@@ -1,17 +1,10 @@
-
 alias l ll
 
 abbr --add rsy "rsync -av --progress"
 abbr --add pwgen "pwgen -cny 30"
 alias R "R --quiet --no-save --no-restore"
 
-abbr --add --position anywhere --command git @u @{upstream}
-abbr --add --position anywhere --command git ..@u ..@{upstream}
-
-abbr --add untilfail --set-cursor 'while %; end'
 abbr --add 1pl 'printf "%s\n"'
-
-alias bc 'bc -l'
 
 #-------------------------------------------------
 
@@ -33,7 +26,3 @@ function implode
     rm -rf -v $target
   end
 end
-
-#-------------------------------------------------
-
-abbr trw 'tmux rename-window'
