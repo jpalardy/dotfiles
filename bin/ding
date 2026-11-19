@@ -18,5 +18,6 @@ play_sound() {
 lastexit=$?
 
 play_sound "$lastexit" &
+printf '\a'
 exit "$lastexit"
 
