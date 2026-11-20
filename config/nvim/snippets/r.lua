@@ -1,4 +1,5 @@
 local result = {
+  { prefix = '=',   body = '<-' },
   { prefix = 'in',  body = '%in%' },
   { prefix = '\\',  body = '\\(${1:d}) { $1$0 }' },
   { prefix = 'fn',  body = { '${1:name} <- function(${2:variables}) {', '  ${0}', '}' } },
