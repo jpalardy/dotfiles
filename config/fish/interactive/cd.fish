@@ -1,25 +1,20 @@
-# save default "cd" as "__cd", for override (next)
-if ! functions -q __cd
-  functions -c cd __cd
-end
-
 function cd
   set -l dst $argv[1]
   # cd to base git directory
   if test "$dst" = "_"
-    set dst $(git rev-parse --show-toplevel 2>/dev/null)
+    set dst $(git rev-parse --show-toplevel)
     if test -n "$dst"
-      __cd $dst
+      builtin cd $dst
     end
     return
   end
   # cd to filepath
   if test -f "$dst"
-    __cd (dirname $dst)
+    builtin cd (dirname $dst)
     return
   end
   # delegate
-  __cd $argv
+  builtin cd $argv
 end
 
 function b
