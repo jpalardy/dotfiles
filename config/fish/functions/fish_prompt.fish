@@ -1,10 +1,7 @@
 function fish_prompt
   set -l laststatus $status
-
   if test $laststatus -ne 0
-    echo -s (set_color red) "exit: $laststatus"
+    printf "%sexit: %d\n" (set_color red) $laststatus
   end
-
-  set -l normal (set_color normal)
-  echo -n -s $normal (set_color $color_host) (prompt_hostname) $normal ' '
+  printf "%s%s%s " (set_color $color_host) (prompt_hostname) (set_color normal)
 end
