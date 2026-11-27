@@ -34,5 +34,4 @@ set -x AWKPATH ".:$HOME/dotfiles/lang/awk"
 fish_add_path -g "/opt/homebrew/bin"
 fish_add_path -g "$HOME/local/bin"
 fish_add_path -g "$DOTFILES/bin"
-fish_add_path -g "$DOTFILES/bin/local"
 
